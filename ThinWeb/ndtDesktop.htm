@@ -1,0 +1,152 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Nixxis Supervisor navigator window</title>
+		<link rel="stylesheet" href="ndtDefault.css" />
+		<script type="text/javascript" language="javascript" src="CrToolbox\CrToolbox.js"></script>
+		<script type="text/javascript" language="javascript" src="tools.js"></script>
+		<script type="text/javascript" language="javascript">
+		    var ClientLink;
+		    function initPage()
+		    {
+		        var toolbarLocation = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1) + 'toolbar_sup.html';
+		        document.getElementById('NixxisAgent').src = toolbarLocation;
+		        //window.onmousemove = function() { console.log("onmousemove"); };
+		        
+		    }
+		    
+		    function exitPage()
+		    {
+		        ClientLink.disconnect();
+		    }
+		    
+		    function ClientInitialized(clientLink)
+		    {
+		        ClientLink = clientLink;
+		        
+		        ClientLink.ContactAdded.Add(this, onContactAdded);
+		        ClientLink.ContactStateChanged.Add(this, onContactStateChanged);
+
+		        window.setTimeout("ClientLogin();", 3000, "javascript");
+		    }
+		    function SaveApp()
+		    {
+		        ClientLink.saveData("47b886e8334d482ca02efa61ed8af615", "TestSave" );
+		    }
+		    function LoadApp()
+		    {
+		        alert(ClientLink.loadData("47b886e8334d482ca02efa61ed8af615"));
+		    }
+		    
+		    function ClientLogin()
+		    {
+		        //ClientLink.connect('101', '101');
+		        ClientLink.connect();        	    
+		    }
+		    
+		    function ConnectClient(userId, password)
+		    {
+		        //ClientLink.connect(userId, password);
+		    }
+		    
+		    
+		    function ClientDisposing(clientLink)
+		    {
+		        ClientLink.ContactAdded.Remove(this, onContactAdded);
+		        ClientLink.ContactStateChanged.Remove(this, onContactStateChanged);
+		        
+		        ClientLink = null;
+		    }
+		    
+		    function onContactAdded(contactInfo)
+		    {
+		        //alert("ContactAdd: " + contactInfo);
+            }
+            
+            function onContactStateChanged(contactInfo)
+            {
+                //alert("StateChanged: " + contactInfo); 
+                if((contactInfo.State == 'A' && !ClientLink.Contacts.ActiveContactId) || contactInfo.State == 'C')
+                {
+                    ClientLink.SetActiveContact(contactInfo);
+                    
+                    try
+                    {
+                        document.getElementById('Application').OnContactConnected(contactInfo);
+                    }
+                    catch(e)
+                    {
+                        ;
+                    }
+                }
+                else if(contactInfo.State == 'D')
+                {
+                    try
+                    {
+                        document.getElementById('Application').OnContactDisconnected(contactInfo);
+                    }
+                    catch(e)
+                    {
+                        ;
+                    }
+
+                    ClientLink.TerminateContact(contactInfo);
+                }
+            }
+            function onSupervisionData(data)
+            {
+                debugger;
+            }
+		</script>
+	</head>
+	<body id="MainBody" onload="javascript:initPage();" onunload="javascript:exitPage()" style="background-image: url(img/Dashboard_Background.png); background-position:bottom">
+	<div style="height: 100%; background-color:Transparent;">
+	    <iframe id="NixxisAgent" width="100%" height="830px" frameborder="0" scrolling="no" allowtransparency="true" style="background-color:Transparent"></iframe>
+
+		<div class="tskContainer">
+			
+			<table class="tsk_hdr">
+				<tr>
+					<td class="tsk_hdrInner">
+						<table class="tsk_hdrInnerTable">
+							<tr>
+								<td class="tsk_btnParent">
+									<a class="tsk_btnLink" href="#"><span class="tsk_btnSpan"></span><img height="37" width="39" style="visibility: hidden;" src="Skins/taskbarButton.png"/ alt="Click here"><span class="tsk_btnTextSpan">Nixxis</span></a>
+								</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+			<table id="uxp_hdr" cellspacing="0">
+				<tbody>
+					<tr>
+						<td class="uxp_hdrInner">
+							<table class="uxp_hdrInnerTable" cellspacing="0">
+								<tbody>
+									<tr>
+										<td id="uxp_hdr_jewelParent" class="uxp_hdr_pointer" onmouseout="this.className=this.className.replace(' uxp_hdr_jewelSpanHover','')" onmouseover="this.className+=' uxp_hdr_jewelSpanHover'">
+											<a id="uxp_hdr_jewelLink" href="#">
+												<span id="uxp_hdr_jewelSpan"/>
+												<img width="39" height="37" style="visibility: hidden;" alt="Meer services" src="http://gfx1.hotmail.com/mail/uxp/w2/pr04/HIG/img/h/jewel_24_hover.png"/>
+												<span class="uxp_hdr_windowsLiveText">
+													Windows Live
+													<span class="uxp_hdr_tm">™</span>
+												</span>
+											</a>
+											<br/>
+											<div class="uxp_hdr_menuParent"> </div>
+										</td>
+										<td></td>
+										<td id="uxp_hdr_meParent" class="uxp_hdr_pointer"></td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+-	</div>
+	</body>
+</html>

@@ -1,0 +1,133 @@
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <title>New Web Project</title>
+		<script>
+			//Test Script. To be removed
+			/*var ExternalFn = 
+			{
+				getFieldValue : function(name)
+				{
+					if(name == 'Field1') return "Tom1";
+					if(name == 'Field2') return "Lanckman";
+					return null;
+				},
+				setFieldValue : function(name, value)
+				{
+				}				
+			}*/
+		</script>
+		<style type="text/css">
+
+		</style>
+
+		
+    </head>
+    <body>
+        <h1>New Web Project Page</h1>
+		<div id="page1">
+			<fieldset style="padding: 10px;" title="My group">
+				<label>First name:</label><input type="text" nixxisId="Field1"><br/>
+				<label>Last name:</label><input type="text" nixxisId="Field2"><br/>
+				<label>Not for nixxis:</label><input type="text" value = "test">
+			</fieldset>
+		</div>
+    </body>
+
+			<script>
+				window.document.body.onload = NixxisInitPage;
+			//Base function
+			var const_NixxisFieldIdent = 'nixxisId';
+			var const_NixxisFieldState = 'nixxisState';
+			var const_NixxisFieldStateSeparator = ';';
+			var const_NixxisFieldStateProValSeparator = ':';
+			function NixxisInitPage()
+			{
+				//debugger;
+				var tags = document.getElementsByTagName("Input");
+				var len = tags.length;
+				
+				for(var i = 0; i < len; i++)
+				{
+					if (tags[i].getAttribute(const_NixxisFieldIdent) != null)
+					{
+						var fieldName = tags[i].getAttribute(const_NixxisFieldIdent);
+						tags[i].value = ExternalFn.getFieldValue(fieldName);
+						debugger;
+						setNixxisStateAttribute(tags[i], 'dirty', false);
+						setNixxisStateAttribute(tags[i], 'originalvalue', tags[i].value);
+						tags[i].nixxisCustomerOnblur  = tags[i].onblur;
+						tags[i].onblur = onNixxisBlur;
+					}
+				}
+			}
+			function getNixxisStateAttribute(element, attribute)
+			{
+				if (!element) return null;
+				if (element.getAttribute(const_NixxisFieldState) != null) 
+				{
+					var val = element.getAttribute(const_NixxisFieldState);
+					if (!val) return;
+					
+					var list = val.split(const_NixxisFieldStateSeparator);
+					var len = list.length;
+					for (var i = 0; i < len; i++)
+					{
+						var part = list[i].split(const_NixxisFieldStateProValSeparator);
+						if (part.length > 1) 
+						{
+							if (part[0] == attribute) 
+								return part[1];
+						}
+					}
+					return '';
+				}
+				return '';
+			}
+			function setNixxisStateAttribute(element, attribute, value)
+			{
+				if (!element) return ;
+				var found = false;
+				var list = new Array();
+				if (element.getAttribute(const_NixxisFieldState) != null) 
+				{
+					var val = element.getAttribute(const_NixxisFieldState);
+					if (!val) return;
+					
+					list = val.split(const_NixxisFieldStateSeparator);
+					var len = list.length;
+					for (var i = 0; i < len; i++)
+					{
+						var part = list[i].split(const_NixxisFieldStateProValSeparator);
+						if (part.length > 0) 
+						{
+							if (part[0] == attribute) 
+							{
+								list[i] = part[0] + const_NixxisFieldStateProValSeparator + value;
+								found = true;
+								break;
+							}
+						}
+					}
+				}	
+				if (!found)
+					{
+						list[list.length] = attribute + const_NixxisFieldStateProValSeparator + value;
+					}
+					element.setAttribute(const_NixxisFieldState, list.join(const_NixxisFieldStateSeparator))
+			}	
+			function onNixxisBlur(e)
+			{
+				//debugger;
+				if (typeof e == 'undefined') e = window.event;
+
+				try{this.nixxisCustomerOnblur(e);} catch (err) {}
+				var orignalValue = getNixxisStateAttribute(this, 'originalvalue');
+				if (orignalValue != this.value) 
+				{
+					setNixxisStateAttribute(this, 'dirty', true);
+				}
+				alert("Blur info: " + element.getAttribute(const_NixxisFieldState));
+			}		
+		</script>
+</html>

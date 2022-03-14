@@ -1,0 +1,84 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Chat conversation</title>
+    <script type="text/javascript" src="chatLink.js"></script>
+    <link rel="stylesheet" href="default.css" type="text/css" />
+		
+	<script type="text/javascript">
+        var chatSession = new chatLink('/*[conversationid]*/','/*[sessionid]*/');
+		
+        function onLoad()
+        {
+            //chatSession.setDebugElement(document.getElementById('chatDebug'));
+            
+            chatSession.waitEvent.Add(OnWait);
+            chatSession.activateEvent.Add(OnActivate);
+            chatSession.historyLineEvent.Add(OnHistoryLine);
+        }
+        
+        function onUnload()
+        {
+            chatSession.disconnect();
+        }
+        
+        function OnWait()
+        {
+			//debugger;
+            document.getElementById('chatWait').innerHTML = arguments[0];
+
+            document.getElementById('chatWait').style.display = "inline";
+            document.getElementById('chatActive').style.display = "none";
+        }
+        
+        function OnActivate()
+        {
+			//debugger;
+            document.getElementById('chatWait').style.display = "none";
+            document.getElementById('chatActive').style.display = "inline";
+        }
+
+        function OnHistoryLine(historyInfo) 
+        {
+			//debugger;
+            var ownerDiv = document.getElementById('chatHistory');
+            
+            if(historyInfo.historyType == chatSession.chatEventType.Say)
+            {
+                var childP = document.createElement('P');
+
+                if(historyInfo.fromMySelf)
+                    childP.innerHTML = '<I>' + historyInfo.from + ':<br />' + historyInfo.text + '</I>';
+                else if(historyInfo.fromAgent)
+                    childP.innerHTML = '<B>' + historyInfo.from + ':<br />' + historyInfo.text + '</B>';
+                else
+                    childP.innerHTML = historyInfo.from + ':<br />' + historyInfo.text;
+                    
+                ownerDiv.appendChild(childP);
+            }
+            else if (historyInfo.historyType == chatSession.chatEventType.Leave)
+            {
+                var childP = document.createElement('P');
+            
+                childP.innerHTML = '<B><I>' + historyInfo.from + ': ' + historyInfo.text + '</I></B>';
+                ownerDiv.appendChild(childP);
+            }
+            
+            ownerDiv.scrollTop = ownerDiv.scrollHeight;
+        }
+    </script>
+</head>
+<body onload="javascript:onLoad();" onunload="javascript:onUnload();">
+	<h1> Chat conversation </h1>
+    <div id="chatWait" style="display:inline;">
+    </div>
+    <div id="chatActive" style="display:none;">
+        <div id="chatHistory" style="width: 100%; height: 200px; overflow:scroll;">
+        </div>
+        <div id="chatSend" style="width:100%;height:40px; overflow:hidden;">
+            <input id="chatText" type="text" /><input type="button" value="Send" onclick="chatSession.send(document.getElementById('chatText').value);" />
+            <input type="button" value="Terminate" onclick="chatSession.disconnect();" />
+        </div>
+    </div>
+    <!--div id="chatDebug" style="width:100%;height:400px;overflow:auto;background-color:Silver;" /-->
+</body>
+</html>

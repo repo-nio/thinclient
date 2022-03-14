@@ -1,0 +1,505 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<link rel="SHORTCUT ICON" href="Icone_agent.ico"/>
+		<title>Nixxis Contact Suite e-mail window</title>	
+		<link rel="stylesheet" type="text/css" href="default.css" />
+		<link rel="stylesheet" type="text/css" href="CrToolboxVisual.css" />
+		<script type="text/javascript" language="javascript" src="JsCommon/NixxisCommonFn.js"></script>
+		<script type="text/javascript" language="javascript" src="tools.js"></script>
+		
+		<script type="text/javascript" language="javascript" src="jsTools/tiny_mce/tiny_mce.js"></script>
+		<script type="text/javascript" language="javascript" src="CrToolbox/CrToolbox.js"></script>
+        <script type="text/javascript" language="javascript" src="CrToolbox/CrToolboxControl.js"></script>
+        <script type="text/javascript" language="javascript" src="CrToolbox/CrToolboxControlVisual.js"></script>
+		
+		<script type="text/javascript" language="javascript" src="jsCommon/NixxisCommonObj.js"></script>
+		<script type="text/javascript" language="javascript" src="jsAgent/AgentLanguageResource.js"></script>
+		<script type="text/javascript" language="javascript" src="jsAgent/agentConst.js"></script>
+		<script type="text/javascript" language="javascript" src="jsAgent/agentEMail.js"></script>
+		<script type="text/javascript" language="javascript" src="jsClient/NixxisClientScript.js"></script>
+		<script>
+			var _CustInfo;
+			var _Input ;
+			
+			var _BScript;
+			var _Histo;
+			var _PerDefBorder;
+			var _AttBorder;
+			var _EmailBorder;
+			var _EmailMsgBorder;
+			var _EmailWindow;
+							
+			function InitPage()
+			{
+<!IS_BROWSER Firefox>
+	        try { document.domain = document.domain.substring(document.domain.lastIndexOf('.', document.domain.lastIndexOf('.') - 1) + 1); }
+			catch(e) {;}
+			//alert("CrAgent.htm: " + document.domain);
+<!IS_BROWSER>	
+				NixxisContactLink.Init();
+				OnToolboxResize.Add(this, onPageResize);
+				//
+				//Script
+				//
+				_BScript = new BorderFrame("xxM_Con_UsSc_Br_" + NixxisContactLink.contactId, $('xxM_Con_UserScript'));
+				_BScript.setTitle("Client information");
+				_BScript.Show();
+
+				var _Frame = document.createElement("iframe");
+				_Frame.width = "100%";
+				_Frame.height = "100%";
+				_Frame.frameBorder = "0";
+				_Frame.scrolling = "auto";
+				_Frame.allowTransparency = false;
+				var script = NixxisContactLink.contactInfo.ScriptUrl;
+				//if (script == "") script = "about:blank";
+				if (script == "" || script == "null") script = "crAgentDefaultScript.htm?ContactId=" + NixxisContactLink.contactInfo.Id;
+				_Frame.src = script;
+				_BScript.getWorkspace().appendChild(_Frame);
+				//
+				//History
+				//
+				_Histo = new BorderFrame("xxM_Con_Histo_Br_" + NixxisContactLink.contactId, $('xxM_Con_Histo'));
+				_Histo.setTitle("History");
+				_Histo.Show();
+				//debugger;
+				SetHistory();				
+				//debugger;
+				//
+				//Email Area
+				//
+				_EmailMsgBorder = new BorderFrame("xxM_Con_EmailMsg_Br_" + NixxisContactLink.contactId, $('xxM_Con_EmailMsg'));
+				_EmailMsgBorder.setTitle("E-mail");
+				_EmailMsgBorder.Show();
+				_EmailBorder = new BorderFrame("xxM_Con_EmailReplay_Br_" + NixxisContactLink.contactId, $('xxM_Con_EmailReplay'));
+				_EmailBorder.setTitle("E-mail reply");
+				_EmailBorder.Show();
+				//debugger;
+				_EmailWindow = new EMailWindow("__Email__", _EmailMsgBorder.getWorkspace(), _EmailBorder.getWorkspace());
+				email = new EMailInfo();
+				email.To = NixxisContactLink.contactInfo.To;
+				email.From = NixxisContactLink.contactInfo.From;
+				email.Subject = NixxisContactLink.contactInfo.UUI;
+				email.Body = NixxisContactLink.contactInfo.ContentLink;
+				email.Date = NixxisContactLink.contactInfo.DateTime;
+				_EmailWindow.SetEMailInfo(email);
+				_EmailWindow.Show();
+
+				
+				
+				NixxisContactLink.contactInfo.EMailClearTextEvent.Add(this, OnEmailClear);
+				NixxisContactLink.contactInfo.EMailAddTextEvent.Add(this, OnEmailAddText);
+				NixxisContactLink.contactInfo.EMailInsertTextEvent.Add(this, OnEmailInsertText);
+				//debugger;
+				//ReplayEnabled(false);
+				
+				//
+				//Predefined text
+				//
+				_PerDefBorder = new BorderFrame("xxM_Con_PreDef_Br_" + NixxisContactLink.contactId, $('xxM_Con_PreDef'));
+				_PerDefBorder.setTitle("Predefined text");
+				_PerDefBorder.Show();
+				//debugger;
+				var actList = NixxisContactLink.contactInfo.Activity.split('.');
+				if (!actList[0]) 
+				{
+					var tmpInfo = new EMailInfo();
+					tmpInfo = _EmailWindow.GetMailInfo();
+					if (tmpInfo['ActivityId']) 
+					{
+						NixxisContactLink.contactInfo.Activity = tmpInfo['ActivityId'] + NixxisContactLink.contactInfo.Activity
+					}
+				}
+				SetPreDef();				
+				//
+				//Attachment
+				//
+				_AttBorder = new BorderFrame("xxM_Con_Att_Br_" + NixxisContactLink.contactId, $('xxM_Con_Att'));
+				_AttBorder.setTitle("Attachments");
+				_AttBorder.Show();
+				SetAtt(_EmailWindow.txAttachmentList);
+				
+				OnToolboxResize.Invoke();
+			}
+			var _lstHistory;
+			var _ListOfHistory;
+			function SetHistory()
+			{
+				_lstHistory = new toolboxListbox("lstHistory")
+				_lstHistory.txParent = _Histo.getWorkspace();
+				_lstHistory.txBoxCss = "NixxisChatBox";
+				//_lstHistory.txOnClick.Add(this, _lstPreDef_OnClick);
+				
+				
+				//_lstPerDef.txHoverCss = "NixxisChatHover";
+				_lstHistory.Show();
+				//debugger;
+				NixxisContactLink.clientLink.Contacts.Get(NixxisContactLink.clientLink.Contacts.ActiveContactId).HistoryList.BuildList(NixxisContactLink.clientLink.getContactHistory(NixxisContactLink.clientLink.Contacts.ActiveContactId));
+				_ListOfHistory = NixxisContactLink.clientLink.Contacts.Get(NixxisContactLink.clientLink.Contacts.ActiveContactId).HistoryList.Items;
+			
+				if (_ListOfHistory != null) 
+				{
+					var i = 0;
+				
+					for (key in _ListOfHistory) 
+					{
+						if ((i % 2)== 0) 
+							AddHistoryText(_ListOfHistory[key], "NixxisChatPerDefI1");
+						else 
+							AddHistoryText(_ListOfHistory[key], "NixxisChatPerDefI2");
+						i++;
+					}
+				}
+			}
+			function AddHistoryText(item, cssType)
+			{
+				var _Item = new toolboxListboxItem();
+				                
+				if (item.Media == "V" && item.Direction == "I")
+                    _Item.txIcon = new toolboxImage("img/tbVoice.png", new toolboxSize(16,16));
+                else if (item.Media == "V" && item.Directio == "O")
+                    _Item.txIcon = new toolboxImage("img/tbVoice.png", new toolboxSize(16,16));
+                else if (item.Media == "M")
+                    _Item.txIcon = new toolboxImage("img/tbMail.png", new toolboxSize(16,16));
+                else if (item.Media == "C")
+                    _Item.txIcon = new toolboxImage("img/tbChat.png", new toolboxSize(16,16));
+                else
+                    _Item.txIcon = new toolboxImage("img/tbVoice.png", new toolboxSize(16,16));
+				//_Item.txIcon = new toolboxImage("img/tbChat.png", new toolboxSize(16,16));
+				
+				
+				_Item.txText = item.ContactTime + " " + item.QualifiedBy + " " + item.Qualification;
+				_Item.txItemCss = cssType;
+				_Item.txTextCss = "NixxisChatPerDefText";
+				_Item.txData = item;
+				_lstHistory.txList.Add(_Item);
+				//videoLstPerDefWhite();
+			}
+			
+			
+			var _lstPreDef;
+			var _ListOfPreDefText;
+			function SetPreDef()
+			{
+				_lstPreDef = new toolboxListbox("lstPerDef")
+				_lstPreDef.txParent = _PerDefBorder.getWorkspace();
+				_lstPreDef.txBoxCss = "NixxisChatBox";
+				_lstPreDef.txOnClick.Add(this, _lstPreDef_OnClick);
+				//_lstPerDef.txHoverCss = "NixxisChatHover";
+				_lstPreDef.Show();
+				//debugger;
+				_ListOfPreDefText = NixxisContactLink.commands.getPredefinedTexts();
+				if (_ListOfPreDefText != null) 
+				{
+					var i = 0;
+					for (key in _ListOfPreDefText.Items) 
+					{
+						if (i % 2 == 0) 
+							AddPreDefText(_ListOfPreDefText.Items[key], "NixxisChatPerDefI1");
+						else 
+							AddPreDefText(_ListOfPreDefText.Items[key], "NixxisChatPerDefI2");
+						i++;
+					}
+				}
+			}
+			function SetAtt(attActive)
+			{			
+				var _ListOfAtt = NixxisContactLink.commands.getAttachments();
+				var list = document.createElement("ul");
+				var checkList = attActive;
+				
+				list.className = "xxM_Att_List";
+				list.id = 'Att_List';
+				
+				if (_ListOfAtt != null) 
+				{
+					//
+					//Pre def attachments
+					//
+					for (key in _ListOfAtt.Items) 
+					{
+						var chkInput = false;
+						for (var i = 0; i < checkList.length; i++) 
+						{
+							if (checkList[i] == _ListOfAtt.Items[key].Id) 
+							{
+								chkInput = true;
+								checkList.splice(i, 1);
+								break;
+							}
+						}
+						
+						var item = document.createElement('li');
+						item.className = "xxM_Att_Li";
+						//Checkbox
+						var chk = document.createElement('input');
+						chk.className = "xxM_Att_L_Chk";
+						chk.type = "checkbox";
+						
+						if (chkInput) 
+							chk.checked = true;
+						
+						item.appendChild(chk);
+						//img
+						var img = document.createElement("img");
+						img.className = "xxM_Att_L_Img";
+						img.src = "img/mail_AttCommon.png";
+						item.appendChild(img);
+						//Test
+						var text = document.createElement("span");
+						text.className = "xxM_Att_L_Text";
+						text.innerHTML = _ListOfAtt.Items[key].Description;
+						item.appendChild(text);
+						
+						item.txData = _ListOfAtt.Items[key].Id;
+						list.appendChild(item);
+					}
+				}
+				//
+				//Unknow attachments
+				//
+				//debugger;
+				for (var i = 0; i < checkList.length; i++) 
+				{
+					var parts = checkList[i].split(':');
+					var pid = parts[0];
+					var pname = "Attachment " + i;
+					if (parts.length > 1) pname = parts[1];
+					
+					if (pid != "") 
+					{
+						var item = document.createElement('li');
+						item.className = "xxM_Att_Li";
+						//Checkbox
+						var chk = document.createElement('input');
+						chk.className = "xxM_Att_L_Chk";
+						chk.type = "checkbox";
+						chk.checked = true;
+						item.appendChild(chk);
+						//img
+						var img = document.createElement("img");
+						img.className = "xxM_Att_L_Img";
+						img.src = "img/mail_AttPrivate.png";
+						item.appendChild(img);
+						//Test
+						var text = document.createElement("span");
+						text.className = "xxM_Att_L_Text";
+						text.innerHTML = pname;
+						item.appendChild(text);
+						
+						item.txData = pid;
+						list.appendChild(item);
+					}
+				}
+				//debugger;
+				_AttBorder.getWorkspace().appendChild(list);
+			}
+			function AddPreDefText(msg, cssType)
+			{
+				var _Item = new toolboxListboxItem();
+				//_Item.txIcon = new toolboxImage("img/Chat_AgentMsg.jpg", new toolboxSize(38,30));
+				_Item.txText = msg.Description;
+				_Item.txItemCss = cssType;
+				_Item.txTextCss = "NixxisChatPerDefText";
+				_Item.txData = msg.Id;
+				_lstPreDef.txList.Add(_Item);
+				//videoLstPerDefWhite();
+			}
+			function _lstPreDef_OnClick(text, data)
+			{
+				//debugger;
+				OnEmailInsertText(_ListOfPreDefText.Get(data).Text);
+			}
+			
+			function OnEmailClear()
+			{
+				//alert("Command mceSetContent");
+				tinyMCE.execCommand('mceSetContent',false,'');
+			}
+			function OnEmailAddText(text){
+				var newText = "";
+				newText = tinyMCE.get('xxM_MailReplay').getContent();
+				
+				if (newText.substring(0, "<P>".length) == "<P>") 
+				{
+					newText = newText.substring("<P>".length);
+					if (newText.lastIndexOf('</P>') > 0) 
+						newText = newText.substring(0, newText.lastIndexOf('</P>'));
+				}
+				else if (newText.substring(0, "<p>".length) == "<p>") 
+				{
+					newText = newText.substring("<p>".length);
+					if (newText.lastIndexOf('</p>') > 0) 
+						newText = newText.substring(0, newText.lastIndexOf('</p>'));
+				}
+
+			 	newText += text;	
+				tinyMCE.execCommand('mceSetContent',false,newText);
+			}
+			function OnEmailInsertText(text)
+			{
+				//alert("Command mceSetContent");
+				tinyMCE.execCommand('mceInsertContent',false, text);
+			}
+			
+			function GetEMailMsg()
+			{				
+				return tinyMCE.get('xxM_MailReplay').getContent();
+			}
+			function GetEMailMsg2()
+			{
+				//debugger;
+				var attIds = "";
+				var list = document.getElementById("Att_List");
+				//document.getElementsByTagName
+				for(var i = 0; i < list.childNodes.length; i++)
+			    {
+			        if(list.childNodes[i].className)
+			        {
+			            if(list.childNodes[i].className == "xxM_Att_Li")
+			            {
+			                var chk = list.childNodes[i].getElementsByTagName('input');
+							if (chk) 
+							{
+								
+								if (chk[0].checked) 
+								{
+									if (attIds == '') 
+										attIds += list.childNodes[i].txData;
+									else 
+										attIds += "," + list.childNodes[i].txData;
+								}
+							}
+			            }
+			        }
+			    }	
+				
+				return attIds + "/" + tinyMCE.get('xxM_MailReplay').getContent();
+			}
+			function ReplayEnabled(bool)
+			{
+				if(bool)
+					EnabledReplayArea();
+				else
+					DisableReplayArea();
+			}
+			function EnabledReplayArea()
+			{
+				
+			}
+			function DisableReplayArea()
+			{
+				var _content =  tinyMCE.get('xxM_MailReplay').getContent();
+				//debugger;
+				tinyMCE.get('xxM_MailReplay').hide();
+				
+				var parent = $('xxM_MailReplay').parentNode;
+				$('xxM_MailReplay').style.display = "none";
+				
+				var dis = document.createElement("div");
+				dis.className = "";
+				dis.style.width = "100%";
+				dis.style.height ="100%";
+				dis.innerHTML = _content;
+				parent.appendChild(dis);
+			}
+			
+			function changeImg()
+			{
+				//_Input.value += "\nIn this case, we managed to deliver the luggage in that timeframe.";
+			}
+			function UnloadPage()
+			{
+				
+			}			
+			function onPageResize()
+			{
+				
+				try {
+	var _Height = $('NixxisTableCellLayout').clientHeight - $('NixxisSliderHorizontalCell').clientHeight - $('NixxisChatCell').clientHeight;
+				//alert ("Chat onPageResize resize height:" + _Height);	
+				$('NixxisUserScriptCell').style.height = _Height + "px";	
+				$('NixxisHistoCell').style.height = _Height + "px";
+} catch (e) {
+	
+}
+
+
+			}
+		</script>	
+	</head>
+	<body  scroll="no" onload="javascript: InitPage();" onunload="javacript: UnloadPage();">
+	    <div id="NixxisContainer" class="NixxisContainer">
+	        <div id="NixxisEMailWindow" class="NixxisPageLayout">
+				<table class="xxM_Tc_Layout" cellpadding="0" cellspacing="0">
+					<tr>
+						<td class="xxM_Tc_Lay_C1">
+							<table class="xxM_Tc_Lay_Cx_T" cellpadding="0" cellspacing="0">
+								<tr class="xxM_Tr_UserScript">
+									<td id="xxM_Tc_UserScript" class="xxM_Tc_UserScript">
+										<div id="xxM_Con_UserScript" class="xxM_Con_UserScript">
+										
+										</div>
+									</td>
+								</tr>
+								<tr id="NixxisSliderHorizontalRow" class="NixxisSliderHorizontalRow"><td id="NixxisSliderHorizontalCell" class="NixxisSliderHorizontalCell">&nbsp;</td></tr>
+								<tr class="xxM_Tr_Email">
+									<td id="xxM_Tc_Email" class="xxM_Tc_Email">
+										<table class="xxM_T_Lay_Email" cellpadding="0" cellspacing="0">
+											<tr class="xxM_Tr_EmailMsg">
+												<td class="xxM_Tc_EmailMsg">
+													<div id="xxM_Con_EmailMsg" class="xxM_Con_EmailMsg">
+
+													</div>
+												</td>
+												<td class="xxM_Tc_EmailReplay">
+													<div id="xxM_Con_EmailReplay" class="xxM_Con_EmailReplay">
+
+													</div>
+												</td>
+											</tr>
+											<!--tr class="xxM_Tr_EmailControls">
+												<td class="xxM_Tc_EmailControls">
+													<div id="xxM_Con_EmailControls" class="xxM_Con_EmailControls">
+
+													</div>													
+												</td>
+											</tr-->
+										</table>
+									</td>
+								</tr>
+							</table>							
+						</td>
+						<td class="NixxisSliderVerticalCell">&nbsp;</td>						
+						<td class="xxM_Tc_Lay_C2">
+							<table class="xxM_Tc_Lay_Cx_T" cellpadding="0" cellspacing="0">
+								<tr class="xxM_Tr_Histo">
+									<td id="NixxisHistoCell" class="xxM_Tc_Histo">
+										<div id="xxM_Con_Histo" class="xxM_Con_Histo">
+											
+										</div>
+									</td>
+								</tr>
+								<tr id="NixxisSliderHorizontalRow" class="NixxisSliderHorizontalRow"><td id="NixxisSliderHorizontalCell" class="NixxisSliderHorizontalCell">&nbsp;</td></tr>
+								<tr class="xxM_Tr_PreDef">
+									<td id="xxM_Tc_PreDef" class="xxM_Tc_PreDef">
+										<div id="xxM_Con_PreDef" class="xxM_Con_PreDef">
+							
+										</div>
+									</td>
+								</tr>
+								<tr class="xxM_Tr_Att">
+									<td id="xxM_Tc_Att" class="xxM_Tc_Att">
+										<div id="xxM_Con_Att" class="xxM_Con_Att">
+										</div>
+									</td>
+								</tr>	
+							</table>
+						</td>
+					</tr>
+				</table>	
+	        </div>    
+	    </div>		
+	</body>
+</html>

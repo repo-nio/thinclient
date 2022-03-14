@@ -1,0 +1,71 @@
+﻿html,body
+{
+	margin:0; 
+	padding:0; 
+	height:100%;
+	width:100%;
+	font-family: Verdana, Arial, Helvetica, Sans-Serif;
+}
+/*user_headset.png*/
+TABLE.LoginField
+{
+
+}
+
+TABLE.LoginField TD.Login_Checkbox
+{
+	padding-left:0px;
+	padding-bottom:5px;
+}
+TABLE.LoginField TD.Login_Label
+{
+	padding-left:18px;
+}
+TABLE.LoginField TD.Login_Input
+{
+	width:200px;
+}
+.LoginElInput
+{
+	width: 180px;
+}
+
+.LoginElInput.DisabledInput
+{
+	background-color: Transparent;
+	border:1px solid gray;
+}
+.LoginElLabel.DisabledLabel
+{
+	color: Gray;
+}
+DIV.LoginDivForm
+{
+	margin-right: 10px; margin-left: 10px; margin-top: 10px;
+}
+DIV.LoginButtons
+{
+	background-color:Transparent;
+	float: left;
+	padding-left: 5px;
+}
+.LoginSubmit
+{
+	position:absolute;
+	left:0px;
+	top:0px;
+	background-image: url(img/BackgroundLight.png);
+	height:100%;
+	width:100%;
+}
+.LoginSubmit.Hide
+{
+	display:none;
+}
+
+.LoginBackground
+{
+	background-image: url(img/BackgroundDefault.png);
+	height:100%;
+	width:100%;
+}

@@ -1,0 +1,1380 @@
+html,body
+{
+	margin:0; 
+	padding:0;
+	padding-top: 0px;
+	margin-top: 0px; 
+	background-color: Transparent;
+	border:none;
+	height:100%;
+	width:100%;
+	font-family: Verdana, Arial, Helvetica, Sans-Serif;
+}
+	
+DIV.NixxisToolBar { display: block; background-color: Transparent; }
+TABLE.NixxisToolStrip { background-color: Transparent; padding-left:2px; display: inline; }
+
+TABLE.NixxisToolStrip TR { height: 38px; }
+TABLE.NixxisToolStrip TD.Left
+{
+	background-color: Transparent;
+	background-image: url(toolbar12.png); 
+	background-position: right top; 
+	background-repeat: no-repeat;
+	width: 16px;
+}
+
+TABLE.NixxisToolStrip TD.Buttons
+{
+	background-color: Transparent;
+	background-image: url(toolbar3.png); 
+	background-position: left top; 
+	background-repeat: repeat-x;
+}
+
+TABLE.NixxisToolStrip TD.Right
+{
+	background-color: Transparent;
+	background-image: url(toolbar4.png); 
+	background-position: left top; 
+	background-repeat: no-repeat;
+	width: 6px;
+}
+
+.NixxisButton
+{
+	background-color: Transparent;
+	border: solid 1px Transparent;
+	margin-top: 3px;	
+	margin-bottom: 1px;
+}
+
+.NixxisLabel
+{
+	background-color:#ECECEC;
+	border:1px solid #9693AE;
+	/*background-color: Transparent;
+	border: solid 1px Transparent;*/
+	margin-top: 3px;
+	margin-bottom: 1px;
+}
+.NixxisSeparator
+{
+	background-color: Transparent;
+	border: solid 1px Transparent;
+	margin-top: 3px;
+	margin-bottom: 1px;
+}
+
+.NixxisButton.Hover
+{
+	background-color: #80E020;
+	border: solid 1px olive;
+}
+
+.NixxisButton.Pressed
+{
+	background-color: #70D010;
+	border: solid 1px olive;
+}
+
+.NixxisButton.Active
+{
+	background-color: #70D010;
+	border: solid 1px olive;
+}
+/*** Default Layout ***/
+DIV.NixxisContainer { width:100%; height:100%; overflow:auto; background-color:Transparent; }
+/*** Layout Agent ***/
+.NixxisAgentPage 
+{ 
+	width:100%; 
+	height:100%;
+	background-color: #ededed;
+	/*background-color: #153651;
+	background-position: bottom ;
+	background-image : url(img/General_Background.png);
+	background-repeat:repeat-x;*/
+} 
+TABLE.NixxisAgentLayout { width:100%; height:100%; }
+TABLE.NixxisAgentLayout TD.NixxisAgentToolbarAreaCell { height: 50px; padding-left: 5px; padding-top:5px; background-color: #676767; }
+TABLE.NixxisAgentLayout TR.NixxisAgentWorkAreaRow { height:100%; }
+TABLE.NixxisAgentLayout TD.NixxisAgentWorkAreaCell { height:100%; }
+
+TABLE.NixxisAgentWorkAreaTable { height:100%; width:100%;}
+TABLE.NixxisAgentWorkAreaTable TR.NixxisAgentWorkAreaTableRow { height:100%; }
+TABLE.NixxisAgentWorkAreaTable TD.NixxisDockLeftCell 
+{ /*To Do: check*/
+	height:100%;
+	background-image:url(img/TabContactShadowDockLeft.png); 
+	background-repeat: repeat-y; 
+	background-position:right; 
+	background-image:url(img/Background_GradientGray.jpg); 
+	background-repeat: repeat-x; 
+	background-position: bottom; 
+	background-color: #676767; 
+}
+TABLE.NixxisAgentWorkAreaTable TD.NixxisDockLeftCell.HideDL { display: none; }
+TABLE.NixxisAgentWorkAreaTable TD.NixxisAgentContactAreaCell { width:100%; height: 100%; }
+TABLE.NixxisAgentWorkAreaTable TD.NixxisAgentContactAreaCell.DockContactAreaLeft { /*padding-right:10px;*/ }
+TABLE.NixxisAgentWorkAreaTable TD.NixxisAgentContactAreaCell.DockContactAreaRight { /*padding-left:10px;*/ }
+TABLE.NixxisAgentWorkAreaTable TD.NixxisAgentContactAreaCell.DockContactAreaBottom { /*padding-left: 10px; padding-right:10px;*/ }
+TABLE.NixxisAgentWorkAreaTable TD.NixxisAgentContactAreaCell { width:100%; height: 100%; }
+TABLE.NixxisAgentWorkAreaTable TD.NixxisDockRightCell { height:100%; background-image:url(img/Background_GradientGray.jpg); background-repeat: repeat-x; background-position: bottom; background-color: #676767; }
+TABLE.NixxisAgentWorkAreaTable TD.NixxisDockRightCell.HideDR { display: none; }
+
+TABLE.NixxisAgentLayout TR.NixxisDockBottomRow.HideDB { display: none; }
+TABLE.NixxisAgentLayout TD.NixxisDockBottomCell { padding-left: 10px; padding-right: 10px; background-color: Transparent; }
+
+
+/*Work divs*/
+DIV.NixxisAgentToolbarArea { width:100%; background-color: Transparent; height: 50px; }
+DIV.NixxisAgentContactArea { width:100%; height:100%; background-color: Transparent; position: relative; }
+DIV.NixxisDockLeft { height:100%; width:165px; background-image:url(img/TabContactShadowDockLeft.png); background-repeat: repeat-y; background-position:right; overflow:hidden; }
+DIV.NixxisDockRight { height:100%; width:165px; background-color: Transparent; }
+DIV.NixxisDockBottom { width:100%; background-image:url(img/Background_GradientGray.jpg); background-repeat: repeat-x; background-position: bottom; background-color: #676767; }
+DIV.NixxisAgtStatsArea { width:100%; height:Auto; background-color: Transparent; }
+
+TABLE.NixxisDockLeftLayoutTable { width: 100%; height:100%; }
+TABLE.NixxisDockLeftLayoutTable TD.NixxisDockLeftHeadingCell { width: 100%; height:30px; background-color: Transparent; }
+TABLE.NixxisDockLeftLayoutTable TD.NixxisDockLeftTabButtonCell { width: 100%; height:100%; background-color: Transparent; }
+TABLE.NixxisDockLeftLayoutTable TD.NixxisDockLeftStatsCell { width: 100%; height:auto; background-color: Transparent;}
+
+/*Custom tab class*/
+/*--> Tab button*/
+DIV.NixxisContactTabButton { background-color: Transparent; width:155px; height:46px; }
+
+DIV.NixxisContactTabButton.TabBtnNoActive { color: lightgrey; }
+DIV.NixxisContactTabButton.TabBtnActive { color: #404040; }
+
+DIV.NixxisContactTabButton.TabBtnLeftVoice 				{ background-position: 0px -138px; background-image:url(Img/DefaultSkin/TabBtn_VoiceLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftVoiceActive 		{ background-position: 0px 0px; background-image:url(Img/DefaultSkin/TabBtn_VoiceLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftVoiceHover 		{ background-position: 0px -276px; background-image:url(Img/DefaultSkin/TabBtn_VoiceLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftVoiceAction 		{ background-position: 0px -414px; background-image:url(Img/DefaultSkin/TabBtn_VoiceLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftVoiceHold 			{ background-position: 0px -184px; background-image:url(Img/DefaultSkin/TabBtn_VoiceLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftVoiceHoldActive 	{ background-position: 0px -46px; background-image:url(Img/DefaultSkin/TabBtn_VoiceLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftVoiceHoldHover 	{ background-position: 0px -322px; background-image:url(Img/DefaultSkin/TabBtn_VoiceLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftVoiceHoldAction 	{ background-position: 0px -460px; background-image:url(Img/DefaultSkin/TabBtn_VoiceLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftVoiceWrapup 		{ background-position: 0px -230px; background-image:url(Img/DefaultSkin/TabBtn_VoiceLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftVoiceWrapupActive	{ background-position: 0px -92px; background-image:url(Img/DefaultSkin/TabBtn_VoiceLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftVoiceWrapupHover 	{ background-position: 0px -368px; background-image:url(Img/DefaultSkin/TabBtn_VoiceLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftVoiceWrapupAction 	{ background-position: 0px -506px; background-image:url(Img/DefaultSkin/TabBtn_VoiceLeft.png); background-repeat: no-repeat; }
+
+DIV.NixxisContactTabButton.TabBtnLeftChat 				{ background-position: 0px -138px; background-image:url(Img/DefaultSkin/TabBtn_ChatLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftChatActive 		{ background-position: 0px 0px; background-image:url(Img/DefaultSkin/TabBtn_ChatLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftChatHover 			{ background-position: 0px -276px; background-image:url(Img/DefaultSkin/TabBtn_ChatLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftChatAction 		{ background-position: 0px -414px; background-image:url(Img/DefaultSkin/TabBtn_ChatLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftChatHold 			{ background-position: 0px -184px; background-image:url(Img/DefaultSkin/TabBtn_ChatLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftChatHoldActive 	{ background-position: 0px -46px; background-image:url(Img/DefaultSkin/TabBtn_ChatLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftChatHoldHover 		{ background-position: 0px -322px; background-image:url(Img/DefaultSkin/TabBtn_ChatLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftChatHoldAction 	{ background-position: 0px -460px; background-image:url(Img/DefaultSkin/TabBtn_ChatLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftChatWrapup 		{ background-position: 0px -230px; background-image:url(Img/DefaultSkin/TabBtn_ChatLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftChatWrapupActive	{ background-position: 0px -92px; background-image:url(Img/DefaultSkin/TabBtn_ChatLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftChatWrapupHover 	{ background-position: 0px -368px; background-image:url(Img/DefaultSkin/TabBtn_ChatLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftChatWrapupAction 	{ background-position: 0px -506px; background-image:url(Img/DefaultSkin/TabBtn_ChatLeft.png); background-repeat: no-repeat; }
+
+DIV.NixxisContactTabButton.TabBtnLeftMail 				{ background-position: 0px -138px; background-image:url(Img/DefaultSkin/TabBtn_MailLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftMailActive 		{ background-position: 0px 0px; background-image:url(Img/DefaultSkin/TabBtn_MailLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftMailHover 			{ background-position: 0px -276px; background-image:url(Img/DefaultSkin/TabBtn_MailLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftMailHold 			{ background-position: 0px -184px; background-image:url(Img/DefaultSkin/TabBtn_MailLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftMailHoldActive 	{ background-position: 0px -46px; background-image:url(Img/DefaultSkin/TabBtn_MailLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftMailHoldHover 		{ background-position: 0px -322px; background-image:url(Img/DefaultSkin/TabBtn_MailLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftMailWrapup 		{ background-position: 0px -230px; background-image:url(Img/DefaultSkin/TabBtn_MailLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftMailWrapupActive	{ background-position: 0px -92px; background-image:url(Img/DefaultSkin/TabBtn_MailLeft.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnLeftMailWrapupHover 	{ background-position: 0px -368px; background-image:url(Img/DefaultSkin/TabBtn_MailLeft.png); background-repeat: no-repeat; }
+
+DIV.NixxisContactTabButton.TabBtnRightVoice 			{ background-position: 0px -138px; background-image:url(Img/DefaultSkin/TabBtn_VoiceRight.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnRightVoiceActive 		{ background-position: 0px 0px; background-image:url(Img/DefaultSkin/TabBtn_VoiceRight.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnRightVoiceHover 		{ background-position: 0px -276px; background-image:url(Img/DefaultSkin/TabBtn_VoiceRight.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnRightVoiceHold 		{ background-position: 0px -184px; background-image:url(Img/DefaultSkin/TabBtn_VoiceRight.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnRightVoiceHoldActive 	{ background-position: 0px -46px; background-image:url(Img/DefaultSkin/TabBtn_VoiceRight.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnRightVoiceHoldHover 	{ background-position: 0px -322px; background-image:url(Img/DefaultSkin/TabBtn_VoiceRight.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnRightVoiceWrapup 		{ background-position: 0px -230px; background-image:url(Img/DefaultSkin/TabBtn_VoiceRight.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnRightVoiceWrapupActive	{ background-position: 0px -92px; background-image:url(Img/DefaultSkin/TabBtn_VoiceRight.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnRightVoiceWrapupHover 	{ background-position: 0px -368px; background-image:url(Img/DefaultSkin/TabBtn_VoiceRight.png); background-repeat: no-repeat; }
+DIV.NixxisContactTabButton.TabBtnRightChat { background-image:url(img/TabContactBtnRight_Chat.png); }
+DIV.NixxisContactTabButton.TabBtnRightChatActive { background-image:url(img/TabContactBtnRight_ChatActive.png); }
+DIV.NixxisContactTabButton.TabBtnRightChatHover { background-image:url(img/TabContactBtnRight_ChatHover.png); }
+DIV.NixxisContactTabButton.TabBtnRightMail { background-image:url(img/TabContactBtnRight_Mail.png); }
+DIV.NixxisContactTabButton.TabBtnRightMailActive { background-image:url(img/TabContactBtnRight_MailActive.png); }
+DIV.NixxisContactTabButton.TabBtnRightMailHover { background-image:url(img/TabContactBtnRight_MailHover.png); }
+
+DIV.NixxisContactTabButton.TabBtnBottomVoice { width:127px; height:62px; background-image:url(img/TabContactBtnBottom_Voice.png); }
+DIV.NixxisContactTabButton.TabBtnBottomVoiceActive { width:127px; height:62px; background-image:url(img/TabContactBtnBottom_VoiceActive.png); }
+DIV.NixxisContactTabButton.TabBtnBottomVoiceHover { width:127px; height:62px; background-image:url(img/TabContactBtnBottom_VoiceHover.png); }
+DIV.NixxisContactTabButton.TabBtnBottomChat { width:127px; height:62px; background-image:url(img/TabContactBtnBottom_Chat.png); }
+DIV.NixxisContactTabButton.TabBtnBottomChatActive { width:127px; height:62px; background-image:url(img/TabContactBtnBottom_ChatActive.png); }
+DIV.NixxisContactTabButton.TabBtnBottomChatHover { width:127px; height:62px; background-image:url(img/TabContactBtnBottom_ChatHover.png); }
+DIV.NixxisContactTabButton.TabBtnBottomMail { width:127px; height:62px; background-image:url(img/TabContactBtnBottom_Mail.png); }
+DIV.NixxisContactTabButton.TabBtnBottomMailActive { width:127px; height:62px; background-image:url(img/TabContactBtnBottom_MailActive.png); }
+DIV.NixxisContactTabButton.TabBtnBottomMailHover { width:127px; height:62px; background-image:url(img/TabContactBtnBottom_MailHover.png); }
+/*--> tab button infobox*/
+DIV.NixxisContactTabButtonInfobox 
+{ 
+	width: 110px; 
+	height: 46px; 
+	position: relative;
+	float:right;
+	padding-right:7px;
+	text-align:right;
+	font-weight:bold;
+	background-color: Transparent; 
+	overflow: hidden;
+	cursor: default;
+}
+DIV.NixxisContactTabButtonInfoboxInner
+{
+	position: absolute;
+	bottom: 7px;
+	right: 7px;
+}
+
+/*Chat*/
+TABLE.NixxisTableLayout { width:100%; height:100%; }
+TABLE.NixxisTableLayout TD.NixxisTableCellLayout { height:100%; }
+TABLE.NixxisTableLayout TD.NixxisTableCellSystemScript { width: 250px; }
+
+TABLE.NixxisTableCellLayoutTable { width:100%; height:100%; }
+TABLE.NixxisTableCellLayoutTable TR.NixxisUserScriptRow{ width:100%; height:100%; }
+TABLE.NixxisTableCellLayoutTable TD.NixxisUserScriptCell{ width:100%; height:100%; }
+TABLE.NixxisTableCellLayoutTable TR.NixxisChatRow{ width:100%; height:300px; }
+TABLE.NixxisTableCellLayoutTable TD.NixxisChatCell{ width:100%; height:300px; }
+
+TABLE.NixxisTableCellLayoutTable TR.NixxisHistoRow{ width:100%; height:100%; }
+TABLE.NixxisTableCellLayoutTable TD.NixxisHistoCell{ width:100%; height:100%; }
+TABLE.NixxisTableCellLayoutTable TR.NixxisSSRow{ width:100%; height:300px; }
+TABLE.NixxisTableCellLayoutTable TD.NixxisSSCell{ width:100%; height:300px; }
+
+
+DIV.NixxisSystemScriptContainer { width: 100%; height: 100%; background-color: #ededed;}
+DIV.NixxisUserScriptCellContainer { width: 100%; height: 100%; background-color: #ededed;}
+DIV.NixxisChatCellContainer { width: 100%; height: 100%; background-color: #ededed;}
+DIV.NixxisHistoCellContainer { width: 100%; height: 100%; background-color: #ededed;}
+
+/*EMail*/
+TABLE.xxM_Tc_Layout { width:100%; height:100%; }
+TABLE.xxM_Tc_Layout TD.xxM_Tc_Lay_C1 { height:100%; }
+TABLE.xxM_Tc_Layout TD.xxM_Tc_Lay_C2 { width: 250px; }
+
+TABLE.xxM_Tc_Lay_Cx_T { width:100%; height:100%; }
+TABLE.xxM_Tc_Lay_Cx_T TR.xxM_Tr_UserScript{ width:100%; height:300px; }
+TABLE.xxM_Tc_Lay_Cx_T TD.xxM_Tc_UserScript{ width:100%; height:300px; }
+TABLE.xxM_Tc_Lay_Cx_T TR.xxM_Tr_Email{ width:100%; height:100%; }
+TABLE.xxM_Tc_Lay_Cx_T TD.xxM_Tc_Email{ width:100%; height:100%; }
+
+TABLE.xxM_Tc_Lay_Cx_T TR.xxM_Tr_Histo{ width:100%; height:300px; }
+TABLE.xxM_Tc_Lay_Cx_T TD.xxM_Tc_Histo{ width:100%; height:300px; }
+TABLE.xxM_Tc_Lay_Cx_T TR.xxM_Tr_PreDef{ width:100%; height:100%; }
+TABLE.xxM_Tc_Lay_Cx_T TD.xxM_Tc_PreDef{ width:100%; height:100%; }
+TABLE.xxM_Tc_Lay_Cx_T TR.xxM_Tr_Att{ width:100%; height:150px; }
+TABLE.xxM_Tc_Lay_Cx_T TD.xxM_Tc_Att{ width:100%; height:150px; }
+
+
+TABLE.xxM_T_Lay_Email { width: 100%; height: 100%; background-color: black; }
+TABLE.xxM_T_Lay_Email TR.xxM_Tr_EmailMsg { width: 100%; height: 100%; background-color: red; }
+TABLE.xxM_T_Lay_Email TD.xxM_Tc_EmailMsg { width: 50%; height: 100%; background-color: green; }
+TABLE.xxM_T_Lay_Email TD.xxM_Tc_EmailReplay { width: 50%; height: 100%; background-color: yellow; }
+
+DIV.xxM_Con_PreDef { width: 100%; height: 100%; background-color: #ededed;}
+DIV.xxM_Con_Att { width: 100%; height: 100%; background-color: #ededed; overflow:auto;}
+DIV.xxM_Con_UserScript{ width: 100%; height: 100%; background-color: #ededed;}
+DIV.xxM_Con_EmailMsg { width: 100%; height: 100%; background-color: #ededed;}
+DIV.xxM_Con_EmailReplay { width: 100%; height: 100%; background-color: #ededed;}
+DIV.xxM_Con_Histo { width: 100%; height: 100%; background-color: #ededed;}
+
+TABLE.xxM_EMsg_Lay_T { width: 100%; height:100%; font-size: 11px; }
+TABLE.xxM_EMsg_Lay_T TD.xxM_EMsg_Lay_Tc_Label { height:17px; text-align: right; font-weight: bold; padding-right: 3px;}
+TABLE.xxM_EMsg_Lay_T TD.xxM_EMsg_Lay_Tc_Text { width: 100%; height:17px; }
+TABLE.xxM_EMsg_Lay_T TD.xxM_EMsg_Lay_Tc_Msg { width: 100%; height:100%; background-color: white; vertical-align: top; padding-top: 3px;}
+
+TABLE.xxM_ERep_Lay_T { width: 100%; height:100%; font-size: 11px; }
+TABLE.xxM_ERep_Lay_T TD.xxM_ERep_Lay_Tc_Label { height:20px; text-align: right; font-weight: bold;padding-right: 3px;}
+TABLE.xxM_ERep_Lay_T TD.xxM_ERep_Lay_Tc_Text { width: 100%; height:20px; }
+TABLE.xxM_ERep_Lay_T TD.xxM_ERep_Lay_Tc_Msg { width: 100%; height:100%; }
+.xxM_ERep_Textbox { width: 100%; height:18px; font-size: 11px; }
+
+.xxM_MailReplay { width: 100%; height:95%; }
+
+.xxM_Att_O_Ref { text-decoration: none; border-style: none; color: black; }
+.xxM_Att_O_Img { text-decoration: none; border-style: none; color: black; }
+.xxM_Att_0_Text { text-decoration: none; border-style: none; color: black; padding-right: 10px;}
+/*Att*/
+UL.xxM_Att_List 
+{
+	list-style-type: none;
+	cursor: default;
+	padding-left: 0px;
+	margin-left: 0px;
+	font-family: Verdana, Arial, Helvetica, Sans-Serif;
+	font-size:11px
+}
+IL.xxM_Att_Li {}
+IL.xxM_Att_Li INPUT.xxM_Att_L_Chk {}
+IL.xxM_Att_Li IMG.xxM_Att_L_Img {}
+IL.xxM_Att_Li SPAN.xxM_Att_L_Text 
+{
+	font-family: Verdana, Arial, Helvetica, Sans-Serif;
+	font-size:11px;
+}
+
+
+/* <-- End agent */
+/* --> Nixxis border */
+TABLE.NixxisBorder { width:100%; height:100%; font-size:1px;}
+TABLE.NixxisBorder TR.NixxisBorderTop { width:100%; height:14px; }
+TABLE.NixxisBorder TR.NixxisBorderMiddle { width:100%; height:100%; }
+TABLE.NixxisBorder TR.NixxisBorderBottom { width:100%; height:7px; }
+
+TABLE.NixxisBorder TD.NixxisBorderTopLeft { width:15px; height:14px; background-image:url(img/Border_TopLeft.png); background-repeat:no-repeat; }
+TABLE.NixxisBorder TD.NixxisBorderTopCenterLeft { width:10px; height:14px; background-image:url(img/Border_TopCenter.png); background-repeat: repeat-x; }
+TABLE.NixxisBorder TD.NixxisBorderTopCenter { width:100%; height:14px; background-image:url(img/Border_TopCenter.png); background-repeat: repeat-x; }
+TABLE.NixxisBorder TD.NixxisBorderTopRight { width:15px; height:14px; background-image:url(img/Border_TopRight.png); background-repeat:no-repeat;}
+
+TABLE.NixxisBorder TD.NixxisBorderMiddleLeft { width:10px; height:100%; background-image:url(img/Border_MiddleLeft.png); background-repeat: repeat-y; }
+TABLE.NixxisBorder TD.NixxisBorderMiddleCenter { width:100%; height:100%; }
+TABLE.NixxisBorder TD.NixxisBorderMiddleRight { width:10px; height:100%; background-image:url(img/Border_MiddleRight.png); background-repeat: repeat-y;}
+
+TABLE.NixxisBorder TD.NixxisBorderBottomLeft { width:15px; height:7px; background-image:url(img/Border_BottomLeft.png); background-repeat: no-repeat; }
+TABLE.NixxisBorder TD.NixxisBorderBottomCenter { width:100%; height:7px; background-image:url(img/Border_BottomCenter.png); background-repeat: repeat-x; }
+TABLE.NixxisBorder TD.NixxisBorderBottomRight { width:15px; height:7px; background-image:url(img/Border_BottomRight.png); background-repeat: no-repeat; }
+DIV.NixxisBorderFill { width:15px; height:10px; }
+DIV.NixxisBorderTopCenterLeftFill { width:8px; height:10px; }
+TABLE.NixxisBorder TD.NixxisBorderTopTitle 
+{ 
+	background-image:url(img/Border_TopTitle.png); 
+	background-repeat:repeat-x; 
+	color: #2a608c; 
+	font-size: 11px; 
+	white-space: nowrap;
+	padding-left: 4px;
+	padding-right: 4px;
+}
+DIV.NixxisBorderWorkSpace { width: 100%; height:100%; overflow: auto;}
+/* --> Nixxis Slider*/
+TD.NixxisSliderVerticalCell { width: 4px; font-size: 1px; background-image:url(img/Slider_Vertical.png); background-repeat: repeat-y; }
+TR.NixxisSliderHorizontalRow { height: 4px; font-size: 1px; background-image:url(img/Slider_Horizontal.png); background-repeat: repeat-x;}
+TD.NixxisSliderHorizontalCell { height: 4px; font-size: 1px;}
+/* <-- End Nixxis Slider*/
+/* --> Nixxis Chat window*/
+DIV.NixxisChatContainer { width: 100%; height: 100%; overflow:hidden; }
+TABLE.NixxisChatLayoutTable { width: 100%; height:100%; }
+TABLE.NixxisChatLayoutTable TD.NixxisChatMsgHistoryCell { width: 100%; height:217px; }
+TABLE.NixxisChatLayoutTable TD.NixxisChatMsgCell { width: 100%; height: 60px; padding: 0px 0px 0px 0px;}
+TABLE.NixxisChatLayoutTable TD.NixxisChatFreeSpace { height: 4px; font-size:1px;}
+TABLE.NixxisChatMsgTableLayout { width: 100%; height:100%; }
+/*TABLE.NixxisChatMsgTableLayout TD.NixxisChatMsgTextCell { width: 100%; height:100%; }*/
+TABLE.NixxisChatMsgTableLayout TD.NixxisChatMsgSendCell { width: 50px; height:100%; }
+
+.NixxisChatMsgToSend { width: 100%; height:100%; margin: 0px 0px 0px 0px; border: 1px solid #bbbbbb; font-family: Verdana, Arial, Helvetica, Sans-Serif; }
+.NixxisChatMsgBtnSend { width: 100%; height:100%; }
+
+/* Chat Items */
+DIV.NixxisChatItemContainer { width:100%; }
+TABLE.NixxisChatItemLayoutTable {}
+TABLE.NixxisChatItemLayoutTable TD.NixxisChatItemIconCell {}
+TABLE.NixxisChatItemLayoutTable TD.NixxisChatItemIconCell.CustomerChatIcon {}
+TABLE.NixxisChatItemLayoutTable TD.NixxisChatItemIconCell.CustomerChatMsg {}
+TABLE.NixxisChatItemLayoutTable TD.NixxisChatItemMsgHistoryCell {}
+TABLE.NixxisChatItemLayoutTable TD.NixxisChatItemMsgHistoryCell.AgentChatIcon {}
+TABLE.NixxisChatItemLayoutTable TD.NixxisChatItemMsgHistoryCell.AgentChatMsg {}
+
+/* <-- End Nixxis Slider*/
+
+/* <-- End agent */
+.ContactTabSelector 
+{ 
+	width:165px; 
+	height: 100%;
+	background-color: Transparent; 
+}
+.ContactTabSelector.DockRight { }
+.ContactTabSelector.DockBottom { width:100%; height: 52px; }
+
+/*** Agent Loging in page ***/
+.NixxisPageLayout 
+{
+	width:100%; 
+	height:100%; 
+	/*background-image: url('Img/Dashboard_Background.png'); 
+	background-repeat: repeat-x; 
+	background-position:bottom;
+	background-color: #153651;*/
+	background-color: #ededed;
+	text-align: center; 
+}
+
+/*************************************************/
+/* Debug view */
+/*************************************************/
+.dbgContainer { width:100%; height: 100%; background-color: Transparent; overflow:hidden; }
+TABLE.dbgLayoutTable { width:100%; height: 100%; }
+/* Button bar*/
+TABLE.dbgLayoutTable .dbgButtonsLayoutRow { width:100%; height: 30px; }
+TABLE.dbgLayoutTable .dbgButtonDiv { width:100%; height: 100%; }
+
+
+/* dispaly bar*/
+TABLE.dbgLayoutTable .dbgDisplayLayoutRow { width:100%; }
+TABLE.dbgLayoutTable .dbgDisplayLayoutCell { width:100%; }
+TABLE.dbgLayoutTable .tstDiv { width:100%;  height: 100%; background-color: Black; color: Olive; white-space:nowrap; } 
+
+.dbgDisplayDiv  { width:100%; height: 100%; overflow:auto; }
+
+/* eval bar*/
+TABLE.dbgLayoutTable .dbgEvalLayoutRow { width:100%; height: 30px; }
+TABLE.dbgLayoutTable .dbgEvalLayoutCell { width:100%; height: 30px; }
+TABLE.dbgLayoutTable .dbgEvalDiv { width:100%; height: 100%; }
+
+TABLE.dbgEvalTable { width:100%; height: 100%; }
+TABLE.dbgEvalTable TR { width:100%; }
+TABLE.dbgEvalTable TD.dbgEvalTextCell { width:100%; }
+TABLE.dbgEvalTable TD.dbgEvalButtonCell { }
+
+.dbgEvalText { width:100%; }
+/*************************************************/
+/* Agent pause page */
+/*************************************************/
+.NixxisPageLogoPause { width:100%; height: 100%; background-image:url(img/AgentPause_Image.png); background-repeat: no-repeat; background-position: right bottom; }
+.xx_InfoBox 
+{
+	height:10%;
+	text-align: left;
+	margin-left: 20px;
+}
+.xx_IB_img
+{
+	float: left;
+}
+.xx_IB_Text
+{
+	height: 28px;
+	vertical-align: middle;
+	padding-left: 35px;
+	padding-top: 5px;
+}
+/*************************************************/
+/* Agent waiting page */
+/*************************************************/
+.NixxisPageLogoWaiting { width:100%; height: 100%; background-image:url(img/AgentWaiting_Image.png); background-repeat: no-repeat; background-position: right bottom; }
+
+/*************************************************/
+/* Agent chat page */
+/*************************************************/
+.NixxisChatBoxAgentText 
+{ 
+	border-top: 1px solid #bbbbbb; 
+	border-bottom: 1px solid #bbbbbb;
+	border-right: 1px solid #bbbbbb;
+	background-color: #f2f2f2; 
+	font-size: 11px; 
+}
+.NixxisChatBoxCustomerText { font-size: 13px; }
+.NixxisChatPBoxItem { font-size: 11px; padding-bottom: 2px; padding-top: 2px;}
+.NixxisChatLeaveMsg { font-size: 11px; padding-bottom: 2px; padding-top: 2px; color: red; font-weight: bold;}
+.NixxisChatBox { background-color: white; border: 1px solid #bbbbbb; }
+/*.NixxisChatHover { background-color: #2a608c; color: white; }*/
+.NixxisChatPerDefI1 { font-size: 11px; background-color: white; padding-bottom: 2px; padding-top: 2px;}
+.NixxisChatPerDefI2 { font-size: 11px; background-color: #f2f2f2; padding-bottom: 2px; padding-top: 2px;}
+.NixxisChatPerDefText {font-size: 11px; }
+
+/*************************************************/
+/* Team selection*/
+/*************************************************/
+DIV.NixxisQualBranchContainer 
+{
+	width:287px;
+	overflow:auto;
+	height:100%
+}
+UL.NixxisQualBranch LI.NixxisQualNode.selected
+{
+	background-color: #70D010;
+	border:1px solid black;
+	margin-bottom:1px;
+	margin-top:1px;
+}
+UL.NixxisQualBranch LI.NixxisQualNode.notselected
+{
+	border:1px solid Transparent;
+	margin-bottom:1px;
+	margin-top:1px;
+}
+UL.NixxisQualBranch LI.NixxisQualNode.hoverTeam
+{
+	background-color: #bbb7c7;
+	cursor: hand;
+	border:1px solid Transparent;
+	margin-bottom:1px;
+	margin-top:1px;
+}
+
+/********************************************
+ * 											*
+ * 											*
+ *	 			Supervision stuff			*
+ * 											*
+ *  										*
+ ********************************************/
+
+DIV.drag
+{
+	position:fixed!important;
+	position:absolute;	
+}
+  /*****************/
+ /***** Common ****/
+/*****************/
+.btnButtonFaceFill
+{
+
+}
+/*
+.Keys
+{
+	background-color: Transparent;
+	margin: 0px 0px 0px 5px;
+	padding: 0px 0px 0px 0px;
+	font-family: Verdana, Arial, Helvetica, Sans-Serif;
+	font-size: 12px;
+	height: 18px;
+	font-weight: bold;
+}
+
+.Values
+{
+	background-color: Transparent;
+	margin: 0px 5px 0px 0px; 
+	padding: 0px 0px 0px 0px;
+	font-family: Verdana, Arial, Helvetica, Sans-Serif;
+	font-size: 12px;
+	height: 18px;
+	text-align: right;
+}*/
+  /********************/
+ /***** Dashboard ****/
+/********************/
+.DashboardCont
+{
+	background-image: url(img/Dashboard_Background.png);
+	padding-left: 10px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+}
+DIV.DashboardPanel
+{
+	display: block;
+	padding: 0px 0px 0px 0px;
+	background-color: Transparent;
+	width: 100%;
+}
+
+TABLE.DashboardTable { background-color: Transparent; margin: 0px 0px 0px 0px; padding: 0px 0px 0px 0px; width: 100%; }
+TABLE.DashboardTable TR { width: 100%; }
+TABLE.DashboardTable TD.DashboardHeaderSection { font-size: 20px; height: 25px; background-color: Transparent; cursor: default; }
+.DashboardHeaderTable { width: 100%; }
+.DashboardHeaderSectionBottom
+{
+	width: 100%;
+	text-align: left;
+	font-weight: bold;
+	color: #0000ff;
+}
+/*.DashboardHeaderSectionBottom TD
+{
+	background-color: White; background-image: url(img/Dashboard_BackgroundTitle.png); background-repeat: repeat-x;
+}*/
+.Dash_BorderTopLeft { width:56px; }
+.Dash_BorderTopMiddle { background-color: White; background-image: url(img/Dashboard_BackgroundTitle.png); background-repeat: repeat-x; }
+.Dash_BorderTopMiddle.MouseOverDbdHeaderSection { color: #6464ff; cursor: pointer; }
+.Dash_BorderTopRight { text-align:right; background-color: White; background-image: url(img/Dashboard_BackgroundTitle.png); background-repeat: repeat-x;}
+
+/*TABLE.DashboardTable TD.DashboardHeaderUnderline
+{
+	height: 1px;
+	background-color: Transparent;
+	background-image: url(Sup_Underline.png);
+	background-repeat: no-repeat;
+}*/
+
+TABLE.DashboardTable TD.DashboardDataSection
+{
+	width: 100%;
+}
+
+
+TABLE.DashboardDataTable
+{
+	background-color: Transparent;
+	margin: 0px 0px 0px 0px; 
+	padding: 0px 0px 0px 0px;
+	font-size: 12px;
+	width: 100%;
+}
+TABLE.DashboardDataTable TR.Dash_DataLine
+{
+	background-color:#c0c0ff;
+	background-image: url(img/Dash_Body.png);
+}
+TABLE.DashboardDataTable TR.Dash_AlgnLine
+{
+	background-color:#c0c0ff;
+	background-image: url(img/Dash_Body.png);
+	font-size:1px;
+}
+TABLE.DashboardDataTable.HideDbdDataSection
+{
+	display: none;
+}
+
+TABLE.DashboardDataTable TD.RightFillCell
+{
+	width: 100%; background-color:#c0c0ff;
+}
+
+TABLE.DashboardDataTable TD.CellKey
+{
+	/*width:400px;*/
+	background-color: #c0c0ff;
+	padding-right: 10px;
+	padding-left: 10px;
+	font-size: 12px;
+	height: 18px;
+	font-weight: bold;
+	white-space:nowrap;
+}
+
+TABLE.DashboardDataTable TD.CellValue
+{
+	/*width:20px;*/
+	background-color: #c0c0ff;
+	font-size: 12px;
+	height: 18px;
+	text-align: right;
+	white-space:nowrap;
+	padding-right: 10px;
+}
+TABLE.Dash_TableBorderBottom { height:100%; width:100%; background-color:Transparent; font-size:1px; }
+TABLE.Dash_TableBorderBottom TD.Dash_BorderBottomLeft
+{
+	background-image: url(img/Dash_BorderBottomLeft.png);
+	background-repeat: no-repeat;
+	height:15px;
+	width:16px;
+}
+TABLE.Dash_TableBorderBottom TD.Dash_BorderBottomBottom
+{
+	background-image: url(img/Dash_BorderBottomBottom.png);
+	height:15px;
+}
+TABLE.Dash_TableBorderBottom TD.Dash_BorderBottomRight
+{
+	background-image: url(img/Dash_BorderBottomRight.png);
+	background-repeat: no-repeat;
+	height:15px;
+	width:16px;
+}
+  /********************/
+ /*****Agent panel****/
+/********************/
+DIV.SupervisionPanel
+{
+	/*display: block;*/
+	padding: 0px 0px 0px 0px;
+	background-color: Transparent;
+	background-image: url(img/BackgroundDefault.png);
+	width: 100%;
+	height: 100%;
+}
+/*****Layout table****/
+TABLE.SupervisionLayoutTable
+{
+	background-color: Transparent;
+	margin: 0px 0px 0px 0px; 
+	padding: 0px 0px 0px 0px;
+	width: 100%;
+	height: 100%;
+}
+
+TABLE.SupervisionLayoutTable TD.ToolbarPanelCell
+{
+	height: 40px;
+}
+TABLE.SupervisionLayoutTable TD.DataListDetailPanelCell
+{
+	width: 200px;
+	/*height: 350px;*/
+	border: solid 2px #7f9db9;
+}
+
+TABLE.SupervisionLayoutTable TD.DataListDetailPanelCell.Hide
+{
+	display:none;
+}
+
+TABLE.SupervisionLayoutTable TD.DataListPanelCell
+{
+	border: solid 2px #7f9db9;
+}
+/*****Panel for display****/
+DIV.ToolbarPanel
+{
+	/*width: 100%; 
+	height: 100%; */
+	background-color: Transparent;
+	/*border: solid 1px Olive;*/
+}
+DIV.DataListDetailPanel
+{
+	width: 200px;
+	height: 100%;
+	background-color: transparent;
+	overflow: hidden;
+	/*background-image: url(img/Background_GradientGray.jpg);*/
+	background-repeat: repeat-x; 
+	background-position: bottom; 
+	/*background-color: #676767;*/
+}
+
+
+DIV.DataListPanel
+{
+	width: 100%; 
+	height: 100%;
+	background-color: White;
+	/*background-image: url(img/BackgroundDefault.png);*/
+	overflow:scroll;
+}
+
+
+/** Table Listview for main list**/
+/*********************************/
+/* --> Main table*/
+TABLE.ListviewData
+{
+	background-color: Transparent;
+	margin: 0px 0px 0px 0px; 
+	padding: 0px 0px 0px 0px;
+	width:100%;
+	/*height: 100%;*/
+}
+
+TABLE.ListviewData TD
+{
+	/*width: 100px;*/
+	font-family: Verdana, Arial, Helvetica, Sans-Serif;
+}
+
+/* --> Group Line*/
+TABLE.ListviewData TR.GroupLine
+{
+	font-size: 14px;
+	font-weight: bold;
+	height: 20px;
+	background-image: url(img/GroupBy.png);
+	background-repeat:repeat-y;
+	cursor: default;
+}
+
+/* --> Header*/
+TABLE.ListviewData TR.ListviewDataHeaderRow
+{
+	height: 20px;
+	cursor: default;
+}
+TABLE.ListviewData TD.ListviewDataHeaderCell
+{
+	overflow: hidden;
+	height:20px;
+	background-image: url(img/Sup_Header.png);
+	background-repeat: no-repeat;
+	background-position: 100%;
+	font-size: 12px;
+	margin: 0px;
+	padding-right: 10px;
+	padding-left: 5px;
+	padding-bottom: 0px;
+	padding-top: 0px;
+	white-space: nowrap;
+}
+TABLE.ListviewData TD.ListviewDataHeaderCell.HoverHeader
+{
+	background-image: url(img/Sup_HeaderHover.png);
+}
+/* --> Standard row*/
+TABLE.ListviewData TR.ListviewDataInfoRow
+{
+	height: 18px;
+	cursor: default; 
+}
+TABLE.ListviewData TR.ListviewDataInfoRow.Hover 
+{ 
+	background-color: #bbb7c7;
+	
+}
+TABLE.ListviewData TR.ListviewDataInfoRow.SelectedInfoRow
+{  
+	background-color : #c4c5c9;
+}
+
+TABLE.ListviewData TR.ListviewDataInfoRow.ListenAgentRow
+{  
+	background-color : red;
+}
+
+
+TABLE.ListviewData TD.ListviewDataInfoCell.HoverInfo 
+{ 
+	/*background-color : #D4CCFF;*/
+}
+TABLE.ListviewData TD.ListviewDataInfoCell.Type1
+{
+	background-image: url(img/columnDiff.png);
+
+}
+TABLE.ListviewData TD.ListviewDataInfoCell.Type2 { background-image: url(img/columnDiff2.png); }
+TABLE.ListviewData TD.ListviewDataInfoCell { font-size: 11px; white-space: nowrap; height: 18px; }
+TABLE.ListviewData TD.ListviewDataInfoCell.Numeric { font-size: 11px; text-align: right; }
+TABLE.ListviewData TD.ListviewDataInfoCell.Float { font-size: 11px; text-align: right; }
+TABLE.ListviewData TD.ListviewDataInfoCell.Time { font-size: 11px; text-align: right; }
+TABLE.ListviewData TD.ListviewDataInfoCell.Percent { font-size: 11px; text-align: right; }
+TABLE.ListviewData TD.ListviewDataInfoCell.Text { font-size: 11px; }
+TABLE.ListviewData TD.ListviewDataInfoCell.GraphBar { height: 18px; }
+/*TABLE.ListviewData TD.ListviewDataInfoCell.GraphBarPercent { height: 18px; }*/
+
+TABLE.GraphBar
+{
+	height : 75%;
+	width: 100%;
+}
+
+TABLE.GraphBar TD
+{
+	background-image:url(img/GraphBarLayout.png);
+}
+/*.CellValues
+{
+	background-color: Transparent;
+	height: 18px;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+	font-family: Verdana, Arial, Helvetica, Sans-Serif;
+}*/
+
+/* <-- *****************/
+
+
+
+
+.Col_NoData
+{
+	font-size: 13px;
+	/*text-align: center;*/
+	font-family: Verdana, Arial, Helvetica, Sans-Serif;
+}
+/********************************/
+/********* Detail panel *********/
+/********************************/
+/* --> Main table layout*/
+TABLE.ListviewDetail TD.MainHeading
+{
+	background-color: Transparent;
+	height: 30px;
+	font-size: 18px;
+	/*font-weight: bold;
+	text-align: center;*/
+	background-color: #f2f2ee;
+	padding-left : 10px;
+	border-bottom : solid 2px #7396b4;
+	overflow:hidden;
+	cursor : default;
+}
+TABLE.ListviewDetail TD.MainDescription
+{
+	background-color: Transparent;	
+	height:30px;
+	font-size: 11px;		
+	border-bottom : solid 2px #7396b4;
+	background-color : white;
+	cursor : default;
+}
+TABLE.ListviewDetail TD.MainData
+{
+	background-color: transparent;
+	font-size: 11px;
+}
+/* --> Info div*/
+DIV.PanelInfo
+{
+	/*width: 195px;*/
+	width: 100%;
+	height: 100%;
+	background-color: transparent;
+	overflow: auto;
+}
+DIV.PanelInfo.noScroll
+{
+	overflow:hidden;
+}
+/* --> Info table*/
+TABLE.PanelInfoTable
+{
+	background-color: Transparent;
+	width: 100%;
+}
+TABLE.PanelInfoTable TR.Heading
+{
+	font-size: 13px;
+	font-weight:bold;
+	height:14px;
+	background-image: none;
+}
+TABLE.PanelInfoTable TR
+{
+	font-size: 11px;
+	height:12px;
+}
+TABLE.PanelInfoTable TD.ColumnColor
+{
+	width: 10px;
+	background-image: url(img/Colorview.png);
+	background-repeat: repeat-x;
+	border-bottom: 1px solid lightgrey;
+	border-right: 1px solid lightgrey;
+	cursor: default;
+}
+TABLE.PanelInfoTable TD.ColumnColor.Header { background-image: none; }
+TABLE.PanelInfoTable TD.ColumnDescription { cursor: default; border-bottom: 1px solid lightgrey; }
+TABLE.PanelInfoTable TD.ColumnTime { cursor: default; width: 50px; text-align: right; border-right: 1px solid lightgrey; border-bottom: 1px solid lightgrey; }
+TABLE.PanelInfoTable TD.ColumnValue { cursor: default; width: 60px; text-align: right; border-bottom: 1px solid lightgrey; border-right: 1px solid lightgrey; }
+TABLE.PanelInfoTable TD.ColumnGraph
+{
+	margin-right: 20px;
+	border-bottom: 1px solid lightgrey;	
+	cursor: default;
+}
+/* --> Column value*/
+TABLE.PanelInfoTable TD.ColumnTitle
+{
+	height:18px;
+	font-size: 9px;
+	border-right: 1px solid lightgrey;
+	border-bottom: 1px solid lightgrey;
+	cursor: default;
+}
+TABLE.PanelInfoTable TD.ColumnTitle.Numeric
+{
+	text-align: right;
+}
+TABLE.PanelInfoTable TD.ColumnTitle.Time
+{
+	text-align: right;
+}
+TABLE.PanelInfoTable TD.ColumnTitle.Float
+{
+	text-align: right;
+}
+TABLE.PanelInfoTable TD.ColumnTitle.Text
+{
+	/*font-size: 11px;*/
+}
+TABLE.PanelInfoTable TD.ColumnTitle.GraphBar
+{
+	/*height: 18px;	*/
+}
+/* <-- Column value*/
+TABLE.PanelInfoTable TD.ColumnCol
+{
+	width : 30px;
+}
+TABLE.PanelInfoTable TD.ColumnEndCol
+{
+}
+/* --> Column value*/
+TABLE.PanelInfoTable TD.ColumnTitleValue
+{
+	height:18px;
+	font-size: 9px;
+	border-bottom: 1px solid lightgrey;
+	cursor: default;
+}
+TABLE.PanelInfoTable TD.ColumnTitleValue.Float
+{
+	text-align: right;
+}
+TABLE.PanelInfoTable TD.ColumnTitleValue.Numeric
+{
+	text-align: right;
+}
+TABLE.PanelInfoTable TD.ColumnTitleValue.Time
+{
+	text-align: right;
+}
+TABLE.PanelInfoTable TD.ColumnTitleValue.Percent
+{
+	font-size: 11px;
+	text-align: right;
+}
+TABLE.PanelInfoTable TD.ColumnTitleValue.Text
+{
+	/*font-size: 11px;*/
+}
+TABLE.PanelInfoTable TD.ColumnTitleValue.GraphBar
+{
+	/*height: 18px;	*/
+}
+/* <-- Column value*/
+/** Detail panel detail item **/
+/******************************/
+TABLE.ListviewDetail
+{
+	background-color: Transparent;
+	/*height:100%;*/
+	width:100%;
+}
+TABLE.ListviewDetail TR.dataRow
+{
+	background-color: Transparent;
+	height:18px;
+	font-size: 9px;
+}
+
+TABLE.ListviewDetail TR.fillRow
+{
+	background-color: Transparent;
+	height:100%;
+}
+
+TABLE.ListviewDetail TD.dataCell
+{
+	background-color: Transparent;
+}
+
+/************************/
+
+/********/
+.DataListDetailPanel { width: 200px; height: 500px; }
+.NixxisViewLogo { float:left; padding-left: 10px; padding-right: 0px; padding-top: 5px; }
+.NixxisViewLogoImgDiv { float: left;}
+.NixxisViewLogoImg { border: solid 1px #9693ae; background-color: #ececec; }
+.NixxisViewLogoTextDiv { float: left; padding-left: 10px}
+.NixxisViewLogoText
+{
+	font-family: Verdana, Arial, Helvetica, Sans-Serif;
+	font-weight: bold;
+	font-size: 18px; 
+	margin: 10px 0px 0px 0px;
+	color: #7F9DB9;
+}
+DIV.NixxisSupToolbar
+{
+	display: block;
+	padding: 5px 0px 0px 0px;
+	background-color: Transparent;
+}
+
+/*****Column selection****/
+TABLE.ColumnSelectionTable TR
+{
+	font-size: 10px;
+	cursor: default;
+}
+TABLE.ColumnSelectionTable TR.HoverMainWindowCell
+{
+	font-size: 12px;
+	font-weight: bold;
+}
+/* <-- */
+/*****Group by option****/
+TABLE.GroupByTable
+{
+	width: 100%;
+}
+TABLE.GroupByTable TR
+{
+	font-size: 12px;
+	cursor: default;
+}
+TABLE.GroupByTable TD
+{
+	padding-bottom: 4px;
+	padding-top: 2px;
+}
+TABLE.GroupByTable SELECT
+{
+	width: 100%;
+}
+TABLE.GroupBy_Form_Table_List TD.data
+{
+	white-space:nowrap;
+	border: solid 1px #7f9db9;
+	padding-left : 2px;
+	padding-right : 2px;
+	background-color : White;
+}
+DIV.DivGroupBy_Form_Table_List
+{
+	height:180px;
+	width:100%;
+	overflow: auto;
+	background-color:White;
+}
+/* <-- */
+
+DIV.MainWindowTableCont
+{
+	height:100%;
+	overflow:auto;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	/*overflow: -moz-scrollbars-vertical;*/
+	/*background-color: Red;*/
+}
+
+/******* Buttons  *******/
+TABLE.ButtonTable
+{
+	width:100%;
+	background-image: url(Sup_Toolbar.png);
+	background-repeat: repeat-x;
+}
+TABLE.ButtonTable .btnButton
+{
+	height:37px;
+}
+
+TABLE.ButtonTable .btnButtonFace
+{
+}
+
+TABLE.ButtonTable .FillCell
+{
+	width: 100%;
+}
+
+/****** Form Custom Columns *****/
+.CC_Action_Div
+{
+	border-right: #7f9db9 1px solid; 
+	border-top: #7f9db9 1px solid; 
+	border-left: #7f9db9 1px solid;
+    width: 100%; 
+    border-bottom: #7f9db9 1px solid; 
+    height: 29px;
+    background-color:Transparent;
+}
+.CC_Action_Table { width: 100%; }
+.CC_Action_CboColumn { width: 100%; }
+.cboColumnSelection { width: 100%; }
+.CC_Action_BtnAdd { }
+.CC_Action_BtnEdit { }
+.CC_Action_BtnRemove { }
+.CC_Body_Div
+{
+	border-right: #7f9db9 1px solid; 
+	border-top: #7f9db9 1px solid; 
+	margin-top: 5px;
+    border-left: #7f9db9 1px solid; 
+    width: 100%; 
+    border-bottom: #7f9db9 1px solid;
+    height: 251px;
+}
+.CC_Body_Table { width: 100%; height: 100%; }
+.CC_Data { height:18px; }
+.CC_Data TR { height:18px; }
+.CC_Data TD { height:18px; font-size:14px; }
+.CC_Data_Table { height:18px; width: 100%; }
+.CC_Data_Desc { width: 10px; white-space:nowrap; }
+/*.CC_Data_Name { width: 100px; }*/
+.CC_Data_Rest {width:100%; }
+.CC_txtReturnEval { }
+.CC_txtReturnEval.CC_Correct { background-color :#d3f4c0 ;}
+.CC_txtReturnEval.CC_Error { background-color:#f6a6ad ;}
+
+
+/****** Form manuel call *****/
+
+
+.MCallCont
+{
+	padding-right: 6px;
+	padding-left: 6px;
+	padding-bottom: 6px;
+	width: 220px;
+	padding-top: 6px;
+	height: 170px;
+	/*background-color: #e0dfe3;*/
+	/*background-position: center bottom;*/
+	/*background-image: url(img/Dashboard_BackgroundSmall.png);*/
+	/*background-repeat: repeat-x;*/
+}
+
+TABLE.MCallLayout { height:100%; width:100%; }
+TABLE.MCallLayout TD.MCallNumber 
+{ 
+	height:74px; 
+	width: 100%;
+	background-image: url(img/textbox_BackgroundScreen.png);
+}
+TABLE.MCallLayout TD.MCallText 
+{
+	font-size: 12px; 
+	color : White; 
+	height:49px; 
+	padding-right: 80px; 
+	vertical-align: top; 
+} 
+.MCDisplay
+{
+	height:74;
+	width:100%;
+	overflow:hidden;
+	padding-top: 0px;
+}
+.MCText
+{
+	width: 100%;
+	height: 20px;
+	background-color: Transparent;
+	border:none;
+	color: #3b393c;
+	padding-left:10px;
+	padding-top: 0px;
+	margin-top:15px;
+	font-size: 14px;
+	font-weight: bold;
+	overflow:hidden;
+	vertical-align: middle;
+}
+.MCNum
+{
+	width: 95%;
+	height: 35px;
+	background-color:  Transparent;
+	background-image: url(img/txtManuelInput.png);
+	background-repeat: repeat-x;
+	border:none;
+	color: #3b393c;
+	padding-left:10px;
+	padding-top: 0px;
+	font-size: 16px;
+	font-weight: bold;
+}
+.MCNum.Connecting
+{
+	background-color: white;	
+	background-position-y: bottom;
+	background-image: url(img/textbox_BackgroundOrange.png);
+	background-repeat: repeat-x;
+	color: gray;
+}
+.MCNum.Connected
+{
+	background-color: white;
+	background-position-y: bottom;
+	background-image: url(img/textbox_BackgroundRed.png);
+	background-repeat: repeat-x;
+	color: gray;
+}
+.MCallLayoutPadCell { vertical-align:top; }
+TABLE.MCallDialPad { width:100%; }
+TABLE.MCallDialPad TD.MCallDialPadCell{ text-align:center; }
+TABLE.MCallDialPad INPUT { font-size: 25px; width:100%; }
+
+.DataListSlider1 { width : 4px; height:100% }
+.slider { width: 4px; background-color: Transparent; cursor:e-resize; font-size:1px; height : 100%; background-image: url(img/slider_Background.png) }
+
+/*************************************************/
+/* Commoun status window */
+/*************************************************/
+
+/****** Form Loading *****/
+.NixxisLoading
+{
+	position : absolute;
+	top : 0;
+	left: 0;
+	z-index : 1001;
+	background-image: url(img/Loading_Background.png);
+	color : #c0c0c0;
+	font-size : 22px;
+
+}
+
+.NixxisLoading.HideLoading
+{
+	display : none;
+}
+/*************************************************/
+/* Qualification */
+/*************************************************/
+.NixxisQualContainer
+{
+	position: absolute;
+	left: 100px;
+	top: 50px;
+	height: 400px;
+	width: 250px;
+	background: orange;
+	z-index: 500;
+}
+UL.NixxisQualBranch
+{
+	font-size : 12px;
+	padding-left: 15px;
+	margin-left : 0px;
+	list-style-type: none;
+	cursor: default;
+}
+UL.NixxisQualBranch.HideBranch
+{
+	display: none;
+}
+UL.NixxisQualBranch LI.NixxisQualNode
+{
+	white-space: nowrap;
+}
+
+UL.NixxisQualBranch LI.NixxisQualNode.Hover
+{
+	background-color: #bbb7c7;
+	cursor: hand;
+	border: none;
+}
+
+DIV.NixxisQualOptionDateTime
+{
+	/*background-color:red;*/
+	margin-top : 3px;
+	font-size : 12px;
+}
+#lblNixxisQualOptDate
+{
+	margin-left : 5px;
+	margin-right : 5px;
+}
+#txtNixxisQualOptDate
+{
+	width:90px;
+}
+#lblNixxisQualOptTime
+{
+	margin-left : 5px;
+	margin-right : 5px;
+}
+#txtNixxisQualOptTime
+{
+	width:50px;
+}
+
+TABLE.xxQual_Lay_Main { width:100%; height:100%}
+TABLE.xxQual_Lay_Main TD.xxQual_Lay_Left{ width:50%; height:100%}
+TABLE.xxQual_Lay_Main TD.xxQual_Lay_Right{ width:49%; height:100%}
+
+
+/*************************************************/
+/* Supervision view */
+/*************************************************/
+DIV.xxView_lst_InfoCell { width: 50px; }
+
+TABLE.MFLayout { font-size: 12px; font-family: Verdana, Arial, Helvetica, Sans-Serif;}
+TABLE.MFLayout TD { padding-left: 2px;}

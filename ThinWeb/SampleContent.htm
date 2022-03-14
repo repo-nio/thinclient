@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title></title>
+		<script type="text/javascript" language="javascript">
+		    function onStateChanged(contactInfo)
+		    {
+		    }
+		    
+		    function initPage()
+		    {
+		        //document.domain = document.domain.substring(document.domain.lastIndexOf('.', document.domain.lastIndexOf('.') - 1) + 1);
+		        
+		        window.parent.ClientLink.ContactStateChanged.Add(this, onStateChanged);
+		        
+		        //window.parent.ClientLink.connect('101', '101');
+		        window.parent.ClientLink.login('101', '101', '101');
+
+		        document.getElementById('UserId').innerHTML = window.parent.ClientLink.UserAccount;
+		        document.getElementById('UserName').innerHTML = window.parent.ClientLink.UserName;
+		    }
+		    
+		    function exitPage()
+		    {
+		        try
+		        {
+    		        window.parent.ClientLink.ContactStateChanged.Remove(this, onStateChanged);
+		        }
+		        catch(e)
+		        {
+		            ;
+		        }
+		    }
+		</script>
+	</head>
+	<body onload="javascript:initPage()" onunload="javascript:exitPage();" style="margin: 0px; border: solid 2px gray; font-family: Verdana, Sans-Serif; font-size: 10pt;">
+	    <p><br />This is a placeholder for the real application.</p>
+	    <p>User: <span id='UserId'></span> <span id='UserName'></span></p>
+	    <p><input type="button" onclick="javascript:window.location.href='SampleWait.htm';" value="Wait..." /></p>
+	</body>
+</html>

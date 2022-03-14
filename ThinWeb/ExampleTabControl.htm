@@ -1,0 +1,171 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<link rel="SHORTCUT ICON" href="Icone_agent.ico"/>
+		<title>Example tabcontrol</title>
+		<link href="ExampleTabControl.css" rel="stylesheet" type="text/css" />
+		<link href="CrToolboxVisual.css" rel="stylesheet" type="text/css" />
+	    <script type="text/javascript" language="javascript" src="tools.js"></script>
+	    <script type="text/javascript" language="javascript" src="JsCommon/NixxisCommonFn.js"></script>
+		<script type="text/javascript" language="javascript" src="CrToolbox/CrToolbox.js"></script>
+        <script type="text/javascript" language="javascript" src="CrToolbox/CrToolboxControl.js"></script>
+        <script type="text/javascript" language="javascript" src="CrToolbox/CrToolboxControlVisual.js"></script>
+		<script type="text/javascript" language="javascript">
+//toolboxTabControlDefaultRenderManager
+//________________________________________________
+var toolboxTabControlNixxisRenderManager = 
+{
+	txTab_SelectorContainer: "_Selector_",
+	txTab_SelectorList: "_TabList_",
+	txTab_SelectorItem: "_TabItem_",
+	txTab_PageContainer: "_PageContainer_",
+	txTab_PageItem: "_PageItem_",
+	txTab_NoTabPage : "_NoPage_",
+	txTab_TabButtonItem: "__TabButton__",
+	txTab_TabButtonInfoBox: "__TabBtnInfo__",
+		
+    Init : function(control)
+    {
+		//var control = new toolboxTabControl("");
+		
+		//Basic structur
+     	toolboxTabControlNixxisRenderManager.DrawPageContainer(control);
+		toolboxTabControlNixxisRenderManager.DrawTabButtonContainer(control);
+		//Drawn tab
+		var _Tabs = control.txTabPages.Items;
+		var _Obj;
+		for(_Obj in _Tabs)
+		{
+			toolboxTabControlNixxisRenderManager.DrawTab(_Tabs[_Obj]);
+		}
+		
+    },
+    DrawTabButtonContainer : function(control)
+    {
+		//var control = new toolboxTabControl("");
+		
+		var _Main = control.txContainer[txTabControlPart.selector]
+		var _Id = control.txName;
+		
+		_Main.id = this.txTab_SelectorContainer + _Id;
+		_Main.className = "txTabControlContainerSelector";
+		/*_Main.innerHTML = "&nbsp;";*/
+		var _Ul = document.createElement('ul');
+		_Ul.id = this.txTab_SelectorList + _Id;
+		_Ul.className ='txTabControlSelectorList';
+		
+		_Main.appendChild(_Ul);
+
+		control.txParent[txTabControlPart.selector].appendChild(_Main);        
+    },
+    DrawPageContainer : function(control)
+    {
+		//var control = new toolboxTabControl("");
+		
+		var _Main = control.txContainer[txTabControlPart.page]
+		var _Id = control.txName;
+		
+		_Main.id = this.txTab_PageContainer + _Id;
+		_Main.className = "txTabControlContainerPage";
+		//_Main.innerHTML = "&nbsp;";
+		
+		
+		var _NoTabContainer = document.createElement('div');
+		_NoTabContainer.id =  this.txTab_NoTabPage + _Id;
+		_NoTabContainer.className = "txTabControlNoTabPage";
+		_Main.appendChild(_NoTabContainer);
+		
+		control.txParent[txTabControlPart.page].appendChild(_Main);
+    },
+	DrawTab : function(tab)
+	{
+		if (!tab) return;
+		
+		toolboxTabControlNixxisRenderManager.DrawPage(tab);
+		toolboxTabControlNixxisRenderManager.DrawTabButton(tab);
+	},
+	RemoveTab : function(tab)
+	{
+		var _Element = $(this.txTab_SelectorItem + tab.txName); 
+		_Element.parentNode.removeChild(_Element);
+		_Element = $(this.txTab_PageItem + tab.txName); 
+		_Element.parentNode.removeChild(_Element);
+		
+	},
+    DrawTabButton : function(tab)
+    {
+		var _Id = tab.txName;
+		
+		var _Item = document.createElement("li");
+		_Item.id = this.txTab_SelectorItem + _Id;
+		_Item.className = "txTabControlTabButton";
+		//TabButtonHover
+		var _Container = document.createElement("div");
+		_Container.className = "NixxisContactTabButton";
+		_Container.id = this.txTab_TabButtonItem + _Id;
+		
+		var _InfoBox = document.createElement("div");
+		_InfoBox.className = "NixxisContactTabButtonInfobox";
+		
+		//SetContactInfoBox(_InfoBox, _Id);
+		
+		_Container.appendChild(_InfoBox);
+		
+		//SetTabButtonClass(_Container, _Id);
+		_Item.appendChild(_Container);
+		
+		
+		$(this.txTab_SelectorList + tab.txParent.txParent.txName).appendChild(_Item);
+		
+		tab.txParent.txParent.txCustomTabButtonDraw(tab);
+		tab.txTabButton = _Item;
+    },
+    DrawPage : function(tab)
+    {
+        var _Id = tab.txName;
+		
+		var _Item = document.createElement("div");
+		_Item.id = this.txTab_PageItem	+ _Id;
+		_Item.className = "txTabControlPage";
+		
+		//SetTabPage(_Item, _Id);
+		addElementClass(_Item, 'TabPageHide')
+		tab.txParent.txParent.txContainer[txTabControlPart.page].appendChild(_Item);
+		tab.txTabPage = _Item;
+    },	
+    UpdateSelector : function()
+    {
+        
+    }
+}			
+		var tab1;
+		function initInstance()
+	    {
+		    tab1 = new toolboxTabControl("tabControlContacts");
+			tab1.txRenderManager = toolboxTabControlNixxisRenderManager;
+			tab1.txParent[txTabControlPart.selector] = $('Buttons');
+			tab1.txParent[txTabControlPart.page] = $('Pages');
+			tab1.Show();
+
+	    }
+	    function exitInstance()
+	    {
+
+	    }
+		var tabCount = 0;
+		function addTab()
+		{
+			var _TabPage = new toolboxTabPage("test" + tabCount);
+			tab1.txTabPages.Add(_TabPage);	
+			tabCount++;
+		}
+		</script>
+</head>
+	<body onload="javascript: initInstance();">
+		<input type="button" value="Add tab" onclick="javascript: addTab();">
+		<table class="tableTab" cellpadding="0" cellspacing="0">
+			<tr> <td id="Buttons" class="Buttons"> </td></tr>
+			<tr> <td id="Pages" class="Pages"> </td></tr>
+		</table>
+	</body>
+</html>

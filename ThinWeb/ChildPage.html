@@ -1,0 +1,54 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Child Test</title>
+		<script id="tst" type="text/javascript" language="javascript">
+		    if(parent.frames['Nixxis'])
+		    {
+                document.domain = "hermesinformatica.nixxisdemo.com";
+		    }
+		    
+		    function NixxisLogin(userId, password)
+		    {
+		        try
+		        {
+		            parent.frames['Nixxis'].Login(userId, password);
+		        }
+		        catch(e)
+		        {
+		            ;
+		        }
+		    }
+		    
+		    function NixxisReady()
+		    {
+		        try
+		        {
+		            parent.frames['Nixxis'].Ready();
+		        }
+		        catch(e)
+		        {
+		            ;
+		        }
+		    }
+		    
+		    function NixxisPause()
+		    {
+		        try
+		        {
+		            parent.frames['Nixxis'].Pause();
+		        }
+		        catch(e)
+		        {
+		            ;
+		        }
+		    }
+		</script>
+    </head>
+    <body onload="javascript:NixxisReady();" onunload="javascript:NixxisPause();">
+        <div>
+            <input type="button" onclick="javascript:NixxisLogin('101','101');" value="Login" />
+            <input type="button" onclick="javascript:parent.frames['Nixxis'].DoGetNextCall();" value="Wait" />
+        </div>
+    </body>
+</html>

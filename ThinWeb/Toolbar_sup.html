@@ -1,0 +1,480 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>ContactRoute <!CR_VERSION> Desktop</title>
+		<link rel="stylesheet" href="default.css" />
+		<link rel="stylesheet" href="DefaultSupervision.css" />	
+        <link href="CrToolboxVisual.css" rel="stylesheet" type="text/css" />
+        
+		<script type="text/javascript" language="javascript" src="JsCommon/NixxisCommonFn.js"></script>
+		<script type="text/javascript" language="javascript" src="link.js"></script>
+		<script type="text/javascript" language="javascript" src="toolbar.js"></script>
+		<script type="text/javascript" language="javascript" src="tools.js"></script>
+        <script type="text/javascript" language="javascript" src="CrToolbox/CrToolbox.js"></script>
+        <script type="text/javascript" language="javascript" src="CrToolbox/CrToolboxControl.js"></script>
+        <script type="text/javascript" language="javascript" src="CrToolbox/CrToolboxControlVisual.js"></script>
+        <script type="text/javascript" language="javascript" src="CrToolbox/CrToolboxBrowser.js"></script>
+		<script type="text/javascript" language="javascript" src="JsCommon/NixxisCommonObj.js"></script>
+		<script type="text/javascript" language="javascript" src="jsTools/dbgWindow.js"></script>
+		<script type="text/javascript" language="javascript" src="js/supervisionLanguageResource.js"></script>
+		<script type="text/javascript" language="javascript" src="Js/SupervisionConst.js"></script>
+		<script type="text/javascript" language="javascript" src="Js/SupervisionCommon.js"></script>
+		<script type="text/javascript" language="javascript" src="Js/SupervisionModel.js"></script>
+		<script type="text/javascript" language="javascript" src="Js/SupervisionColumnConfig.js"></script>
+		<script type="text/javascript" language="javascript" src="Js/SupervisionEnum.js"></script>
+		<script type="text/javascript" language="javascript" src="Js/SupervisionWorkspace.js"></script>
+		<script type="text/javascript" language="javascript" src="Js/SupervisionToolbar.js"></script>
+		<script type="text/javascript" language="javascript">
+		    var ClientLink;
+		    var SuperModel;
+		    var txDimensions = new toolboxBrowserDimensions(false);
+		    var _LoadingWorkspace = false;
+		    var _ViewConfig = new Array();
+		    var crMCallform;
+		    
+			/* --> Start debug */
+			function dbgViewerTest()
+			{
+				//divID = document.getElementById('yappletDiv');
+				divId = document.createElement('div');
+				divId.style.dispaly = "none";
+				//divID.innerHTML = '<APPLET id=\"yapplet\" height=85 width=600 code=\"yapplet.Yapplet\"' +
+				//	'ARCHIVE=\"Yapplet.jar, TimingFramework.jar\" MAYSCRIPT/>';
+				divId.innerHTML = '<applet CODE="vncviewer/VNCViewer.class" ARCHIVE="http://tommobiel:8088/agent/vncviewer.jar" height="250" width="400">' +
+						'<param name="port" value="5900">' +
+						'<param name="server" value="remote3:0">' +
+						'<param name="ViewOnly" value="true">' +
+						'<param name="Shared" value="true">' +
+						'<param name="AlwaysShowServerDialog" value="false">' +
+					'</applet>'
+				document.body.appendChild(divId);
+				//buttonID = document.getElementById('starter');
+				//buttonID.onclick=stopApplet;
+				//buttonID.innerHTML = "Stop Applet";
+			}
+			
+			function dbgTestFunction()
+			{
+				crStatusWindow.Show();
+			}
+			/* <-- End debug */
+
+
+		    function initInstance()
+		    {
+<!IS_BROWSER Firefox>
+		        try { document.domain = document.domain.substring(document.domain.lastIndexOf('.', document.domain.lastIndexOf('.') - 1) + 1); }
+				catch(e) {}
+				//alert("CrAgent.htm: " + document.domain);
+<!IS_BROWSER>					
+				if (const_Debug) dbgStartWindow();
+				if (const_DebugToolbar) SetDebug(true);
+				//Debug
+				setDefaultToolbarLayout($('dbgStartWindow'),    function() { dbgStartWindow(); });
+			    setDefaultToolbarLayout($('dbgHideWindow'),     function() { dbgHideWindow(); });
+			    setDefaultToolbarLayout($('dbgStopWindow'),     function() { dbgStopWindow(); });
+				setDefaultToolbarLayout($('Debug'),             function() { Debug(); });
+				setDefaultToolbarLayout($('dbgTestFunction'),   function() { dbgTestFunction(); });
+				setDefaultToolbarLayout($('dbgViewerTest'),     function() { dbgViewerTest(); });
+                //Navigator
+				setDefaultToolbarLayout($("sup_AgentWindow"), function() { onClickAgent();} )
+                setDefaultToolbarLayout($("sup_InboundWindow"), function() { onClickInbound();} )
+                setDefaultToolbarLayout($("sup_OutboundWindow"), function() { onClickOutbound();} )
+                setDefaultToolbarLayout($("sup_QueueWindow"), function() { onClickQueue();} )
+                setDefaultToolbarLayout($("sup_TeamWindow"), function() { onClickTeam();} )
+                setDefaultToolbarLayout($("sup_CampaignWindow"), function() { onClickCampaign();} )
+                //Menu
+                setDefaultToolbarLayout($("sup_Save"), function() { onClickSave();} )
+                setDefaultToolbarLayout($("sup_Open"), function() { onClickOpen();} )
+                setDefaultToolbarLayout($("sup_Help"), function() { onClickHelp();} )
+								
+		        disableSelection($('NavigatorToolStrip'));
+		        disableSelection($('MainFileToolStrip'));
+		        disableSelection($('VoiceToolStrip'));
+				setToolStripLanguage($('NavigatorToolStrip'));
+				setToolStripLanguage($('MainFileToolStrip'));
+				setToolStripLanguage($('VoiceToolStrip'));
+		        
+                ClientLink = new NixxisClientLink;
+                SuperModel = new SupervisionModel(this);
+                
+                ClientLink.linkToolStrip(document.getElementById("VoiceToolStrip"));
+                $("VoiceNewCall").onclick = function() { MCall_OnClick();}
+                
+                ClientLink.SupervisionItem.Add(this, onSupervisionItem);
+                ClientLink.SupervisionData.Add(this, onSupervisionData);
+                ClientLink.ContactAdded.Add(this, onContactAdded);
+		        ClientLink.ContactStateChanged.Add(this, onContactStateChanged);
+				ClientLink.AgentWarning.Add(this, nixxislink_AgentWarning);     
+				ClientLink.ChatSpyMessage.Add(this, nixxislink_ChatSpyMsg);           
+                ClientLink.EndBatch.Add(this, nixxislink_EndBatch);
+				
+                //Supervisor
+		        var dashboardLocation = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1) + 'SupervisionDashboard.htm';
+		        document.getElementById('NixxisDashboard').src = dashboardLocation;	
+		        
+                if(window.parent)
+                {
+                    try { window.parent.ClientInitialized(ClientLink); }
+                    catch(e) { ; }
+                }
+                
+                crMCallform = new crManuelCallForm();
+                crMCallform.Create();
+                crMCallform.txClientLink = ClientLink;
+                crMCallform.txIcon = $("VoiceNewCall");
+		    }
+		    function onContactAdded(contactInfo) { }
+            function onContactStateChanged(contactInfo)
+            {
+                if((contactInfo.State == 'A' && !ClientLink.Contacts.ActiveContactId) || contactInfo.State == 'C')
+                {
+                    crMCallform.setConnected();
+                    ClientLink.SetActiveContact(contactInfo);
+                }
+                else if(contactInfo.State == 'D')
+                {
+                    crMCallform.setDisconnected();
+                    ClientLink.TerminateContact(contactInfo);
+                }
+            }
+			function nixxislink_AgentWarning(message)
+			{
+				DebugLog("nixxislink_AgentWarning. message:" + message);
+				crStatusWindow.AddMsg(message);
+			}
+			function nixxislink_ChatSpyMsg(message)
+			{
+				//debugger;
+				DebugLog("nixxislink_ChatSpy. message:" + message);
+				crChatSpyWindow.AddMsg(message);
+			}			
+			function nixxislink_EndBatch()
+			{
+				//DebugLog("nixxislink_EndBatch.");
+				SuperModel.RefreshDashboard();
+			}
+            function MCall_OnClick() { crMCallform.Show(); }
+		    function exitInstance() 
+		    {
+                ClientLink.SupervisionItem.Remove(this, onSupervisionItem);
+                ClientLink.SupervisionData.Remove(this, onSupervisionData);
+
+                try
+                {
+                    window.parent.ClientDisposing(ClientLink);
+                }
+                catch(e)
+                {
+                    ;
+                }
+
+                ClientLink.dispose();
+                ClientLink = null;
+		    }
+		    //
+		    //Menu file
+		    //
+		    function onClickOpen()
+		    {
+				//debugger;
+		        var _Valt = ClientLink.loadData("47b886e8334d482ca02efa61ed8af615_" + ClientLink.UserAccount);
+                _LoadingWorkspace = true;
+                //if (_Valt) SupConfig.Set(_Valt);
+                try { if (_Valt) SupConfig.Set(decodeURI(_Valt)); } catch(e) { _LoadingWorkspace = false;}
+                _LoadingWorkspace = false;
+                //window.alert("Workspace is loaded!");
+		    }		    
+		    function onClickSave()
+		    {
+		        var _Result = window.confirm(CrResource.Common.WRN_Save);
+		        if (!_Result) return;
+		        
+		        if(!txDimensions.txInit)
+		        {
+		            txDimensions.Init();
+		            txDimensions.SetOffset("NixxisView", "left=0,top=0,height=200 ,width=400, toolbar=no, location=no,directories=no,status=no,menubar=no,scrollbars=no,copyhistory=no,resizable=yes");
+                }
+				//debugger;
+                var _ValueToSave = SupConfig.Get();
+                //debugger;
+                ClientLink.saveData("47b886e8334d482ca02efa61ed8af615_" + ClientLink.UserAccount,encodeURI(_ValueToSave));
+				//debugger;
+                window.alert(CrResource.Common._IsSaved);
+		    }
+		    function onClickHelp()
+		    {
+                var dashboardLocation = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1) + CrResource.HelpFile.SupervisionGlobal;
+                window.open(dashboardLocation, 'SupervisionHelp', 'left=0,top=0,height=400 ,width=800, toolbar=no, location=no,directories=yes,status=yes,menubar=yes,scrollbars=yes,copyhistory=no,resizable=yes');		    
+		    }
+            //
+            //Menu navigator
+            //
+            function CreateNewWindow(id, ws_columns, ws_group, ws_windowcf)
+            {
+				//debugger;
+                if(_LoadingWorkspace) 
+                {
+                    _ViewConfig[id] = [true, ws_columns, ws_group, ws_windowcf];
+                }
+                
+                var _WindowLocation;
+                var _Features = "left=0,top=0,height=400 ,width=800, toolbar=no, location=no,directories=no,status=no,menubar=no,scrollbars=no,copyhistory=no,resizable=yes";
+                //var _Features = "";                
+
+                if (id == Enums.model.types.Agent)           { OpenSupervisionView(id, 'SupervisionAgent.htm', 'AgentWindow', _Features); }
+                else if (id == Enums.model.types.Inbound)    { OpenSupervisionView(id, 'SupervisionInbound.htm', 'InboundWindow', _Features); }
+                else if (id == Enums.model.types.Outbound)   { OpenSupervisionView(id, 'SupervisionOutbound.htm', 'OutboundWindow', _Features); }
+                else if (id == Enums.model.types.Queue)      { OpenSupervisionView(id, 'SupervisionQueue.htm', 'QueueWindow', _Features); }
+                else if (id == Enums.model.types.team)       { OpenSupervisionView(id, 'SupervisionTeam.htm', 'TeamWindow', _Features); }
+                else if (id == Enums.model.types.campaign)   { OpenSupervisionView(id, 'SupervisionCampaign.htm', 'CampaignWindow', _Features); }
+            }
+            function OpenSupervisionView(type, uri, name, features)
+            {
+                WindowLocation = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1) + uri;
+                if (!_LoadingWorkspace) 
+                { 
+                    if (!SuperModel.SuperItems[type].GetFocus()) window.open(WindowLocation, name, features);
+                }
+                else { window.open(WindowLocation, name, features); }            
+            }
+            
+            function onClickAgent() { CreateNewWindow(Enums.model.types.Agent); }
+            function onClickInbound() { CreateNewWindow(Enums.model.types.Inbound); }
+            function onClickOutbound() { CreateNewWindow(Enums.model.types.Outbound); }
+            function onClickQueue() { CreateNewWindow(Enums.model.types.Queue); }
+            function onClickTeam() { CreateNewWindow(Enums.model.types.team); }
+            function onClickCampaign() { CreateNewWindow(Enums.model.types.campaign); }
+            //
+            //View functions
+            //
+            function OnSupervisionWindowLoaded(windowDocument, type)
+            {
+                if (windowDocument == null) return;
+                if (type == null) return;
+                
+                var _Type = type;
+                if (isNaN(_Type)) _Type = SuperModel.TypeNameToIndex(_Type);
+                if (_Type == -1) return;
+                
+                try { SuperModel.SuperItems[_Type].NewWindow(windowDocument); }
+                catch(e) { ; }
+                
+                try
+                {
+                    if(_ViewConfig[_Type])
+                    {
+                        if (_ViewConfig[_Type][0])
+                        {
+                            //Info: _ViewConfig[id] = [true, ws_colums, ws_group, ws_windowcf];
+                            windowDocument.GroupByList = Object.clone(_ViewConfig[_Type][2]);
+                            windowDocument.ColumnDef = Object.clone(_ViewConfig[_Type][1]);
+                            windowDocument.txWinSettings = _ViewConfig[_Type][3];
+                            windowDocument.txWinSettings.Set(windowDocument); 
+                        }
+                        _ViewConfig[_Type] = [false];
+                    }
+                }
+                catch(e) { _ViewConfig[_Type] = [false]; }
+            }
+			
+            function OnSupervisionListToChat(agentid)
+            {
+				//debugger;
+                if (!agentid) return;
+                ClientLink.commands.ChatSpy.execute(agentid, 1);
+				crChatSpyWindow.AddMsg([6, "", "", 0, "Start spy on chat"]);
+				crChatSpyWindow.crAgentId = agentid;
+            }
+            function OnSupervisionListStopToChat(agentid)
+            {
+				//debugger;
+                ClientLink.commands.ChatSpy.execute(agentid, 0);
+				try 
+				{
+					SuperModel.SuperItems[Enums.model.types.Agent].Window[0].StopCoachAction();
+				} catch (e) {}
+				crChatSpyWindow.Close();
+            }
+			
+            function OnSupervisionListToAgent(contactId)
+            {
+                if (!contactId) return;
+                ClientLink.commands.VoiceHangup.execute();
+                ClientLink.commands.VoiceNewCall.execute(contactId);
+            }
+
+            function OnSupervisionListStopToAgent()
+            {
+                ClientLink.commands.VoiceHangup.execute();
+            }
+			            
+            function OnSupervisionGetItemId(type)
+            {
+                if (type == null) return;
+                
+                var _Type = type;
+                if (isNaN(_Type)) _Type = SuperModel.TypeNameToIndex(_Type);
+                if (_Type == -1) return;
+                
+                var _ReturnValue;
+                
+                try
+                {
+                    _ReturnValue = SuperModel.SuperItems[_Type].CurrentItemId;
+                }
+                catch(e)
+                {
+                    ;
+                }                
+                
+                return _ReturnValue;
+            }
+            
+            function OnSupervisionWindowUnLoaded(type)
+            {
+                if (type == null) return;
+                
+                var _Type = type;
+                if (isNaN(_Type)) _Type = SuperModel.TypeNameToIndex(_Type);
+                if (_Type == -1) return;
+
+                try
+                {
+                   SuperModel.SuperItems[_Type].DisposeWindow();
+                }
+                catch(e)
+                {
+                    ;
+                } 
+            }            
+                        
+            function onSupervisionItem(data)
+            {
+                if (data.length == 1)
+                {
+                    //Remove item
+                    var _IdString = new Array();
+                    _IdString = data[0].split("_");
+                    
+                    if (_IdString.length > 1)
+                    {
+                        SuperModel.RemoveItem(_IdString[0], _IdString[1]);
+                    }
+                }
+                else if (data.length > 1)
+                {
+                    //Add item
+                    var _IdString = new Array();
+                    _IdString = data[0].split("_");
+                    
+					var t = 0;
+					if (_IdString[0] == "SupervisionConfig") {
+						//debugger;
+						t = 1;
+					}
+										
+                    if (_IdString.length > 1)
+                    {
+                        SuperModel.AddItem(_IdString[0], _IdString[1]);
+                        SuperModel.SetKey(_IdString[0], _IdString[1], Enums.model.keys.Parameters, data.slice(1));
+                    }
+                }
+            }
+
+            function onSupervisionData(data)
+            {
+                if (data.length < 3) return;
+                
+                var _IdString = new Array();
+                _IdString = data[0].split("_");
+                
+                if (_IdString.length > 1)
+                {
+					var t = 0;
+					if (_IdString[0] == "SupervisionConfig") {
+						//debugger;
+						t = 1;
+					}
+                    SuperModel.SetKey(_IdString[0], _IdString[1], data[1].substring(2), data.slice(2));
+                }
+            }
+           
+        </script>
+	</head>
+	<body onload="javascript:initInstance();" onunload="javascript:exitInstance();" style="background-color:Transparent">
+	    <div class="NixxisSupToolbar">
+	        <table id="NavigatorToolStrip" class="NixxisToolStrip" cellpadding="0" cellspacing="0">
+	            <tr>
+	                <td class="Left">
+	                </td>
+	                <td class="Buttons">
+	                <img class="NixxisLabel" id="navigatorLabel" src="Img\tbNav.png" alt="Navigator toolbar" title="Navigator toolbar"/>
+	                <img class="NixxisSeparator" src="separator28.png" alt="" />
+	                <img class="NixxisButton" id="sup_AgentWindow" src="Img\tbNav_Agent.png" title="Agent window" alt="Agent window"/>
+	                <img class="NixxisButton" id="sup_InboundWindow" src="Img\tbNav_Inbound.png" title="Inbound window" alt="Inbound window"/>
+	                <img class="NixxisButton" id="sup_OutboundWindow" src="Img\tbNav_Outbound.png" title="Outbound window" alt="Outbound window"/>
+	                <img class="NixxisButton" id="sup_QueueWindow" src="Img\tbNav_Queue.png" title="Queue window" alt="Queue window"/>
+	                <img class="NixxisButton" id="sup_TeamWindow" src="Img\tbNav_Team.png" title="Team window" alt="Team window" style="display:none"/>
+	                <img class="NixxisButton" id="sup_CampaignWindow" src="Img\tbNav_Campaign.png" title="Campaign window" alt="Campaign window"/>
+	                </td>
+	                <td class="Right">
+	                </td>
+	            </tr>
+	        </table>
+	        <table id="MainFileToolStrip" class="NixxisToolStrip" cellpadding="0" cellspacing="0">
+	            <tr>
+	                <td class="Left">
+	                </td>
+	                <td class="Buttons">
+	                <img class="NixxisLabel" id="mainFileLabel" src="Img\tbFile.png" alt="File toolbar" title="File toolbar"/>
+	                <img class="NixxisSeparator" src="separator28.png" alt="" />
+	                <img class="NixxisButton" id="sup_Open" src="Img\tbFile_Open.png" title="Open my workspaces" alt="Open workspaces"/>
+	                <img class="NixxisButton" id="sup_Save" src="Img\tbFile_Save.png" title="Save my workspace" alt="Save workspaces"/>
+	                <img class="NixxisButton" id="sup_Help" src="Img\tbFile_Help.png" title="Documentation" alt="Documentation"/>
+	                </td>
+	                <td class="Right">
+	                </td>
+	            </tr>
+	        </table>
+	        <table id="VoiceToolStrip" class="NixxisToolStrip" cellpadding="0" cellspacing="0">
+	            <tr>
+	                <td class="Left">
+	                </td>
+	                <td class="Buttons">
+                    <img class="NixxisLabel" id="voiceLabel" src="Img/tbVoice.png" alt="Voice commands" title="Manual call" />
+                    <img class="NixxisSeparator" src="separator28.png" alt="" />
+                    <img class="NixxisButton" id="VoiceNewCall" src="Img/tbVoice_MCall.png" title="New call" alt="New call" />
+                    <img class="NixxisButton" id="VoiceHold" src="Img/tbVoice_Hold.png" title="Hold call" alt="Hold call" />
+                    <img class="NixxisButton" id="VoiceRetrieve" src="Img/tbVoice_Retrieve.png" title="Retrieve call" alt="Retrieve call" />
+                    <!--img class="NixxisButton" id="VoiceTransfer" src="Img/tbVoice_Transfer.png" title="Transfer call" alt="Transfer call" /-->
+                    <!--img class="NixxisButton" id="VoiceConference" src="Img/tbVoice_Conference.png" title="Conference call" alt="Conference call" /-->
+                    <!--img class="NixxisButton" id="VoiceForward" src="Img/tbVoice_Forward.png" title="Forward call" alt="Forward call" /-->
+                    <img class="NixxisButton" id="VoiceHangup" src="Img/tbVoice_Hangup.png" title="Hangup call" alt="Hangup call" />
+	                </td>
+	                <td class="Right">
+	                </td>
+	            </tr>
+	        </table>
+			<table id="DebugToolStrip" class="NixxisToolStrip" cellpadding="0" cellspacing="0" style=" display:none;">
+	                            <tr>
+	                                <td class="Left">&nbsp;</td>
+	                                <td class="Buttons">
+                                        <img class="NixxisLabel" src="ImgDev/tbDebug.png" alt="Debug commands" title="Debug commands" />
+                                        <img class="NixxisSeparator" src="separator28.png" alt="" />
+                                        <img class="NixxisButton" id="Debug" src="ImgDev/tbDebug_Debug.png" title="Debug" alt="Debug" />
+                                        <img class="NixxisButton" id="dbgStartWindow" src="ImgDev/tbDebug_StartWindow.png" title="Start debug window" alt="Start debug" />
+                                        <img class="NixxisButton" id="dbgHideWindow" src="ImgDev/tbDebug_HideWindow.png" title="Hide debug window" alt="Hide debug" />
+                                        <img class="NixxisButton" id="dbgStopWindow" src="ImgDev/tbDebug_StopWindow.png" title="Stop debug window" alt="Stop debug" />
+										<img class="NixxisSeparator" src="separator28.png" alt="" />
+										<img class="NixxisButton" id="dbgViewerTest" src="ImgDev/tbDebug_TestView.png" title="Viewer test" alt="Viewer test" />
+										<img class="NixxisSeparator" src="separator28.png" alt="" />
+										<img class="NixxisButton" id="dbgTestFunction" src="ImgDev/tbDebug_Function.png" title="Test function" alt="Test function" />
+	                                </td>
+	                                <td class="Right">&nbsp;</td>
+	                            </tr>
+	       </table>
+        </div>       
+	    <iframe id="NixxisDashboard" width="100%" height="780px" frameborder="0" scrolling="auto" allowtransparency="true"></iframe>
+	</body>
+</html>

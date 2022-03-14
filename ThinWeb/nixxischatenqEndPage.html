@@ -1,0 +1,77 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+    	<title>Nixxis Live Chat Survey</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <link rel="stylesheet" type="text/css" href="nixxischatenq.css">
+        
+        <script type="text/javascript">
+			var lang = 'nl';
+            //Getting lang and other data from url
+            var _Location = window.document.URL;
+			var _Parameters = _Location.substring(_Location.indexOf('?') + 1, _Location.length);
+			var _Values = _Parameters.split("&");
+			
+			for (var i = 0; i < _Values.length; i++) 
+			{
+				var _Pair = _Values[i].split("=");
+
+				if (_Pair[0].toLowerCase() == "lang") {
+					lang = _Pair[1];			
+				}			
+			}
+            //debugger;
+            //Setting language parameters
+            var res_Enq_nl = 
+            {
+            	end : "Dank u en tot ziens. Nixxis Live Chat Survey"
+            }
+            var res_Enq_en = 
+            {
+				end : "Thanks you. Nixxis Live Chat Survey"
+
+            }
+            var res_Enq_fr = 
+            {
+				end : "Merci. Nixxis Live Chat Survey"
+            }
+            
+            if(lang == 'nl')
+            	res_Enq = res_Enq_nl;
+            else if(lang == 'en')
+            	res_Enq = res_Enq_en;
+            else if(lang == 'fr')
+            	res_Enq = res_Enq_fr;
+            else
+            	res_Enq = res_Enq_en;
+            
+	        function onLoad()
+	        {
+	        	
+	        }
+	        
+	        function onUnload()
+	        {	    
+	        }
+
+			</script>
+    </head>
+    <body onload="javascript:onLoad();" onunload="javascript:onUnload();">
+    	<form name="vrg">
+			<table class="window" cellspacing="0" cellpadding="0">
+				<tbody>
+					<tr class="title">
+						<td><h2><a>Nixxis</a> Chat customer survey</h2></td>
+					</tr>
+					<tr class="welcome">
+						<td> </td>
+					</tr>
+					<tr class="panel">
+						<td><script>document.writeln(res_Enq.end);</script></td>
+					</tr>			
+				</tbody>
+			</table>
+		</form>
+    </body>
+</html>

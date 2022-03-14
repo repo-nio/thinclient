@@ -1,0 +1,377 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!REPLACE Truc &lt;!CR_BROWSER&gt;>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>ContactRoute <!CR_VERSION> Desktop for <!CR_BROWSER></title>
+		<link rel="stylesheet" href="hermesinformatica.css" />
+		<script type="text/javascript" language="javascript">
+		        document.domain = "hermesinformatica.nixxisdemo.com";
+		</script>
+		<script type="text/javascript" language="javascript" src="tools.js"></script>
+		<script type="text/javascript" language="javascript" src="layout.js"></script>
+		<script type="text/javascript" language="javascript" src="link.js"></script>
+		<script type="text/javascript" language="javascript" src="toolbar.js"></script>
+		<script type="text/javascript" language="javascript" src="SupervisionModel.js"></script>
+		<script type="text/javascript" language="javascript">
+		    var ClientLink,SuperModel;
+		    
+		    function initInstance()
+		    {
+		        //document.domain = document.domain.substring(document.domain.lastIndexOf('.', document.domain.lastIndexOf('.') - 1) + 1);
+		        
+                ClientLink = new NixxisClientLink(null, "/agent/");
+                SuperModel = new SupervisionModel(this);
+
+                ClientLink.linkToolStrip(document.getElementById("AgentToolStrip"));
+                ClientLink.linkToolStrip(document.getElementById("VoiceToolStrip"));
+                
+                ClientLink.SupervisionItem.Add(this, onSupervisionItem);
+                ClientLink.SupervisionData.Add(this, onSupervisionData);
+                
+                if(window.parent)
+                {
+                    try
+                    {
+                        window.parent.ClientInitialized(ClientLink);
+                    }
+                    catch(e)
+                    {
+                        ;
+                    }
+                }
+
+                //window.setTimeout("parent.frames['App'].location.href = 'http://agent.hermesinformatica.nixxisdemo.com/agent/childpage.html'", 3000, 'javascript');
+                window.setTimeout("parent.frames['App'].location.href = 'http://cc.hermesinformatica.nixxisdemo.com:8090/creditcare'", 1000, 'javascript');
+		    }
+
+		    function exitInstance()
+		    {
+		        ClientLink.ContactAdded.Clear();
+		        ClientLink.ContactStateChanged.Clear();
+		        
+                ClientLink.SupervisionItem.Remove(this, onSupervisionItem);
+                ClientLink.SupervisionData.Remove(this, onSupervisionData);
+
+                try
+                {
+                    window.parent.ClientDisposing(ClientLink);
+                }
+                catch(e)
+                {
+                    ;
+                }
+
+                ClientLink.dispose();
+                ClientLink = null;
+		    }
+		    
+		    function Login(userId, password)
+		    {
+                ClientLink.connect('101','101');
+                
+                document.getElementById('Waiting').style.display = "none";
+                document.getElementById('Toolbar').style.display = "block";
+
+		        ClientLink.ContactAdded.Add(this, OnContactAdded);
+		        ClientLink.ContactStateChanged.Add(this, OnContactStateChanged);
+		    }
+		    
+		    function Logout(userId, password)
+		    {
+                document.getElementById('Waiting').style.display = "block";
+                document.getElementById('Toolbar').style.display = "none";
+
+		        ClientLink.ContactAdded.Clear();
+		        ClientLink.ContactStateChanged.Clear();
+
+                ClientLink.disconnect();
+		    }
+		    
+		    function Ready()
+		    {
+		        ClientLink.commands.WaitForCall.execute(true);
+		        
+		        if(arguments.length > 0)
+                    parent.frames['App'].navigate("http://cc.hermesinformatica.nixxisdemo.com:8090/creditcare/" + arguments[0]);
+		    }
+		    
+		    function Pause()
+		    {
+		        ClientLink.commands.WaitForCall.execute(false);
+		        
+		        if(arguments.length > 0)
+                    parent.frames['App'].navigate("http://cc.hermesinformatica.nixxisdemo.com:8090/creditcare/" + arguments[0]);
+		    }
+		    
+		    function DoGetNextCall()
+		    {
+		        ClientLink.ContactAdded.Add(this, OnContactAdded);
+		        
+		        ClientLink.commands.WaitForCall.execute(true);
+		    }
+
+		    function OnContactAdded(contactInfo)
+		    {
+		        ClientLink.ContactAdded.Clear();
+
+                ClientLink.SetActiveContact(contactInfo);
+                
+                if(contactInfo.Customer)
+                {
+                    parent.frames['App'].navigate("http://cc.hermesinformatica.nixxisdemo.com:8090/creditcare/cli_dossier.jsp?campaignid=1&callid=" + contactInfo.Customer);
+//                    parent.frames['App'].window.open("http://cc.hermesinformatica.nixxisdemo.com:8090/creditcare/cli_dossier.jsp?campaignid=1&callid=" + contactInfo.Customer, contactInfo.id);
+                }
+		    }
+            
+            function OnContactStateChanged(contactInfo)
+            {
+                if((contactInfo.State == 'A' && !ClientLink.Contacts.ActiveContactId) || contactInfo.State == 'C')
+                {
+                    ClientLink.SetActiveContact(contactInfo);
+                    
+                    try
+                    {
+                        ;
+                    }
+                    catch(e)
+                    {
+                        ;
+                    }
+                }
+                else if(contactInfo.State == 'D')
+                {
+                    try
+                    {
+                        ;
+                    }
+                    catch(e)
+                    {
+                        ;
+                    }
+
+                    ClientLink.TerminateContact(contactInfo);
+                }
+            }
+		    
+            function onClickAgent()
+            {
+                
+                /*
+                var AgentWindowLocation = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1) + 'SupervisionAgent.htm';
+                
+                window.open(AgentWindowLocation,"AgentWindow", "left=0,top=0,height=400 ,width=1050, toolbar=no, location=no,directories=no,status=no,menubar=no,scrollbars=no,copyhistory=no,resizable=yes");
+                */
+                //document.getElementById('Child').src = "http://agent.hermesinformatica.nixxisdemo.com/agent/ChildPage.html";
+            }
+            
+            function onClickInbound()
+            {
+                parent.frames['App'].testCall();
+            /*
+                if (_DebugActive) 
+                {
+                    _DebugActive = false;
+                }
+                else
+                {
+                    _DebugActive = true;
+                }*/
+            }
+            
+            function OnSupervisionWindowLoaded(windowDocument, type)
+            {
+                if (_DebugActive) debugger;
+                
+                if (windowDocument == null) return;
+                if (type == null) return;
+                
+                var _Type = type;
+                if (isNaN(_Type)) _Type = SuperModel.TypeNameToIndex(_Type);
+                if (_Type == -1) return;
+                
+                switch(_Type)
+                {
+                    case SuperModel.codes.types.Agent:
+                        SuperModel._SupervisionLists[SuperModel.codes.types.Agent]._Window = windowDocument;
+                        SuperModel._SupervisionLists[SuperModel.codes.types.Agent].ShowColumnHeader();
+                        break;
+                    case SuperModel.codes.types.Inbound:
+                        SuperModel._SupervisionLists[SuperModel.codes.types.Inbound]._Window = windowDocument;
+                        SuperModel._SupervisionLists[SuperModel.codes.types.Inbound].ShowColumnHeader();
+                        break;
+                    case SuperModel.codes.types.Outbound:
+                        SuperModel._SupervisionLists[SuperModel.codes.types.Outbound]._Window = windowDocument;
+                        SuperModel._SupervisionLists[SuperModel.codes.types.Outbound].ShowColumnHeader();
+                        break;
+                    case SuperModel.codes.types.Queue:
+                        SuperModel._SupervisionLists[SuperModel.codes.types.Queue]._Window = windowDocument;
+                        SuperModel._SupervisionLists[SuperModel.codes.types.Queue].ShowColumnHeader();
+
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            function OnSupervisionWindowUnLoaded(type)
+            {
+                if (_DebugActive) debugger;
+                
+                if (type == null) return;
+                
+                var _Type = type;
+                if (isNaN(_Type)) _Type = SuperModel.TypeNameToIndex(_Type);
+                if (_Type == -1) return;
+                
+                switch(_Type)
+                {
+                    case SuperModel.codes.types.Agent:
+                        SuperModel._SupervisionLists[SuperModel.codes.types.Agent]._Window = undefined;
+                        break;
+                    case SuperModel.codes.types.Inbound:
+                        SuperModel._SupervisionLists[SuperModel.codes.types.Inbound]._Window = undefined;
+                        break;
+                    case SuperModel.codes.types.Outbound:
+                        SuperModel._SupervisionLists[SuperModel.codes.types.Outbound]._Window = undefined;
+                        break;
+                    case SuperModel.codes.types.Queue:
+                        SuperModel._SupervisionLists[SuperModel.codes.types.Queue]._Window = undefined;
+                        break;
+                    default:
+                        break;
+                }
+            }            
+            
+            function OnSupervisionOnRowClick(type, id)
+            {
+                if (_DebugActive) debugger;
+                
+                if (type == null) return;
+                
+                var _Type = type;
+                if (isNaN(_Type)) _Type = SuperModel.TypeNameToIndex(_Type);
+                if (_Type == -1) return;
+                
+                switch(_Type)
+                {
+                    case SuperModel.codes.types.Agent:
+                        SuperModel._SupervisionLists[SuperModel.codes.types.Agent].OnRowClick(id);
+                        break;
+                    case SuperModel.codes.types.Inbound:
+                        SuperModel._SupervisionLists[SuperModel.codes.types.Inbound].OnRowClick(id);
+                        break;
+                    case SuperModel.codes.types.Outbound:
+                        SuperModel._SupervisionLists[SuperModel.codes.types.Outbound].OnRowClick(id);
+                        break;
+                    case SuperModel.codes.types.Queue:
+                        SuperModel._SupervisionLists[SuperModel.codes.types.Queue].OnRowClick(id);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            
+            function onSupervisionItem(data)
+            {
+                if (_DebugActive) debugger;
+                
+                if (data.length == 1)
+                {
+                    //Remove item
+                }
+                else if (data.length > 1)
+                {
+                    //Add item
+                    var _IdString = new Array();
+                    _IdString = data[0].split("_");
+                    
+                    if (_IdString.length > 1)
+                    {
+                        SuperModel.AddItem(_IdString[0], _IdString[1]);
+                        SuperModel.SetKey(_IdString[0], _IdString[1], SuperModel.codes.keys.Parameters, data.slice(1));
+                    }
+                    //debugger;
+                    
+                    //SuperModel.AddItem();
+                }
+            }
+
+            function onSupervisionData(data)
+            {
+                if (_DebugActive) debugger;
+                
+                if (data.length < 3) return;
+                
+                var _IdString = new Array();
+                _IdString = data[0].split("_");
+                
+                if (_IdString.length > 1)
+                {
+                    SuperModel.SetKey(_IdString[0], _IdString[1], data[1].substring(2), data.slice(2));
+                }
+                //debugger;
+            }
+            
+		</script>
+	</head>
+	<body onload="javascript:initInstance()" onunload="javascript:exitInstance()" onbeforeunload="javascript:event.returnValue='This will close your session.'">
+	    <div id='Waiting' style="background-color: White; display: block;">
+	        <img src="spinner.gif" alt='Loading...' style='margin-top: 6px; margin-left: 20px;'/>
+	        <img src="small_logo.png" alt='' style='margin-top: 7px; margin-left: 10px;'/>
+	    </div>
+	    <div id='Toolbar' class="NixxisToolBar" style="display: none;">
+	        <table id="AgentToolStrip" class="NixxisToolStrip" cellpadding="0" cellspacing="0">
+	            <tr>
+	                <td class="Left">
+	                </td>
+	                <td class="Buttons">
+	                    <img class="NixxisLabel" src="user28.png" alt="Agent commands" />
+	                    <img class="NixxisLabel" src="separator28.png" alt="" />
+	                    <img class="NixxisButton" id="WaitForCall" src="user28_monitor.png" alt="Wait for call" />
+	                    <img class="NixxisButton" id="Pause" src="user28_time.png" alt="Pause" />
+	                </td>
+	                <td class="Right">
+	                </td>
+	            </tr>
+	        </table>
+	        <table id="VoiceToolStrip" class="NixxisToolStrip" cellpadding="0" cellspacing="0">
+	            <tr>
+	                <td class="Left">
+	                </td>
+	                <td class="Buttons">
+	                <img class="NixxisLabel" src="telephone28.png" alt="Voice commands" />
+	                <img class="NixxisLabel" src="separator28.png" alt="" />
+	                <img class="NixxisButton" id="VoiceNewCall" src="symbol28_plus.png" alt="New call" />
+	                <img class="NixxisButton" id="VoiceHold" src="symbol28_pause.png" alt="Hold call" />
+	                <img class="NixxisButton" id="VoiceRetrieve" src="symbol28_up.png" alt="Retrieve call" />
+	                <img class="NixxisButton" id="VoiceTransfer" src="symbol28_transfer.png" alt="Transfer call" />
+	                <!--img class="NixxisButton" id="VoiceConference" src="symbol28_circle.png" alt="Conference call" /-->
+	                <img class="NixxisButton" id="VoiceForward" src="symbol28_right2.png" alt="Forward call" />
+	                <img class="NixxisButton" id="VoiceHangup" src="symbol28_cross.png" alt="Hangup call" />
+	                </td>
+	                <td class="Right">
+	                </td>
+	            </tr>
+	        </table>
+	        <!--table id="SupervisionToolStrip" class="NixxisToolStrip" cellpadding="0" cellspacing="0">
+	            <tr>
+	                <td class="Left">
+	                </td>
+	                <td class="Buttons">
+	                <img class="NixxisLabel" src="telephone28.png" alt="Voice commands" />
+	                <img class="NixxisLabel" src="separator28.png" alt="" />
+	                <img class="NixxisButton" id="sup_AgentWindow" src="Sup_Agent.png" width="28" height="28" alt="Agent window" onclick="javascript:onClickAgent();" />
+	                <img class="NixxisButton" id="sup_InboundWindow" src="Sup_Inbound.png" width="28" height="28" alt="Inbound window" onclick="javascript:onClickInbound();" />
+	                <img class="NixxisButton" id="sup_OutboundWindow" src="Sup_Outbound.png" width="28" height="28" alt="Outbound window" onclick="javascript:onClickOutbound();" />
+	                <img class="NixxisButton" id="sup_QueueWindow" src="Sup_Queue.png" width="28" height="28" alt="Queue window" onclick="javascript:parent.frames['App'].testCall();" />
+	                </td>
+	                <td class="Right">
+	                </td>
+	            </tr>
+	        </table-->
+        </div>
+        <div id='tstDiv' style="margin-top: 30px; width: 100%; height:600px; overflow:scroll;">
+            <input type="button" value="Connect" onclick="javascript:onChildTest();" />
+        </div>
+	</body>
+</html>

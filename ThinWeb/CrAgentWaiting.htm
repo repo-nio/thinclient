@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Waiting for contact</title>
+		<link rel="stylesheet" href="default.css" type="text/css" />
+		<script type="text/javascript" language="javascript" src="CrToolbox/CrToolbox.js"></script>
+		<script type="text/javascript" language="javascript" src="jsAgent/AgentLanguageResource.js"></script>		
+		<script type="text/javascript" language="javascript" src="jsAgent/agentConst.js"></script>
+		<script type="text/javascript" language="javascript">
+			function InitPage()
+			{
+				if (const_WaitingScreenV2)
+				{
+					$('xx_Info').style.display = "";
+				}
+			}
+		</script>
+</head>
+<body onload="javascript: InitPage();">
+    <div id="NixxisContainer" class="NixxisContainer">
+        <div id="NixxisPauseDiv" class="NixxisPageLayout">
+        	<div class="NixxisPageLogoWaiting">
+	            <div style="height:10%;"></div>
+				<div style="height:30%;">
+	            	<center><h1><script>document.writeln(CrResource.pageWaiting._T1);</script></h1></center>
+				</div>
+				<div id="xx_Info" class="xx_InfoBox" style="display:none">
+					<img id="ReadyCall" class="xx_IB_img" src="Img/tbAgent_ReadyVoice.png" title="Ready call" alt="Ready call" /><div class="xx_IB_Text">Call</div>
+					<img id="ReadyMail" class="xx_IB_img" src="Img/tbAgent_ReadyMail.png" title="Ready mail" alt="Ready mail" /><div class="xx_IB_Text">Mail</div>
+					<img id="ReadyChat" class="xx_IB_img" src="Img/tbAgent_ReadyChat.png" title="Ready chat" alt="Ready chat" /><div class="xx_IB_Text">Chat</div>
+				</div>
+			</div>
+			</div>	        	
+        </div>    
+    </div>
+</body>
+</html>
