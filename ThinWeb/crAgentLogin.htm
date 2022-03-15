@@ -4,16 +4,17 @@
     <link rel="SHORTCUT ICON" href="Icone_agent.ico" />
     <title>Nixxis client login</title>
     <link rel="stylesheet" href="CrToolboxVisual.css" />
-    <link rel="stylesheet" href="CrToolboxVisualWhite.css" />
+    <!--<link rel="stylesheet" href="CrToolboxVisualWhite.css" />-->
     <link rel="stylesheet" href="CrLoginScreen.css" />
     <link rel="stylesheet" href="default.css" />
     <script type="text/javascript" language="javascript" src="CrToolbox/CrToolbox.js"></script>
     <script type="text/javascript" language="javascript" src="CrToolbox/CrToolboxControl.js"></script>
     <script type="text/javascript" language="javascript" src="CrToolbox/CrToolboxControlVisual.js"></script>
     <script type="text/javascript" language="javascript" src="js/supervisionLanguageResource.js"></script>
-    <script type="text/javascript" language="javascript" src="js/supervisionConst.js"></script>
+    <!-- <script type="text/javascript" language="javascript" src="js/supervisionConst.js"></script> -->
     <script type="text/javascript" language="javascript" src="tools.js"></script>
     <script type="text/javascript" language="javascript" src="JsCommon/NixxisCommonFn.js"></script>
+    <script type="text/javascript" language="javascript" src="JsCommon/NixxisCommonObj.js"></script>
     <script type="text/javascript" language="javascript" src="link.js"></script>
     <script type="text/javascript" language="javascript" src="toolbar.js"></script>
 
@@ -22,6 +23,8 @@
 
         function StartInit() {
             addElementClass($("LoginSubmit"), "Hide");
+            $("lblErrorMessage").innerHTML = "";
+
             ClientLink = new NixxisClientLink;
         }
 
@@ -33,6 +36,37 @@
         function submitForm() {
             removeElementClass($("LoginSubmit"), "Hide");
             ClientLink.login($("userAccount").value, $("password").value, $("extension").value);
+
+            debugger;
+
+            if ($("userAccount").value == "") {
+                addElementClass($("LoginSubmit"), "Hide");
+                $("lblErrorMessage").innerHTML = "please input account to continue";
+                return false;
+            }
+
+            if (ClientLink == null || ClientLink.connection == null) {
+                addElementClass($("LoginSubmit"), "Hide");
+                $("lblErrorMessage").innerHTML = "network not working";
+                return false;
+            }
+
+            if (ClientLink.connection.links != null && ClientLink.connection.links.length > 0) {
+                var lineresponse = ClientLink.connection.links[ClientLink.connection.links.length - 1];
+
+                if (lineresponse != "" && lineresponse.status != 200) {
+                    addElementClass($("LoginSubmit"), "Hide");
+                    $("lblErrorMessage").innerHTML = lineresponse.responseText;
+                    return false;
+                }
+            }
+
+            if (ClientLink.AgentId == "") {
+                addElementClass($("LoginSubmit"), "Hide");
+                $("lblErrorMessage").innerHTML = "username or password is invalid";
+                return false;
+            }
+
             window.location = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1) + "crAgent.htm";
         }
 
@@ -117,7 +151,11 @@
                                 </div>
                             </li>
                             <li>
-                                <div id="errorMessage" class="errorMessage" style="display:none;">username or password is incorrect</div>                                
+                                <div id="" class="errorMessage" id="errorMessage" style="display:visible;">
+                                    <label id="lblErrorMessage">
+                                        username or password is incorrect
+                                    </label>
+                                </div>
                             </li>
 
                         </ul>
@@ -129,13 +167,13 @@
                                 <input type="hidden" value="Client_Sup.html" name="startPage" id="startPage" />
                                 <input type="hidden" value="agent" name="roles" id="roles" />
                                 <!--<div id="divBtnSubmit" class="LoginButtons"></div>-->
-                                <button class="loginFormLoginBtn" id="divBtnSubmit" onclick="javascript:submitForm()">
+                                <button type="button" class="loginFormLoginBtn" id="divBtnSubmit" onclick="javascript:submitForm()">
                                     <script>document.writeln(const_Btn_Ok)</script>
                                 </button>
                             </li>
                             <li>
                                 <!--<div id="divBtnReset" class="LoginButtons"></div>-->
-                                <button id="divBtnReset" class="loginFormLoginBtn" onclick="javascript:resetForm()">
+                                <button type="button" id="divBtnReset" class="loginFormLoginBtn" onclick="javascript:resetForm()">
                                     <script>document.writeln(const_Btn_Cancel)</script>
                                 </button>
                             </li>
