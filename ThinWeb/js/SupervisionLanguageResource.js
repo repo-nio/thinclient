@@ -53,6 +53,11 @@ var const_LOGIN_T3 = "Use the following identification";
 var const_LOGIN_T4 = "Account:";
 var const_LOGIN_T5 = "Password:";
 var const_LOGIN_T6 = "Domain:";
+
+var const_LOGIN_VALIDATION_T1 = "please input account to continue";
+var const_LOGIN_VALIDATION_T2 = "username or password is invalid";
+var const_LOGIN_VALIDATION_T3 = "network not working";
+
 //Info
 //___________________
 var const_VersionManjor = "1";

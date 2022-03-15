@@ -41,13 +41,13 @@
 
             if ($("userAccount").value == "") {
                 addElementClass($("LoginSubmit"), "Hide");
-                $("lblErrorMessage").innerHTML = "please input account to continue";
+                $("lblErrorMessage").innerHTML = const_LOGIN_VALIDATION_T1;
                 return false;
             }
 
             if (ClientLink == null || ClientLink.connection == null) {
                 addElementClass($("LoginSubmit"), "Hide");
-                $("lblErrorMessage").innerHTML = "network not working";
+                $("lblErrorMessage").innerHTML = const_LOGIN_VALIDATION_T3;
                 return false;
             }
 
@@ -63,7 +63,7 @@
 
             if (ClientLink.AgentId == "") {
                 addElementClass($("LoginSubmit"), "Hide");
-                $("lblErrorMessage").innerHTML = "username or password is invalid";
+                $("lblErrorMessage").innerHTML = const_LOGIN_VALIDATION_T2;
                 return false;
             }
 
