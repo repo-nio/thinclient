@@ -1,99 +1,95 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
 <html xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-		<link rel="SHORTCUT ICON" href="Icone_agent.ico"/>
-		<title>ContactRoute Desktop Parent Window</title>
-		<link href="default.css" rel="stylesheet" type="text/css" />
-		<link href="CrToolboxVisual.css" rel="stylesheet" type="text/css" />
-		<link rel="stylesheet" type="text/css" media="all" href="jsTools/jscalendar-1.0/calendar-blue.css" title="win2k-cold-1" />
-		<script type="text/javascript" src="jsTools/jscalendar-1.0/calendar.js"></script>
-		<script type="text/javascript" src="jsTools/jscalendar-1.0/lang/calendar-fr.js"></script>      
-		<script type="text/javascript" language="javascript" src="jsAgent/AgentLanguageResource.js"></script>
-		<script type="text/javascript" language="javascript" src="jsAgent/agentConst.js"></script>
-	    <script type="text/javascript" language="javascript" src="tools.js"></script>
-	    <script type="text/javascript" language="javascript" src="JsCommon/NixxisCommonFn.js"></script>
-	    <script type="text/javascript" language="javascript" src="link.js"></script>
-	    <script type="text/javascript" language="javascript" src="toolbar.js"></script>		
-		<script type="text/javascript" language="javascript" src="CrToolbox/CrToolbox.js"></script>
-        <script type="text/javascript" language="javascript" src="CrToolbox/CrToolboxControl.js"></script>
-        <script type="text/javascript" language="javascript" src="CrToolbox/CrToolboxControlVisual.js"></script>
-        <script type="text/javascript" language="javascript" src="jsTools/dbgWindow.js"></script>
-		<script type="text/javascript" language="javascript" src="jsCommon/NixxisCommonObj.js"></script>
-		<script type="text/javascript" language="javascript" src="jsAgent/agentPanels.js"></script>
-		<script type="text/javascript" language="javascript" src="jsAgent/agentWindowCfg.js"></script>
-		<script type="text/javascript" language="javascript">
+<head>
+	<link rel="SHORTCUT ICON" href="Icone_agent.ico" />
+	<title>ContactRoute Desktop Parent Window</title>
+	<link href="default.css" rel="stylesheet" type="text/css" />
+	<link href="CrToolboxVisual.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" type="text/css" media="all" href="jsTools/jscalendar-1.0/calendar-blue.css" title="win2k-cold-1" />
+	<script type="text/javascript" src="jsTools/jscalendar-1.0/calendar.js"></script>
+	<script type="text/javascript" src="jsTools/jscalendar-1.0/lang/calendar-fr.js"></script>
+	<script type="text/javascript" language="javascript" src="jsAgent/AgentLanguageResource.js"></script>
+	<script type="text/javascript" language="javascript" src="jsAgent/agentConst.js"></script>
+	<script type="text/javascript" language="javascript" src="tools.js"></script>
+	<script type="text/javascript" language="javascript" src="JsCommon/NixxisCommonFn.js"></script>
+	<script type="text/javascript" language="javascript" src="link.js"></script>
+	<script type="text/javascript" language="javascript" src="toolbar.js"></script>
+	<script type="text/javascript" language="javascript" src="CrToolbox/CrToolbox.js"></script>
+	<script type="text/javascript" language="javascript" src="CrToolbox/CrToolboxControl.js"></script>
+	<script type="text/javascript" language="javascript" src="CrToolbox/CrToolboxControlVisual.js"></script>
+	<script type="text/javascript" language="javascript" src="jsTools/dbgWindow.js"></script>
+	<script type="text/javascript" language="javascript" src="jsCommon/NixxisCommonObj.js"></script>
+	<script type="text/javascript" language="javascript" src="jsAgent/agentPanels.js"></script>
+	<script type="text/javascript" language="javascript" src="jsAgent/agentWindowCfg.js"></script>
+	<script type="text/javascript" language="javascript">
 		var ClientLink;
-		function initInstance()
-	    {
-<!IS_BROWSER Firefox>
-	        try { document.domain = document.domain.substring(document.domain.lastIndexOf('.', document.domain.lastIndexOf('.') - 1) + 1); }
-			catch(e) {;}
-			//alert("CrAgent.htm: " + document.domain);
-<!IS_BROWSER>			
-	        //document.domain = "nixxisdemo.com";
-			
-			window.document.title = "Nixxis agent desktop version " + const_AgentVersionDisplay;
-		
+		function initInstance() {
+< !IS_BROWSER Firefox >
+				try { document.domain = document.domain.substring(document.domain.lastIndexOf('.', document.domain.lastIndexOf('.') - 1) + 1); }
+			catch (e) { ; }
+				//alert("CrAgent.htm: " + document.domain);
+< !IS_BROWSER >
+				//document.domain = "nixxisdemo.com";
+
+				window.document.title = "Nixxis agent desktop version " + const_AgentVersionDisplay;
+
 			OnToolboxResize.Add(this, pageResize);
 			crLoadingScreen.crLoadingMsg = CrResource.Common.LoadingMsg;
 			crLoadingScreen.Init();
 			crLoadingScreen.Visible(true);
-			
-            if (const_Debug) dbgStartWindow();
-            
-            DebugLog("NixxisLink...");
-            ClientLink = new NixxisClientLink;
+
+			if (const_Debug) dbgStartWindow();
+
+			DebugLog("NixxisLink...");
+			ClientLink = new NixxisClientLink;
 			//debugger;
-            ClientLink.linkToolStrip($("AgentToolStrip"));
-            ClientLink.linkToolStrip($("VoiceToolStrip"));
+			ClientLink.linkToolStrip($("AgentToolStrip"));
+			ClientLink.linkToolStrip($("VoiceToolStrip"));
 			ClientLink.linkToolStrip($("ChatToolStrip"));
 			ClientLink.linkToolStrip($("MailToolStrip"));
-			
+
 			setToolStripLanguage($('AgentToolStrip'));
-            setToolStripLanguage($('VoiceToolStrip'));
+			setToolStripLanguage($('VoiceToolStrip'));
 			setToolStripLanguage($('MailToolStrip'));
 			setToolStripLanguage($('ChatToolStrip'));
-			
+
 			setToolStripConfiguration($('AgentToolStrip'));
-            setToolStripConfiguration($('VoiceToolStrip'));
+			setToolStripConfiguration($('VoiceToolStrip'));
 			setToolStripConfiguration($('MailToolStrip'));
 			setToolStripConfiguration($('ChatToolStrip'));
-			
-			DebugLog("Init window...");
-            Init_Window();
-			pageResize();
-            if (const_DebugToolbar) SetDebug(true);
-            window.setTimeout("ClientConnect();", 3000, "javascript");
-			document.body.nextSibling;
-	    }
-	    function exitInstance()
-	    {
 
-            try
-            {
+			DebugLog("Init window...");
+			Init_Window();
+			pageResize();
+			if (const_DebugToolbar) SetDebug(true);
+			window.setTimeout("ClientConnect();", 3000, "javascript");
+			document.body.nextSibling;
+		}
+		function exitInstance() {
+
+			try {
 				//if (confirm("Do you really want to close this window"))
 				//{
-	    			ClientLink.disconnect();
-	                DisposeClient();
-					ClientLink.dispose();
-	            	ClientLink = null;
-					//return true; 
+				ClientLink.disconnect();
+				DisposeClient();
+				ClientLink.dispose();
+				ClientLink = null;
+				//return true;
 				//}
-   				//location.href = document.URL;;
-  				//http://tommobiel:8088/agent/crloginscreendummy.htmreturn true;
-				
-				
-            }
-            catch(e)
-            {
-                ;
-            }
-	    }
+				//location.href = document.URL;;
+				//http://tommobiel:8088/agent/crloginscreendummy.htmreturn true;
 
-		/*function HandleOnClose(evt) 
+
+			}
+			catch (e) {
+				;
+			}
+		}
+
+		/*function HandleOnClose(evt)
 		{
 			var y = (window.Event) ? evt.pageY : evt.clientY;
-			if (y < 0) 
+			if (y < 0)
 			{
 				alert('Thank You for chatting with iHosty');
 				//document.location.href='chatlogout.php?user=<?php echo $_SESSION['user'];?>';
@@ -101,153 +97,155 @@
 			}
 		}
 
-		if (window.Event) 
+		if (window.Event)
 		{
-			window.onbeforeunload = function(event) 
+			window.onbeforeunload = function(event)
 			{
 				return HandleOnClose(event); // pass argument event block
 			}
-		} else 
+		} else
 		{
-			window.onbeforeunload = function() 
+			window.onbeforeunload = function()
 			{
 				return HandleOnClose(event); // pass IE's global event block
 			}
 		}*/
-		function onBeforeUnloadAction()
-		{
+		function onBeforeUnloadAction() {
 			return "Do you want to logout?";
 		}
-		 
-		window.onbeforeunload = function(e)
-		{
+
+		window.onbeforeunload = function (e) {
 			//alert("this will be closed");
-		 	var ev=(e)? e: window.event;
-		 	if((ev.clientX<0) || (ev.clientY<0))
-			{
-		    	return onBeforeUnloadAction();
+			var ev = (e) ? e : window.event;
+			if ((ev.clientX < 0) || (ev.clientY < 0)) {
+				return onBeforeUnloadAction();
 			}
 		}
-		 </script>
-		 		
+	</script>
+
+
+	<link rel="stylesheet" href="/v3/assets/css/style.css" />
+	<script src="/v3/assets/js/jquery.min.js"></script>
+
 </head>
 <body onload="javascript: initInstance();" onunload="javascript: exitInstance();">
-    <div id="NixxisAgentContainer" class="NixxisContainer">
-	    <div id="NixxisAgentPage" class="NixxisAgentPage">
-	        <table class="NixxisAgentLayout" cellpadding="0" cellspacing="0">
-	            <tr id="NixxisAgentToolbarAreaRow" style="height:50px;">
-	                <td id="NixxisAgentToolbarAreaCell" class="NixxisAgentToolbarAreaCell"> 
-	                    <div id="NixxisAgentToolbarArea" class="NixxisAgentToolbarArea">
-		                    <div class="NixxisToolBar">
-		                        <table id="AgentToolStrip" class="NixxisToolStrip" cellpadding="0" cellspacing="0">
-		                            <tr>
-		                                <td class="Left">&nbsp;</td>
-		                                <td class="Buttons">
-		                                    <img class="NixxisLabel" id="agentLabel"  src="Img/tbAgent.png" title="Agent commands" alt="Agent commands" />
-		                                    <img class="NixxisSeparator" src="separator28.png" alt="" />
-		                                    <img class="NixxisButton" id="WaitForCall" src="Img/tbAgent_ReadyVoice.png" title="Wait for call" alt="Wait for call" />
+
+	<!--<div id="NixxisAgentContainer" class="NixxisContainer">
+		<div id="NixxisAgentPage" class="NixxisAgentPage">
+			<table class="NixxisAgentLayout" cellpadding="0" cellspacing="0">
+				<tr id="NixxisAgentToolbarAreaRow" style="height:50px;">
+					<td id="NixxisAgentToolbarAreaCell" class="NixxisAgentToolbarAreaCell">
+						<div id="NixxisAgentToolbarArea" class="NixxisAgentToolbarArea">
+							<div class="NixxisToolBar">
+								<table id="AgentToolStrip" class="NixxisToolStrip" cellpadding="0" cellspacing="0">
+									<tr>
+										<td class="Left">&nbsp;</td>
+										<td class="Buttons">
+											<img class="NixxisLabel" id="agentLabel" src="Img/tbAgent.png" title="Agent commands" alt="Agent commands" />
+											<img class="NixxisSeparator" src="separator28.png" alt="" />
+											<img class="NixxisButton" id="WaitForCall" src="Img/tbAgent_ReadyVoice.png" title="Wait for call" alt="Wait for call" />
 											<img class="NixxisButton" id="WaitForMail" src="Img/tbAgent_ReadyMail.png" title="Wait for mail" alt="Wait for mail" />
 											<img class="NixxisButton" id="WaitForChat" src="Img/tbAgent_ReadyChat.png" title="Wait for chat" alt="Wait for chat" />
 											<img class="NixxisButton" id="TeamSelection" src="Img/tbAgent_TeamSelection.png" title="Select active teams" alt="Select active teams" />
-		                                    <img class="NixxisButton" id="Pause" src="Img/tbAgent_Pause.png" title="Pause" alt="Pause" />
+											<img class="NixxisButton" id="Pause" src="Img/tbAgent_Pause.png" title="Pause" alt="Pause" />
 											<img class="NixxisButton" id="PriorityPickup" src="Img/tbAgent_Vip.png" title="Vip" alt="Vip" />
 											<img class="NixxisSeparator" src="separator28.png" alt="" />
 											<img class="NixxisButton" id="CloseScript" src="Img/tbAgent_CloseScript.png" title="Close script" alt="Close script" />
 											<img class="NixxisButton" id="Selectqual" src="Img/tbAgent_Selectqual.png" title="Select qualification" alt="Select qualification" />
 											<img class="NixxisButton" id="SearchMode" src="Img/tbAgent_SearchMode.png" title="SearchMode" alt="SearchMode" />
-		                                </td>
-		                                <td class="Right">&nbsp;</td>
-		                            </tr>
-		                        </table>
-		                        <table id="VoiceToolStrip" class="NixxisToolStrip" cellpadding="0" cellspacing="0">
-		                            <tr>
-		                                <td class="Left">&nbsp;</td>
-		                                <td class="Buttons">
-	                                        <img class="NixxisLabel" id="voiceLabel"  src="Img/tbVoice.png" title="Voice commands" alt="Voice commands" />
-	                                        <img class="NixxisSeparator" src="separator28.png" alt="" />
-	                                        <img class="NixxisButton" id="VoiceNewCall" src="Img/tbVoice_MCall.png" title="New call" alt="New call" />
-	                                        <img class="NixxisButton" id="VoiceHold" src="Img/tbVoice_Hold.png" title="Hold call" alt="Hold call" />
-	                                        <img class="NixxisButton" id="VoiceRetrieve" src="Img/tbVoice_Retrieve.png" title="Retrieve call" alt="Retrieve call" />
-	                                        <img class="NixxisButton" id="VoiceTransfer" src="Img/tbVoice_Transfer.png" title="Transfer call" alt="Transfer call" />
-	                                        <img class="NixxisButton" id="VoiceConference" src="Img/tbVoice_Conference.png" title="Conference call" alt="Conference call" />
-	                                        <img class="NixxisButton" id="VoiceForward" src="Img/tbVoice_Forward.png" title="Forward call" alt="Forward call" />
-	                                        <img class="NixxisButton" id="VoiceHangup" src="Img/tbVoice_Hangup.png" title="Hangup call" alt="Hangup call" />
-		                                </td>
-		                                <td class="Right">&nbsp;</td>
-		                            </tr>
-		                        </table>
-		                        <table id="MailToolStrip" class="NixxisToolStrip" cellpadding="0" cellspacing="0">
-		                            <tr>
-		                                <td class="Left">&nbsp;</td>
-		                                <td class="Buttons">
-	                                        <img class="NixxisLabel" id="mailLabel" src="Img/tbMail.png" alt="Mail commands" title="Mail commands" />
-	                                        <img class="NixxisSeparator" src="separator28.png" alt="" />
-	                                        <!--img class="NixxisButton" id="MailNewMail" src="Img/tbMail_NewMail.png" title="New mail" alt="New mail" /-->
-	                                        <img class="NixxisButton" id="MailReply" src="Img/tbMail_Reply.png" title="Reply mail" alt="Reply mail" />
-	                                        <img class="NixxisButton" id="MailForward" src="Img/tbMail_Forward.png" title="Forward mail" alt="Forward mail" />
-	                                        <!--img class="NixxisButton" id="MailHangup" src="Img/tbMail_Close.png" title="Close mail" alt="Close mail" /-->
-		                                </td>
-		                                <td class="Right">&nbsp;</td>
-		                            </tr>
-		                        </table>							
-		                        <table id="ChatToolStrip" class="NixxisToolStrip" cellpadding="0" cellspacing="0">
-		                            <tr>
-		                                <td class="Left">&nbsp;</td>
-		                                <td class="Buttons">
-	                                        <img class="NixxisLabel" id="chatLabel" src="Img/tbChat.png" alt="Chat commands" title="Chat commands" />
-	                                        <img class="NixxisSeparator" src="separator28.png" alt="" />
-	                                        <!--img class="NixxisButton" id="ChatNewChat" src="Img/tbChat_NewChat.png" title="New chat" alt="New chat" /-->
-	                                        <img class="NixxisButton" id="ChatHold" src="Img/tbChat_OnHold.png" title="Hold chat" alt="Hold chat" />
-	                                        <img class="NixxisButton" id="ChatRetrieve" src="Img/tbChat_Retrieve.png" title="Retrieve chat" alt="Retrieve chat" />
-	                                        <!--img class="NixxisButton" id="ChatForward" src="Img/tbChat_Forward.png" title="Forward chat" alt="Forward chat" /-->
-	                                        <img class="NixxisButton" id="ChatHangup" src="Img/tbChat_Close.png" title="Close chat" alt="Close chat"/>
-		                                </td>
-		                                <td class="Right">&nbsp;</td>
-		                            </tr>
-		                        </table>
-		                        <table id="DebugToolStrip" class="NixxisToolStrip" cellpadding="0" cellspacing="0" style=" display:none;">
-		                            <tr>
-		                                <td class="Left">&nbsp;</td>
-		                                <td class="Buttons">
-	                                        <img class="NixxisLabel" src="ImgDev/tbDebug.png" alt="Debug commands" title="Debug commands" />
-	                                        <img class="NixxisSeparator" src="separator28.png" alt="" />
-	                                        <img class="NixxisButton" id="Debug" src="ImgDev/tbDebug_Debug.png" title="Debug" alt="Debug"/>
-	                                        <img class="NixxisButton" id="dbgStartWindow" src="ImgDev/tbDebug_StartWindow.png" title="Start debug window" alt="Start debug" style=" "/>
-	                                        <img class="NixxisButton" id="dbgHideWindow" src="ImgDev/tbDebug_HideWindow.png" title="Hide debug window" alt="Hide debug"  style=" "/>
-	                                        <img class="NixxisButton" id="dbgStopWindow" src="ImgDev/tbDebug_StopWindow.png" title="Stop debug window" alt="Stop debug"  style=" "/>
+										</td>
+										<td class="Right">&nbsp;</td>
+									</tr>
+								</table>
+								<table id="VoiceToolStrip" class="NixxisToolStrip" cellpadding="0" cellspacing="0">
+									<tr>
+										<td class="Left">&nbsp;</td>
+										<td class="Buttons">
+											<img class="NixxisLabel" id="voiceLabel" src="Img/tbVoice.png" title="Voice commands" alt="Voice commands" />
+											<img class="NixxisSeparator" src="separator28.png" alt="" />
+											<img class="NixxisButton" id="VoiceNewCall" src="Img/tbVoice_MCall.png" title="New call" alt="New call" />
+											<img class="NixxisButton" id="VoiceHold" src="Img/tbVoice_Hold.png" title="Hold call" alt="Hold call" />
+											<img class="NixxisButton" id="VoiceRetrieve" src="Img/tbVoice_Retrieve.png" title="Retrieve call" alt="Retrieve call" />
+											<img class="NixxisButton" id="VoiceTransfer" src="Img/tbVoice_Transfer.png" title="Transfer call" alt="Transfer call" />
+											<img class="NixxisButton" id="VoiceConference" src="Img/tbVoice_Conference.png" title="Conference call" alt="Conference call" />
+											<img class="NixxisButton" id="VoiceForward" src="Img/tbVoice_Forward.png" title="Forward call" alt="Forward call" />
+											<img class="NixxisButton" id="VoiceHangup" src="Img/tbVoice_Hangup.png" title="Hangup call" alt="Hangup call" />
+										</td>
+										<td class="Right">&nbsp;</td>
+									</tr>
+								</table>
+								<table id="MailToolStrip" class="NixxisToolStrip" cellpadding="0" cellspacing="0">
+									<tr>
+										<td class="Left">&nbsp;</td>
+										<td class="Buttons">
+											<img class="NixxisLabel" id="mailLabel" src="Img/tbMail.png" alt="Mail commands" title="Mail commands" />
+											<img class="NixxisSeparator" src="separator28.png" alt="" />
+											img class="NixxisButton" id="MailNewMail" src="Img/tbMail_NewMail.png" title="New mail" alt="New mail" /
+											<img class="NixxisButton" id="MailReply" src="Img/tbMail_Reply.png" title="Reply mail" alt="Reply mail" />
+											<img class="NixxisButton" id="MailForward" src="Img/tbMail_Forward.png" title="Forward mail" alt="Forward mail" />
+											img class="NixxisButton" id="MailHangup" src="Img/tbMail_Close.png" title="Close mail" alt="Close mail" /
+										</td>
+										<td class="Right">&nbsp;</td>
+									</tr>
+								</table>
+								<table id="ChatToolStrip" class="NixxisToolStrip" cellpadding="0" cellspacing="0">
+									<tr>
+										<td class="Left">&nbsp;</td>
+										<td class="Buttons">
+											<img class="NixxisLabel" id="chatLabel" src="Img/tbChat.png" alt="Chat commands" title="Chat commands" />
+											<img class="NixxisSeparator" src="separator28.png" alt="" />
+											img class="NixxisButton" id="ChatNewChat" src="Img/tbChat_NewChat.png" title="New chat" alt="New chat" /
+											<img class="NixxisButton" id="ChatHold" src="Img/tbChat_OnHold.png" title="Hold chat" alt="Hold chat" />
+											<img class="NixxisButton" id="ChatRetrieve" src="Img/tbChat_Retrieve.png" title="Retrieve chat" alt="Retrieve chat" />
+											img class="NixxisButton" id="ChatForward" src="Img/tbChat_Forward.png" title="Forward chat" alt="Forward chat" /
+											<img class="NixxisButton" id="ChatHangup" src="Img/tbChat_Close.png" title="Close chat" alt="Close chat" />
+										</td>
+										<td class="Right">&nbsp;</td>
+									</tr>
+								</table>
+								<table id="DebugToolStrip" class="NixxisToolStrip" cellpadding="0" cellspacing="0" style=" display:none;">
+									<tr>
+										<td class="Left">&nbsp;</td>
+										<td class="Buttons">
+											<img class="NixxisLabel" src="ImgDev/tbDebug.png" alt="Debug commands" title="Debug commands" />
+											<img class="NixxisSeparator" src="separator28.png" alt="" />
+											<img class="NixxisButton" id="Debug" src="ImgDev/tbDebug_Debug.png" title="Debug" alt="Debug" />
+											<img class="NixxisButton" id="dbgStartWindow" src="ImgDev/tbDebug_StartWindow.png" title="Start debug window" alt="Start debug" style=" " />
+											<img class="NixxisButton" id="dbgHideWindow" src="ImgDev/tbDebug_HideWindow.png" title="Hide debug window" alt="Hide debug" style=" " />
+											<img class="NixxisButton" id="dbgStopWindow" src="ImgDev/tbDebug_StopWindow.png" title="Stop debug window" alt="Stop debug" style=" " />
 											<img class="NixxisButton" id="dbgFunction" src="ImgDev/tbDebug_Function.png" title="run function" alt="run function" />
 											<img class="NixxisButton" id="dbgQualification" src="ImgDev/tbDebug_TestQual.png" title="See list of qualification" alt="See list of qualification" />
-	                                        <img class="NixxisSeparator" src="separator28.png" alt=""/>
+											<img class="NixxisSeparator" src="separator28.png" alt="" />
 											<img class="NixxisButton" id="dbgAddChatContact" src="ImgDev/tbDebug_AddChatContact.png" title="Add chat contact" alt="Add chat contact" />
 											<img class="NixxisButton" id="dbgChatReceiveMsg" src="ImgDev/tbDebug_AddChatContactMsg.png" title="Send new msg" alt="Send new msg" />
 											<img class="NixxisButton" id="dbgAddEMailContact" src="ImgDev/tbDebug_AddEMailContact.png" title="Add e-mail contact" alt="Add e-mail contact" />
-											<img class="NixxisButton" id="dbgDomain" src="ImgDev/tbDebug_DomainName.png" title="Show domain name" alt="Domain_name" style=" display:none;"/>
-	                                        <img class="NixxisButton" id="dbgChangeDomain" src="ImgDev/tbDebug_ChangeDomainName.png" title="Change domain name" alt="Change domain name" style=" display:none;"/>
-	                                        <img class="NixxisSeparator" src="separator28.png" alt="" style=" display:none;"/>
-	                                        <img class="NixxisButton" id="dbgAccessFrame" src="ImgDev/tbDebug_AccessFrame.png" title="Acces function in the Frame" alt="Access frame" style=" display:none;"/>
-	                                        <img class="NixxisButton" id="dbgChangeFrameUri" src="ImgDev/tbDebug_ChangeFrameUri.png" title="Change frame uri" alt="Change frame uri" style=" display:none;"/>
-	                                        <img class="NixxisButton" id="dbgTestSendHashMsg" src="ImgDev/tbDebug_HashMsgSend.png" title="Send hash message to frame" alt="Send hash msg" style=" display:none;"/>
-	                                        <img class="NixxisButton" id="dbgUserFunction" src="ImgDev/tbDebug_Function.png" title="Test function to run" alt="User function" style=" display:none;"/>
-											<img class="NixxisButton" id="dbgTabAdd" src="ImgDev/tbDebug_TabAdd.png" title="Add contact" alt="Add contact" style=" display:none;"/>
-											<img class="NixxisButton" id="dbgTabRemove" src="ImgDev/tbDebug_TabRemove.png" title="Remove contact" alt="Remove contact" style=" display:none;"/>
-											<img class="NixxisButton" id="dbgTabPosLeft" src="ImgDev/tbDebug_TabPosLeft.png" title="Position left" alt="Position left"  style=""/>
-											<img class="NixxisButton" id="dbgTabPosBottom" src="ImgDev/tbDebug_TabPosBottom.png" title="Position bottom" alt="Position bottom"  style=""/>
-											<img class="NixxisButton" id="dbgTabPosRight" src="ImgDev/tbDebug_TabPosRight.png" title="Position right" alt="Position right"  style=""/>
-											<img class="NixxisButton" id="dbgStatusWindowAdd" src="ImgDev/tbDebug_AddItemToStatus.png" title="Status add" alt="Status add"  style=" display:none;"/>
-		                                </td>
-		                                <td class="Right">&nbsp;</td>
-		                            </tr>
-		                        </table>	                        
-	                        </div>                    
-	                    </div> 
-	                </td>
-	            </tr>
-	            <tr id="NixxisAgentWorkAreaRow" class="NixxisAgentWorkAreaRow">
-					<td class="NixxisAgentWorkAreaCell"> 
+											<img class="NixxisButton" id="dbgDomain" src="ImgDev/tbDebug_DomainName.png" title="Show domain name" alt="Domain_name" style=" display:none;" />
+											<img class="NixxisButton" id="dbgChangeDomain" src="ImgDev/tbDebug_ChangeDomainName.png" title="Change domain name" alt="Change domain name" style=" display:none;" />
+											<img class="NixxisSeparator" src="separator28.png" alt="" style=" display:none;" />
+											<img class="NixxisButton" id="dbgAccessFrame" src="ImgDev/tbDebug_AccessFrame.png" title="Acces function in the Frame" alt="Access frame" style=" display:none;" />
+											<img class="NixxisButton" id="dbgChangeFrameUri" src="ImgDev/tbDebug_ChangeFrameUri.png" title="Change frame uri" alt="Change frame uri" style=" display:none;" />
+											<img class="NixxisButton" id="dbgTestSendHashMsg" src="ImgDev/tbDebug_HashMsgSend.png" title="Send hash message to frame" alt="Send hash msg" style=" display:none;" />
+											<img class="NixxisButton" id="dbgUserFunction" src="ImgDev/tbDebug_Function.png" title="Test function to run" alt="User function" style=" display:none;" />
+											<img class="NixxisButton" id="dbgTabAdd" src="ImgDev/tbDebug_TabAdd.png" title="Add contact" alt="Add contact" style=" display:none;" />
+											<img class="NixxisButton" id="dbgTabRemove" src="ImgDev/tbDebug_TabRemove.png" title="Remove contact" alt="Remove contact" style=" display:none;" />
+											<img class="NixxisButton" id="dbgTabPosLeft" src="ImgDev/tbDebug_TabPosLeft.png" title="Position left" alt="Position left" style="" />
+											<img class="NixxisButton" id="dbgTabPosBottom" src="ImgDev/tbDebug_TabPosBottom.png" title="Position bottom" alt="Position bottom" style="" />
+											<img class="NixxisButton" id="dbgTabPosRight" src="ImgDev/tbDebug_TabPosRight.png" title="Position right" alt="Position right" style="" />
+											<img class="NixxisButton" id="dbgStatusWindowAdd" src="ImgDev/tbDebug_AddItemToStatus.png" title="Status add" alt="Status add" style=" display:none;" />
+										</td>
+										<td class="Right">&nbsp;</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</td>
+				</tr>
+				<tr id="NixxisAgentWorkAreaRow" class="NixxisAgentWorkAreaRow">
+					<td class="NixxisAgentWorkAreaCell">
 						<table class="NixxisAgentWorkAreaTable" cellpadding="0" cellspacing="0">
-							<tr class="NixxisAgentWorkAreaTableRow"> 
-				                <td id="NixxisDockLeftCell" class="NixxisDockLeftCell">
-				                    <div id="NixxisDockLeft" class="NixxisDockLeft"> 
+							<tr class="NixxisAgentWorkAreaTableRow">
+								<td id="NixxisDockLeftCell" class="NixxisDockLeftCell">
+									<div id="NixxisDockLeft" class="NixxisDockLeft">
 										<table class="NixxisDockLeftLayoutTable" cellpadding="0" cellspacing="0">
 											<tr>
 												<td class="NixxisDockLeftHeadingCell">
@@ -256,7 +254,7 @@
 											</tr>
 											<tr>
 												<td id="NixxisDockLeftTabButtonCell" class="NixxisDockLeftTabButtonCell">
-													<div id="ContactTabSelector" class="ContactTabSelector" ></div>
+													<div id="ContactTabSelector" class="ContactTabSelector"></div>
 												</td>
 											</tr>
 											<tr>
@@ -268,12 +266,17 @@
 																	<table class="txPropertyGridHeaderTable" cellpadding="0" cellspacing="0">
 																		<tr>
 																			<td class="txPropertyGridHeaderIconCell"><div class="txPropertyGridHeaderIconDiv"></div></td>
-																			<td class="txPropertyGridHeaderTitleCell"><script>document.writeln(CrResource.infoBox.title);</script></td>
+																			<td class="txPropertyGridHeaderTitleCell">
+																				<script>document.writeln(CrResource.infoBox.title);</script>
+																			</td>
 																			<td class="txPropertyGridHeaderVisibleCell"><div class="txPropertyGridHeaderVisibleDiv"></div></td>
 																		</tr>
 																	</table>
 																</li>
-																<li id="PropertyGridCat_Agent" Class="txPropertyGridCategory"><img id="PropertyGridCatImg_Agent" class="txPropertyGridCategoryImage" src="Img/DefaultSkin/Common_Less.png" alt="" /><script>document.writeln(CrResource.infoBox.titleAgt);</script></li>
+																<li id="PropertyGridCat_Agent" Class="txPropertyGridCategory">
+																	<img id="PropertyGridCatImg_Agent" class="txPropertyGridCategoryImage" src="Img/DefaultSkin/Common_Less.png" alt="" />
+																	<script>document.writeln(CrResource.infoBox.titleAgt);</script>
+																</li>
 																<li id="PropertyGridList_Agent" Class="txPropertyGridPropertyList">
 																	<table class="txPropertyGridPropertyListTable" cellpadding="0" cellspacing="0">
 																		<tr>
@@ -284,7 +287,9 @@
 																		</tr>
 																		<tr>
 																			<td class="txPropertyGridPropertyFillLeftCell"><div class="txPropertyGridPropertyFillLeft"></div></td>
-																			<td class="txPropertyGridPropertyCell"><script>document.writeln(CrResource.infoBox.agtName);</script></td>
+																			<td class="txPropertyGridPropertyCell">
+																				<script>document.writeln(CrResource.infoBox.agtName);</script>
+																			</td>
 																			<td class="txPropertyGridPropertyValueCell"><div id="Info_AgtName" class="txPropertyGridPropertyValue">&nbsp;</div></td>
 																			<td class="txPropertyGridPropertyFillRightCell"><div class="txPropertyGridPropertyFillLeft"></div></td>
 																		</tr>
@@ -293,10 +298,12 @@
 																			<td class="txPropertyGridPropertyFillCell"></td>
 																			<td class="txPropertyGridPropertyFillCell"></td>
 																			<td class="txPropertyGridPropertyFillRightCell"><div class="txPropertyGridPropertyFillLeft"></div></td>
-																		</tr>																	
+																		</tr>
 																		<tr>
 																			<td class="txPropertyGridPropertyFillLeftCell"><div class="txPropertyGridPropertyFillLeft"></div></td>
-																			<td class="txPropertyGridPropertyCell"><script>document.writeln(CrResource.infoBox.agtAccount);</script></td>
+																			<td class="txPropertyGridPropertyCell">
+																				<script>document.writeln(CrResource.infoBox.agtAccount);</script>
+																			</td>
 																			<td class="txPropertyGridPropertyValueCell"><div id="Info_AgtAccount" class="txPropertyGridPropertyValue">&nbsp;</div></td>
 																			<td class="txPropertyGridPropertyFillRightCell"><div class="txPropertyGridPropertyFillLeft"></div></td>
 																		</tr>
@@ -305,10 +312,13 @@
 																			<td class="txPropertyGridPropertyFillCell"></td>
 																			<td class="txPropertyGridPropertyFillCell"></td>
 																			<td class="txPropertyGridPropertyFillRightCell"><div class="txPropertyGridPropertyFillLeft"></div></td>
-																		</tr>																	
+																		</tr>
 																	</table>
 																</li>
-																<li id="PropertyGridCat_Queue" Class="txPropertyGridCategory"><img id="PropertyGridCatImg_Queue" class="txPropertyGridCategoryImage" src="Img/DefaultSkin/Common_Less.png" alt="" /><script>document.writeln(CrResource.infoBox.titleQueue);</script></li>
+																<li id="PropertyGridCat_Queue" Class="txPropertyGridCategory">
+																	<img id="PropertyGridCatImg_Queue" class="txPropertyGridCategoryImage" src="Img/DefaultSkin/Common_Less.png" alt="" />
+																	<script>document.writeln(CrResource.infoBox.titleQueue);</script>
+																</li>
 																<li id="PropertyGridList_Queue" Class="txPropertyGridPropertyList">
 																	<table class="txPropertyGridPropertyListTable" cellpadding="0" cellspacing="0">
 																		<tr>
@@ -319,7 +329,9 @@
 																		</tr>
 																		<tr>
 																			<td class="txPropertyGridPropertyFillLeftCell"><div class="txPropertyGridPropertyFillLeft"></div></td>
-																			<td class="txPropertyGridPropertyCell"><script>document.writeln(CrResource.infoBox.queueWaiting);</script></td>
+																			<td class="txPropertyGridPropertyCell">
+																				<script>document.writeln(CrResource.infoBox.queueWaiting);</script>
+																			</td>
 																			<td class="txPropertyGridPropertyValueCell"><div id="Info_QueueWaiting" class="txPropertyGridPropertyValue">&nbsp;</div></td>
 																			<td class="txPropertyGridPropertyFillRightCell"><div class="txPropertyGridPropertyFillLeft"></div></td>
 																		</tr>
@@ -328,10 +340,12 @@
 																			<td class="txPropertyGridPropertyFillCell"></td>
 																			<td class="txPropertyGridPropertyFillCell"></td>
 																			<td class="txPropertyGridPropertyFillRightCell"><div class="txPropertyGridPropertyFillLeft"></div></td>
-																		</tr>																																		
+																		</tr>
 																		<tr>
 																			<td class="txPropertyGridPropertyFillLeftCell"><div class="txPropertyGridPropertyFillLeft"></div></td>
-																			<td class="txPropertyGridPropertyCell" style="color: red"><script>document.writeln(CrResource.infoBox.queuePriority);</script></td>
+																			<td class="txPropertyGridPropertyCell" style="color: red">
+																				<script>document.writeln(CrResource.infoBox.queuePriority);</script>
+																			</td>
 																			<td class="txPropertyGridPropertyValueCell"><div id="Info_QueueHighPriority" class="txPropertyGridPropertyValue">&nbsp;</div></td>
 																			<td class="txPropertyGridPropertyFillRightCell"><div class="txPropertyGridPropertyFillLeft"></div></td>
 																		</tr>
@@ -340,10 +354,13 @@
 																			<td class="txPropertyGridPropertyFillCell"></td>
 																			<td class="txPropertyGridPropertyFillCell"></td>
 																			<td class="txPropertyGridPropertyFillRightCell"><div class="txPropertyGridPropertyFillLeft"></div></td>
-																		</tr>																																		
-																	</table>	
+																		</tr>
+																	</table>
 																</li>
-																<li id="PropertyGridCat_Contact" Class="txPropertyGridCategory"><img id="PropertyGridCatImg_Contact" class="txPropertyGridCategoryImage" src="Img/DefaultSkin/Common_Less.png" alt="" /><script>document.writeln(CrResource.infoBox.titleContact);</script></li>
+																<li id="PropertyGridCat_Contact" Class="txPropertyGridCategory">
+																	<img id="PropertyGridCatImg_Contact" class="txPropertyGridCategoryImage" src="Img/DefaultSkin/Common_Less.png" alt="" />
+																	<script>document.writeln(CrResource.infoBox.titleContact);</script>
+																</li>
 																<li id="PropertyGridList_Contact" Class="txPropertyGridPropertyList">
 																	<table class="txPropertyGridPropertyListTable" cellpadding="0" cellspacing="0">
 																		<tr>
@@ -351,10 +368,12 @@
 																			<td class="txPropertyGridPropertyFillCell"></td>
 																			<td class="txPropertyGridPropertyFillCell"></td>
 																			<td class="txPropertyGridPropertyFillRightCell"><div class="txPropertyGridPropertyFillLeft"></div></td>
-																		</tr>																																	
+																		</tr>
 																		<tr>
 																			<td class="txPropertyGridPropertyFillLeftCell"><div class="txPropertyGridPropertyFillLeft"></div></td>
-																			<td class="txPropertyGridPropertyCell"><script>document.writeln(CrResource.infoBox.contactState);</script></td>
+																			<td class="txPropertyGridPropertyCell">
+																				<script>document.writeln(CrResource.infoBox.contactState);</script>
+																			</td>
 																			<td class="txPropertyGridPropertyValueCell"><div id="Info_ContactState" class="txPropertyGridPropertyValue">&nbsp;</div></td>
 																			<td class="txPropertyGridPropertyFillRightCell"><div class="txPropertyGridPropertyFillLeft"></div></td>
 																		</tr>
@@ -363,10 +382,12 @@
 																			<td class="txPropertyGridPropertyFillCell"></td>
 																			<td class="txPropertyGridPropertyFillCell"></td>
 																			<td class="txPropertyGridPropertyFillRightCell"><div class="txPropertyGridPropertyFillLeft"></div></td>
-																		</tr>																	
+																		</tr>
 																		<tr>
 																			<td class="txPropertyGridPropertyFillLeftCell"><div class="txPropertyGridPropertyFillLeft"></div></td>
-																			<td class="txPropertyGridPropertyCell"><script>document.writeln(CrResource.infoBox.contactFrom);</script></td>
+																			<td class="txPropertyGridPropertyCell">
+																				<script>document.writeln(CrResource.infoBox.contactFrom);</script>
+																			</td>
 																			<td class="txPropertyGridPropertyValueCell"><div id="Info_ContactOriginator" class="txPropertyGridPropertyValue">&nbsp;</div></td>
 																			<td class="txPropertyGridPropertyFillRightCell"><div class="txPropertyGridPropertyFillLeft"></div></td>
 																		</tr>
@@ -375,10 +396,12 @@
 																			<td class="txPropertyGridPropertyFillCell"></td>
 																			<td class="txPropertyGridPropertyFillCell"></td>
 																			<td class="txPropertyGridPropertyFillRightCell"><div class="txPropertyGridPropertyFillLeft"></div></td>
-																		</tr>	
-																																																				<tr>
+																		</tr>
+																		<tr>
 																			<td class="txPropertyGridPropertyFillLeftCell"><div class="txPropertyGridPropertyFillLeft"></div></td>
-																			<td class="txPropertyGridPropertyCell"><script>document.writeln(CrResource.infoBox.contactTo);</script></td>
+																			<td class="txPropertyGridPropertyCell">
+																				<script>document.writeln(CrResource.infoBox.contactTo);</script>
+																			</td>
 																			<td class="txPropertyGridPropertyValueCell"><div id="Info_ContactTo" class="txPropertyGridPropertyValue">&nbsp;</div></td>
 																			<td class="txPropertyGridPropertyFillRightCell"><div class="txPropertyGridPropertyFillLeft"></div></td>
 																		</tr>
@@ -387,30 +410,326 @@
 																			<td class="txPropertyGridPropertyFillCell"></td>
 																			<td class="txPropertyGridPropertyFillCell"></td>
 																			<td class="txPropertyGridPropertyFillRightCell"><div class="txPropertyGridPropertyFillLeft"></div></td>
-																		</tr>	
-																	</table>	
+																		</tr>
+																	</table>
 																</li>
 															</ul>
 														</div>
-													</div>	
+													</div>
 												</td>
 											</tr>
 										</table>
-				                    </div>
-				                </td>
-				                <td id="NixxisAgentContactAreaCell" class="NixxisAgentContactAreaCell"> 
-				                    <div id="NixxisAgentContactArea" class="NixxisAgentContactArea"> </div> 
-				                </td>
-			                	<td id="NixxisDockRightCell" class="NixxisDockRightCell"> <div id="NixxisDockRight" class="NixxisDockRight"></div> </td>
+									</div>
+								</td>
+								<td id="NixxisAgentContactAreaCell" class="NixxisAgentContactAreaCell">
+									<div id="NixxisAgentContactArea" class="NixxisAgentContactArea"> </div>
+								</td>
+								<td id="NixxisDockRightCell" class="NixxisDockRightCell"> <div id="NixxisDockRight" class="NixxisDockRight"></div> </td>
 							</tr>
 						</table>
 					</td>
-	            </tr>
-	            <tr id="NixxisDockBottomRow" class="NixxisDockBottomRow">       
+				</tr>
+				<tr id="NixxisDockBottomRow" class="NixxisDockBottomRow">
 					<td id="NixxisDockBottomCell" class="NixxisDockBottomCell"> <div id="NixxisDockBottom" class="NixxisDockBottom"></div> </td>
-	            </tr>
-	        </table>
-	    </div>
+				</tr>
+			</table>
+		</div>
+	</div>-->
+
+
+
+
+	<div id="app">
+		<div class="content">
+			<!-- <object data="..." type="..."></object> -->
+
+			<div class="message">
+				<h1>You are currently on a break!</h1>
+				<p>Click on ready to start working</p>
+			</div>
+		</div>
+		<div class="footer">
+			<!-- Buttons -->
+			<div class="column grid-buttons">
+				<!-- Quit -->
+				<button class="btn-1">
+					<div class="icon">
+						<img src="v3/assets/icons/Agent_AddressBookEntryType_Agent_Off_25.png"
+							 alt="icon" />
+					</div>
+					<span>Quit</span>
+				</button>
+
+				<!-- Ready -->
+				<button class="btn-1">
+					<div class="icon">
+						<img src="v3/assets/icons/Agent_Command_Ready_50.png" alt="icon" />
+					</div>
+					<span>Ready</span>
+				</button>
+
+				<!-- Break -->
+				<button class="btn-1 active" data-target="#break">
+					<div class="icon">
+						<img src="v3/assets/icons/Agent_Command_Pause_50.png" alt="icon" />
+					</div>
+					<span>Break</span>
+				</button>
+
+				<!-- Priority picker -->
+				<button class="btn-1" disabled>
+					<div class="icon">
+						<img src="v3/assets/icons/Agent_AddressBookEntryType_Queue_25.png"
+							 alt="icon" />
+					</div>
+					<span>Priority picker</span>
+				</button>
+
+				<!-- Search mode -->
+				<button class="btn-1" data-target="#search-mode">
+					<div class="icon">
+						<img src="v3/assets/icons/Agent_Command_StartSearchMode_50.png"
+							 alt="icon" />
+					</div>
+					<span>Search mode</span>
+				</button>
+
+				<!-- Pickup -->
+				<button class="btn-1">
+					<div class="icon">
+						<img src="v3/assets/icons/Agent_Command_ContactPickup_50.png"
+							 alt="icon" />
+					</div>
+					<span>Pickup</span>
+				</button>
+
+				<!-- Manual dial -->
+				<button class="btn-1">
+					<div class="icon">
+						<img src="v3/assets/icons/Agent_Command_Voice_NewCall_50.png"
+							 alt="icon" />
+					</div>
+					<span>Manual dial</span>
+				</button>
+
+				<!-- Team -->
+				<button class="btn-1 NixxisButton" id="TeamSelection" data-target="#team">
+					<div class="icon">
+						<img src="v3/assets/icons/Agent_Command_SelectTeam_50.png"
+							 alt="icon" />
+					</div>
+					<span>Team</span>
+				</button>
+
+				<!-- Send alert -->
+				<button class="btn-1">
+					<div class="icon">
+						<img src="v3/assets/icons/Agent_Command_SendAlert_50.png"
+							 alt="icon" />
+					</div>
+					<span>Send alert</span>
+				</button>
+
+				<!-- Mini mode -->
+				<button class="btn-1">
+					<div class="icon">
+						<img src="v3/assets/icons/Agent_MiniMode_50.png" alt="icon" />
+					</div>
+					<span>Mini mode</span>
+				</button>
+			</div>
+
+			<!-- Buttons -->
+			<div class="column grid-buttons">
+				<!-- Disposition -->
+				<button class="btn-1">
+					<div class="icon">
+						<img src="v3/assets/icons/Agent_Command_SetQualification_50.png"
+							 alt="icon" />
+					</div>
+					<span>Disposition</span>
+				</button>
+
+				<!-- Contact history -->
+				<button class="btn-1">
+					<div class="icon">
+						<img src="v3/assets/icons/Agent_Command_ShowContatHistory_50.png"
+							 alt="icon" />
+					</div>
+					<span>Contact history</span>
+				</button>
+
+				<!-- Extend -->
+				<button class="btn-1">
+					<div class="icon">
+						<img src="v3/assets/icons/Agent_Command_ExtendTime_50.png"
+							 alt="icon" />
+					</div>
+					<span>Extend</span>
+				</button>
+
+				<!-- Close -->
+				<button class="btn-1">
+					<div class="icon">
+						<img src="v3/assets/icons/Agent_Command_CloseScript_50.png"
+							 alt="icon" />
+					</div>
+					<span>Close</span>
+				</button>
+
+				<!-- Hold -->
+				<button class="btn-1">
+					<div class="icon">
+						<img src="v3/assets/icons/Agent_Command_Voice_Forward_50.png"
+							 alt="icon" />
+					</div>
+					<span>Hold</span>
+				</button>
+
+				<!-- Retrieve -->
+				<button class="btn-1">
+					<div class="icon">
+						<img src="v3/assets/icons/Agent_Command_Voice_Retrieve_50.png"
+							 alt="icon" />
+					</div>
+					<span>Retrieve</span>
+				</button>
+
+				<!-- Hangup -->
+				<button class="btn-1">
+					<div class="icon">
+						<img src="v3/assets/icons/Agent_Command_Voice_Hangup_50.png"
+							 alt="icon" />
+					</div>
+					<span>Hangup</span>
+				</button>
+
+				<!-- Record -->
+				<button class="btn-1">
+					<div class="icon">
+						<img src="v3/assets/icons/Agent_Command_Voice_Record_50.png"
+							 alt="icon" />
+					</div>
+					<span>Record</span>
+				</button>
+			</div>
+
+			<!-- Status -->
+			<div class="column">
+				<div class="status">
+					<div>
+						<img src="v3/assets/icons/Agent_MediaType_Outbound_25.png"
+							 alt="icon" />
+					</div>
+					<div>
+						<ul>
+							<li class="row">
+								<strong>Search lab</strong>
+								<span>00:00:06</span>
+							</li>
+							<li class="row">
+								<span>From:</span>
+								<span></span>
+							</li>
+							<li class="row">
+								<span>To:</span>
+								<span></span>
+							</li>
+							<li class="row">
+								<span>State:</span>
+								<span>Preview</span>
+							</li>
+							<li class="row">
+								<span>Customer:</span>
+								<span>Preview</span>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+
+			<!-- Info -->
+			<div class="column">
+				<div class="view">
+					<ul>
+						<li class="row">
+							<span class="label">Wating contacts:</span>
+							<span class="value">0</span>
+						</li>
+						<li class="row">
+							<span class="label">Priority contacts:</span>
+							<span class="value">0 - 0</span>
+						</li>
+						<li class="row">
+							<span class="label">State:</span>
+							<span class="value">Break</span>
+						</li>
+						<li class="row">
+							<span class="label">Duration:</span>
+							<span class="value">00:00:04</span>
+						</li>
+						<li class="row">
+							<span>Formateur Nixxis (10008)</span>
+
+							<div class="d-flex">
+								<button class="btn-2">
+									<img src="v3/assets/icons/Agent_ReadyVoiceIndication_25.png"
+										 alt="icon" />
+								</button>
+								<button class="btn-2">
+									<img src="v3/assets/icons/Agent_ReadyChatIndication_25.png"
+										 alt="icon" />
+								</button>
+								<button class="btn-2">
+									<img src="v3/assets/icons/Agent_ReadyMailIndication_25.png"
+										 alt="icon" />
+								</button>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
 	</div>
+
+
+
+
+	<!-- Break -->
+	<div class="modal" id="break">
+		<div class="modal-header">
+			<h4>Break</h4>
+		</div>
+		<div class="modal-content"></div>
+		<div class="modal-footer">
+			<button data-close>Close</button>
+		</div>
+	</div>
+
+	<!-- Search mode -->
+	<div class="modal" id="search-mode">
+		<div class="modal-header">
+			<h4>Search mode</h4>
+		</div>
+		<div class="modal-content"></div>
+		<div class="modal-footer">
+			<button data-close>Close</button>
+		</div>
+	</div>
+
+	<!-- Team -->
+	<div class="modal" id="team">
+		<div class="modal-header">
+			<h4>Team</h4>
+		</div>
+		<div class="modal-content"></div>
+		<div class="modal-footer">
+			<button data-close>Close</button>
+		</div>
+	</div>
+
+	<div class="backdrop"></div>
+
+	<script src="/v3/assets/js/script.js"></script>
 </body>
 </html>

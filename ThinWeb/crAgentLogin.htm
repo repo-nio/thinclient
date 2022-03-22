@@ -4,7 +4,7 @@
     <link rel="SHORTCUT ICON" href="Icone_agent.ico" />
     <title>Nixxis client login</title>
     <link rel="stylesheet" href="CrToolboxVisual.css" />
-    <!--<link rel="stylesheet" href="CrToolboxVisualWhite.css" />-->
+
     <link rel="stylesheet" href="CrLoginScreen.css" />
     <link rel="stylesheet" href="default.css" />
     <script type="text/javascript" language="javascript" src="CrToolbox/CrToolbox.js"></script>
@@ -68,7 +68,8 @@
             }
 
             window.location = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1) + "crAgent.htm";
-        }
+                < !--document.forms["Login"].submit(); -->
+            }
 
         function resetForm() {
             $("userAccount").value = "";
@@ -112,7 +113,7 @@
             <img src="v3/img/Nixxis_Logotype_RGB_White.png" alt="Nixxis" width="140" />
         </div>
         <div class="LoginDivForm">
-            <form id="Login" name="Login" action="CrLoginScreen.htm" method="post" style="overflow:hidden; width:100%">
+            <form id="Login" name="Login" action="CrAgentLogin.htm" method="post" style="overflow:hidden; width:100%">
 
                 <div class="loginBoxMain">
                     <div class="loginFormTitle">
@@ -167,7 +168,7 @@
                                 <input type="hidden" value="Client_Sup.html" name="startPage" id="startPage" />
                                 <input type="hidden" value="agent" name="roles" id="roles" />
                                 <!--<div id="divBtnSubmit" class="LoginButtons"></div>-->
-                                <button type="button" class="loginFormLoginBtn" id="divBtnSubmit" onclick="javascript:submitForm()">
+                                <button type="button" class="loginFormLoginBtn" id="divBtnSubmit" onclick="javascript:submitForm()" type="submit">
                                     <script>document.writeln(const_Btn_Ok)</script>
                                 </button>
                             </li>
