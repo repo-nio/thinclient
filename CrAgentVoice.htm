@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Nixxis Contact Suite voice window</title>	
+		<link rel="stylesheet" href="default.css" type="text/css" />
+		<link href="CrToolboxVisual.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" language="javascript" src="CrToolbox/CrToolbox.js"></script>
+        <script type="text/javascript" language="javascript" src="CrToolbox/CrToolboxControl.js"></script>
+        <script type="text/javascript" language="javascript" src="CrToolbox/CrToolboxControlVisual.js"></script>
+		<script type="text/javascript" language="javascript" src="jsClient/NixxisClientScript.js"></script>
+		<script type="text/javascript" language="javascript" src="jsCommon/NixxisCommonObj.js"></script>
+		<script type="text/javascript" language="javascript" src="jsAgent/AgentLanguageResource.js"></script>
+		<script type="text/javascript" language="javascript" src="jsAgent/agentConst.js"></script>		
+		<script type="text/javascript" language="javascript" src="jsAgent/agentPanels.js"></script>
+		<script>
+			var _MainBorder;
+			var __crContactId = null;
+			var _Frame;
+			function InitPage()
+			{
+				////debugger;
+<!IS_BROWSER Firefox>
+				try { document.domain = document.domain.substring(document.domain.lastIndexOf('.', document.domain.lastIndexOf('.') - 1) + 1); }
+				catch (e) {;}
+				//alert("CrAgentVoice.htm: " + document.domain);
+<!IS_BROWSER>				
+				NixxisContactLink.Init();
+				__crContactId = NixxisContactLink.contactId;
+				
+				_MainBorder = new BorderFrame(NixxisContactLink.contactId, $('NixxisVoiceWindow'));
+				_MainBorder.setTitle("Script");
+				_MainBorder.Show();
+				
+				var _WorkSpace = _MainBorder.getWorkspace();
+				_Frame = document.createElement("iframe");
+				_Frame.width = "100%";
+				_Frame.height = "100%";
+				_Frame.frameBorder = "0";
+				_Frame.scrolling = "auto";
+				_Frame.allowTransparency = false;
+				var script = NixxisContactLink.contactInfo.ScriptUrl;
+				if (script == "" || script == "null") script = "crAgentDefaultScript.htm?ContactId=" + NixxisContactLink.contactInfo.Id;
+				_Frame.src = script;
+				_WorkSpace.appendChild(_Frame);
+			} 
+			function onPageResize()
+			{
+				//var _Height = $('NixxisChatLayoutTable').clientHeight - $('NixxisChatMsgCell').clientHeight - $('NixxisChatFreeSpace').clientHeight;
+				//$('NixxisChatMsgHistoryCell').style.height = _Height + "px";
+			}
+
+			function exitInstance()
+			{
+				////debugger;
+				_Frame.src = "about:blank";
+				_MainBorder.Dispose();
+				
+				PurgeElement(_MainBorder);
+				_MainBorder = null;
+				PurgeElement(__crContactId);
+				__crContactId = null;
+				PurgeElement(_Frame);
+				_Frame = null;
+			}
+		</script>	
+	</head>
+	<body scroll="no" onresize="javascript: onPageResize(event);" onload="javascript: InitPage();" onunload="javascript:exitInstance()">
+	    <div id="NixxisContainer" class="NixxisContainer">
+	        <div id="NixxisVoiceWindow" class="NixxisPageLayout">
+			</div>
+		</div>
+	</body>
+</html>

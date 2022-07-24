@@ -1,0 +1,707 @@
+﻿/*_____________________________*/
+/*Toolbox items*/
+/*_____________________________*/
+/*Button*/
+/*__________________*/
+A.HTML_Button
+{
+	text-decoration: none;
+/*	position:relative;*/
+}
+TABLE.HTML_Button
+{
+	height:25px;
+}
+TABLE.HTML_Button TD
+{
+	padding-left: 0px;
+	padding-top: 0px;
+}
+TABLE.HTML_Button TD.BtnLeft
+{
+	background-image: url(CrToolbox/HTML_Button/btnLeft.png);
+	background-repeat: no-repeat;
+	cursor: default;
+	font-size:1px;
+}
+TABLE.HTML_Button TD.BtnLeft.V1
+{
+	padding-left:5px;
+}
+
+TABLE.HTML_Button TD.BtnBody
+{
+	background-image: url(CrToolbox/HTML_Button/btnBody.png);
+	background-repeat: repeat-x;
+	white-space:nowrap;
+	cursor: default;
+	font-size:13px;
+}
+TABLE.HTML_Button TD.BtnRight
+{
+	padding-left:5px;
+	background-image: url(CrToolbox/HTML_Button/btnRight.png);
+	background-repeat: no-repeat;
+	cursor: default;
+}
+
+TABLE.HTML_Button TD.BtnLeft.ActLeft
+{
+	background-image: url(CrToolbox/HTML_Button/btnLeftAct.png);
+	background-repeat: no-repeat;
+}
+TABLE.HTML_Button TD.BtnBody.ActBody
+{
+	background-image: url(CrToolbox/HTML_Button/btnBodyAct.png);
+	background-repeat: repeat-x;
+}
+TABLE.HTML_Button TD.BtnRight.ActRight
+{
+	padding-left:5px;
+	background-image: url(CrToolbox/HTML_Button/btnRightAct.png);
+	background-repeat: no-repeat;
+}
+
+TABLE.HTML_Button TD.BtnLeft.DisLeft
+{
+	background-image: url(CrToolbox/HTML_Button/btnLeft_Disabled.png);
+	background-repeat: no-repeat;
+}
+TABLE.HTML_Button TD.BtnBody.DisBody
+{
+	background-image: url(CrToolbox/HTML_Button/btnBody_Disabled.png);
+	background-repeat: repeat-x;
+	color: #9d9da1;
+}
+TABLE.HTML_Button TD.BtnRight.DisRight
+{
+	padding-left:5px;
+	background-image: url(CrToolbox/HTML_Button/btnRight_Disabled.png);
+	background-repeat: no-repeat;
+}
+TABLE.HTML_Button TD.BtnLeft.TabLeft
+{
+	background-image: url(CrToolbox/HTML_Button/btnLeft_Tab.png);
+	background-repeat: no-repeat;
+}
+TABLE.HTML_Button TD.BtnBody.TabBody
+{
+	background-image: url(CrToolbox/HTML_Button/btnBody_Tab.png);
+	background-repeat: repeat-x;
+}
+TABLE.HTML_Button TD.BtnRight.TabRight
+{
+	padding-left:5px;
+	background-image: url(CrToolbox/HTML_Button/btnRight_Tab.png);
+	background-repeat: no-repeat;
+}
+/*__________________*/
+/* Form*/
+/*__________________*/
+/* --> Main form*/
+/* --------------------*/
+DIV.HTML_Form
+{
+	height: 350px;
+	width: 310px;
+	left: 20px;
+	top: 20px;
+	overflow: hidden;
+}
+DIV.HTML_Form.Drag
+{
+	position: fixed !important;
+	position: absolute;	
+}
+DIV.HTML_Form.Hide
+{
+	display: none;
+}
+DIV.HTML_Form.Dock
+{
+	position : inherit;
+}
+/* --> Resize */
+/* --------------------*/
+DIV.HTML_Form_ResizeElement
+{
+	height: 17px;
+	width: 16px;
+	right: 4px;
+	bottom: 4px;
+	position: absolute;
+	background-image: url(CrToolbox/HTML_Form/Resize.png);
+	background-repeat: no-repeat;
+	z-index: 99;
+	cursor: nw-resize;
+}
+
+DIV.HTML_Form_ResizeElement.HideResize
+{
+	display: none;
+}
+/* --> Top section */
+/* --------------------*/
+DIV.HTML_Form_BlockDrag
+{
+	height: 27px;
+	width: 100%;
+}
+TABLE.HTML_Form_BorderDrag
+{
+	height: 27px;
+	width: 100%;	
+}
+
+TABLE.HTML_Form_BorderDrag TR.Title
+{
+
+}
+/* --> Border left top*/
+TABLE.HTML_Form_BorderDrag TD.Border_Left_Top
+{
+	background-image: url(CrToolbox/HTML_Form/Border_Left_Top.png);
+	background-repeat: no-repeat;
+	width: 8px;
+}
+TABLE.HTML_Form_BorderDrag TD.Border_Left_Top.NofocusBLT
+{
+	background-image: url(CrToolbox/HTML_Form/Border_Left_Top_NoFocus.png);
+}
+
+/* --> Border top*/
+TABLE.HTML_Form_BorderDrag TD.Top
+{
+	background-image: url(CrToolbox/HTML_Form/TitleBar.png);
+	background-repeat: repeat-x;	
+	white-space: nowrap;
+	cursor: default;
+	font-weight: bold;
+	font-size:14px;
+}
+
+TABLE.HTML_Form_BorderDrag TD.Top.NofocusBT
+{
+	background-image: url(CrToolbox/HTML_Form/TitleBar_Inactive.png);
+	background-repeat: repeat-x;	
+	color: #A2A1A1;	
+}
+/* Border right top*/
+TABLE.HTML_Form_BorderDrag TD.Border_Right_Top
+{
+	background-image: url(CrToolbox/HTML_Form/Border_Right_Top.png);
+	background-repeat: no-repeat;
+	width: 8px;
+}
+TABLE.HTML_Form_BorderDrag TD.Border_Right_Top.NofocusBRT
+{
+	background-image: url(CrToolbox/HTML_Form/Border_Right_Top_NoFocus.png);
+}
+/* --> Top section button exit*/
+TABLE.HTML_Form_BorderDrag TD.ExitButton
+{
+	width: 18px;
+	background-image: url(CrToolbox/HTML_Form/FormbtnExit.png);
+	background-repeat: no-repeat;		
+}
+TABLE.HTML_Form_BorderDrag TD.ExitButton.NofocusExitbtn
+{
+	background-image: url(CrToolbox/HTML_Form/FormbtnExit_NoFocus.png);		
+}
+TABLE.HTML_Form_BorderDrag TD.ExitButton.NofocusExitbtn_Mouseover
+{
+	background-image: url(CrToolbox/HTML_Form/FormbtnExit_NoFocus_Mouseover.png);
+}
+TABLE.HTML_Form_BorderDrag TD.ExitButton.ExitButtonHover
+{
+	background-image: url(CrToolbox/HTML_Form/FormbtnExit_Over.png);
+}
+
+TABLE.HTML_Form_BorderDrag TD.ExitButton.Hide
+{
+	display:none;
+}
+/* --> Top section button exit*/
+DIV.HTML_Form_TitleElement
+{
+	background-color:Transparent;
+}
+/* --> Midden section */
+/* --------------------*/
+DIV.HTML_Form_BlockWorkSpace
+{
+	width: 100%;
+	background-image: url(CrToolbox/HTML_Form/Background.png);
+	background-repeat: repeat-x;	
+}
+TABLE.HTML_Form_BorderWorkSpace
+{
+	width: 100%;	
+}
+
+TABLE.HTML_Form_BorderWorkSpace TR
+{
+
+}
+/* --> Border left*/
+TABLE.HTML_Form_BorderWorkSpace TD.Border_Left
+{
+	background-image: url(CrToolbox/HTML_Form/Border_Left.png);
+	background-repeat: repeat-y;
+	width: 4px;
+}
+TABLE.HTML_Form_BorderWorkSpace TD.Border_Left.NofocusBL
+{
+	background-image: url(CrToolbox/HTML_Form/Border_Left_NoFocus.png);
+}
+/* --> Border midden*/
+TABLE.HTML_Form_BorderWorkSpace TD.Midden
+{
+}
+DIV.HTML_Form_WorkSpaceElement
+{ 
+	/*padding:3px;*/
+	 /*margin-left: 3px;
+	 margin-right: 5px;
+	 margin-bottom:3px;
+	 margin-top:3px;*/
+}
+
+/* Border right*/
+TABLE.HTML_Form_BorderWorkSpace TD.Border_Right
+{
+	background-image: url(CrToolbox/HTML_Form/Border_Right.png);
+	background-repeat: repeat-y;
+	width: 4px;
+}
+TABLE.HTML_Form_BorderWorkSpace TD.Border_Right.NofocusBR
+{
+	background-image: url(CrToolbox/HTML_Form/Border_Right_NoFocus.png);
+}
+/* --> Bottom section */
+/* --------------------*/
+DIV.HTML_Form_BlockButtonbar
+{
+	width: 100%;
+	height: 30px;
+	background-color: Transparent;	
+}
+TABLE.HTML_Form_BorderButtonbar
+{
+	width: 100%;
+	height: 30px;	
+}
+
+TABLE.HTML_Form_BorderButtonbar TR
+{
+
+}
+/* --> Border left Bottom*/
+TABLE.HTML_Form_BorderButtonbar TD.Border_Left_Bottom
+{
+	background-image: url(CrToolbox/HTML_Form/Border_Left_Bottom.png);
+	background-repeat: no-repeat;
+	width: 4px;
+}
+TABLE.HTML_Form_BorderButtonbar TD.Border_Left_Bottom.NofocusBLB
+{
+	background-image: url(CrToolbox/HTML_Form/Border_Left_Bottom_NoFocus.png);
+}
+/* --> Border Bottom*/
+TABLE.HTML_Form_BorderButtonbar TD.Bottom
+{
+	background-image: url(CrToolbox/HTML_Form/Border_Bottom.png);
+	background-repeat: repeat-x;	
+}
+TABLE.HTML_Form_BorderButtonbar TD.Bottom.NofocusBB
+{
+	background-image: url(CrToolbox/HTML_Form/Border_Bottom_NoFocus.png);
+}
+DIV.HTML_Form_Buttonbar
+{
+	height: 30px;
+	margin-left:5px;
+}
+/* Border right Bottom*/
+TABLE.HTML_Form_BorderButtonbar TD.Border_Right_Bottom
+{
+	background-image: url(CrToolbox/HTML_Form/Border_Right_Bottom.png);
+	background-repeat: repeat-y;
+	width: 4px;
+}
+TABLE.HTML_Form_BorderButtonbar TD.Border_Right_Bottom.NofocusBRB
+{
+	background-image: url(CrToolbox/HTML_Form/Border_Right_Bottom_NoFocus.png);
+}
+/*<---------------------------------------------------------------------------------->*/
+/*<---------------------------------------------------------------------------------->*/
+/*__________________*/
+/* Basic Form*/
+/*__________________*/
+/* --> Main form*/
+/* --------------------*/
+DIV.txForm
+{
+	height: 350px;
+	width: 310px;
+	left: 20px;
+	top: 20px;
+	overflow: hidden;
+}
+DIV.txForm.Drag { position: fixed !important; position: absolute; }
+DIV.txForm.Hide { display: none; }
+DIV.txForm.Dock { position : inherit; }
+
+/* --> Resize */
+/* --------------------*/
+DIV.txFormResizeElement
+{
+	height: 17px;
+	width: 16px;
+	right: 4px;
+	bottom: 4px;
+	position: absolute;
+	background-image: url(CrToolbox/HTML_Form/Resize.png);
+	background-repeat: no-repeat;
+	z-index: 99;
+	cursor: nw-resize;
+}
+DIV.txFormResizeElement.HideResize { display: none; }
+
+/* --> Top section */
+/* --------------------*/
+DIV.txFormBlockHeader { height: 27px; width: 100%; }
+TABLE.txFormBorderHeader { height: 27px; width: 100%; }
+TABLE.txFormBorderHeader TR.Title { }
+/* --> Border left top*/
+TABLE.txFormBorderHeader TD.Border_Left_Top { background-image: url(CrToolbox/HTML_Form/Border_Left_Top.png); background-repeat: no-repeat; width: 8px; }
+TABLE.txFormBorderHeader TD.Border_Left_Top.NofocusBLT { background-image: url(CrToolbox/HTML_Form/Border_Left_Top_NoFocus.png); }
+/* --> Border top*/
+TABLE.txFormBorderHeader TD.Top
+{
+	background-image: url(CrToolbox/HTML_Form/TitleBar.png);
+	background-repeat: repeat-x;	
+	white-space: nowrap;
+	cursor: default;
+	font-weight: bold;
+	font-size:14px;
+}
+TABLE.txFormBorderHeader TD.Top.NofocusBT { background-image: url(CrToolbox/HTML_Form/TitleBar_Inactive.png); background-repeat: repeat-x; color: #A2A1A1; }
+/* Border right top*/
+TABLE.txFormBorderHeader TD.Border_Right_Top
+{
+	background-image: url(CrToolbox/HTML_Form/Border_Right_Top.png);
+	background-repeat: no-repeat;
+	width: 8px;
+}
+TABLE.txFormBorderHeader TD.Border_Right_Top.NofocusBRT { background-image: url(CrToolbox/HTML_Form/Border_Right_Top_NoFocus.png); }
+/* --> Top section button exit*/
+TABLE.txFormBorderHeader TD.txFormExitButton
+{
+	width: 18px;
+	background-image: url(CrToolbox/HTML_Form/FormbtnExit.png);
+	background-repeat: no-repeat;		
+}
+TABLE.txFormBorderHeader TD.txFormExitButton.NofocusExitbtn { background-image: url(CrToolbox/HTML_Form/FormbtnExit_NoFocus.png); }
+TABLE.txFormBorderHeader TD.txFormExitButton.NofocusExitbtn_Mouseover { background-image: url(CrToolbox/HTML_Form/FormbtnExit_NoFocus_Mouseover.png); }
+TABLE.txFormBorderHeader TD.txFormExitButton.ExitButtonHover { background-image: url(CrToolbox/HTML_Form/FormbtnExit_Over.png); }
+TABLE.txFormBorderHeader TD.txFormExitButton.Hide { display:none; }
+/* --> Top section button exit*/
+DIV.txFormHeaderElement { background-color:Transparent; overflow:hidden; }
+
+/* --> Midden section */
+/* --------------------*/
+DIV.txFormBlockWorkSpace { width: 100%; background-image: url(CrToolbox/HTML_Form/Background.png); background-repeat: repeat-x; }
+TABLE.txFormBorderWorkSpace { width: 100%; }
+TABLE.txFormBorderWorkSpace TR { }
+/* --> Border left*/
+TABLE.txFormBorderWorkSpace TD.Border_Left { background-image: url(CrToolbox/HTML_Form/Border_Left.png); background-repeat: repeat-y; width: 4px; }
+TABLE.txFormBorderWorkSpace TD.Border_Left.NofocusBL { background-image: url(CrToolbox/HTML_Form/Border_Left_NoFocus.png); }
+/* --> Border midden*/
+TABLE.txFormBorderWorkSpace TD.Midden { }
+DIV.txFormWorkSpaceElement
+{
+	overflow:hidden; 
+	/*padding:3px;*/
+	 /*margin-left: 3px;
+	 margin-right: 5px;
+	 margin-bottom:3px;
+	 margin-top:3px;*/
+}
+
+/* Border right*/
+TABLE.txFormBorderWorkSpace TD.Border_Right
+{
+	background-image: url(CrToolbox/HTML_Form/Border_Right.png);
+	background-repeat: repeat-y;
+	width: 4px;
+}
+TABLE.txFormBorderWorkSpace TD.Border_Right.NofocusBR { background-image: url(CrToolbox/HTML_Form/Border_Right_NoFocus.png); }
+
+/* --> Bottom section */
+/* --------------------*/
+DIV.txFormBlockBottom { width: 100%; height: 4px; background-color: Transparent; }
+TABLE.txFormBorderBottom { width: 100%; height: 4px; }
+TABLE.txFormBorderBottom TR { }
+/* --> Border left Bottom*/
+TABLE.txFormBorderBottom TD.Border_Left_Bottom
+{
+	background-image: url(CrToolbox/HTML_Form/Border_Left_Bottom2.png);
+	background-repeat: no-repeat;
+	width: 4px;
+}
+TABLE.txFormBorderBottom TD.Border_Left_Bottom.NofocusBLB { background-image: url(CrToolbox/HTML_Form/Border_Left_Bottom_NoFocus2.png); }
+/* --> Border Bottom*/
+TABLE.txFormBorderBottom TD.Bottom
+{
+	background-image: url(CrToolbox/HTML_Form/Border_Bottom2.png);
+	background-repeat: repeat-x;
+	font-size: 1px;
+}
+TABLE.txFormBorderBottom TD.Bottom.NofocusBB { background-image: url(CrToolbox/HTML_Form/Border_Bottom_NoFocus2.png); }
+/* Border right Bottom*/
+TABLE.txFormBorderBottom TD.Border_Right_Bottom
+{
+	background-image: url(CrToolbox/HTML_Form/Border_Right_Bottom2.png);
+	background-repeat: repeat-y;
+	width: 4px;
+}
+TABLE.txFormBorderBottom TD.Border_Right_Bottom.NofocusBRB { background-image: url(CrToolbox/HTML_Form/Border_Right_Bottom_NoFocus2.png); }
+/*__________________*/
+/* Header */
+/*__________________*/
+/* --> Basic */
+/* --------------------*/
+.HTML_Header
+{
+	overflow: hidden;
+	background-image: url(CrToolbox/HTML_Header/Header.png);
+	background-repeat: no-repeat;
+	background-position: 100%;
+	font-size: 12px;
+	margin: 0px;
+	padding-right: 10px;
+	padding-left: 5px;
+	padding-bottom: 0px;
+	padding-top: 0px;
+	white-space: nowrap;
+}
+.HTML_Header.HTML_Header_Mouseover
+{
+	background-image: url(CrToolbox/HTML_Header/Header_Mouseover.png);
+}
+/*__________________*/
+/* TabControl */
+/*__________________*/
+/* --> Basic */
+/* --------------------*/
+.txTabControlNoTabPage { width: 100%; height: 100%; background-color: Transparent; }
+.txTabControlNoTabPage.Hide { display: none; }
+.txTabControlContainerSelector { width: 100%; height: 100%; background-color: Transparent; overflow: hidden; }
+.txTabControlContainerPage{ width: 100%; height: 100%; background-color: Transparent; }
+.txTabControlSelectorList 
+{ 
+	list-style-type: none; 
+	margin:0px; 
+	padding:0px 0px 0px 0px; 
+	float: right;
+}
+.txTabControlSelectorList.DockLeft { float: right; padding-right: 0px; }
+.txTabControlSelectorList.DockRight { float: left; ; padding-left: 0px; }
+.txTabControlSelectorList.DockBottom { float: left; }
+
+.txTabControlTabButton { float: right; font-size: 10px;}
+.txTabControlTabButton.DockTabbtnLeft { float: right; }
+.txTabControlTabButton.DockTabbtnRight { float: left; }
+.txTabControlTabButton.DockTabbtnBottom { float: left; }
+.txTabControlTabButton.TabButtonHide { display: none; }
+
+.txTabControlDefaultButton 
+{ 
+	width:120px; 
+	height: 19px;
+	border-right: solid 1px #919b9c;
+	border-left: solid 1px #919b9c;
+	overflow:hidden;
+	background-image: url(CrToolbox/HTML_Tab/TabButton.png);
+	background-repeat: repeat-x;
+	cursor: default;
+}
+.txTabControlDefaultButton.TabButtonHover
+{ 
+	background-image: url(CrToolbox/HTML_Tab/TabButton_Hover.png);
+	background-repeat: repeat-x;
+}
+
+.txTabControlSelector 
+{ 
+	height: 30px; 
+	width: 100px;
+	overflow:hidden;
+	border: 1px solid gray; 
+	background-color: #f7d28b; 
+	margin-top:2px; 
+	font-size: 10px;
+	/*float: right;*/
+}
+.txTabControlSelector.TabHover
+{ 
+	/*height: 30px;*/ 
+	border: 1px solid black; 
+	background-color: #ffa500; 
+}
+
+.txTabControlPage { width:100%; height:100%; background-color: Transparent; }
+.txTabControlPage.TabPageHide { display: none; }
+/*__________________*/
+/* ListBox */
+/*__________________*/
+/* --> Basic */
+/* --------------------*/
+/*DIV.txListBoxContainer { width: 100%; height: 100%; overflow: hidden; background-color: Transparent; }
+DIV.txListBoxList  { width: 100%; height: 100%; background-color: white; overflow:auto; border: 1px solid #bbbbbb;}
+
+UL.txListBoxItemList { list-style-type: none; margin:0px; padding:0px;  }
+UL.txListBoxItemList IL.txListBoxItem { }
+DIV.txListBoxItemContainer { width: 100%; }*/
+/*__________________*/
+/* Property grid */
+/*__________________*/
+/* --> Basic */
+/* --------------------*/
+DIV.txPropertyGridContainer { width: 100%; height: 100%; background-color: Transparent; margin: 0px 0px 0px 0px; font-size:1px; }
+UL.txPropertyGrid { list-style-type: none; margin:0px; padding:0px 0px 0px 0px; background-color: Transparent; }
+UL.txPropertyGrid LI.txPropertyGridHeader 
+{
+	font-size: 13px;
+	font-weight: bold; 
+	background-color: #f2f2ed;
+	height: 18px;
+	background-image:url(img/TabContactShadowDockLeft.png); background-repeat: repeat-y; background-position:right;
+}
+UL.txPropertyGrid LI.txPropertyGridCategory 
+{ 
+	font-size: 11px;
+	font-weight: bold;
+	background-color: #f7f7f5; 
+	background-image:url(img/TabContactShadowDockLeft.png); 
+	background-repeat: repeat-y; 
+	background-position:right;
+	cursor:pointer;
+	cursor:hand;
+}
+UL.txPropertyGrid LI.txPropertyGridPropertyList { font-size: 11px; background-color: #efeee9; cursor: default; }
+UL.txPropertyGrid LI.txPropertyGridPropertyList.ProListHide { display: none; }
+
+TABLE.txPropertyGridHeaderTable { width: 100%; height: 18px; cursor: default; }
+TABLE.txPropertyGridHeaderTable TD.txPropertyGridHeaderIconCell { width: 20px; height: 18px; background-image: url(Img/DefaultSkin/AgtStat_Icon.png); background-repeat: no-repeat; background-position: right; }
+TABLE.txPropertyGridHeaderTable TD.txPropertyGridHeaderTitleCell { width: 100%; height: 18px; padding-left:3px; font-size: 13px; font-weight: bold; }
+TABLE.txPropertyGridHeaderTable TD.txPropertyGridHeaderVisibleCell { width: 10px; height: 18px; background-image: url(Img/DefaultSkin/AgtStat_Down.png); background-repeat: no-repeat; }
+DIV.txPropertyGridHeaderIconDiv { width: 20px; height: 18px; }
+DIV.txPropertyGridHeaderVisibleDiv { width: 10px; height: 18px; }
+
+
+TABLE.txPropertyGridPropertyListTable { width: 100%; }
+TABLE.txPropertyGridPropertyListTable TD.txPropertyGridPropertyFillLeftCell { width: 10px; height: 5px; font-size:1px;}
+TABLE.txPropertyGridPropertyListTable TD.txPropertyGridPropertyCell { width: 10px; padding-right: 4px; font-size: 10px; background-color: white; }
+TABLE.txPropertyGridPropertyListTable TD.txPropertyGridPropertyValueCell { font-size: 10px; background-color: #e5e5e5; border: 1px solid #c5c5c5;  }
+TABLE.txPropertyGridPropertyListTable TD.txPropertyGridPropertyFillRightCell { width: 16px; font-size:1px; background-color: white; background-image:url(img/TabContactShadowDockLeft.png); background-repeat: repeat-y; background-position:right; }
+TABLE.txPropertyGridPropertyListTable TD.txPropertyGridPropertyFillCell { background-color: white; font-size:1px; }
+
+DIV.txPropertyGridPropertyValue { overflow:hidden;  }
+
+DIV.txPropertyGridPropertyFillLeft { width: 10px; height: 5px; }
+DIV.txPropertyGridPropertyFillRight { width: 10px; height: 5px; }
+
+TABLE.txPropertyGridHelp  { width: 100%; background-color:#bbbbbb; }
+TABLE.txPropertyGridHelp TD.txPropertyGridPropertyFillLeftCell { width: 10px; height: 5px; font-size:1px;}
+TABLE.txPropertyGridHelp TD.txPropertyGridPropertyFillRightCell { width: 16px; font-size:1px; background-image:url(img/TabContactShadowDockLeft.png); background-repeat: repeat-y; background-position:right; }
+TABLE.txPropertyGridHelp TD.txPropertyGridPropertyFillCell { font-size:11px; }
+
+DIV.txPropertyGridHelpContainer { width: 100%; height: 50px; }
+DIV.txPropertyGridHelpText { width: 100%; height: 100%; background-color: #bbbbbb; }
+/*__________________*/
+/* Listbox */
+/*__________________*/
+/* --> Basic */
+/* --------------------*/
+DIV.txListBoxScrollContainer 
+{ 
+	width:100%; 
+	height: 100%; 
+	overflow: auto; 
+	background-color: #EDEDED; 
+	font-size : 1px;
+}
+DIV.txListBoxListContainer { width:100%; height: 100%; overflow:visible; }
+UL.txListBoxList 
+{
+	list-style-type: none; 
+	margin:0px 0px 0px 0px; 
+	padding:0px 0px 0px 0px; 
+}
+UL.txListBoxList LI.txListBoxItem 
+{ 
+	width:100%;
+	margin:0px 0px 0px 0px; 
+	padding:0px 0px 0px 0px; 
+}
+DIV.txListBoxItemContainer { width:100%; /*height: 100%; background-color: Transparent;*/ cursor: default; padding-right:2px; }
+DIV.txListBoxItemContainer.HoverListBoxItem { width:100%; background-color: #2a608c; color: white; cursor: default;}
+TABLE.txListBoxItemLayout 
+{
+	width:100%;
+	margin:0px 0px 0px 0px; 
+	padding:0px 0px 0px 0px; 
+}
+TABLE.txListBoxItemLayout TD.txListBoxItemCellText { width: 100%; height: 100%; padding-left: 4px; }
+TABLE.txListBoxItemLayout TD.txListBoxItemCellText.HoverListBoxItem { width:100%; background-color: #2a608c; color: white; cursor: default;}
+TABLE.txListBoxItemLayout TD.txListBoxItemCellIcon { width: 24px; height: 100%; padding-left: 4px; }
+/*__________________*/
+/* Panel Button */
+/*__________________*/
+/* --> Basic */
+/* --------------------*/
+TABLE.txPanelBtn
+{
+	width:100%;
+	height:100%;
+	margin:0px 0px 0px 0px; 
+	padding:0px 0px 0px 0px; 
+}
+TABLE.txPanelBtn TR.txBtnPanelRow { }
+TABLE.txPanelBtn TD.txBtnPanelWorkSpaceCell { }
+TABLE.txPanelBtn TD.txBtnPanelButtonSpaceCell { height:27px; }
+TABLE.txPanelBtn TD.txBtnPanelMenuSpaceCell { height:50px; }
+DIV.txBtnPaneWorkSpace
+{
+	background-color:#f1edee;
+	width:100%;
+	height:100%;
+	margin:0px 0px 0px 0px; 
+	padding:0px 0px 0px 0px;
+	overflow:auto;
+}
+DIV.txBtnPaneButtonSpace
+{
+	/*background-color:red;*/
+	width:100%;
+	height:100%;
+	margin:0px 0px 0px 0px; 
+	padding:0px 0px 0px 0px;
+	overflow:hidden;
+	
+}
+DIV.txBtnPaneMenuSpace
+{
+	width:100%;
+	height:100%;
+	margin:0px 0px 0px 0px; 
+	padding:0px 0px 0px 0px;
+	overflow:hidden;
+}
+TABLE.txBtnPanelButtonBar
+{
+	margin-left:5px;
+}
+

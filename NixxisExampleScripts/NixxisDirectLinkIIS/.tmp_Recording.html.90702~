@@ -1,0 +1,111 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<title>NixxisDirectLink Example</title>
+		<script type="text/javascript" language="javascript" src="jsClient/NixxisDirectLink.js"></script>
+		<script type="text/javascript" language="javascript" src="jsClient/NixxisClientScript.js"></script>
+		<script type="text/javascript" >
+			var dbgDiv = null;
+			function InitPage()
+			{
+				try{
+					NixxisContactLink.Init();
+				}
+				catch(e){;}
+				
+			  var o = document.getElementById('dbg');
+			  if (o) dbgDiv = o;
+			  
+			  //To get the session id  and contact id from the query string
+			  // That means that we expect to have url formated in the admin: http://server/page.htm?SeId={8}&CtId={1} &CuId={0}
+			  var _Location = window.document.URL;
+			  var _Parameters = _Location.substring(_Location.indexOf('?') + 1, _Location.length);
+			  var _Values = _Parameters.split("&");
+			  for (var i = 0; i < _Values.length; i++) 
+			  {
+			   var _Pair = _Values[i].split("=");
+			   if (_Pair[0].toLowerCase() == "seid") 
+			   {
+			    	NixxisDirectLink.sessionId = _Pair[1];
+			   }
+			   else if (_Pair[0].toLowerCase() == "ctid") 
+			   {
+			   		NixxisDirectLink.contactId = _Pair[1];
+			   }
+			   //else if (_Pair[0].toLowerCase() == "qual") {
+			   // qual = _Pair[1];
+			   //}
+			   
+			  }
+			 
+			  //Set here the Nixxis apllication server
+			  	NixxisDirectLink.serviceUrl = "http://t61tom:8088/agent";
+			    //NixxisDirectLink.setQualification(qual);
+			    //NixxisDirectLink.nextContact();
+			 }
+			 //
+			 //Examples Direct functions
+			 //
+			 function nextConact()
+			 {
+			 	Log('nextContact ...');
+			 	NixxisDirectLink.nextContact();
+				Log('nextContact.');
+			 }
+			 function StartRecording()
+			 {
+			 	Log('startContact ...');
+			 	NixxisDirectLink.startRecording();
+				Log('startContact.');
+			 }
+			 function StopRecording()
+			 {
+			 	Log('stopContact ...');
+			 	NixxisDirectLink.stopRecording();
+				Log('stopContact.');
+			 }
+			 //
+			 //Examples functions
+			 //
+			 function nextConactLink()
+			 {
+			 	Log('nextContact Link ...');
+			 	NixxisDirectLink.nextContact();
+				Log('nextContact Link.');
+			 }
+			 function StartRecordingLink()
+			 {
+			 	Log('startContact Link ...');
+			 	NixxisContactLink.commands.startRecording();
+				Log('startContact Link.');
+			 }
+			 function StopRecordingLink()
+			 {
+			 	Log('stopContact Link ...');
+			 	NixxisContactLink.commands.stopRecording();
+				Log('stopContact Link.');
+			 }		
+			 //Tools
+			 function Log(text)
+			 {
+			 	if (dbgDiv) dbgDiv.innerHTML = "<SPAN>" + text + "</SPAN><br />" + dbgDiv.innerHTML;
+			 }
+		</script>
+		
+	</head>
+	<body onload="javascript: InitPage();">
+		<H1>Example script</H1>
+		<H2>Direct link</H2>
+		<input type='button' value='Next Contact' onclick='javascript: nextConact();'>
+		<input type='button' value='Start Recording' onclick='javascript: StartRecording();'>
+		<input type='button' value='Stop Recording' onclick='javascript: StopRecording();'>	
+		<H2>Client link</H2>	
+		<input type='button' value='Next Contact' onclick='javascript: nextConactLink();'>
+		<input type='button' value='Start Recording' onclick='javascript: StartRecordingLink();'>
+		<input type='button' value='Stop Recording' onclick='javascript: StopRecordingLink();'>
+		<H2>Debug view</H2>
+		<div id='dbg' style='background:black; color: green; width: 350px; height: 200px'>	
+		</div>
+	</body>
+</html>

@@ -1,0 +1,1340 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>NCS</title>
+    <link rel="stylesheet" href="DefaultStyle.css" />
+    <link rel="stylesheet" type="text/css" media="all" href="jscalendar-1.0/calendar-blue.css" title="win2k-cold-1" />
+    <script type="text/javascript" language="javascript" src="tools.js"></script>
+    <script type="text/javascript" language="javascript" src="link.js"></script>
+	<script type="text/javascript" language="javascript" src="toolbar.js"></script>		
+    <script type="text/javascript" language="javascript" src="jscalendar-1.0/calendar.js"></script>		
+    <script type="text/javascript" language="javascript" src="jscalendar-1.0/lang/calendar-en.js"></script>	
+    <script src="https://nixxis.na15.visual.force.com/support/api/28.0/interaction.js"></script>
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script language="javascript">
+
+        var cal = null;
+        function showTab(tab) {
+            var tabs = ["tblCommon", "tblTelephony", "tblOthers"];
+            for (var i = 0; i < tabs.length; i++) {
+                if (tabs[i] != tab) {
+                    document.getElementById(tabs[i]).style.display = 'none';
+                }
+            }
+            document.getElementById(tab).style.display = 'block';
+            try
+            {
+                ClientLink.setAgentProperty("selectedTab", tab);
+            }
+            catch (e) {
+            }
+        }
+
+        function showPopup(id, displayRight) {
+            if ($("#" + id).find("div:first").find("table:first").find("tr").length > 0) {
+                $("#" + id).children("div:first")[0].style.display = 'inline';
+                if(displayRight)
+                    $("#" + id).children("div:first")[0].style.left = $("#" + id).children("img:first")[0].offsetLeft + $("#" + id).children("img:first")[0].offsetWidth + 2 + "px";
+                else
+                    $("#" + id).children("div:first")[0].style.left = $("#" + id).children("img:first")[0].offsetLeft - $("#" + id).children("div:first")[0].offsetWidth - 2 + "px";
+
+                $("#" + id).children("div:first")[0].style.top = $("#" + id).children("img:first")[0].offsetTop - $("#" + id).children("div:first")[0].offsetHeight / 2 + $("#" + id).children("img:first")[0].offsetHeight / 2 + "px";
+                return true;
+            }
+            else
+                return false;
+        }
+
+        function showCallPopup(id) {
+            $("#" + id).children("div:first")[0].style.display = 'inline';
+            $("#" + id).children("div:first")[0].style.left = "2px";
+            $("#" + id).children("div:first")[0].style.top = $("#" + id).children("img:first")[0].offsetTop - $("#" + id).children("div:first")[0].offsetHeight / 2 + $("#" + id).children("img:first")[0].offsetHeight / 2 + "px";
+            $("#" + id).find("input:first")[0].focus();
+        }
+
+        function showQualifsPopup(id) {
+            $("#" + id).children("div:first")[0].style.display = 'inline';
+            $("#" + id).children("div:first")[0].style.left = $("#" + id).children("img:first")[0].offsetRight + 2 + "px";
+            $("#" + id).children("div:first")[0].style.top = $("#" + id).children("img:first")[0].offsetTop - $("#" + id).children("div:first")[0].offsetHeight / 2 + $("#" + id).children("img:first")[0].offsetHeight / 2 + "px";
+        }
+
+        function popupSubQualifs(object, event) {
+            $(object).children("div:first")[0].style.display = 'inline';
+            $(object).children("div:first")[0].style.left = event.offsetX + "px";
+            $(object).children("div:first")[0].style.top = event.offsetY + "px";
+        }
+
+        function hide_(div) {
+            div.style.display = 'none';
+        }
+
+        function internalCall(atag) {           
+            callClicked($(atag).parents("div:first").find("input:first")[0].value);
+            hide_($(atag).parents("div:first")[0]);
+        }
+
+        function internalForward(atag) {
+            forwardClicked($(atag).parents("div:first").find("input:first")[0].value);
+            hide_($(atag).parents("div:first")[0]);
+        }
+
+        function internalPauseSelected(atag) {
+            pauseSelected($(atag).attr("pauseid"));
+            hide_($(atag).parents("div:first")[0])
+        }
+
+        function internalSearchSelected(atag) {
+            searchSelected($(atag).attr("searchid"));
+            hide_($(atag).parents("div:first")[0])
+        }
+
+        function internalTeamSelected(atag) {
+            teamSelected($(atag).attr("teamid"), $(atag).attr("teamactive"));
+            hide_($(atag).parents("div:first")[0])
+        }
+
+        function internalQualificationSelected(atag) {
+            qualificationSelected($(atag).attr("qualid"), $(atag).attr("action"));
+            hide_($('#setQualification').children("div:first")[0]);
+        }
+
+        function handleKeys(object, event) {
+            if (event.keyCode == 13) {
+                $(object).parents("div:first").find("a:first").click();           
+            }
+            else if (event.keyCode == 27) {
+                hide_($(object).parents("div:first")[0]);
+            }
+            event.stopPropagation();
+            return false;
+        }
+
+        function setButtonState(button, enabled, active) {
+            buttonRef = "#" + button;
+
+            if (active == null) {
+                $(buttonRef).children()[1].setAttribute('class', 'inactiveButton');
+                $(buttonRef).children()[2].setAttribute('class', 'activeButton');
+            }
+            else if (active) {
+                $(buttonRef).children()[1].setAttribute('class', 'activeButton');
+                $(buttonRef).children()[2].setAttribute('class', 'inactiveButton');
+            }
+            else {
+                $(buttonRef).children()[1].setAttribute('class', 'inactiveButton');
+                $(buttonRef).children()[2].setAttribute('class', 'inactiveButton');
+            }
+
+            if(enabled)
+            {
+                $(buttonRef).children(":first").attr('class', 'button');
+                $(buttonRef)[0].href = "javascript:" + button + "Clicked('" + button + "');";
+            }
+            else
+            {
+                $(buttonRef).children(":first").attr('class', 'disabledButton');
+                $(buttonRef)[0].removeAttribute("href");
+            }
+        }
+
+
+
+        function readyGlobalClicked() {
+            if (ClientLink.commands.WaitForCall.active == ClientLink.commands.WaitForMail.active == ClientLink.commands.WaitForChat.active) {
+                ClientLink.commands.WaitForCall.execute();
+                ClientLink.commands.WaitForMail.execute();
+                ClientLink.commands.WaitForChat.execute();
+            }
+            else{
+                if (!ClientLink.commands.WaitForCall.active) {
+                    ClientLink.commands.WaitForCall.execute();
+                }
+                if (!ClientLink.commands.WaitForMail.active) {
+                    ClientLink.commands.WaitForMail.execute();
+                }
+                if (!ClientLink.commands.WaitForChat.active) {
+                    ClientLink.commands.WaitForChat.execute();
+                }
+            }
+        }
+
+        function pauseClicked(id) {
+            buildPauses();
+            if (!showPopup(id))
+                pauseSelected(null);
+        }
+
+        function pauseSelected(pause) {
+            ClientLink.commands.Pause.execute(pause);
+        }
+
+        function readyVoiceClicked() {
+            ClientLink.commands.WaitForCall.execute();
+        }
+
+        function readyMailClicked() {
+            ClientLink.commands.WaitForMail.execute();
+        }
+
+        function readyChatClicked() {
+            ClientLink.commands.WaitForChat.execute();
+        }
+
+        function priorityPickupClicked()
+        {
+            window.alert('priorityPickup clicked');
+        }
+
+        function searchClicked(id)
+        {
+            buildSearch();
+            showPopup(id, true);
+        }
+
+        function searchSelected(search) {
+            ClientLink.commands.SearchMode.execute(search);
+        }
+
+        function selectTeamClicked(id)
+        {
+            if(buildTeams())
+                showPopup(id, true);
+        }
+
+        function teamSelected(team, active) {
+            if(active==1)
+                ClientLink.setActivateTeam(team, false);
+            else
+                ClientLink.setActivateTeam(team, true);
+        }
+
+
+        function sendAlertClicked()
+        {
+            ClientLink.commands.RequestAssistance.execute();
+        }
+
+        function closeScriptClicked()
+        {
+            ClientLink.commands.TerminateContact.execute();
+        }
+
+        function repopClicked() {
+            try {
+                triggerPopup();
+            }
+            catch (e) {
+                ;
+            }
+
+        }
+
+        function setQualificationClicked(id)
+        {
+            showQualifsPopup(id);
+        }
+
+        function qualificationSelected(qualification, action) {
+
+            if (action == 4 || action == 5) {
+
+                $("#txtPhone")[0].value = "";
+
+                $("#txtPhone").attr('qualid', qualification);
+
+                var dte = new Date();
+                var dte1 = new Date(dte.getFullYear(), dte.getMonth(), dte.getDate() + 1, dte.getHours(), 0, 0);
+                cal.setDate(dte1);
+                $("#callbackDiv")[0].style.display = "inline";
+            }
+            else
+                ClientLink.setQualification(ClientLink.Contacts.ActiveContactId, qualification,null, null);
+        }
+        function callbackOK() {
+
+            var dte = cal.date;
+            var xxDay = dte.getDate().toString();
+            if (xxDay.length == 1) xxDay = "0" + xxDay;
+            var xxMonth = (dte.getMonth() + 1).toString();
+            if (xxMonth.length == 1) xxMonth = "0" + xxMonth;
+            var xxYear = dte.getFullYear().toString();
+
+            var xxHour = dte.getHours().toString();
+            if (xxHour.length == 1) xxHour = "0" + xxHour;
+            var xxMin = dte.getMinutes().toString();
+            if (xxMin.length == 1) xxMin = "0" + xxMin;
+
+            callback = xxYear + xxMonth + xxDay + xxHour + xxMin;
+
+            ClientLink.setQualification(ClientLink.Contacts.ActiveContactId, $("#txtPhone").attr('qualid'), callback, $("#txtPhone")[0].value);
+
+            hide_($("#callbackDiv")[0]);
+        }
+        function callbackCancel() {
+            hide_($("#callbackDiv")[0]);
+        }
+
+        function doNewCallClicked(id)
+        {
+            showCallPopup(id);
+        }
+
+        function holdClicked()
+        {
+            ClientLink.commands.VoiceHold.execute();
+        }
+
+        function retrieveClicked()
+        {
+            ClientLink.commands.VoiceRetrieve.execute();
+        }
+
+        function transfertClicked()
+        {
+            window.alert('transfert clicked');
+        }
+
+        function callClicked(destination) {
+            ClientLink.commands.VoiceNewCall.execute(destination);
+        }
+
+        function doForwardClicked(id) {
+            showCallPopup(id);
+        }
+
+        function forwardClicked(destination) {
+            window.alert('forward ' + destination);
+        }
+
+        function conferenceClicked() {
+            window.alert('conference clicked');
+        }
+
+        function hangupClicked() {
+            ClientLink.commands.VoiceHangup.execute();
+        }
+
+        function sendDtmfClicked() {
+            sendDtmf($("#optDtmf")[0].options[$("#optDtmf")[0].selectedIndex].text);
+        }
+
+        function sendDtmf(dtmf) {
+            ClientLink.sendDtmf.execute(dtmf);
+        }
+
+
+        function init() {
+
+            var xhreqloc = document.location.href.substring(0, document.location.href.lastIndexOf('/') + 1);
+
+            var pos = xhreqloc.lastIndexOf("salesforce");
+            if (pos > 0)
+                ClientLink = new NixxisClientLink(/*null*/ '/*[sessionid]*/', xhreqloc.substring(0, pos));
+            else
+                ClientLink = new NixxisClientLink;
+
+            ClientLink.ContactAdded.Add(this, nixxislink_ContactAdded);
+            ClientLink.ContactChanged.Add(this, nixxislink_ContactChanged);
+            ClientLink.ContactStateChanged.Add(this, nixxislink_ContactStateChanged);
+            ClientLink.ContactRemoved.Add(this, nixxislink_ContactRemoved);
+
+            ClientLink.AgentWarning.Add(this, nixxislink_AgentWarning);
+            ClientLink.AgentQueueState.Add(this, nixxislink_AgentQueueState);
+
+            ClientLink.commands.Pause.stateChanged.Add(this, Pause_StateChanged);
+
+            ClientLink.commands.WaitForCall.stateChanged.Add(this, WaitFor_StateChanged);
+            ClientLink.commands.WaitForMail.stateChanged.Add(this, WaitFor_StateChanged);
+            ClientLink.commands.WaitForChat.stateChanged.Add(this, WaitFor_StateChanged);
+
+            ClientLink.commands.PriorityPickup.stateChanged.Add(this, PriorityPickup_StateChanged);
+            ClientLink.commands.SearchMode.stateChanged.Add(this, SearchMode_StateChanged);
+            ClientLink.commands.RequestAssistance.stateChanged.Add(this, RequestAssistance_StateChanged);
+
+            ClientLink.commands.TerminateContact.stateChanged.Add(this, TerminateContact_StateChanged);
+            ClientLink.commands.VoiceNewCall.stateChanged.Add(this, VoiceNewCall_StateChanged);
+            ClientLink.commands.VoiceHold.stateChanged.Add(this, VoiceHold_StateChanged);
+            ClientLink.commands.VoiceRetrieve.stateChanged.Add(this, VoiceRetrieve_StateChanged);
+            ClientLink.commands.VoiceTransfer.stateChanged.Add(this, VoiceTransfer_StateChanged);
+            ClientLink.commands.VoiceConference.stateChanged.Add(this, VoiceConference_StateChanged);
+            ClientLink.commands.VoiceForward.stateChanged.Add(this, VoiceForward_StateChanged);
+            ClientLink.commands.VoiceHangup.stateChanged.Add(this, VoiceHangup_StateChanged);
+            
+
+            setButtonState('readyGlobal', false, false);
+            setButtonState('pause', false, false);
+
+            setButtonState('readyVoice', false, false);
+            setButtonState('readyMail', false, false);
+            setButtonState('readyChat', false, false);
+
+
+            setButtonState('priorityPickup', false, false);
+            setButtonState('search', false, false);
+            setButtonState('selectTeam', true, false);
+            setButtonState('sendAlert', false, false);
+
+            setButtonState('closeScript', false, false);
+            setButtonState('repop', false, false);
+            setButtonState('setQualification', false, false);
+            setButtonState('doNewCall', false, false);
+            setButtonState('hold', false, false);
+            setButtonState('retrieve', false, false);
+            setButtonState('transfert', false, false);
+
+            setButtonState('doForward', false, false);
+            setButtonState('conference', false, false);
+            setButtonState('hangup', false, false);
+
+            setButtonState('sendDtmf', true, false);
+
+            hide_($("#callbackDiv")[0]);
+            var dte = new Date();
+            var dte1 = new Date(dte.getFullYear(), dte.getMonth(), dte.getDate() + 1, dte.getHours(), 0, 0);
+            cal = new Calendar(1, dte1.toString(), dateChanged, null);
+            cal.showsTime = true;
+            cal.time24 = true;
+            cal.setDateFormat("%Y%m%d%H%M");
+            cal.create($("#calendar")[0]);
+
+
+            window.setTimeout("ClientConnect();", 300, "javascript");
+        }
+
+        function nixxislink_AgentWarning(message)
+        {
+            window.alert(message);
+        }
+        function nixxislink_AgentQueueState(state)
+        {
+            $("#Info_QueueHighPriority").text("High priority: " + state[0]);
+            $("#Info_QueueWaiting").text("Waiting: " + state[1]);
+
+            if (state[1] > 0) {
+                $("#Info_QueueWaiting").css("font-weight", "bold");
+                $("#Info_QueueWaiting").css("color", "red");
+            }
+            else {
+                $("#Info_QueueWaiting").css("font-weight", "normal");
+                $("#Info_QueueWaiting").css("color", "black");
+            }
+
+            if (state[0] > 0) {
+                $("#Info_QueueHighPriority").css("font-weight", "bold");
+                $("#Info_QueueHighPriority").css("color", "red");
+            }
+            else {
+                $("#Info_QueueHighPriority").css("font-weight", "normal");
+                $("#Info_QueueHighPriority").css("color", "black");
+            }
+
+        }
+
+        function nixxislink_ContactAdded(contactInfo) {
+            ClientLink.SetActiveContact(contactInfo);
+            TerminateContact_StateChanged(ClientLink.commands.TerminateContact.authorized, ClientLink.commands.TerminateContact.active);
+            setAgentInfo();
+
+            if (contactInfo.State == "P" && contactInfo.To && contactInfo.To != null && contactInfo.To != "") {
+                $("#doNewCall").find("input:first")[0].value = contactInfo.To;
+            }
+
+
+            triggerPopup();
+
+
+            if (buildQualifications())
+                setButtonState('setQualification', true, false);
+            else
+                setButtonState('setQualification', false, false);
+
+            showTab("tblTelephony");
+        }
+
+        function nixxislink_ContactChanged(contactInfo) {
+
+            if (contactInfo.State == "P" && contactInfo.To && contactInfo.To != null && contactInfo.To != "") {
+                $("#doNewCall").find("input:first")[0].value = contactInfo.To;
+            }
+
+
+        }
+        var lastcontactid;
+
+        var pageinfocallback = function (response) {
+            debugger;
+            var myobj = eval('(' + response.result + ')');
+            if (lastcontactid.startsWith(myobj.objectId))
+                sforce.interaction.refreshPage(refreshcallback);
+        };
+
+
+        var refreshcallback = function (response) {
+
+        };
+
+        function nixxislink_ContactRemoved(contactInfo) {
+            TerminateContact_StateChanged(ClientLink.commands.TerminateContact.authorized, ClientLink.commands.TerminateContact.active);
+            setAgentInfo();
+            if (buildQualifications())
+                setButtonState('setQualification', true, false);
+            else
+                setButtonState('setQualification', false, false);
+            debugger;
+            lastcontactid = contactInfo.Customer;
+            sforce.interaction.getPageInfo(pageinfocallback);
+
+
+
+        }
+        function nixxislink_ContactStateChanged(contactInfo) {
+            TerminateContact_StateChanged(ClientLink.commands.TerminateContact.authorized, ClientLink.commands.TerminateContact.active);
+            setAgentInfo();
+
+            if (contactInfo.State == "P" && contactInfo.To && contactInfo.To != null && contactInfo.To!="") {
+                $("#doNewCall").find("input:first")[0].value = contactInfo.To;
+            }
+
+
+            if (buildQualifications())
+                setButtonState('setQualification', true, false);
+            else
+                setButtonState('setQualification', false, false);
+
+        }
+
+        function Pause_StateChanged(authorized, active) {
+            setButtonState('pause', authorized, active);
+        }
+
+        function WaitFor_StateChanged(authorized, active) {
+            setButtonState('readyVoice', ClientLink.commands.WaitForCall.authorized, ClientLink.commands.WaitForCall.active);
+            setButtonState('readyMail', ClientLink.commands.WaitForMail.authorized, ClientLink.commands.WaitForMail.active);
+            setButtonState('readyChat', ClientLink.commands.WaitForChat.authorized, ClientLink.commands.WaitForChat.active);
+            if(ClientLink.commands.WaitForCall.active && ClientLink.commands.WaitForMail.active && ClientLink.commands.WaitForChat.active)
+                setButtonState('readyGlobal', ClientLink.commands.WaitForChat.authorized || ClientLink.commands.WaitForCall.authorized || ClientLink.commands.WaitForMail.authorized, true);
+            else if (ClientLink.commands.WaitForCall.active || ClientLink.commands.WaitForMail.active || ClientLink.commands.WaitForChat.active)
+                setButtonState('readyGlobal', ClientLink.commands.WaitForChat.authorized || ClientLink.commands.WaitForCall.authorized || ClientLink.commands.WaitForMail.authorized, null);
+            else 
+                setButtonState('readyGlobal', ClientLink.commands.WaitForChat.authorized || ClientLink.commands.WaitForCall.authorized || ClientLink.commands.WaitForMail.authorized, false);
+
+            setAgentInfo();
+        }
+
+        function PriorityPickup_StateChanged(authorized, active) {
+            setButtonState('priorityPickup', authorized, active);
+        }
+
+        function SearchMode_StateChanged(authorized, active) {
+            setButtonState('search', authorized, active);
+        }
+
+        function RequestAssistance_StateChanged(authorized, active) {
+            setButtonState('sendAlert', authorized, active);
+        }
+
+        function TerminateContact_StateChanged(authorized, active) {            
+            setButtonState('closeScript', authorized && ClientLink.Contacts.ActiveContact() != null, active);
+            setButtonState('repop', authorized && ClientLink.Contacts.ActiveContact() != null, active);
+        }
+
+        function VoiceNewCall_StateChanged(authorized, active) {
+            setButtonState('doNewCall', authorized, active);
+        }
+
+        function VoiceHold_StateChanged(authorized, active) {
+            setButtonState('hold', authorized, active);
+        }
+
+        function VoiceRetrieve_StateChanged(authorized, active) {
+            setButtonState('retrieve', authorized, active);
+        }
+
+        function VoiceTransfer_StateChanged(authorized, active) {
+            setButtonState('transfert', authorized, active);
+        }
+        function VoiceConference_StateChanged(authorized, active) {
+            setButtonState('conference', authorized, active);
+        }
+        function VoiceForward_StateChanged(authorized, active) {
+            setButtonState('doForward', authorized, active);
+        }
+
+        function VoiceHangup_StateChanged(authorized, active) {
+            setButtonState('hangup', authorized, active);
+        }
+
+
+        function ClientConnect() {
+            ClientLink.connect();
+
+            Pause_StateChanged(ClientLink.commands.Pause.authorized, ClientLink.commands.Pause.active);
+            WaitFor_StateChanged(null, null);
+            VoiceHold_StateChanged(ClientLink.commands.VoiceHold.authorized, ClientLink.commands.VoiceHold.active);
+            PriorityPickup_StateChanged(ClientLink.commands.PriorityPickup.authorized, ClientLink.commands.PriorityPickup.active);
+            SearchMode_StateChanged(ClientLink.commands.SearchMode.authorized, ClientLink.commands.SearchMode.active);
+            RequestAssistance_StateChanged(ClientLink.commands.RequestAssistance.authorized, ClientLink.commands.RequestAssistance.active);
+            TerminateContact_StateChanged(ClientLink.commands.TerminateContact.authorized, ClientLink.commands.TerminateContact.active);
+            VoiceNewCall_StateChanged(ClientLink.commands.VoiceNewCall.authorized, ClientLink.commands.VoiceNewCall.active);
+            VoiceHold_StateChanged(ClientLink.commands.VoiceHold.authorized, ClientLink.commands.VoiceHold.active);
+            VoiceRetrieve_StateChanged(ClientLink.commands.VoiceRetrieve.authorized, ClientLink.commands.VoiceRetrieve.active);
+            VoiceTransfer_StateChanged(ClientLink.commands.VoiceTransfer.authorized, ClientLink.commands.VoiceTransfer.active);
+            VoiceConference_StateChanged(ClientLink.commands.VoiceConference.authorized, ClientLink.commands.VoiceConference.active);
+            VoiceForward_StateChanged(ClientLink.commands.VoiceForward.authorized, ClientLink.commands.VoiceForward.active);
+            VoiceHangup_StateChanged(ClientLink.commands.VoiceHangup.authorized, ClientLink.commands.VoiceHangup.active);
+
+            setAgentInfo();
+
+            if (buildQualifications())
+                setButtonState('setQualification', true, false);
+            else
+                setButtonState('setQualification', false, false);
+
+            var _Contact;
+
+            if (ClientLink.Contacts.ActiveContactId) {
+                _Contact = ClientLink.Contacts.Get(ClientLink.Contacts.ActiveContactId);
+                if (_Contact) {
+                }
+
+                if (_Contact.State == "P" && _Contact.To && _Contact.To != null && _Contact.To != "") {
+                    $("#doNewCall").find("input:first")[0].value = _Contact.To;
+                }
+
+            }
+
+
+
+            try {
+                var selectedTab = ClientLink.getAgentProperty("selectedTab");
+                if(selectedTab && selectedTab!=null && selectedTab!="")
+                    showTab(ClientLink.getAgentProperty("selectedTab"));
+                else
+                    showTab("tblCommon");
+
+            }
+            catch (e) {
+            }
+
+        }
+
+        function exit() {            
+            try {
+
+                setButtonState('readyGlobal', false, false);
+                setButtonState('pause', false, false);
+
+                setButtonState('readyVoice', false, false);
+                setButtonState('readyMail', false, false);
+                setButtonState('readyChat', false, false);
+
+
+                setButtonState('priorityPickup', false, false);
+                setButtonState('search', false, false);
+                setButtonState('selectTeam', false, false);
+                setButtonState('sendAlert', false, false);
+
+                setButtonState('closeScript', false, false);
+                setButtonState('repop', false, false);
+                setButtonState('setQualification', false, false);
+                setButtonState('doNewCall', false, false);
+                setButtonState('hold', false, false);
+                setButtonState('retrieve', false, false);
+                setButtonState('transfert', false, false);
+
+                setButtonState('doForward', false, false);
+                setButtonState('conference', false, false);
+                setButtonState('hangup', false, false);
+
+                setButtonState('sendDtmf', false, false);
+
+                $('#infoTitle').html("Off");
+
+                ClientLink.disconnect();
+                DisposeClient();
+                ClientLink.dispose();
+                ClientLink = null;
+
+
+                var temp = window.location.href;
+                var bReplaceDone = false;
+                var temparray = temp.split("&");
+                for(var i=0; i< temparray.length; i++)
+                {
+                    if (temparray[i].startsWith("timestamp=")) {
+                        temparray[i] = "&timestamp=" + (new Date()).getTime().toString();
+                        bReplaceDone = true;
+                    }
+                }
+
+                if (bReplaceDone==false)
+                    window.location = window.location.href + "&timestamp=" + (new Date()).getTime().toString();
+                else
+                    window.location = temparray.join("&");
+
+
+
+            }
+            catch (e) {
+                ;
+            }
+        }
+
+        function DisposeClient() {
+            try {
+
+                ClientLink.ContactAdded.Remove(this, nixxislink_ContactAdded);
+                ClientLink.ContactStateChanged.Remove(this, nixxislink_ContactStateChanged);
+                ClientLink.ContactRemoved.Remove(this, nixxislink_ContactRemoved);
+
+                ClientLink.commands.Pause.stateChanged.Remove(this, Pause_StateChanged);
+
+                ClientLink.commands.WaitForCall.stateChanged.Remove(this, WaitFor_StateChanged);
+                ClientLink.commands.WaitForMail.stateChanged.Remove(this, WaitFor_StateChanged);
+                ClientLink.commands.WaitForChat.stateChanged.Remove(this, WaitFor_StateChanged);
+
+                ClientLink.commands.PriorityPickup.stateChanged.Remove(this, PriorityPickup_StateChanged);
+                ClientLink.commands.SearchMode.stateChanged.Remove(this, SearchMode_StateChanged);
+                ClientLink.commands.RequestAssistance.stateChanged.Remove(this, RequestAssistance_StateChanged);
+
+                ClientLink.commands.TerminateContact.stateChanged.Remove(this, TerminateContact_StateChanged);
+                ClientLink.commands.VoiceNewCall.stateChanged.Remove(this, VoiceNewCall_StateChanged);
+                ClientLink.commands.VoiceHold.stateChanged.Remove(this, VoiceHold_StateChanged);
+                ClientLink.commands.VoiceRetrieve.stateChanged.Remove(this, VoiceRetrieve_StateChanged);
+                ClientLink.commands.VoiceTransfer.stateChanged.Remove(this, VoiceTransfer_StateChanged);
+                ClientLink.commands.VoiceConference.stateChanged.Remove(this, VoiceConference_StateChanged);
+                ClientLink.commands.VoiceForward.stateChanged.Remove(this, VoiceForward_StateChanged);
+                ClientLink.commands.VoiceHangup.stateChanged.Remove(this, VoiceHangup_StateChanged);
+
+            }
+            catch (e) { }
+        }
+
+        function buildPauses() {
+            $("#pause").find("div:first").find("table:first").find('tbody').html("");
+
+            for (var i in ClientLink.PauseCodes.Items) {
+                $("#pause").find("div:first").find("table:first").find('tbody').append($('<tr>').append($('<td>').append($('<a>').attr('class', 'nolink').attr('href', '#').attr('onclick', 'internalPauseSelected(this)').attr('pauseid',i.split("_").pop()).text(ClientLink.PauseCodes.Items[i].Description))));
+            }
+        }
+
+        function buildSearch() {
+            $("#search").find("div:first").find("table:first").find('tbody').html("");
+
+            for (var i in ClientLink.SearchModeCampLst.Children) {
+                $("#search").find("div:first").find("table:first").find('tbody').append(
+                    $('<tr>').append(
+                        $('<td>').append(
+                            $('<a>')
+                            .attr('class', 'nolink')
+                            .attr('href', '#')
+                            .attr('onclick', 'internalSearchSelected(this)')
+                            .attr('searchid', i.split("_").pop())
+                            .text(ClientLink.SearchModeCampLst.Children[i].Description))));
+            }
+        }
+
+        $.fn.appendText = function (text) {
+            return this.each(function () {
+                var textNode = document.createTextNode(text);
+                $(this).append(textNode);
+            });
+        };
+
+        function buildTeams() {
+            $("#selectTeam").find("div:first").find("table:first").find('tbody').html("");
+            var atLeastOne = false;
+            for (var i in ClientLink.TeamList.Items) {
+                atLeastOne = true;
+                if (ClientLink.TeamList.Items[i].Active)
+                {
+                    $("#selectTeam").find("div:first").find("table:first").find('tbody').append(
+                        $('<tr>').append(
+                            $('<td>').append(
+                                $('<a>')
+                                .attr('class', 'nolink')
+                                .attr('href', '#')
+                                .attr('onclick', 'internalTeamSelected(this)')
+                                .attr('teamid', i.split("_").pop())
+                                .attr('teamactive', '1')
+                                .append(
+                                    $('<img>')
+                                    .attr('src', 'Selected.png')
+                                )
+                                .appendText(ClientLink.TeamList.Items[i].Description)
+                                )
+                             )
+                         );
+                }
+                else
+                {
+                    $("#selectTeam").find("div:first").find("table:first").find('tbody').append(
+                    $('<tr>').append(
+                        $('<td>').append(
+                            $('<a>')
+                            .attr('class', 'nolink')
+                            .attr('href', '#')
+                            .attr('onclick', 'internalTeamSelected(this)')
+                            .attr('teamid', i.split("_").pop())
+                            .attr('teamactive', '0')
+                            .append(
+                                $('<img>')
+                                .attr('src', 'Unselected.png')
+                            )
+                            .appendText(ClientLink.TeamList.Items[i].Description)
+                            )
+                         )
+                     );
+                }
+            }
+            return atLeastOne;
+        }
+        function buildQualifications() {
+            
+            $("#setQualification").find("div:first").html("");
+            if (ClientLink.Contacts.ActiveContactId == null) {
+                return false;
+            }
+
+            var Q = new QualificationInfo(ClientLink);
+            var info = ClientLink.Contacts.Get(ClientLink.Contacts.ActiveContactId);
+            var actList = info.Activity.split('.');
+            var List = Q.FromActivityId(actList[0]);
+            var atLeastOne = false;
+            
+            if (List && List.Children) {
+                for (var a in List.Children.Items) {
+                    if (!atLeastOne) {
+                        $("#setQualification").find("div:first")
+                            .append($('<div>').attr('style', 'position:absolute;right:0px;').append($('<a>')
+                                .attr('class', 'nolink')
+                                .attr('href', '#')
+                                .attr('onclick', 'arguments[0].stopPropagation();hide_($("#qualificationTree")[0]);').
+                                    append($('<img>')
+                                        .attr('src', 'Unselected.png')
+                                        )))
+                            .append(
+                            $('<table>')
+                            .attr('style', 'margin:2px;border-spacing:2px 2px;')
+                            .append($('<tbody>'))
+                            )
+                        atLeastOne = true;
+                    }
+
+                    buildSubQualification($("#setQualification").find("div:first")[0], List.Children.Items[a]);
+                }
+            }
+            return atLeastOne;
+        }
+
+        function dateChanged(calendar, newDate) {
+            return;
+        }
+
+        function buildSubQualification(div, q) {           
+            if (q.Children.Count() > 0) {
+                $(div).find("table:first").find('tbody:first')
+                    .append($('<tr>')
+                        .append($('<td>')
+                            .attr('nowrap', 'nowrap')
+                            .append($('<a>')
+                                .attr('class', 'nolink')
+                                .attr('href', '#')
+                                .attr('onclick', 'popupSubQualifs(this, event)')
+                                .attr('qualid', q.Id)
+                                .appendText(q.Description)
+                                .append($('<div>')                                    
+                                    .attr('style', 'display:none;background-color:#1797c0;border:1px solid White;position:absolute;z-index:10;')
+                                    .attr('onmouseleave', 'hide_(this)')
+                                    .append($('<table>')
+                                        .attr('style', 'margin:2px;border-spacing:2px 2px;')
+                                        .append($('<tbody>'))
+                                        )
+                                    )
+                                )
+                            )
+                        )
+                for (var a in q.Children.Items) {
+                    buildSubQualification($(div).find("table:first").find('tbody:first').find('div:last')[0], q.Children.Items[a]);
+                }
+
+            }
+            else {
+                $(div).find("table:first").find('tbody:first')
+                    .append($('<tr>')
+                        .append($('<td>')
+                            .attr('nowrap', 'nowrap')
+                            .append($('<a>')
+                                .attr('class', 'nolink')
+                                .attr('href', '#')
+                                .attr('onclick', 'internalQualificationSelected(this)')
+                                .attr('qualid', q.Id)
+                                .attr('action', q.Action)
+                                .appendText(q.Description)
+                                )
+                            )
+                        )
+
+            }
+
+        }
+
+        function GetContactState(state) {
+            switch (state) {
+                case "A": return "Alerting";
+                case "C": return "Connected";
+                case "D": return "Disconnected";
+                case "P": return "Preview";
+                case "H": return "Held";
+                default: return "";
+            }
+
+        }
+        function $D(value) {
+            if (value == null) return "";
+            if (!value) return "";
+            return value;
+        }
+        function getAgentState() {
+            // ready or pause
+            if ( ClientLink.commands.WaitForChat.active ||
+                 ClientLink.commands.WaitForCall.active ||
+                 ClientLink.commands.WaitForMail.active) {
+                return "Ready";
+            }
+            else {
+                return "Pause";
+            }
+        }
+        function ensureNotTooLong(str, len) {
+            if (str.length < len)
+                return str;
+            else
+                return str.substring(0, len - 3) + '...';
+        }
+        function setAgentInfo() {
+            var _Contact;
+
+            if (ClientLink.Contacts.ActiveContactId) {
+                _Contact = ClientLink.Contacts.Get(ClientLink.Contacts.ActiveContactId);
+                if (_Contact) {
+
+                    $('#infoContext').html("Context: " + ensureNotTooLong(_Contact.Context, 16));
+                    $('#infoTitle').text($D(GetContactState(_Contact.State)));
+                    $('#infoFrom').text("From: " + $D(_Contact.From));
+                    $('#infoTo').text("To: " + $D(_Contact.To));
+                }
+                else {
+                    $('#infoContext').html("Context:");
+                    $('#infoTitle').html(getAgentState());
+                    $('#infoFrom').text("From:");
+                    $('#infoTo').text("To:");
+                }
+            }
+            else {
+                $('#infoContext').html("Context:");
+                $('#infoTitle').html(getAgentState());
+                $('#infoFrom').text("From:");
+                $('#infoTo').text("To:");
+            }
+        }
+
+        var callback = function (response) {
+            if (!response.result) {
+                alert(response.error);
+            }
+        }
+
+        function searchAndScreenPop(phone, direction) {
+            //Invokes API method
+            sforce.interaction.searchAndScreenPop(phone, 'Key1=value1&Key2=value2', direction, callback);
+        }
+
+        function screenPop(id) {
+            //Invokes API method
+            sforce.interaction.screenPop(id, true, callback);
+        }
+
+
+        function numericFilter(strText) {
+            return strText.replace("(", "").replace(")", "").replace("-","").replace(" ", "");
+        }
+
+        function triggerPopup() {
+            var _Contact;
+
+            if (ClientLink.Contacts.ActiveContactId) {
+                _Contact = ClientLink.Contacts.Get(ClientLink.Contacts.ActiveContactId);
+                if (_Contact) {
+                    if (_Contact.Direction == "I")
+                        searchAndScreenPop(_Contact.From, "inbound");
+                    else {
+                        if (_Contact.Customer && _Contact.Customer.length > 0)
+                            screenPop(_Contact.Customer, "inbound");
+                        else
+                            searchAndScreenPop(_Contact.To, "inbound");
+                    }
+                }
+            }
+        }
+
+
+        var clickToDial = function (response) {
+            if (response.result) {
+                var obj = JSON.parse(response.result);
+                ClientLink.commands.VoiceNewCall.execute(numericFilter(obj.number));
+            }
+        }
+
+
+
+        sforce.interaction.cti.enableClickToDial();
+
+        sforce.interaction.cti.onClickToDial(clickToDial);
+
+    </script>
+</head>
+    <!--
+       deactivated to maintain session through reload
+       TODO!!!!
+        onunload="exit()"
+        -->
+<body onload="init()"  >
+
+    <div style="height:50px;width:50px;background:url(64x64_AppIcon.ico);background-repeat:no-repeat;position:absolute;left:146px;top:0px;"></div>
+
+
+    <div id="callbackDiv"  style="height:300px;position:absolute;left:0px;top:0px;z-index:1000;background-image:url(BackgroundCenter.png);background-repeat:repeat-y">
+        <div id="calendar" >
+
+        </div>
+
+        <table style="border-spacing:8px 0px;margin-top:5px;">
+            
+            <tr class="buttonRow"><td class="button" colspan="2">Phone: <input id="txtPhone" style="width:130px;" type="text" onkeypress="handleKeys(this, event)"/></td> </tr>        
+
+            <tr class="buttonRow">
+                <td class="button" style="background-color: #1797C0;">
+                    <a style="display:block;" onclick="javascript:callbackOK()"><img src="Selected.png" style="margin:5px;"/></a>
+                </td>
+                <td class="button" style="background-color: #1797C0;">
+                    <a style="display:block;" onclick="javascript:callbackCancel()"><img src="Unselected.png" style="margin:5px;" /></a>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+
+    <table style="margin-top:15px;">
+        <tr >
+            <td style="height:25px;width:200px;background-image:url(Title.png);background-repeat:no-repeat;vertical-align:middle;">
+                <p id="infoTitle" align="center" style="font-weight:bold;color:white;">&nbsp;</p>
+            </td>
+        </tr>
+    </table>
+    <table style="margin-top:2px;">
+        <tr >
+            <td style="height:6px;width:200px;background-image:url(BackgroundTop.png);background-repeat:no-repeat;" ></td>
+        </tr>
+        <tr >
+            <td style="width:200px;background-image:url(BackgroundCenter.png);background-repeat:repeat-y;padding-left:5px;">
+                <table>
+                    <tr>
+                        <td style="width:160px;" >                            
+                            <p id="infoContext">Context:</p>
+                            <p id="infoFrom">From:</p>
+                            <p id="infoTo">To:</p>
+                            <p id="Info_QueueWaiting">Waiting: 0</p>
+                            <p id="Info_QueueHighPriority">High priority: 0</p>
+                        </td>
+                        <td style="width:40px;">
+                            <table style="border-spacing:8px 0px;" >
+                                <tr class="buttonRow">
+                                    <td class="button">
+                                        <a id="readyGlobal" title="Ready"><img src="Buttons/ReadyGlobal.png"/><img src="Buttons/Active.png"/><img src="Buttons/PartialActive.gif"/></a>
+                                    </td>
+                                </tr>
+                                <tr height="8px"></tr>
+                                <tr class="buttonRow" >
+                                    <td class="button">
+                                        <a id="pause" title="Pause"> 
+                                            <img src="Buttons/AgentPause.png"/><img src="Buttons/Active.png"/><img src="Buttons/PartialActive.gif"/>
+                                            <div style="display:none;background-color:#1797c0;border:1px solid White;position:absolute;z-index:10;" onmouseleave="hide_(this)">
+                                                <table style="margin:2px;border-spacing:2px 2px;">
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </a>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr >
+            <td style="height:6px;width:200px;background-image:url(BackgroundBottom.png); background-repeat:no-repeat;"></td>
+        </tr>
+    </table>
+
+
+
+    <table style="margin-top:2px;background-image:url(Title.png);background-repeat:no-repeat;">
+        <tr onclick="showTab('tblCommon')" style="cursor:pointer;">
+            <td style="height:25px;width:180px;vertical-align:middle;">
+                <p align="center" style="font-weight:bold;color:white;">Common</p>
+            </td>
+            <td style="height:25px;width:20px;vertical-align:top;">
+                <img style="padding:7px 10px 0px 0px;" src="Triangle.png"/>
+            </td>
+        </tr>
+    </table>
+
+    <table id="tblCommon" style="margin-top:2px;height:100%;display:inline;">
+        <tr >
+            <td style="height:6px;width:200px;background-image:url(BackgroundTop.png);background-repeat:no-repeat;"></td>
+        </tr>
+        <tr >
+            <td style="width:200px;background-image:url(BackgroundCenter.png);background-repeat:repeat-y;">
+                <table style="border-spacing:8px 0px;">
+                    
+                    <tr class="buttonRow">
+                        <td class="button">
+                            <a id="readyVoice" title="Ready voice"><img src="Buttons/ReadyVoice.png"/><img src="Buttons/Active.png"/><img src="Buttons/PartialActive.gif"/></a>
+                        </td>
+                        <td class="button">
+                            <a id="readyMail" title="Ready mail"><img src="Buttons/ReadyMail.png"/><img src="Buttons/Active.png"/><img src="Buttons/PartialActive.gif"/></a>
+                        </td>
+                        <td class="button">
+                            <a id="readyChat" title="Ready chat"><img src="Buttons/ReadyChat.png"/><img src="Buttons/Active.png"/><img src="Buttons/PartialActive.gif"/></a>
+                        </td>
+
+                        <td class="button">
+                        </td>
+
+
+                        <td class="button">
+                        </td>
+                            
+
+                        <td class="button">
+                            <a id="exit" href="javascript:exit()" title="Log off"><img src="Buttons/AgentExit.png"/></a>
+                        </td>
+
+
+                    </tr>
+
+                    <tr class="separator"></tr>
+
+                    <tr class="buttonRow">
+                        <td class="button">
+                            <a id="priorityPickup" Title="Priority pickup"><img src="Buttons/PriorityPickup.png"/><img src="Buttons/Active.png"/><img src="Buttons/PartialActive.gif"/></a>
+                        </td>
+                        <td class="button">
+                            <a id="search" title="Search"><img src="Buttons/SearchMode.png"/><img src="Buttons/Active.png"/><img src="Buttons/PartialActive.gif"/>
+                                <div style="display:none;background-color:#1797c0;border:1px solid White;position:absolute;z-index:10;" onmouseleave="hide_(this)">
+                                    <table style="margin:2px;border-spacing:2px 2px;">
+                                        <tbody></tbody>                                    
+                                    </table>
+                                </div>
+                            </a>
+                        </td>
+                        <td class="button">
+                            <a id="selectTeam" title="Team selection"><img src="Buttons/TeamSelection.png"/><img src="Buttons/Active.png"/><img src="Buttons/PartialActive.gif"/>
+                                 <div style="display:none;background-color:#1797c0;border:1px solid White;position:absolute;z-index:10;" onmouseleave="hide_(this)">
+                                    <table style="margin:2px;border-spacing:2px 2px;">
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </a>
+                        </td>
+                        <td class="button">
+                            <a id="sendAlert" title="Send alert"><img src="Buttons/Alert.png"/><img src="Buttons/Active.png"/><img src="Buttons/PartialActive.gif"/></a>
+                        </td>
+                        
+                    </tr>
+
+                </table>
+            </td>
+        </tr>
+        <tr >
+            <td style="height:6px;width:200px;background-image:url(BackgroundBottom.png); background-repeat:no-repeat;"></td>
+        </tr>
+    </table>
+
+
+
+    <table style="margin-top:2px;background-image:url(Title.png);background-repeat:no-repeat;">
+        <tr onclick="showTab('tblTelephony')" style="cursor:pointer;">
+            <td style="height:25px;width:180px;vertical-align:middle;">
+                <p align="center" style="font-weight:bold;color:white;">Contact</p>
+            </td>
+            <td style="height:25px;width:20px;vertical-align:top;">
+                <img style="padding:7px 10px 0px 0px;" src="Triangle.png"/>
+            </td>
+        </tr>
+    </table>
+
+    <table id="tblTelephony" style="margin-top:2px;height:100%;display:none;">
+    <tr >
+        <td style="height:6px;width:200px;background-image:url(BackgroundTop.png);background-repeat:no-repeat;"></td>
+    </tr>
+    <tr >
+        <td style="width:200px;background-image:url(BackgroundCenter.png);background-repeat:repeat-y;">
+            <table style="border-spacing:8px 0px;">
+
+                <tr class="buttonRow">
+                    <td class="button">
+                        <a id="doNewCall" title="Dial"> 
+                            <img src="Buttons/AgentTel_Call.png"/><img src="Buttons/Active.png"/><img src="Buttons/PartialActive.gif"/>
+                            <div style="display:none;background-color:#1797c0;border:1px solid White;position:absolute;z-index:10;" onmouseleave="hide_(this)">
+                                <table style="margin:2px;border-spacing:2px 2px;">
+                                    <tr><td><input type="text" onkeypress="handleKeys(this, event)"/></td><td style="vertical-align:middle;"><a class="nolink" href="#" onclick="internalCall(this)"><img src="TriangleRight.png" /></a></td></tr>
+                                </table>
+                            </div>
+                        </a>
+                    </td>
+
+                    <td class="button">
+                        <a id="closeScript" title="Close script"> 
+                            <img src="Buttons/AgentCloseScript.png"/><img src="Buttons/Active.png"/><img src="Buttons/PartialActive.gif"/>
+                        </a>
+                    </td>
+                    <td class="button">
+                        <a id="setQualification" title="Set qualification"> 
+                            <img src="Buttons/AgentQualification.png"/><img src="Buttons/Active.png"/><img src="Buttons/PartialActive.gif"/>
+                            <div id="qualificationTree" style="display:none;background-color:#1797c0;border:1px solid White;position:absolute;z-index:10;" ></div> <!--onmouseleave="hide_(this)"-->
+
+                        </a>
+                    </td>
+                    <td class="button" >
+                        <a id="hold" title="Hold"><img src="Buttons/AgentTel_Hold.png"/><img src="Buttons/Active.png"/><img src="Buttons/PartialActive.gif"/></a>
+                    </td>
+                    <td class="button" >
+                        <a id="retrieve" title="Retrieve"><img src="Buttons/AgentTel_Retrieve.png"/><img src="Buttons/Active.png"/><img src="Buttons/PartialActive.gif"/></a>
+                    </td>
+                    <td class="button" >
+                        <a id="transfert" title="Transfer"><img src="Buttons/AgentTel_Transfer.png"/><img src="Buttons/Active.png"/><img src="Buttons/PartialActive.gif"/></a>
+                    </td>
+
+                </tr>
+
+                <tr class="separator"></tr>
+
+                <tr class="buttonRow">
+                    <td class="button">
+                        <a id="doForward" title="Forward"> 
+                            <img src="Buttons/AgentTel_Forward.png"/><img src="Buttons/Active.png"/><img src="Buttons/PartialActive.gif"/>
+                            <div style="display:none;background-color:#1797c0;border:1px solid White;position:absolute;z-index:10;" onmouseleave="hide_(this)">
+                                <table style="margin:2px;border-spacing:2px 2px;">
+                                    <tr><td><input type="text" onkeypress="handleKeys(this, event)"/></td><td style="vertical-align:middle;"><a class="nolink" href="#" onclick="internalForward(this)"><img src="TriangleRight.png" /></a></td></tr>
+                                </table>
+                            </div>
+
+                        </a>
+                    </td>
+                    <td class="button" >
+                        <a id="conference" title="Conference"><img src="Buttons/AgentTel_Conference.png"/><img src="Buttons/Active.png"/><img src="Buttons/PartialActive.gif"/></a>
+                    </td>
+
+                    <td class="button">                            
+                        <a id="hangup" title="Hangup"><img src="Buttons/AgentTel_Hangup.png"/><img src="Buttons/Active.png"/><img src="Buttons/PartialActive.gif"/></a>
+                    </td>
+                                            <td class="button">
+                        </td>
+
+                        <td class="button">
+                        </td>
+                            
+
+                        <td class="button">
+                            <a id="repop" title="Re-pop"><img src="Buttons/AgentRepop.png"/><img src="Buttons/Active.png"/><img src="Buttons/PartialActive.gif"/</a>
+                        </td>
+                </tr>
+
+            </table>
+        </td>
+    </tr>
+    <tr >
+        <td style="height:6px;width:200px;background-image:url(BackgroundBottom.png); background-repeat:no-repeat;"></td>
+    </tr>
+</table>
+
+
+
+
+    <table style="margin-top:2px;background-image:url(Title.png);background-repeat:no-repeat;">
+        <tr onclick="showTab('tblOthers')" style="cursor:pointer;">
+            <td style="height:25px;width:180px;vertical-align:middle;">
+                <p align="center" style="font-weight:bold;color:white;">Others</p>
+            </td>
+            <td style="height:25px;width:20px;vertical-align:top;">
+                <img style="padding:7px 10px 0px 0px;" src="Triangle.png"/>
+            </td>
+        </tr>
+    </table>
+
+    <table id="tblOthers" style="margin-top:2px;height:100%;display:none;">
+        <tr >
+            <td style="height:6px;width:200px;background-image:url(BackgroundTop.png);background-repeat:no-repeat;"></td>
+        </tr>
+        <tr >
+            <td style="width:200px;background-image:url(BackgroundCenter.png);background-repeat:repeat-y;">
+                
+                <table style="margin-left:5px;">
+                    <tr height="24px">
+                        <td  style="vertical-align:middle;">                
+                            <p>Dtmf:</p>
+                        </td>
+                        <td style="vertical-align:middle;">                
+                            <select id="optDtmf">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                                <option>6</option>
+                                <option>7</option>
+                                <option>8</option>
+                                <option>9</option>
+                                <option>0</option>
+                                <option>*</option>
+                                <option>#</option>
+                            </select>
+                        </td>
+                        <td style="height:24px;width:24px;">                            
+                            <a id="sendDtmf" title="Send"><img src="Buttons/AgentTel_Transfer.png"/><img src="Buttons/Active.png"/><img src="Buttons/PartialActive.gif"/></a>
+
+                        </td>
+                        <td width="*"></td>
+                    </tr>
+                    <tr height="2px"></tr>
+                    <tr height="30px">
+                        <td style="vertical-align:middle;">                
+                            <p>Alerts:</p>
+                        </td>
+                        <td style="vertical-align:middle;" width="*" colspan="3">
+                            <textarea style="overflow-y:scroll;resize:none;height:30px;"  id="TextAreaAlerts" cols="16" rows="5" readonly="readonly" ></textarea>                            
+                        </td>
+
+                    </tr>
+                </table>
+
+
+
+            
+
+            </td>
+        </tr>
+        <tr >
+            <td style="height:6px;width:200px;background-image:url(BackgroundBottom.png); background-repeat:no-repeat;"></td>
+        </tr>
+    </table>
+
+
+
+</body>
+
+    
+</html>

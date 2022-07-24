@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nixxis Client v3</title>
+    <link rel="stylesheet" href="./v3/assets/css/style.css" />
+    <script type="text/javascript" language="javascript" src="./v3/assets/js/jquery.min.js"></script>
+    <link rel="icon" type="image/png" href="./favicon.png" />
+
+
+    <script type="text/javascript" src="jsTools/jscalendar-1.0/calendar.js"></script>
+    <script type="text/javascript" src="jsTools/jscalendar-1.0/lang/calendar-fr.js"></script>      
+    <script type="text/javascript" language="javascript" src="jsAgent/AgentLanguageResource.js"></script>
+    <!-- <script type="text/javascript" language="javascript" src="jsAgent/agentConst.js"></script> -->
+    <script type="text/javascript" language="javascript" src="tools.js"></script>
+    <script type="text/javascript" language="javascript" src="JsCommon/NixxisCommonFn.js"></script>
+    <script type="text/javascript" language="javascript" src="link.js"></script>
+    <script type="text/javascript" language="javascript" src="toolbar.js"></script>		
+    <script type="text/javascript" language="javascript" src="CrToolbox/CrToolbox.js"></script>
+    <script type="text/javascript" language="javascript" src="CrToolbox/CrToolboxControl.js"></script>
+    <script type="text/javascript" language="javascript" src="CrToolbox/CrToolboxControlVisual.js"></script>
+    <script type="text/javascript" language="javascript" src="jsTools/dbgWindow.js"></script>
+    <script type="text/javascript" language="javascript" src="jsCommon/NixxisCommonObj.js"></script>
+    <script type="text/javascript" language="javascript" src="jsAgent/agentPanels.js"></script>
+    <script type="text/javascript" language="javascript" src="jsAgent/agentWindowCfg.js"></script>
+
+    <script type="text/javascript" language="javascript">
+      var ClientLink;
+      
+      function initInstance(){        
+
+        
+
+  // <!IS_BROWSER Firefox>
+  //           try { document.domain = document.domain.substring(document.domain.lastIndexOf('.', document.domain.lastIndexOf('.') - 1) + 1); }
+  //       catch(e) {;}
+  //       //alert("CrAgent.htm: " + document.domain);
+  // <!IS_BROWSER>			
+  //           //document.domain = "nixxisdemo.com";
+        
+        window.document.title = "Nixxis agent desktop version " + const_AgentVersionDisplay;
+      
+        // OnToolboxResize.Add(this, pageResize);
+        crLoadingScreen.crLoadingMsg = CrResource.Common.LoadingMsg;
+        crLoadingScreen.Init();
+        crLoadingScreen.Visible(true);
+        
+        if (const_Debug) dbgStartWindow();
+  
+        debugger;
+        
+        // DebugLog("NixxisLink...");
+        ClientLink = new NixxisClientLink;
+        
+        ClientLink.linkToolStrip_V3($("AgentToolStrip"));
+        ClientLink.linkToolStrip_V3($("VoiceToolStrip"));
+        // ClientLink.linkToolStrip_V3($("ChatToolStrip"));
+        // ClientLink.linkToolStrip_V3($("MailToolStrip"));
+        
+        // debugger;
+        setToolStripLanguage_V3($('AgentToolStrip'));
+        setToolStripLanguage_V3($('VoiceToolStrip'));
+        // setToolStripLanguage($('MailToolStrip'));
+        // setToolStripLanguage($('ChatToolStrip'));
+  
+        setToolStripConfiguration($('AgentToolStrip'));
+        setToolStripConfiguration($('VoiceToolStrip'));
+        // setToolStripConfiguration($('MailToolStrip'));
+        // setToolStripConfiguration($('ChatToolStrip'));
+        
+        
+        DebugLog("Init window...");
+        
+        
+        Init_Window();
+        pageResize();
+  
+        if (const_DebugToolbar) SetDebug(true);
+
+        window.setTimeout("ClientConnect();", 3000, "javascript");
+        
+        // debugger;
+
+        document.body.nextSibling;
+        }
+  
+        function exitInstance()
+        {
+          debugger;
+
+          try
+          {			
+            ClientLink.disconnect();
+            DisposeClient();
+            ClientLink.dispose();
+            ClientLink = null;				
+          }
+          catch(e)
+          {
+              ;
+          }
+        }
+  
+      function onBeforeUnloadAction()
+      {
+        return "Do you want to logout?";
+      }
+       
+      window.onbeforeunload = function(e)
+      {
+        //alert("this will be closed");
+         var ev=(e)? e: window.event;
+         if((ev.clientX<0) || (ev.clientY<0))
+        {
+            return onBeforeUnloadAction();
+        }
+      }
+      </script>
+  </head>
+
+
+
+  <body onload="javascript: initInstance();" onunload="javascript: exitInstance();">
+    <div id="app">
+      <div class="content">
+        <iframe src="about:blank" style="display:none;" id="NixxisAgent"
+                sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-pointer-lock allow-top-navigation"
+                frameborder="0" allowtransparency="true" height="100%" width="100%" >
+        </iframe>
+
+                <!-- frameborder="0" scrolling="no" allowtransparency="true" 
+                style="display:none; background-color:Transparent;" -->
+        <object data="./embed.html" type="text/html" id="contactViewerObject"></object>
+      </div>
+      <div class="footer" id="divFooter">
+        <!-- Buttons -->
+        <div class="column grid-buttons" id="AgentToolStrip">
+          <!-- Quit -->
+          <!-- <button class="btn-1">
+            <div class="icon">
+              <img
+                src="./assets/icons/Agent_AddressBookEntryType_Agent_Off_25.png" alt="icon"
+                class="NixxisButton" id="CloseScript" />
+            </div>
+            <span id="CloseScript">Quit</span>
+          </button> -->
+
+          <!-- Ready -->
+
+          <!-- data-switch="ready" -->
+          <button class="btn-1" data-switch="ready" id="WaitForCall">
+            <div class="icon">
+              <img src="./assets/icons/Agent_Command_Ready_50.png" alt="icon"
+                   class="NixxisButton" id="WaitForCall"/>
+            </div>
+            <span id="WaitForCall">Ready</span>
+          </button>
+
+          <!-- Break -->
+
+          <button class="btn-1" data-switch="break" id="Pause">
+            <div class="icon">
+              <img src="./assets/icons/Agent_Command_Pause_50.png" alt="icon"
+                   class="NixxisButton" id="Pause" />
+            </div>
+            <span id="Pause">Break</span>
+          </button>
+
+          <!-- Priority picker -->
+          <button class="btn-1" id="PriorityPickup">
+            <div class="icon">
+              <img src="./assets/icons/Agent_AddressBookEntryType_Queue_25.png" alt="icon"
+                   class="NixxisButton" id="PriorityPickup" />
+            </div>
+            <span id="PriorityPickup">Priority picker</span>
+          </button>
+
+          <!-- Search mode -->
+          <button class="btn-1" data-target="#search-mode" id="SearchMode">
+            <div class="icon">
+              <img
+                src="./assets/icons/Agent_Command_StartSearchMode_50.png" alt="icon"
+                class="NixxisButton" id="SearchMode"
+              />
+            </div>
+            <span id="SearchMode">Search mode</span>
+          </button>
+
+          <!-- Pickup -->
+
+          <!-- Pickup = remove it, same as priority pickup. Discussed with Fawaaz 06152022  -->
+
+          <!-- <button class="btn-1">
+            <div class="icon">
+              <img
+                src="./assets/icons/Agent_Command_ContactPickup_50.png" alt="icon"
+                class="NixxisButton" id=""
+              />
+            </div>
+            <span id="Pickup">Pickup</span>
+          </button> -->
+
+          <!-- Manual dial -->
+          <button class="btn-1" data-target="#dial-pad" id="VoiceNewCall">
+            <div class="icon">
+              <img
+                src="./assets/icons/Agent_Command_Voice_NewCall_50.png" alt="icon"
+                class="NixxisButton" id="VoiceNewCall"
+              />
+            </div>
+            <span id="VoiceNewCall">Manual dial</span>
+          </button>
+
+          <!-- Team -->
+           <button class="btn-1" data-target="#team" id="TeamSelection">
+            <div class="icon">
+              <img
+                src="./assets/icons/Agent_Command_SelectTeam_50.png" alt="icon"
+                class="NixxisButton" id="TeamSelection"
+              />
+            </div>
+            <span id="TeamSelection">Team</span>
+          </button>
+
+          <!-- Send alert -->
+          <button class="btn-1" id="RequestAssistance">
+            <div class="icon">
+              <img
+                src="./assets/icons/Agent_Command_SendAlert_50.png" alt="icon"
+                class="NixxisButton" id="RequestAssistance"
+              />
+            </div>
+            <span id="RequestAssistance">Send alert</span>
+          </button>
+
+          <!-- Mini mode -->
+          <button class="btn-1" data-mode="1" id="MiniMode">
+            <div class="icon">
+              <img src="./assets/icons/Agent_MiniMode_50.png" alt="icon"
+                   class="NixxisButton" id="MiniMode"              
+              />
+            </div>
+            <span id="MiniMode">Mini mode</span>
+          </button>
+        </div>
+
+        <!-- Buttons -->
+        <div class="column when-ready grid-buttons" id="VoiceToolStrip">
+          <!-- Disposition -->
+          <button class="btn-1" data-target="#disposition">
+            <div class="icon">
+              <img
+                src="./assets/icons/Agent_Command_SetQualification_50.png" alt="icon"
+                class="NixxisButton" id="Selectqual"
+              />
+            </div>
+            <span id="Selectqual">Disposition</span>
+          </button>
+
+          <!-- Contact history -->
+          <button class="btn-1">
+            <div class="icon">
+              <img
+                src="./assets/icons/Agent_Command_ShowContatHistory_50.png" alt="icon"
+                class="NixxisButton" id=""
+              />
+            </div>
+            <span id="">Contact history</span>
+          </button>
+
+          <!-- Extend -->
+          <button class="btn-1">
+            <div class="icon">
+              <img
+                src="./assets/icons/Agent_Command_ExtendTime_50.png" alt="icon"
+                class="NixxisButton" id="ExtendWrapup"
+              />
+            </div>
+            <span id="ExtendWrapup">Extend</span>
+          </button>
+
+          <!-- Close -->
+          <button class="btn-1" id="CloseScript">
+            <div class="icon">
+              <img
+                src="./assets/icons/Agent_Command_CloseScript_50.png" alt="icon"
+                class="NixxisButton" id="CloseScript"
+              />
+            </div>
+            <span id="CloseScript">Close</span>
+          </button>
+
+          <!-- Hold -->
+          <button class="btn-1" id="VoiceHold">
+            <div class="icon">
+              <img
+                src="./assets/icons/Agent_Command_Voice_Forward_50.png" alt="icon"
+                class="NixxisButton" id="VoiceHold"
+              />
+            </div>
+            <span id="VoiceHold">Hold</span>
+          </button>
+
+          <!-- Retrieve -->
+          <button class="btn-1" id="VoiceRetrieve">
+            <div class="icon">
+              <img
+                src="./assets/icons/Agent_Command_Voice_Retrieve_50.png" alt="icon"
+                class="NixxisButton" id="VoiceRetrieve"
+              />
+            </div>
+            <span id="VoiceRetrieve">Retrieve</span>
+          </button>
+
+          <!-- Hangup -->
+          <button class="btn-1" id="VoiceHangup">
+            <div class="icon">
+              <img
+                src="./assets/icons/Agent_Command_Voice_Hangup_50.png" alt="icon"
+                class="NixxisButton" id="VoiceHangup"
+              />
+            </div>
+            <span id="VoiceHangup">Hangup</span>
+          </button>
+
+          <!-- Record -->
+          <button class="btn-1" id="VoiceRecord">
+            <div class="icon">
+              <img
+                src="./assets/icons/Agent_Command_Voice_Record_50.png" alt="icon"
+                class="NixxisButton" id="VoiceRecord"
+              />
+            </div>
+            <span id="VoiceRecord">Record</span>
+          </button>
+        </div>
+
+        <!-- Status -->
+        <div class="column when-ready">
+          <div class="status">
+            <div>
+              <img
+                src="./assets/icons/Agent_MediaType_Outbound_25.png"
+                alt="icon"
+              />
+            </div>
+            <div>
+              <ul>
+                <li class="row">
+                  <strong id="Info_ContactActivity">Activity Info</strong>
+                  <span id="Info_ContactStatusDuration">00:00:06</span>
+                </li>
+                <li class="row">
+                  <span >From:</span>
+                  <span id="Info_ContactOriginator"></span>
+                </li>
+                <li class="row">
+                  <span>To:</span>
+                  <span id="Info_ContactTo"></span>
+                </li>
+                <li class="row">
+                  <span>State:</span>
+                  <span id="Info_ContactState">C State</span>
+                </li>
+                <li class="row">
+                  <span>Customer:</span>
+                  <span id="Info_ContactCustomer">C Preview</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- Info -->
+        <div class="column">
+          <ul id="txPropertyGrid_AgentInfo" class="txPropertyGrid" style="display:none;"></ul>
+          <li id="PropertyGridCat_Agent" Class="txPropertyGridCategory" style="display:none;"><script>document.writeln(CrResource.infoBox.titleAgt);</script></li>
+          <li id="PropertyGridCat_Queue" Class="txPropertyGridCategory" style="display:none;"><script>document.writeln(CrResource.infoBox.titleQueue);</script></li>
+          <li id="PropertyGridCat_Contact" Class="txPropertyGridCategory" style="display:none;"><script>document.writeln(CrResource.infoBox.titleContact);</script></li>
+          <div id="NixxisAgentContactArea" class="NixxisAgentContactArea" style="display:none;"> </div> 
+
+          <div class="view">
+            <ul>
+              <li class="row">
+                <span class="label" id="Info_QueueWaitingHeader">Wating contacts:</span>
+                <span class="value" id="Info_QueueWaiting">0</span>
+              </li>
+              <li class="row">
+                <span class="label" id="Info_QueueHighPriorityHeader">Priority contacts:</span>
+                <span class="value" id="Info_QueueHighPriority">0 - 0</span>
+              </li>
+              <li class="row">
+                <span class="label" id="Info_AgentStateHeader">State:</span>
+                <span class="value" id="Info_AgentState">Break</span>
+              </li>
+              <li class="row">
+                <span class="label" id="Info_AgentSessionDurationHeader">Duration:</span>
+                <span class="value" id="Info_AgentSessionDuration">00:00:04</span>
+              </li>
+              <li class="row">
+                <span id="Info_AgtName_Account">Formateur Nixxis (10008)</span>
+
+                <div class="d-flex">
+                  <button class="btn-2">
+                    <img src="./assets/icons/Agent_ReadyVoiceIndication_25.png" alt="icon" id="Info_AgentReadyVoiceIndication"
+                         class="NixxisButton"/>
+                  </button>
+                  <button class="btn-2">                    
+                    <img src="./assets/icons/Agent_ReadyChatIndication_25.png" alt="icon" id="Info_AgentReadyChatIndication"
+                         class="NixxisButton"/>
+                  </button>
+                  <button class="btn-2">
+                    <img src="./assets/icons/Agent_ReadyMailIndication_25.png" alt="icon" id="Info_AgentReadyMailIndication"
+                         class="NixxisButton"/>
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Break -->
+    <div class="modal" id="break">
+      <div class="modal-header">
+        <h4>Break</h4>
+      </div>
+      <div class="modal-content"></div>
+      <div class="modal-footer">
+        <button data-close>Close</button>
+      </div>
+    </div>
+
+    <!-- Search mode -->
+    <!-- <div class="modal" id="search-mode">
+      <div class="modal-header">
+        <h4>Search mode</h4>
+      </div>
+      <div class="modal-content"></div>
+      <div class="modal-footer">
+        <button data-close>Close</button>
+      </div>
+    </div> -->
+
+    <!-- Disposition -->
+    <div class="modal" id="disposition">
+      <div class="modal-header">
+        <h4>Disposition</h4>
+      </div>
+      <div class="modal-content"></div>
+      <div class="modal-footer">
+        <button data-close>Close</button>
+      </div>
+    </div>
+
+    <!-- Team -->
+    <!-- <div class="modal" id="team">
+      <div class="modal-header">
+        <h4>Team</h4>
+      </div>
+      <div class="modal-content"></div>
+      <div class="modal-footer">
+        <button data-close>Close</button>
+      </div>
+    </div> -->
+
+    
+    <!-- Dial pad -->
+    <!-- <div class="modal" id="dial-pad">
+      <div class="modal-header">
+        <h4>Dial pad</h4>
+      </div>
+      <div class="modal-content dial">
+        <div class="d-flex">
+          <input id="dial" type="tel" />          
+          <button id="dial-clear">
+            <img src="./assets/icons/Agent_AddressBookEntryType_Agent_Off_25.png" alt="icon" />
+          </button>
+          <button id="MCallDialPad_Dial">
+            <img src="./assets/icons/Agent_Command_ReadyVoice_50.png" alt="icon" />
+          </button>
+        </div>
+        <div class="buttons">
+          <button id="MCallDialPad_1" class="MCallDialPadCell btn-3">1</button>
+          <button id="MCallDialPad_2" class="MCallDialPadCell btn-3">2</button>
+          <button id="MCallDialPad_3" class="MCallDialPadCell btn-3">3</button>
+          <button id="MCallDialPad_4" class="MCallDialPadCell btn-3">4</button>
+          <button id="MCallDialPad_5" class="MCallDialPadCell btn-3">5</button>
+          <button id="MCallDialPad_6" class="MCallDialPadCell btn-3">6</button>
+          <button id="MCallDialPad_7" class="MCallDialPadCell btn-3">7</button>
+          <button id="MCallDialPad_8" class="MCallDialPadCell btn-3">8</button>
+          <button id="MCallDialPad_9" class="MCallDialPadCell btn-3">9</button>
+          <button id="MCallDialPad_Star" class="MCallDialPadCell btn-3">*</button>
+          <button id="MCallDialPad_0" class="MCallDialPadCell btn-3">0</button>
+          <button id="MCallDialPad_Hash" class="MCallDialPadCell btn-3">#</button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button data-close>Close</button>
+      </div>
+    </div> -->
+
+    <div class="backdrop" id="backdrop"></div>
+    <script src="./assets/js/script.js"></script>
+  </body>
+</html>

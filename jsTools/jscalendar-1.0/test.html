@@ -1,0 +1,45 @@
+<html>
+<head>
+  <title>Calendar test [flat calendar]</title>
+  <link rel="stylesheet" type="text/css" media="all" href="calendar-blue.css" title="win2k-cold-1" />
+  <script type="text/javascript" src="calendar.js"></script>
+  <script type="text/javascript" src="lang/calendar-fr.js"></script>
+  <script type="text/javascript" src="calendar-setup.js"></script>
+</head>
+
+<body>
+
+
+<span id="dateValue">&nbsp;</span>
+
+<div style="float: right; margin-left: 1em; margin-bottom: 1em; height: 300px;" id="calendar-container"></div>
+
+<script type="text/javascript">
+  function dateChanged(calendar, newDate) {
+    // Beware that this function is called even if the end-user only
+    // changed the month/year.  In order to determine if a date was
+    // clicked you can use the dateClicked property of the calendar:
+    if (calendar.dateClicked || calendar.timeChanged) {
+      document.getElementById("dateValue").innerHTML = newDate; //calendar.date.toString();
+    }
+  };
+/*
+  Calendar.setup(
+    {
+      flat         : "calendar-container", // ID of the parent element
+      flatCallback : dateChanged           // our callback function
+    }
+  );
+*/
+
+  var Cal = new Calendar(1, null, dateChanged, null);
+
+  Cal.showsTime = true;
+  Cal.time24 = true;
+  Cal.setDateFormat("%d.%m.%Y %H:%M");
+  Cal.create(document.getElementById("calendar-container"));
+
+
+</script>
+</body>
+</html>

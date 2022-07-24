@@ -1,0 +1,101 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+		<script type="text/javascript" language="javascript" src="CrToolbox/CrToolbox.js"></script>
+		<script type="text/javascript" language="javascript" src="CrToolbox/CrToolboxControl.js"></script>
+        <script type="text/javascript" language="javascript" src="CrToolbox/CrToolboxControlVisual.js"></script>
+		
+		<script type="text/javascript" language="javascript" src="PlugIn/NixxisAgenda/NixxisAgenda.js"></script>
+		<link type="text/css" rel="stylesheet" href="PlugIn/NixxisAgenda/NixxisAgenda.css" />
+		<style type="text/css">
+			html,body
+			{
+				/*background-image: url("img/dfScript_Background.png");
+				background-repeat: no-repeat;
+				background-color: white;*/
+				background-color:#ebebeb;
+				margin:0;
+				padding:0;
+				border:none;
+				height:100%;
+				width:100%;
+				font-family: Verdana, Arial, Helvetica, Sans-Serif;
+			}
+
+		</style>
+		<script>
+/*
+ * File version : 1.20.4.0
+ */
+			var agenda;// = new NixxisAgenda($('AgendaParent'));
+			var NixxisContactLink = null
+			
+			var arrTemp=self.location.href.split("?");
+   			var picUrl = (arrTemp.length>0)?arrTemp[1]:"";
+   			var NS = (navigator.appName=="Netscape")?true:false;
+			var i = navigator.userAgent.indexOf("Firefox/");
+			var FX = i >= 0 ? true:false;
+
+		     function FitPic() 
+			 {
+			 	iWidth = (NS)?window.innerWidth:document.body.clientWidth;
+			    iHeight = (NS)?window.innerHeight:document.body.clientHeight;
+			    iWidth = document.images[0].width - iWidth;
+			    iHeight = document.images[0].height - iHeight;
+			    window.resizeBy(iWidth, iHeight);
+			    self.focus();
+		     }; 
+	 
+			function InitPage(){
+				////debugger;
+				if (FX) 
+				{
+					try { document.domain = document.domain.substring(document.domain.lastIndexOf('.', document.domain.lastIndexOf('.') - 1) + 1); }
+					catch(e) { ; }
+				}
+		
+				NixxisContactLink = window.opener.NixxisContactLink;
+				//try{ NixxisContactLink.Init(); } catch (e) {;}
+
+				agenda = new NixxisAgenda($('AgendaParent'));
+				agenda.txName = "TestAgenda"
+				agenda.txNixxisContactLink = NixxisContactLink;
+				agenda.txMaxAppSelect = true;
+				agenda.DateTimeSelectionChange = OnClickApp;
+				agenda.DateTimeSelected = OnClickConfirm;
+				agenda.Show();
+				//Resize window
+				var obj = agenda.txParent.lastChild;
+				resizeTo(obj.clientWidth + 10 , obj.clientHeight);
+				
+				iWidth = (NS)?window.innerWidth:document.body.clientWidth;
+			    iHeight = (NS)?window.innerHeight:document.body.clientHeight;
+			    iWidth = obj.clientWidth + 10 - iWidth;
+			    iHeight = obj.clientHeight - iHeight;
+			    window.resizeBy(iWidth, iHeight);
+			}
+			
+			function OnClickConfirm(date)
+			{
+				NixxisContactLink.Agenda.SelectApp(date);
+				window.close();
+			}
+			
+			function OnClickApp(date, cellId)
+			{
+				//var dte = new Date(date);
+				
+				
+				//NixxisContactLink.Agenda.SelectApp(date, time);
+			}
+
+		</script>
+		<title>Agenda date/Time selection</title>
+	</head>
+	<body onload="javascript: InitPage();">
+		<div id="AgendaParent" class="xx_ParentContainer">
+		
+		</div>		
+	</body>
+</html>

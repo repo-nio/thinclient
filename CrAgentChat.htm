@@ -1,0 +1,235 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<title>Nixxis Contact Suite chat window</title>	
+		<link rel="stylesheet" href="default.css" type="text/css" />
+		<link href="CrToolboxVisual.css" rel="stylesheet" type="text/css" />
+		<script type="text/javascript" language="javascript" src="JsCommon/NixxisCommonFn.js"></script>
+		<script type="text/javascript" language="javascript" src="tools.js"></script>
+		<script type="text/javascript" language="javascript" src="chatLink.js"></script>
+		
+		<script type="text/javascript" language="javascript" src="CrToolbox/CrToolbox.js"></script>
+        <script type="text/javascript" language="javascript" src="CrToolbox/CrToolboxControl.js"></script>
+        <script type="text/javascript" language="javascript" src="CrToolbox/CrToolboxControlVisual.js"></script>
+		<script type="text/javascript" language="javascript" src="jsCommon/NixxisCommonObj.js"></script>
+		<script type="text/javascript" language="javascript" src="jsAgent/AgentLanguageResource.js"></script>
+		<script type="text/javascript" language="javascript" src="jsAgent/agentConst.js"></script>
+		<script type="text/javascript" language="javascript" src="jsAgent/AgentChat.js"></script>
+		<script type="text/javascript" language="javascript" src="jsClient/NixxisClientScript.js"></script>
+		<script>
+			////debugger;
+			var _BScript;
+			var _PerDefBorder;
+			var _ChatWindow;
+			var _HistoBorder;
+			var _HistoImg;
+			var _Customer;
+			var _demoCustInfo;
+			var _demoCount = 0;
+			var _CustInfo;
+			var chatSession = new chatLink('/*[conversationid]*/');
+			function InitPage()
+			{
+<!IS_BROWSER Firefox>
+	        try { document.domain = document.domain.substring(document.domain.lastIndexOf('.', document.domain.lastIndexOf('.') - 1) + 1); }
+			catch(e) {;}
+			//alert("CrAgent.htm: " + document.domain);
+<!IS_BROWSER>	
+				NixxisContactLink.Init();
+				_Customer = NixxisContactLink.contactInfo.From;
+
+				OnToolboxResize.Add(this, onPageResize);
+				//
+				//Script
+				//
+				_BScript = new BorderFrame("NixxisUserScriptCellContainer_" + NixxisContactLink.contactId, $('NixxisUserScriptCellContainer'));
+				_BScript.setTitle("Client information");
+				_BScript.Show();
+
+				var _Frame = document.createElement("iframe");
+				_Frame.width = "100%";
+				_Frame.height = "100%";
+				_Frame.frameBorder = "0";
+				_Frame.scrolling = "auto";
+				_Frame.allowTransparency = false;
+				var script = NixxisContactLink.contactInfo.ScriptUrl;
+				//if (script == "") script = "about:blank";
+				if (script == "" || script == "null") script = "crAgentDefaultScript.htm?ContactId=" + NixxisContactLink.contactInfo.Id;
+				_Frame.src = script;
+				 _BScript.getWorkspace().appendChild(_Frame);
+				//
+				//Predefined text
+				//
+				_PerDefBorder = new BorderFrame("NixxisSystemScriptContainer_" + NixxisContactLink.contactId, $('NixxisSystemScriptContainer'));
+				_PerDefBorder.setTitle("Predefined text");
+				_PerDefBorder.Show();
+				//
+				//Contact history
+				//
+				_HistoBorder = new BorderFrame("NixxisHistoCellContainer_" + NixxisContactLink.contactId, $('NixxisHistoCellContainer'));
+				_HistoBorder.setTitle("History");
+				_HistoBorder.Show();
+				//_HistoBorder.getWorkspace().appendChild(_HistoImg.Create());
+				
+				//
+				//Chat part
+				//
+				_ChatWindow = new ChatWindow("Chat_" + NixxisContactLink.contactId, $('NixxisChatCellContainer'))
+				_ChatWindow.txCustomerPrefix = _Customer; 
+				_ChatWindow.OnChatCustomerMsgReceived.Add(this, Chat1_OnChatCustomerMsg);
+				_ChatWindow.OnChatSendMsg.Add(this, Chat1_OnChatSendMsg);
+				_ChatWindow.Show();
+				//_ChatWindow.AddAgentMsg("Good morning, what can I do for you?");
+				//
+				//Settings
+				//
+				SetPreDef();
+				//videoLstPerDef();
+				
+				chatSession.setDebugElement(document.getElementById('tstDiv'));
+            
+            	chatSession.historyLineEvent.Add(chatLink_Msg);
+				OnToolboxResize.Invoke();
+
+				
+			}
+			function UnloadPage()
+			{
+				
+			}
+			function chatLink_Msg(historyInfo)
+			{
+				//0 -- Type
+				//1 -- From
+				//2 -- Dest
+				//3 -- msg
+				
+				if(historyInfo.historyType == chatSession.chatEventType.Say)
+            	{
+	                var childP = document.createElement('P');
+	
+	                if(historyInfo.fromMySelf)
+	                    _ChatWindow.AddAgentMsg(historyInfo.text);
+	                else
+	                    _ChatWindow.AddCustomerMsg(historyInfo.text, historyInfo.from);
+	            }
+	            else if (historyInfo.historyType == chatSession.chatEventType.Leave)
+	            {
+					_ChatWindow.AddLeaveMsg(historyInfo.text, historyInfo.from);
+	            }
+			}
+			function Chat1_OnChatSendMsg(msg)
+			{
+				chatSession.send(msg);
+			}
+			function Chat1_OnChatCustomerMsg()
+			{
+				NixxisContactLink.commands.SetContactRequestAction();
+			}		
+			
+			var _lstPreDef;
+			var _ListOfPreDefText;
+			function SetPreDef()
+			{
+				_lstPreDef = new toolboxListbox("lstPerDef")
+				_lstPreDef.txParent = _PerDefBorder.getWorkspace();
+				_lstPreDef.txBoxCss = "NixxisChatBox";
+				_lstPreDef.txOnClick.Add(this, _lstPerDef_OnClick);
+				//_lstPerDef.txHoverCss = "NixxisChatHover";
+				_lstPreDef.Show();
+				////debugger;
+				_ListOfPreDefText = NixxisContactLink.commands.getPredefinedTexts();
+				var i = 0;
+				for (key in _ListOfPreDefText.Items) 
+				{
+					if(i%2 == 0)
+						AddPreDefText(_ListOfPreDefText.Items[key], "NixxisChatPerDefI1");
+					else
+						AddPreDefText(_ListOfPreDefText.Items[key], "NixxisChatPerDefI2");
+					i++;
+				}
+			}
+			function AddPreDefText(msg, cssType)
+			{
+				var _Item = new toolboxListboxItem();
+				//_Item.txIcon = new toolboxImage("img/Chat_AgentMsg.jpg", new toolboxSize(38,30));
+				_Item.txText = msg.Description;
+				_Item.txItemCss = cssType;
+				_Item.txTextCss = "NixxisChatPerDefText";
+				_Item.txData = msg.Id;
+				_lstPreDef.txList.Add(_Item);
+				//videoLstPerDefWhite();
+			}
+			function _lstPerDef_OnClick(text, data)
+			{
+				////debugger;
+				_ChatWindow.setText(_ListOfPreDefText.Get(data).Text);
+			}
+			
+			function videoLstPerDefWhite()
+			{
+				var _Item = new toolboxListboxItem();
+				_Item.txIcon = new toolboxImage("img/ListBoxWhiteSpace.png", new toolboxSize(1,5));
+				_Item.txText = "";
+				_Item.txDoHover = false;
+				_lstPerDef.txList.Add(_Item);
+			}
+			function onPageResize()
+			{
+				var _Height = $('NixxisTableCellLayout').clientHeight - $('NixxisSliderHorizontalCell').clientHeight - $('NixxisChatCell').clientHeight;
+				//alert ("Chat onPageResize resize height:" + _Height);	
+				$('NixxisUserScriptCell').style.height = _Height + "px";	
+				$('NixxisHistoCell').style.height = _Height + "px";
+			}
+		</script>	
+	</head>
+	<body  scroll="no" onload="javascript: InitPage();" onunload="javacript: UnloadPage();">
+	    <div id="NixxisContainer" class="NixxisContainer">
+	        <div id="NixxisChatWindow" class="NixxisPageLayout">
+				<table class="NixxisTableLayout" cellpadding="0" cellspacing="0">
+					<tr>
+						<td class="NixxisTableCellLayout">
+							<table class="NixxisTableCellLayoutTable" cellpadding="0" cellspacing="0">
+								<tr class="NixxisUserScriptRow">
+									<td id="NixxisUserScriptCell" class="NixxisUserScriptCell">
+										<div id="NixxisUserScriptCellContainer" class="NixxisUserScriptCellContainer">
+										
+										</div>
+									</td>
+								</tr>
+								<tr id="NixxisSliderHorizontalRow" class="NixxisSliderHorizontalRow"><td id="NixxisSliderHorizontalCell" class="NixxisSliderHorizontalCell">&nbsp;</td></tr>
+								<tr class="NixxisChatRow">
+									<td id="NixxisChatCell" class="NixxisChatCell">
+										<div id="NixxisChatCellContainer" class="NixxisChatCellContainer">
+
+										</div>
+									</td>
+								</tr>
+							</table>							
+						</td>
+						<td class="NixxisSliderVerticalCell">&nbsp;</td>						
+						<td class="NixxisTableCellSystemScript">
+							<table class="NixxisTableCellLayoutTable" cellpadding="0" cellspacing="0">
+								<tr class="NixxisHistoRow">
+									<td id="NixxisHistoCell" class="NixxisHistoCell">
+										<div id="NixxisHistoCellContainer" class="NixxisHistoCellContainer">
+										
+										</div>
+									</td>
+								</tr>
+								<tr id="NixxisSliderHorizontalRow" class="NixxisSliderHorizontalRow"><td id="NixxisSliderHorizontalCell" class="NixxisSliderHorizontalCell">&nbsp;</td></tr>
+								<tr class="NixxisSSRow">
+									<td id="NixxisSSCell" class="NixxisSSCell">
+										<div id="NixxisSystemScriptContainer" class="NixxisSystemScriptContainer">
+									
+										</div>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>	
+	        </div>    
+	    </div>		
+	</body>
+</html>

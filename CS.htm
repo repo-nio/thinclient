@@ -1,0 +1,82 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<link rel="SHORTCUT ICON" href="Icone_agent.ico"/>
+		<title>ContactRoute Desktop Parent Window</title>
+		<link href="default.css" rel="stylesheet" type="text/css" />
+		<link href="CrToolboxVisual.css" rel="stylesheet" type="text/css" />
+		<link href="nixxis.css" rel="stylesheet" type="text/css" />
+		<style>
+			
+			.xxQual_Tbl {}
+		</style>
+	    <script type="text/javascript" language="javascript" src="JsCommon/NixxisCommonFn.js"></script>
+		<script type="text/javascript" language="javascript" src="CrToolbox/CrToolbox.js"></script>
+        <script type="text/javascript" language="javascript" src="CrToolbox/CrToolboxControl.js"></script>
+        <script type="text/javascript" language="javascript" src="CrToolbox/CrToolboxControlVisual.js"></script>
+		
+		<script type="text/javascript" language="javascript" src="JsClient/NixxisClientScript.js"></script>
+		<script type="text/javascript" language="javascript" src="JsCallScripter/Qualification.js"></script>
+		
+		<script type="text/javascript" language="javascript">
+		function initInstance()
+	    {
+			NixxisContactLink.Init();
+	    }
+	    function exitInstance()
+	    {
+
+
+	    }
+		function LoadJs()
+		{
+			//debugger;
+			LoadJavascriptScript('jsAgent/AgentLanguageResource.js');
+			LoadJavascriptScript('jsAgent/AgentLanguageResource.js');
+		}
+		function ShowQualTreeView()
+	    {
+			var Q = new QualificationInfo(NixxisContactLink.clientLink);
+			//var info = NixxisContactLink.clientLink.Contacts.Get(NixxisContactLink.clientLink.Contacts.ActiveContactId);
+			//var actList = info.Activity.split('.');
+			var List = Q.FromActivityId('df6c41f0b24f43ecb558d498f00c934d');
+			crQualTreeView.crParent = $('trv');
+			crQualTreeView.Init(List);
+	    }
+		function ShowQualButtonView()
+	    {
+			crQualButtonView.crParent = $('btn');
+			crQualButtonView.IncludePositive = true;
+			crQualButtonView.IncludeNeutral = true;
+			crQualButtonView.IncludeNegative = true;
+			crQualButtonView.IncludeCallbacks = true;
+			crQualButtonView.Show();
+	    }
+		function ShowQualButtonViewOnlyCallback()
+	    {
+			crQualButtonView.crParent = $('btn');
+			crQualButtonView.IncludePositive = false;
+			crQualButtonView.IncludeNeutral = false;
+			crQualButtonView.IncludeNegative = false;
+			crQualButtonView.IncludeCallbacks = true;
+			crQualButtonView.Show();
+	    }		
+		 </script>
+		 		
+</head>
+<body onload="javascript: initInstance();" onunload="javascript: exitInstance();">
+    <input type='button' value='Load Js' onclick='javascript: LoadJs();'><br />
+	<input type='button' value='Show qualification treeview' onclick='javascript: ShowQualTreeView();'>
+	<input type='button' value='Show qualification buttonview' onclick='javascript: ShowQualButtonView();'>
+	<input type='button' value='Show qualification buttonview callbacks only' onclick='javascript: ShowQualButtonViewOnlyCallback();'>
+	<br />
+	Tree view <br />
+	<div id="trv" class="" style="height:100px;width:200px; background-color:green; overflow:visible">
+
+	</div>
+	Button <br />
+	<div id="btn" class="" style="height:100px;width:100%">
+
+	</div>
+</body>
+</html>

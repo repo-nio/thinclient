@@ -1,0 +1,760 @@
+html,body
+{
+	margin:0; 
+	padding:0;
+	padding-top: 0px;
+	margin-top: 0px; 
+	background-color: Transparent;
+	border:none;
+	height:100%;
+	width:100%;
+	font-family: Verdana, Arial, Helvetica, Sans-Serif;
+	font-size: 1px;
+}
+
+/*
+.tskContainer
+{
+	position:absolute;
+	bottom:0px;
+	left:0px;
+}
+
+.tsk_hdr
+{
+	background-color: #66962e;
+	background-image: url(skins/taskbarVistaGradient.png);
+	background-repeat: repeat;
+	background-attachment: scroll;
+	background-position-x: center;
+	background-position-y: top;
+	height: 39px;
+	width:100%;
+	text-align:left;
+	
+	font-family:Verdana,Tahoma,Arial,sans-serif;
+	font-size:100%;
+	font-size-adjust:none;
+	font-stretch:normal;
+	font-style:normal;
+	font-variant:normal;
+	font-weight:normal;
+	line-height:normal;
+}
+.tsk_hdr a 
+{
+	text-decoration:none;
+}
+
+.tsk_hdr * 
+{
+	line-height:normal;
+}
+
+.tsk_hdrInner
+{
+	background-color: Transparent;
+	background-image: url(skins/taskbarVistaGradient.png);
+	background-repeat: repeat;
+	background-attachment: scroll;
+	background-position-x: center;
+	background-position-y: top;
+	
+	padding-left:10px;
+	padding-right:10px;	
+}
+
+.tsk_hdr td
+{
+	vertical-align:middle;
+	padding:0px;
+	white-space:nowrap;	
+}
+
+.tsk_hdrInnerTable
+{
+	width:100%;
+	color: #FFFFFF;
+}
+
+.tsk_hdrInnerTable
+{
+	white-space:nowrap;
+}
+.tsk_btnParent
+{
+	cursor: pointer;
+	line-height:37px;
+	width:0.1%;
+	padding:0pt;
+}
+
+.tsk_btnLink
+{
+	vertical-align:middle;
+}
+
+.tsk_btnSpan
+{
+	background-image: url(skins/taskbarButton.png);
+	height:37px;
+	width:39px;
+	position:absolute;
+}
+.tsk_btnTextSpan
+{
+	vertical-align:middle;
+}
+*/
+.FloatLeft,
+	.ToolbarItemNew,
+	.ToolbarItem,
+	.EditContact .Values,
+	.ContactDetails .Value,
+	.TodayTabContainer .TabHeaders LI
+{
+	float: left;
+}
+
+.FloatRight
+{
+	float: right;
+}
+
+.TextAlignLeft
+{
+	text-align:left; 
+}
+
+.TextAlignRight,
+	.dComposeItemLabel,
+	.ItemListHeaderRow TH.TextAlignRight
+{
+	text-align: right;
+}
+
+.ClearLeft {clear: left; }
+.ClearRight {clear: right; }
+
+
+.BorderTop, 
+    .MSN_TOOLBAR
+{
+	border-top: 1px solid #dbdce3;
+}
+.BorderRight, 
+    .MSN_TOOLBAR_COMMANDSEPERATOR
+{
+	border-right:1px solid #dbdce3;
+}
+.BorderBottom,
+	.ContactPickerBodyTable TR TD,
+	.MSN_TOOLBAR, .MSN_INSERTLINK_TITLE, .MSN_EDITCONTAINER,
+	.BorderBottomTableRow TD, .BorderBottomTableRow TH
+{
+	border-bottom: 1px solid #dbdce3;
+}
+.BorderBottomLineColor,
+	.SmcNameInput
+{
+	border-bottom: 1px solid #BEC6C7;
+}
+.BorderLeft 
+{
+	border-left:1px solid #dbdce3;
+}
+
+.BorderNoTop,
+	.ToolbarContent
+{
+	border: 1px solid #dbdce3;
+	border-top: 0px; 
+}
+
+.BorderNoBottom
+{
+	border: solid 1px #dbdce3;
+	border-bottom: 0px; 
+}
+
+.BorderNone
+{
+	border: none;
+}
+
+.BorderBox,
+	TEXTAREA,
+	.MSN_TOOLBAR_CUSTOMIZE, .MSN_COLORPICKER, .MSN_BLOCKPICKER, .MSN_CONTEXTMENU,
+	.MSN_INSERTLINK, .MSN_INSERTLINK_BUTTON
+{
+	border: 1px solid #dbdce3; 
+}
+
+
+
+.DefaultFont,
+	BODY, TEXTAREA, SELECT, INPUT
+{
+	font-family:Verdana,Tahoma,Arial,sans-serif;
+	line-height:normal; 
+	color: #444444;
+}
+
+BODY
+{
+	font-size:0.69em;
+}
+
+A
+{
+	text-decoration:none;
+}
+
+
+.EditArea, .ExternalClass
+{
+	font-size:10pt;
+	font-family:Verdana,Tahoma,Arial,sans-serif;
+	line-height:normal; 
+}
+
+
+.ToolbarContent
+{
+	background: #FFFFFF url(http://gfx1.hotmail.com/mail/w2/ltr/theme0/ToolbarBG.gif) repeat;
+}
+.ToolbarItem SPAN
+{
+    padding-left: 4px; 
+}
+.ToolbarOptionsLink, .ToolbarHelpLink
+{
+	margin-right: 1px;
+}
+.MainLayoutRightBar
+{
+	background: #ffffff url(http://gfx2.hotmail.com/mail/w2/ltr/theme0/ToolbarBGx3.gif) repeat-x ;
+	width: 100%;
+}
+
+
+
+
+
+
+#uxp_hdr_parent_ie6 { background-color:#FFFFFF }
+
+#uxp_hdr       { text-align:left }      
+#uxp_hdr td    { vertical-align:middle } 
+#uxp_hdr input { width:auto }            
+
+
+
+#uxp_hdr
+{
+    height      : 39px;
+    background  : #0066A7 url("http://gfx1.hotmail.com/mail/uxp/w2/pr04/HIG/img/h/headerBG_24_~HeaderGradientImageType~.png") top;
+    _background : #0066A7;
+}
+
+#uxp_hdr,
+.uxp_hdrInnerTable { width:100% }
+
+#uxp_hdr .uxp_hdrInner
+{
+    background     : url("http://gfx1.hotmail.com/mail/uxp/w2/pr04/HIG/img/h/headerBG_24_~HeaderGradientImageType~.png") bottom;
+    _background    : none;
+    padding-left  : 8px;
+    padding-right : 12px;
+}
+
+#uxp_hdr,
+#uxp_hdr input 
+{
+    font : 100% Verdana,Tahoma,Arial,sans-serif
+}
+
+#uxp_hdr *     { line-height:normal }    
+#uxp_hdr img,                            
+#uxp_hdr input { vertical-align:middle } 
+#uxp_hdr td    { padding:0; white-space:nowrap }
+#uxp_hdr ul    { list-style:none }
+#uxp_hdr li    { margin:0 } 
+
+
+
+#uxp_hdr,
+#uxp_hdr a,
+#uxp_hdr a:visited 
+{
+    color : #FFFFFF;
+}
+
+#uxp_hdr a                              { text-decoration:none }      
+#uxp_hdr_meLink:hover,
+#uxp_hdr_signIn:hover,
+#uxp_hdr_signOut:hover                  { text-decoration:underline } 
+#uxp_hdr_jewelParent                    { line-height:37px }          
+
+
+.uxp_hdr_windowsLiveText
+{
+    font-family   : Verdana, Arial, sans-serif;
+    font-size     : 125%; 
+    padding-left : 1px;
+}         
+
+.uxp_hdr_tm                             { font-size:7px; vertical-align:super }
+
+.uxp_hdr_jewelLink_block_ie             { display:inline-block; vertical-align:middle }
+
+.uxp_hdr_pointer,                                          
+.uxp_hdr_pointer table,                                    
+.uxp_hdr_pointer a,                                        
+.uxp_hdr_pointer span                   { cursor:pointer } 
+
+#uxp_hdr_jewelParent                    { width:0.1% } 
+#uxp_hdr_middleArea                     { margin-left:auto; margin-right:auto }
+
+#uxp_hdr_jewelMenu                      { margin-left:4px; width:17em }
+
+#uxp_hdr_tabs
+{
+    margin-left : auto;
+    *margin-top  : 2px;  
+}
+
+#uxp_hdr_search                         { display:inline } 
+#uxp_hdr #uxp_hdr_searchParent          { padding-left:4px }
+#uxp_hdr_meParent                       { text-align:right; width:0.1% }
+#uxp_hdr_meMenu                         { text-align:left; right:0px; margin-right:-6px } 
+
+.uxp_hdr_menuParent
+{
+    position : absolute;
+    z-index  : 1001;
+    display  : inline; 
+}
+
+.uxp_hdr_cobrandText,
+#uxp_hdr_signOut
+{
+    font-size   : 92%; 
+}
+
+#uxp_hdr_signOut
+{
+    display     : block;           
+    position    : relative;        
+    top         : 2px;             
+
+}
+
+.uxp_hdr_hideSearch #uxp_hdr_tabs               { margin-right:auto } 
+#uxp_hdr.uxp_hdr_hideTabs #uxp_hdr_searchParent { padding-left:0; text-align:center }
+
+
+
+
+#uxp_hdr_jewelSpan
+{
+    background-image : url("http://gfx1.hotmail.com/mail/uxp/w2/pr04/HIG/img/h/jewel_24_hover.png");
+    position         : absolute;
+    width            : 39px;
+    height           : 37px;
+}
+
+
+
+#uxp_hdr_tabs .h_separator
+{
+background-color:#FFFFFF;
+width:1px;
+}
+
+#uxp_hdr_tabs a
+{
+    
+    padding  : 6px 1px 5px;
+    *padding : 1px; 
+
+    
+    *display : inline-block;
+}
+
+#uxp_hdr_tabs a:hover
+{
+    border              : 1px solid #285E82; 
+    border-top-color    : #43708C;
+    border-bottom-color : #1C5478;
+    padding             : 4px 0 5px;
+    *padding            : 0; 
+    _background         : white; 
+}
+
+#uxp_hdr_tabs a span
+{
+    line-height  : 31px; 
+    padding      : 4px 8px 5px;
+
+    
+    *display     : inline-block;
+    *line-height : normal;
+}
+
+#uxp_hdr_tabs a:hover span
+{
+    border              : 1px solid #B3E3FF;
+    padding             : 3px 7px 4px;
+    background          : #0066A6 url("http://gfx1.hotmail.com/mail/uxp/w2/pr04/HIG/img/h/headerBG_24_~HeaderGradientImageType~.png") center;
+    _background         : #0066A6;
+}
+
+#uxp_hdr_tabs #uxp_hdr_tabs_current,
+#uxp_hdr_tabs #uxp_hdr_tabs_current:hover
+{
+    margin              : 0 4px; 
+    border              : 1px solid #61A0C9; 
+    border-top-color    : #81B4D4;
+    border-bottom-color : #5394BD;
+    padding             : 4px 0 5px;
+    *padding            : 0;
+    _background         : white; 
+}
+
+#uxp_hdr_tabs #uxp_hdr_tabs_current span,
+#uxp_hdr_tabs #uxp_hdr_tabs_current:hover span
+{
+    border               : 1px solid #000000; 
+    border-bottom-width  : 0;
+    _border-bottom-width : 1px;
+    padding              : 3px 7px 5px;
+    background           : #0086BF url("http://gfx1.hotmail.com/mail/uxp/w2/pr04/HIG/img/h/headerBG_24_~HeaderGradientImageType~.png") bottom;
+    _background          : #0086BF;
+}
+
+#uxp_hdr
+{
+    _filter:
+        progid:DXImageTransform.Microsoft.Alpha(Opacity=55, FinishOpacity=100, Style=1, StartX=0, FinishX=0, StartY=0, FinishY=50)
+        progid:DXImageTransform.Microsoft.Alpha(Opacity=100, FinishOpacity=75, Style=1, StartX=0, FinishX=0, StartY=51, FinishY=100)
+}
+
+#uxp_hdr #uxp_hdr_productSearchButton,
+#uxp_hdr #uxp_hdr_webSearchButton 
+{
+    _filter:
+        progid:DXImageTransform.Microsoft.Alpha(Opacity=85, FinishOpacity=100, Style=1, StartX=0, FinishX=0, StartY=0, FinishY=50)
+        progid:DXImageTransform.Microsoft.Alpha(Opacity=100, FinishOpacity=85, Style=1, StartX=0, FinishX=0, StartY=51, FinishY=100)
+}
+
+#uxp_hdr_tabs a:hover span
+{
+    _filter:
+        progid:DXImageTransform.Microsoft.Alpha(Opacity=45, FinishOpacity=100, Style=1, StartX=0, FinishX=0, StartY=0, FinishY=65)
+}
+
+#uxp_hdr #uxp_hdr_tabs_current span
+{
+    _filter:
+        progid:DXImageTransform.Microsoft.Alpha(Opacity=100, FinishOpacity=75, Style=1, StartX=0, FinishX=0, StartY=45, FinishY=90)
+}
+
+.uxp_hdr_searchBorder
+{
+    
+    border              : 1px solid #61A0C9; 
+    border-top-color    : #81B4D4;
+    border-bottom-color : #5394BD;
+    padding-top         : 3px;
+    padding-bottom      : 6px;
+    *padding            : 0;
+}
+
+.uxp_hdr_innerSearchBorder
+{
+    border              : 1px solid #285E82;
+    border-top-color    : #43708C;
+    border-bottom-color : #1C5478;
+    padding-top         : 2px;
+    padding-bottom      : 5px;
+    *padding            : 0;
+    background-color    : #FFF;
+}
+
+#uxp_hdr #uxp_hdr_searchInput
+{
+    _position:relative; 
+
+
+
+    padding-left  : 2px; 
+
+
+
+
+    padding-top    : 3px;
+    padding-bottom : 4px;
+
+    width          : 21em;
+ 
+
+    border         : 0; 
+    border-right  : 1px solid #8F8F8F; 
+}
+
+.uxp_hdr_buttonBorder
+{
+    padding-bottom      : 4px;
+    padding-top         : 1px;
+    *padding            : 0;
+    border              : 1px solid #99C383; 
+    border-top-color    : #CFE3C4;           
+    border-bottom-color : #5DA253;           
+    
+    _background-color   : #FFF;              
+    
+    
+}
+
+.uxp_hdr_buttonBorder:hover
+{
+    border              : 1px solid #CAEDB9; 
+    border-top-color    : #EFFAEA;           
+    border-bottom-color : #6FA951;           
+}
+
+#uxp_hdr_webSearchButton,
+#uxp_hdr_productSearchButton
+{
+    margin         : 0;
+    border         : 0;
+    padding-top    : 1px;
+    padding-bottom : 2px;
+    *padding       : 2px 3px 1px;
+    background     : #307C0B url("http://gfx1.hotmail.com/mail/uxp/w2/pr04/HIG/img/h/headerBG_24_~HeaderGradientImageType~.png") center;
+    _background    : #307C0B; 
+    color          : #FFFFFF; 
+}
+
+#uxp_hdr_webSearchButton:hover,
+#uxp_hdr_productSearchButton:hover,
+#uxp_hdr_search .uxp_hdr_searchButtonHover_ie6
+{
+    background-color : #478D22; 
+}
+
+
+
+
+
+
+.uxp_hdr_menu,
+.uxp_hdr_submenu
+{
+    position            : absolute;
+    margin              : 0;
+    border              : 1px solid #A5A8A8; 
+    border-bottom       : 2px solid #42555C; 
+    border-right       : 2px solid #42555C; 
+    padding             : 4px;
+}
+
+.uxp_hdr_menu
+{
+    cursor           : default; 
+    background-color : #E9F9FF;
+}
+
+.uxp_hdr_submenu
+{
+    display          : none;
+    top              : -1px; 
+    width            : 16em;
+    background-color : #FFFFFF
+}
+
+#uxp_hdr .uxp_hdr_menu a,
+#uxp_hdr .uxp_hdr_menu a:visited 
+{
+    color:#444444
+}
+
+#uxp_hdr .uxp_hdr_menuSeparator
+{
+    line-height      : 1px;
+    font-size        : 1px;
+    margin-top       : 4px;
+    margin-bottom    : 4px;
+    background-color : #DADFE0; 
+    display          : block;   
+}
+
+.uxp_hdr_menu a
+{
+    display  : block;
+    _display : inline-block; 
+    _width   : 90%;          
+    padding  : 5px 9px;
+}
+
+.uxp_hdr_menu .uxp_hdr_menu_open,
+.uxp_hdr_menu a:hover,
+.uxp_hdr_menu a.uxp_hdr_currentLinkedID
+{
+    background      : #d9f1f9 url("http://gfx1.hotmail.com/mail/uxp/w2/pr04/HIG/img/h/headerBG_24_~HeaderGradientImageType~.png") center;
+    _background     : #d9f1f9;
+    padding         : 4px 8px;
+    border          : 1px solid #B9EAFF; 
+}
+
+#uxp_hdr .uxp_hdr_menu a.uxp_hdr_currentLinkedID:hover, 
+.uxp_hdr_menu a.uxp_hdr_currentLinkedID
+{
+    background-color : #c3ebf9
+}
+
+.uxp_hdr_downArrowblack          { background-position:7px -493px; } 
+.uxp_hdr_downArrowwhite          { background-position:0px -493px; } 
+.uxp_hdr_ltr_rightArrowDark      { background-position:7px -399px; }
+.uxp_hdr_ltr_rightArrowLight     { background-position:0px -399px; }
+.uxp_hdr_rtl_rightArrowDark      { background-position:7px -392px; }
+.uxp_hdr_rtl_rightArrowLight     { background-position:0px -392px; }
+
+.uxp_hdr_downArrowblack_ie6      { left:-9px; top:-493px; } 
+.uxp_hdr_downArrowwhite_ie6      { left: 0px; top:-493px; } 
+.uxp_hdr_ltr_rightArrowDark_ie6  { left:-9px; top:-399px; }
+.uxp_hdr_ltr_rightArrowLight_ie6 { left: 0px; top:-399px; }
+.uxp_hdr_rtl_rightArrowDark_ie6  { left:-9px; top:-392px; }
+.uxp_hdr_rtl_rightArrowLight_ie6 { left: 0px; top:-392px; }
+
+.uxp_hdr_downArrow,
+.uxp_hdr_rightArrow
+{
+    background : url("http://gfx1.hotmail.com/mail/uxp/w2/pr04/HIG/img/h/headerBG_24_~HeaderGradientImageType~.png");
+    position   : absolute;
+    width      : 7px;
+    height     : 7px;
+    margin-top : 2px;
+}
+
+.uxp_hdr_rightArrow
+{
+    background-position:7px -399px;
+    _background : none; 
+    right      : 1em;
+}
+
+     .uxp_hdr_downArrow      { background-position:0px -493px}
+.rtl .uxp_hdr_downArrow      { display:block;}
+.rtl .uxp_hdr_rightArrow     { background-position:7px -392px }
+
+     .uxp_hdr_jewel_ie6      { left:0; top:0 }
+     .uxp_hdr_rightArrow_ie6 { left:-9px; top:-399px }
+.rtl .uxp_hdr_rightArrow_ie6 { left:-9px; top:-392px }
+     .uxp_hdr_downArrow_ie6  { left: 0px; top:-493px }
+
+.uxp_hdr_jewelSpanHover #uxp_hdr_jewelSpan, 
+.uxp_hdr_jewelSpanOpen  #uxp_hdr_jewelSpan { background-position:0 -37px }
+
+.uxp_hdr_jewelSpanHover .uxp_hdr_jewel_ie6,
+.uxp_hdr_jewelSpanOpen  .uxp_hdr_jewel_ie6 { top:-37px }
+
+
+
+#uxp_ftr_control { border-top:1px solid none; width:100%; font-size:100%; color:#0068CF; background-color:Transparent; }
+#uxp_ftr_control td { padding:8px 0; vertical-align:top; } 	
+#uxp_ftr_control td#uxp_ftr_right { text-align:right; }
+#uxp_ftr_control ul { margin:0; padding:0; list-style:none; white-space:nowrap; }	
+#uxp_ftr_control ul li { float:left; padding:0 8px; white-space:nowrap; border-right:1px solid; }	
+#uxp_ftr_control ul li.uxp_ftr_item_last { border-right:none; }	
+#uxp_ftr_control ul li a { text-decoration:none; color:#0068CF; }
+#uxp_ftr_control ul li a:hover { text-decoration:underline; }
+
+#uxp_ftr_right_nest { margin:0; padding:0; margin-left:auto; font-size:100%; }
+#uxp_ftr_right_nest td { margin:0; padding:0; }
+
+.uxp_hdr_menuParent
+{
+	z-index:1001;
+}
+
+
+.Shortcuts A
+{
+	color: #444444;
+	background-image: url(http://gfx2.hotmail.com/mail/w2/ltr/theme0/sc_rest.gif);
+	border-bottom: solid 1px #dbdce3;
+}
+
+.Shortcuts A.ShortcutHover, .Shortcuts A.ShortcutItemHover
+{
+	background-image: url(http://gfx2.hotmail.com/mail/w2/ltr/theme0/sc_hover.gif);
+}
+.todayShortcutOn #todayShortcut, .mailShortcutOn #mailShortcut, .contactsShortcutOn #contactsShortcut
+{
+	background-image: url(http://gfx1.hotmail.com/mail/w2/ltr/theme0/sc_press.gif);
+}
+
+
+.BoldText
+{
+	font-weight: bold;
+}
+.ContentLeft
+{
+	margin-right: 5px;
+}
+
+.UiButton, .cButton
+{
+    height: 2em;
+    overflow: visible;
+    padding: 0em 0.5em;
+    margin: 0em 0.5em;
+    margin-right: 0.5em;
+    margin-left:  0em;
+	background: url(http://gfx2.hotmail.com/mail/w2/ltr/button_rest.gif) center repeat-x ;
+    background-color: #FFFFFF;
+	cursor: pointer;
+	cursor: hand;
+	border: 1px solid #707070;
+}
+
+.DropShadow
+{
+	height:1px;
+	overflow:hidden;  
+	background-color: #BEC6C7;
+	clear:both;
+}
+
+
+.dSideAds, #dSideAdsDiv
+{
+	margin-left: 4px;
+}
+
+
+.i_calendar, .i_trash, .i_inbox, .search_folder, .i_drafts, .i_sent, .i_junkfolder, .i_today, .i_mail, .i_folder, .i_webmessenger, .i_contacts, .glyph_empty_rest{border:none;overflow:hidden;background-repeat:no-repeat;background-image:url(http://gfx1.hotmail.com/mail/w2/ltr/icc_left1.gif);height:16px;width:16px;}
+.i_forward, .i_read, .i_send, .i_importance_high, .i_reply, .i_importance_low, .i_new, .i_nextpage, .i_previouspage, .descend_rest_dark, .ascend_rest_dark, .i_nextpage_disable, .i_attach, .i_previouspage_disable{border:none;overflow:hidden;background-repeat:no-repeat;background-image:url(http://gfx2.hotmail.com/mail/w2/ltr/icc_msglst1.gif);height:16px;width:16px;}
+.i_checkmail, .i_print, .i_replyall, .i_next, .i_previous, .i_prefs, .i_junkEmail, .i_newmessage_2, .i_phish, .i_notJunk, .i_delete, .i_new{border:none;overflow:hidden;background-repeat:no-repeat;background-image:url(http://gfx2.hotmail.com/mail/w2/ltr/icc_tb3.gif);height:16px;width:16px;}
+.i_newfolder, .i_rename, .i_spelling, .mr_accept, .i_cancel, .i_done, .i_attachment_action{border:none;overflow:hidden;background-repeat:no-repeat;background-image:url(http://gfx1.hotmail.com/mail/w2/ltr/icc_tb4.gif);height:16px;width:16px;}
+.i_merge, .i_edit, .i_save, .i_new_group, .i_newcontact{border:none;overflow:hidden;background-repeat:no-repeat;background-image:url(http://gfx2.hotmail.com/mail/w2/ltr/icc_tb5.gif);height:16px;width:16px;}
+
+.ManageLink
+{
+	padding-left: 8px;
+	padding-right: 4px; 
+}
+
+
+.ListItem SPAN
+{
+    padding-left: 4px;
+}
+
+.FolderList LI A.IndexListItemEmptyLink IMG
+{
+	margin: 4px 0px;
+}
