@@ -865,55 +865,13 @@ var crSearchModePanel =
 		crSearchModePanel.crFormBtnOk.txTitle = "Ok";      
 		crSearchModePanel.crFormBtnOk.Show();			
 
-		$('btnSearchClose').focus();		
-		
-		// if (!crSearchModePanel.WorkSpace) 
-		// {
-		// 	////debugger;
-		//     crSearchModePanel.Form = new toolboxForm("SearchModeForm");
-		//     crSearchModePanel.Form.txSize = new toolboxSize(495, 305);
-		//     crSearchModePanel.Form.txLocation = new toolboxPoint(50, 50);
-		//     crSearchModePanel.Form.setTitle("Search mode");//TO DO: Res
-		//     crSearchModePanel.Form.Show();
-		//     crSearchModePanel.Form.setResizeble(false);
-		// 	var row, cell;
-		// 	var tb = document.createElement('table');
-		// 	tb.className = "xxQual_Lay_Main";
-		// 	tb.cellSpacing = "0"; tb.cellPadding = "0";
-		// 	tb.style.height = crSearchModePanel.Form.txWorkArea[1].clientHeight + "px";
-		// 	row = tb.insertRow(-1);
-		// 	cell = row.insertCell(-1);
-		// 	cell.className = "xxQual_Lay_Left";
-			
-		// 	crSearchModePanel.Form.txWorkArea[1].appendChild(tb);
-			
-		// 	var txBtnPanel = new toolboxFormButtonPanel("SearchModePanel", cell);
-		// 	txBtnPanel.Show();
-		// 	txBtnPanel.AddButton("btnSearchModeOk", "Ok", crSearchModePanel.btnOk_OnClick);
-		// 	txBtnPanel.AddButton("btnSearchModeCancel", "Cancel", crSearchModePanel.btnCancel_OnClick);
-		// 	crSearchModePanel.WorkSpace = txBtnPanel.txWorkSpace;		
-		// }
-		
-		// if(crSearchModePanel.Form)
-		// 	crSearchModePanel.Form.setVisibility(true);	
-			
-		// if(arguments.length > 0)
-		// 	crSearchModePanel.ShowTree(arguments[0], crSearchModePanel.WorkSpace);
+		$('btnSearchClose').focus();
 	},
 
 	ShowTree : function(tree, workspace)
 	{
 		workspace.innerHTML = "";
-		workspace.appendChild(crSearchModePanel.CreateBranch(tree, crSearchModePanel._sysLevel)); 
-
-		// if(tree.Count() > 0)	
-		// {
-		// 	workspace.appendChild(crSearchModePanel.CreateBranch(tree, crSearchModePanel._sysLevel)); 
-		// }
-		// else
-		// {
-		// 	workspace.innerHTML = 'No Items';
-		// }
+		workspace.appendChild(crSearchModePanel.CreateBranch(tree, crSearchModePanel._sysLevel));
 	},
 	Show : function (tree)
 	{
@@ -944,11 +902,6 @@ var crSearchModePanel =
 			{
 				if (branch.Children[index].Count() > 0)
 				{
-					// var mainDIV = document.createElement('div');
-					// mainDIV.id = "divSearchBodyItems";
-					// mainDIV.className = "modal-content-SearchModeitem";
-					
-
 					var mainTag = document.createElement('ul');
 
 					mainTag.className = "labelSearchModeUL";
@@ -967,8 +920,6 @@ var crSearchModePanel =
 
 						mainTag.appendChild(lispan);
 					}
-
-					// mainTag.appendChild(insideSpan);
 				}
 				else
 				{
@@ -990,55 +941,6 @@ var crSearchModePanel =
 		}
 
 		return mainTag;
-
-		// var mainEl = document.createElement('UL');
-		// mainEl.className = "NixxisQualBranch";
-	
-		// if (level == 0) 
-		// {
-		// 	mainEl.style.paddingLeft = "5px";
-		// 	mainEl.style.marginTop = "2px";
-		// }
-					
-		// for(index in branch.Children)
-		// {
-		// 	var node = document.createElement('LI');
-		// 	node.className = "NixxisQualNode";
-			
-		// 	var innerEl = document.createElement('SPAN');
-		// 	var icon = document.createElement('IMG');
-			
-		// 	if (branch.Children[index].Count() > 0) 
-		// 	{
-		// 		icon.src = "img/Qual_Open.png";
-		// 		innerEl.crIsCollapsed = false;
-		// 		innerEl.onclick = crSearchModePanel.Icon_Onclick;
-		// 	}
-		// 	else 
-		// 	{
-		// 		icon.src = "img/Qual_None.png";
-		// 		node.onmouseover = function() { addElementClass(this, 'Hover'); };
-	    //     	node.onmouseout = function() { removeElementClass(this, 'Hover'); };
-		// 		innerEl.onclick = crSearchModePanel.Select_OnClick;
-		// 	}
-					
-		// 	innerEl.appendChild(icon);
-		// 	innerEl.innerHTML += branch.Children[index].Description;
-		// 	innerEl.crId = branch.Children[index].Id;
-
-		// 	node.appendChild(innerEl);
-				
-		// 	if(branch.Children[index].Count() > 0)
-		// 	{
-		// 		crSearchModePanel._sysLevel++;
-		// 		node.appendChild(crSearchModePanel.CreateBranch(branch.Children[index], crSearchModePanel._sysLevel));
-		// 		crSearchModePanel._sysLevel--;
-		// 	}
-				
-		// 	mainEl.appendChild(node);
-		// }
-			
-		// return mainEl;
 	},
 	Select_OnClick : function(sender)
 	{
@@ -1054,22 +956,7 @@ var crSearchModePanel =
 		else
 		{
 
-		}
-
-		// try
-		// {
-		// 	if (crSearchModePanel.CurrentSelected) 
-		// 	{
-		// 		if (crSearchModePanel.CurrentSelected.parentNode.style)
-		// 			crSearchModePanel.CurrentSelected.parentNode.style.backgroundColor = "Transparent";
-		// 	}
-		// }
-		// catch(e)
-		// {;}
-		
-		// this.parentNode.style.backgroundColor = "#a9a9a9";
-				
-		// crSearchModePanel.CurrentSelected = this;
+		}		
 	},
 
 	//
@@ -1159,7 +1046,6 @@ var crPauseCodePanel =
 	{
 		debugger;
 
-
 		crPauseCodePanel.Form = new toolboxForm("PauseCodes");
 		crPauseCodePanel.Form.txParent = document.body;
 		crPauseCodePanel.Form.Show();
@@ -1199,57 +1085,12 @@ var crPauseCodePanel =
 		crPauseCodePanel.crFormBtnOk.Show();			
 
 		$('btnBreakreasonClose').focus();
-
-		// if (!crPauseCodePanel.WorkSpace) 
-		// {
-		// 	//New
-		// 	////debugger;
-		//     crPauseCodePanel.Form = new toolboxForm("PauseCodes");
-		//     crPauseCodePanel.Form.txSize = new toolboxSize(300, 305);
-		//     crPauseCodePanel.Form.txLocation = new toolboxPoint(50, 50);
-		//     crPauseCodePanel.Form.setTitle("Pause mode");
-		//     crPauseCodePanel.Form.Show();
-		//     crPauseCodePanel.Form.setResizeble(false);
-		// 	var row, cell;
-		// 	var tb = document.createElement('table');
-		// 	tb.className = "xxQual_Lay_Main";
-		// 	tb.cellSpacing = "0"; tb.cellPadding = "0";
-		// 	tb.style.height = crPauseCodePanel.Form.txWorkArea[1].clientHeight + "px";
-		// 	row = tb.insertRow(-1);
-		// 	cell = row.insertCell(-1);
-		// 	cell.className = "xxQual_Lay_Left";
-			
-		// 	crPauseCodePanel.Form.txWorkArea[1].appendChild(tb);
-			
-		// 	var txBtnPanel = new toolboxFormButtonPanel("PauseCodePanel", cell);
-		// 	////debugger;
-		// 	txBtnPanel.Show();
-		// 	txBtnPanel.AddButton("btnPauseCodeOk", "Ok", crPauseCodePanel.btnOk_OnClick);
-		// 	txBtnPanel.AddButton("btnPauseCodeCancel", "Cancel", crPauseCodePanel.btnCancel_OnClick);
-		// 	crPauseCodePanel.WorkSpace = txBtnPanel.txWorkSpace;
-		// }
-		
-		// if(crPauseCodePanel.Form)
-		// 	crPauseCodePanel.Form.setVisibility(true);	
-			
-		// if(arguments.length > 0)
-		// 	crPauseCodePanel.ShowList(arguments[0], crPauseCodePanel.WorkSpace);
 	},
 
 	ShowList : function(list, workspace)
 	{
 		workspace.innerHTML = "";
-		workspace.appendChild(crPauseCodePanel.CreateList(list)); 
-	
-		// workspace.innerHTML = "";
-		// if(list.Count() > 0)
-		// {
-		// 	workspace.appendChild(crPauseCodePanel.CreateList(list)); 
-		// }
-		// else
-		// {
-		// 	workspace.innerHTML = 'No Items';
-		// }
+		workspace.appendChild(crPauseCodePanel.CreateList(list));
 	},
 	Show : function (list) 
 	{ 
@@ -1542,49 +1383,7 @@ var crTeamSelectPanel =
 			mainDIV.appendChild(insideSpan);
 
 			return mainDIV;
-		}
-
-		// return superMainDIV.appendChild(mainDIV);
-		
-		// mainEl.className = "NixxisQualBranch";
-		// mainEl.style.paddingLeft = "5px";
-		// mainEl.style.marginTop = "2px";
-		// crTeamSelectPanel._ULlist = mainEl;
-				
-		// for(index in list.Items)
-		// {
-		// 	var node = document.createElement('LI');
-		// 	node.className = "NixxisQualNode";
-			
-		// 	var innerEl = document.createElement('SPAN');
-				
-		// 	var icon = document.createElement('IMG');
-		// 	if (list.Items[index].Active) 
-		// 	{
-		// 		icon.src = "img/Icon_Selected.png";
-		// 		addElementClass(node, 'selected');
-		// 	}
-		// 	else 
-		// 	{
-		// 		icon.src = "img/Icon_NotSelected.png";
-		// 		addElementClass(node, 'notselected');
-		// 	}
-			
-		// 	node.onmouseover = function() { addElementClass(this, 'hoverTeam'); };
-        // 	node.onmouseout = function() { removeElementClass(this, 'hoverTeam'); };
-			
-		// 	node.onclick = crTeamSelectPanel.Select_OnClick;
-		// 	innerEl.appendChild(icon);
-		// 	innerEl.innerHTML += list.Items[index].Description;
-		// 	innerEl.crId = list.Items[index].Id;
-		// 	innerEl.crActive = list.Items[index].Active;
-		// 	innerEl.crActiveNewValue = list.Items[index].Active;
-
-		// 	node.appendChild(innerEl);
-		// 	mainEl.appendChild(node);
-		// }
-			
-		// return mainEl;
+		}		
 	},
 
 
