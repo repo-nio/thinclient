@@ -44,7 +44,14 @@ function removeElementClass(control, className)
     var lst;
     
     if(control.className) lst = control.className.split(' '); else return;
-    for(var i = 0; i < lst.length; i++) if(lst[i] == className) { control.className = lst.slice(0,i).concat(lst.slice(i+1)).join(' '); break; }
+    for(var i = 0; i < lst.length; i++) 
+	{
+		if(lst[i] == className) 
+		{ 
+			control.className = lst.slice(0,i).concat(lst.slice(i+1)).join(' '); 
+			// break;
+		}
+	}
 }
 
 function addSourcePrefix(control, prefix)

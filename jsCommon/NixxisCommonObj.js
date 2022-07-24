@@ -309,6 +309,8 @@ var crNewCallDialog =
 	
 	Call : function(link, cmd, clientlink)
 	{
+		debugger;
+
 		crNewCallDialog.crLink = link;
 		crNewCallDialog.crCmd = cmd;
 		crNewCallDialog.crClientLink = clientlink;
@@ -320,7 +322,11 @@ var crNewCallDialog =
 		
 		if(crNewCallDialog.crInt_OpenWindow)
 			crNewCallDialog.Show();
-		
+		else
+		{
+			addElementClass($('dial-pad'), 'active');
+			addElementClass($('backdrop'), 'active');
+		}		
 		
 		if (crNewCallDialog.crNumToCall) 
 		{
@@ -328,8 +334,7 @@ var crNewCallDialog =
 			crNewCallDialog.crNumToCall = null;
 		}
 		
-		$("MCNum").focus();
-		//if (!crNewCallDialog.crWindow) return;
+		$("MCNum").focus();		
 	},
 	Clear : function()
 	{
@@ -453,6 +458,9 @@ var crNewCallDialog =
 		crNewCallDialog.crDialPadBtn[_Key].txAlt = "Close";
 	    crNewCallDialog.crDialPadBtn[_Key].txTitle = "Close";      
 	    crNewCallDialog.crDialPadBtn[_Key].Show();
+
+		addElementClass($('dial-pad'), 'active');
+		addElementClass($('backdrop'), 'active');
 	    
 	    this.setStatus(CrResource.newContactForm.statusEnterNumber);		
 	},
@@ -506,7 +514,9 @@ var crNewCallDialog =
 			i++;
 		}
 		crNewCallDialog.Close();
-		
+
+		removeElementClass($('dial-pad'), 'active');
+		removeElementClass($('backdrop'), 'active');		
 	},	
 	ButtonClear : function()
 	{
@@ -527,7 +537,7 @@ var crNewCallDialog =
 	},
 	ButtonClose : function()
 	{
-		// debugger;
+		debugger;
 		
 		removeElementClass($('dial-pad'), 'active');
 		removeElementClass($('backdrop'), 'active');
@@ -868,7 +878,16 @@ function removeElementClass(control, className)
 function removeClass_V3(control, className)
 {
 	if(control.className) lst = control.className.split(' '); else return;
-    for(var i = 0; i < lst.length; i++) if(lst[i] == className) { control.className = lst.slice(0,i).concat(lst.slice(i+1)).join(' '); break; }
+    for(var i = 0; i < lst.length; i++) 
+	{
+		if(lst[i] == className) 
+		{			
+			// control.className = lst.slice(0,i).concat(lst.slice(i+1)).join(' ');
+			// break;
+
+			control.className = control.className.replace(' ' + className,'');
+		}
+	}
 }
 var crLoadingScreen =
 {
