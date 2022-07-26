@@ -1429,7 +1429,7 @@ function NixxisClientLink(sessionId, baseLocation)
 		{
 			if(toolStrip.childNodes[i].className)
 			{
-				debugger;
+				// debugger;
 
 				var elementParent = toolStrip.childNodes[i];
 				

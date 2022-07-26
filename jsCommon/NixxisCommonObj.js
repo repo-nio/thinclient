@@ -796,12 +796,20 @@ function addElementClass(control, className)
 function joinClass_V3(control, className)
 {
 	if(control.className) lst = control.className.split(' '); else lst = new Array();
-    for(var i = 0; i < lst.length; i++) 
+
+	if(lst == null || lst.length == 0)
 	{
-		if(lst[i] != null && lst[i]?.toLowerCase() == className?.toLowerCase()) return;
-	
-		lst.push(className);
-		control.className = lst.join(' ');
+		control.className = className;
+	}
+	else
+	{
+		for(var i = 0; i < lst.length; i++) 
+		{
+			if(lst[i] != null && lst[i]?.toLowerCase() == className?.toLowerCase()) return;
+		
+			lst.push(className);
+			control.className = lst.join(' ');
+		}
 	}
 }
 
@@ -878,9 +886,9 @@ function removeElementClass(control, className)
 function removeClass_V3(control, className)
 {
 	if(control.className) lst = control.className.split(' '); else return;
-    for(var i = 0; i < lst.length; i++) 
+    for(var i = 0; i < lst.length; i++)
 	{
-		if(lst[i] == className) 
+		if(lst[i] == className)
 		{			
 			// control.className = lst.slice(0,i).concat(lst.slice(i+1)).join(' ');
 			// break;

@@ -143,7 +143,6 @@ function ClientConnect()
 		removeElementClass($('Info_AgentReadyVoiceIndication'), 'active');
 		removeElementClass($('WaitForCall'), 'active');
 		addElementClass($('Pause'), 'active');
-		// $('Pause').click();
 	}
 	else
 	{
@@ -159,13 +158,13 @@ function DisplayDateTimeElapsed()
 {
 	//debugger;
 
-	if(startdatetime==null)
+	if(startdatetime == null)
 	{
-		startdatetime=new Date();
+		startdatetime = new Date();
 	}
 
-	var enddatetime=new Date();
-	var timediff= enddatetime-startdatetime;
+	var enddatetime = new Date();
+	var timediff = enddatetime-startdatetime;
 	
 	var seconds=FormatTime(timediff);
 
@@ -173,9 +172,6 @@ function DisplayDateTimeElapsed()
 	
 	if( ClientLink.UserLastWarning[0]?.includes("Session%20disconnected%20due%20to%20new%20login%20request"))
 	{
-		// $("Info_AgentSessionDurationHeader").textContent  = 'Session disconnected due to new login request';
-		// $("Info_AgentSessionDuration").textContent = '';
-		
 		setSessionDisconnectedMessage();
 	}
 	else
@@ -284,8 +280,13 @@ function nixxislink_ConactAdded(contactInfo)
 	debugger;
 	contactInfo.__AgentAction = "S";
 	
-	if (contactInfo.Media == "V") { contactInfo.__ContactUpdate = true; }
-	else  { contactInfo.__ContactUpdate = false; }
+	if (contactInfo.Media == "V") 
+	{ 
+		contactInfo.__ContactUpdate = true;
+		addElementClass($('VoiceToolStrip'),'active');
+		addElementClass($('voiceStatusToolStrip'),'active');
+	}
+	else { contactInfo.__ContactUpdate = false; }
 	
 	// start tmp -->
 	if (contactInfo.Media == "C")
@@ -293,11 +294,13 @@ function nixxislink_ConactAdded(contactInfo)
 	// <-- End tmp
 	
 	contactInfo.__LabelTop = "";
-	if (contactInfo.Direction == "I") {
+	if (contactInfo.Direction == "I") 
+	{
 		contactInfo.__LabelBottom = contactInfo.From;
 		$('Info_ContactOriginator').textContent = contactInfo.To;		
 	}
-	else {
+	else 
+	{
 		contactInfo.__LabelBottom = contactInfo.To;
 		$('Info_ContactTo').textContent = contactInfo.To;
 	}
@@ -314,7 +317,6 @@ function nixxislink_ConactAdded(contactInfo)
 	$('NixxisAgent').style.display ='inline';
 
 	// $('contactViewerObject').setAttribute("data", contactInfo.ScriptUrl);
-	// $('contactViewerObject').setAttribute("data", "https://www.nixxis.com");
 }
 function nixxislink_ContactRemoved(contactInfo)
 {
@@ -328,6 +330,9 @@ function nixxislink_ContactRemoved(contactInfo)
 	//contactInfo.__Panel = null;
 	
 	SetAgentInfoStat();
+
+	removeElementClass($('VoiceToolStrip'),'active');
+	removeElementClass($('voiceStatusToolStrip'),'active');
 }
 function nixxislink_ContactStateChanged(contactInfo)
 {
@@ -427,6 +432,13 @@ function nixxislink_AgentQueueState(state)
 	$("Info_QueueHighPriority").innerHTML = state[0] +' - '+ state[1];
 	$("Info_QueueWaiting").innerHTML = state[1];
 	
+	if(state[1] != null && state[1] != '' && state[1] != '0')
+	{
+		addElementClass($("divAgentStatus"),'highlight');
+	}
+	else
+		removeElementClass($("divAgentStatus"),'highlight');
+
 	DebugLog("nixxislink_AgentQueueState. message:" + state);
 }
 function WaitFor_StateChanged(authorized, active)
@@ -435,19 +447,7 @@ function WaitFor_StateChanged(authorized, active)
 
     DebugLog("WaitFor_StateChanged. authorized:" + authorized + ". active:" + active );
 	
-
-	// if(!authorized && !active)
-	// {
-	// 	if(ClientLink.Contacts.Get.length)
-	// 	{
-	// 		DebugLog("Working");
-	// 		AgentStateWorking();
-
-	// 		return;
-	// 	}
-	// }
-
-	if (!authorized) return;	
+	if (!authorized) return;
 	
 	if(ClientLink.commands.WaitForCall.active)
 	{
@@ -459,26 +459,21 @@ function WaitFor_StateChanged(authorized, active)
 		if(ClientLink.commands.WaitForMail.active)
 		{
 	        DebugLog("Waiting Mail");
-			AgentStateWaiting();		
+			AgentStateWaiting();
 		}
 		else
 		{
 			if(ClientLink.commands.WaitForChat.active)
 			{
 		        DebugLog("Waiting Chat");
-				AgentStateWaiting();		
+				AgentStateWaiting();
 			}
-			// else if(ClientLink.Contacts.Get.length)
-			// {
-			// 	DebugLog("Working");
-			// 	AgentStateWorking();
-			// }
 			else
 			{
 		        DebugLog("Pause");
-				AgentStatePause();				
-			}			
-		}		
+				AgentStatePause();
+			}
+		}
 	}
 	
     /*if(active)
@@ -608,7 +603,13 @@ function AgentStatePause()
 {	
 	debugger;
 	
-	$("Info_AgentState").textContent = 'Break';
+	if(crPauseCodePanel !=null && crPauseCodePanel.CurrentSelected !=null && crPauseCodePanel.CurrentSelected.childNodes.length > 0)
+	{
+		$("Info_AgentState").textContent = 'Break - ' + crPauseCodePanel.CurrentSelected.childNodes[1].textContent;
+	}
+	else
+		$("Info_AgentState").textContent = 'Break';
+	
 	startdatetime=new Date();
 	removeElementClass($('Info_AgentReadyVoiceIndication'), 'active');
 	
@@ -625,18 +626,17 @@ function AgentStateWorking()
 	startdatetime=new Date();
 	removeElementClass($('Info_AgentReadyVoiceIndication'), 'active');
 
-	// _NoTabPagePanel.setUrl("CrAgentPause.htm");	
+	// _NoTabPagePanel.setUrl("CrAgentPause.htm");
 }
 
 function AgentStateWaiting()
 {
-	debugger;
+	// debugger;
 	
 	$("Info_AgentState").textContent = 'Waiting (V)';
 	startdatetime=new Date();
 	addElementClass($('Info_AgentReadyVoiceIndication'), 'active');
-	
-	// $('WaitForCall').click();
+		
 	// SetReadyBreakBasedOnAgentState('Waiting (V)');
 	// _NoTabPagePanel.setUrl("CrAgentWaiting.htm");	
 }
@@ -649,9 +649,7 @@ function AgentStateOnline(contactInfo)
 }
 function SetReadyBreakBasedOnAgentState(state)
 {
-	debugger;
-	
-	// var state='';
+	// debugger;
 
 	const url = new URL(window.location.href);
 	url.pathname = url.pathname + "/../embed.html"
@@ -680,6 +678,8 @@ function SetReadyBreakBasedOnAgentState(state)
 }
 function CloseScript()
 {
+	debugger;
+
 	ClientLink.TerminateContact(ClientLink.Contacts.Get(ClientLink.Contacts.ActiveContactId));
 	SetAgentInfoStat();
 	
@@ -690,12 +690,13 @@ function CloseScript()
 
 	// $('contactViewerObject').setAttribute("data", '');
 	
-	// SetReadyBreakBasedOnAgentState();	
+	// SetReadyBreakBasedOnAgentState();
 }
 function NewContact(contactInfo)
 {
 	//var _TabId = contactInfo.Id;
-	// // debugger;
+	// debugger;
+
 	var _TabPage = tabContacts.txTabPages.GetNextFreeTab(contactInfo.Media);
 	if(!_TabPage)
 	{

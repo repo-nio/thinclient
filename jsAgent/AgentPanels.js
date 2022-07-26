@@ -190,7 +190,10 @@ function crVoicePanel(parent, name)
 	//this.txFrame.src = "about:blank";
 	//this.txFrame.src = "CrAgentVoiceDemo.htm?ContactId=" + this.txName;
 
-	this.Show = function(){
+	this.Show = function()
+	{
+		debugger;
+
 		if (!this.txParent) 
 			return;
 		
@@ -489,9 +492,7 @@ var crQualPanel =
 			
 		//crQualPanel.Form.Resize();
 		
-		crQualPanel.OptionClear();
-		
-		
+		crQualPanel.OptionClear();		
 	},
 
 	ShowTree : function(tree, workspace)
@@ -1093,8 +1094,8 @@ var crPauseCodePanel =
 		workspace.appendChild(crPauseCodePanel.CreateList(list));
 	},
 	Show : function (list) 
-	{ 
-		// crPauseCodePanel.Init(list);
+	{
+		crPauseCodePanel.CurrentSelected = null;
 
 		if (crPauseCodePanel.Form)
 			crPauseCodePanel.crInt_OpenWindow = false;
@@ -1148,10 +1149,10 @@ var crPauseCodePanel =
 
 				var insideSpan = document.createElement('span');
 				insideSpan.className = "labelcheckbox";
-				insideSpan.textContent = list.Items[index].Description
-				insideSpan.crId = list.Items[index].Id;				
+				insideSpan.textContent = list.Items[index].Description;
+				insideSpan.crId = list.Items[index].Id;
+				
 				mainDIV.appendChild(insideSpan);
-
 				superMainDIV.appendChild(mainDIV);
 			}
 
@@ -1222,8 +1223,7 @@ var crPauseCodePanel =
 		if (crPauseCodePanel.CurrentSelected) 
 		{
 			ClientLink.commands.Pause.execute(crPauseCodePanel.CurrentSelected.childNodes[1].crId);
-
-			crPauseCodePanel.CurrentSelected = null;
+			
 			removeElementClass($('backdrop'), 'active');
 			removeElementClass($('break-reason'), 'active');			
 		}
