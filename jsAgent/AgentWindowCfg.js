@@ -33,7 +33,7 @@ function Init_Window()
 	setDefaultToolbarLayout($('Selectqual'),       function() { dbgQualification(); });
 	setDefaultToolbarLayout($('SearchMode'),       function() { dbgSearchMode(); });
 	setDefaultToolbarLayout($('TeamSelection'),       function() { btnTeamSelection(); });
-	setDefaultToolbarLayout($('MiniMode'),       function() { btnMiniMode(); });
+	setDefaultToolbarLayout($('AgentLogout'),       function() { btnMiniMode(); });
 	
 	//Debug function
     // setDefaultToolbarLayout($('Debug'),             function() { Debug(); });
@@ -127,7 +127,8 @@ function DisposeClient()
 	catch(e) {}
 }
 function ClientConnect()
-{	
+{
+	// sessionStorage.setItem('reloadedOn', new Date());
     DebugLog("Nixxislink connect...");
     ClientLink.connect();
 	SetAgentInfoStat();
@@ -285,6 +286,21 @@ function nixxislink_ConactAdded(contactInfo)
 		contactInfo.__ContactUpdate = true;
 		addElementClass($('VoiceToolStrip'),'active');
 		addElementClass($('voiceStatusToolStrip'),'active');
+
+		if(contactInfo.Context == 'Customer service')
+		{
+			addElementClass($('ExtendWrapup'),'active');
+			removeElementClass($('CloseScript'),'active');
+			$('ExtendWrapup').disabled = false;
+			AgentStateOnline();
+		}
+		else
+		{
+			removeElementClass($('ExtendWrapup'),'active');
+			removeElementClass($('CloseScript'),'active');
+			$('ExtendWrapup').disabled = true;
+			AgentStateWorking();
+		}		
 	}
 	else { contactInfo.__ContactUpdate = false; }
 	
@@ -333,6 +349,9 @@ function nixxislink_ContactRemoved(contactInfo)
 
 	removeElementClass($('VoiceToolStrip'),'active');
 	removeElementClass($('voiceStatusToolStrip'),'active');
+	removeElementClass($('ExtendWrapup'),'active');
+	
+	$('ExtendWrapup').disabled = true;
 }
 function nixxislink_ContactStateChanged(contactInfo)
 {
@@ -427,7 +446,7 @@ function nixxislink_AgentWarning(message)
 }
 function nixxislink_AgentQueueState(state)
 {
-	debugger;
+	// debugger;
 	
 	$("Info_QueueHighPriority").innerHTML = state[0] +' - '+ state[1];
 	$("Info_QueueWaiting").innerHTML = state[1];
@@ -443,7 +462,7 @@ function nixxislink_AgentQueueState(state)
 }
 function WaitFor_StateChanged(authorized, active)
 {
-	debugger;
+	// debugger;
 
     DebugLog("WaitFor_StateChanged. authorized:" + authorized + ". active:" + active );
 	
@@ -475,17 +494,7 @@ function WaitFor_StateChanged(authorized, active)
 			}
 		}
 	}
-	
-    /*if(active)
-    {
-        DebugLog("Waiting");
-		AgentStateWaiting();
-    }
-    else
-    {
-        DebugLog("Pause");
-		AgentStatePause();
-    }*/
+    
 	SetAgentInfoStat();
 }
 
@@ -603,7 +612,8 @@ function AgentStatePause()
 {	
 	debugger;
 	
-	if(crPauseCodePanel !=null && crPauseCodePanel.CurrentSelected !=null && crPauseCodePanel.CurrentSelected.childNodes.length > 0)
+	if(crPauseCodePanel !=null && crPauseCodePanel.CurrentSelected !=null && crPauseCodePanel.CurrentSelected.childNodes !=null
+		&& crPauseCodePanel.CurrentSelected.childNodes !='' && crPauseCodePanel.CurrentSelected.childNodes.length > 0)
 	{
 		$("Info_AgentState").textContent = 'Break - ' + crPauseCodePanel.CurrentSelected.childNodes[1].textContent;
 	}
@@ -613,8 +623,6 @@ function AgentStatePause()
 	startdatetime=new Date();
 	removeElementClass($('Info_AgentReadyVoiceIndication'), 'active');
 	
-	// $('Pause').click();
-	// SetReadyBreakBasedOnAgentState('break');
 	// _NoTabPagePanel.setUrl("CrAgentPause.htm");	
 }
 
@@ -636,8 +644,7 @@ function AgentStateWaiting()
 	$("Info_AgentState").textContent = 'Waiting (V)';
 	startdatetime=new Date();
 	addElementClass($('Info_AgentReadyVoiceIndication'), 'active');
-		
-	// SetReadyBreakBasedOnAgentState('Waiting (V)');
+	
 	// _NoTabPagePanel.setUrl("CrAgentWaiting.htm");	
 }
 function AgentStateOnline(contactInfo)
@@ -688,9 +695,15 @@ function CloseScript()
 	$('NixxisAgent').src = "about:blank";
 	$('NixxisAgent').style.display ='none';
 
+	WaitFor_StateChanged(true, true);
 	// $('contactViewerObject').setAttribute("data", '');
 	
 	// SetReadyBreakBasedOnAgentState();
+
+	removeElementClass($('VoiceToolStrip'),'active');
+	removeElementClass($('voiceStatusToolStrip'),'active');
+	removeElementClass($('ExtendWrapup'),'active');
+	$('ExtendWrapup').disabled = true;
 }
 function NewContact(contactInfo)
 {
@@ -1620,6 +1633,46 @@ function dbgAddEMailContact()
 	ClientLink.loadData("SimulateMail");
 }
 
+function VoiceRecordSetStartStop()
+{
+	// debugger;
+	addElementClass($("ExtendWrapup"),'active');
+
+	if($('VoiceRecord').className) lst = $('VoiceRecord').className.split(' '); else lst = new Array();
+
+	var CanStartrecording = false;
+
+	if(lst == null || lst.length == 0) CanStartrecording = false;
+	else
+	{
+		for(var i = 0; i < lst.length; i++) 
+		{
+			if(lst[i] != null && lst[i]?.toLowerCase() == 'active') 
+			{
+				if(CanStartrecording == true)
+				{
+					removeElementClass($('VoiceRecord'),'active');
+					CanStartrecording = false;
+					break;
+				}
+
+				CanStartrecording = true;
+			}
+		}
+	}
+
+	if(CanStartrecording)
+	{
+		$('VoiceRecord').childNodes[3].innerText = "Stop Recording";
+		$('VoiceRecord').childNodes[3].title = "Stop Recording";
+	}
+	else
+	{
+		$('VoiceRecord').childNodes[3].innerText = "Record"
+		$('VoiceRecord').childNodes[3].title = "Record";
+	}
+}
+
 function dbgFunction()
 {
 	//debugger;
@@ -1656,7 +1709,7 @@ function dbgQualification()
 	//alert("PreText:" + response);
 	//var responseAtt = this.ClientLink.getAttachments('4d0cb4de70314da39186075cd91ad119');
 	//alert("Att:" + responseAtt);
-	crQualPanel.Init(List);
+	crQualPanel.Show(List);
 }
 var dbgMsg = ["Msg1", "Msg2", "Msg3"];
 var dbgMsgCount = -1;
@@ -1689,42 +1742,10 @@ function ContactTabButton(tab)
 	
 }
 
-var isMini=false;
+
 function btnMiniMode()
 {
-	debugger;
-	if(!isMini)
-	{
-		// window.innerWidth = 100;
-		// window.innerHeight = 100;
-		// window.screenX = screen.width;
-		// window.screenY = screen.height;
+	// debugger;
 
-		window.moveTo(0, 0);
-
- 		window.resizeTo(screen.availWidth, 100);
-	}
-	else
-	{
-		// window.moveTo(0, 0);
-
- 		// window.resizeTo(screen.availWidth, screen.availHeight);
-
-		// window.innerWidth = screen.width;
-		// window.innerHeight = screen.height;
-		// window.screenX = 0;
-		// window.screenY = 0;
-
-		// var elem = document.documentElement;
-		
-		// if (elem.requestFullscreen) {
-		// 	elem.requestFullscreen();
-		//   } else if (elem.webkitRequestFullscreen) { /* Safari */
-		// 	elem.webkitRequestFullscreen();
-		//   } else if (elem.msRequestFullscreen) { /* IE11 */
-		// 	elem.msRequestFullscreen();
-		//   }
-	}
-	
-	isMini = !isMini;
+	crAgentLogout.Show();
 }

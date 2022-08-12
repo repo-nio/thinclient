@@ -401,6 +401,8 @@ function NixxisCreateCommands(owner)
 
                                     this.setState = function(isAuthorized, isActive, forceUpdate)
                                                     {
+                                                        // debugger;
+
                                                         if(isAuthorized != this.authorized || isActive != this.active || (arguments.length > 2 && forceUpdate))
                                                         {
                                                             this.authorized = isAuthorized;
@@ -410,22 +412,27 @@ function NixxisCreateCommands(owner)
                                                             {
                                                                 try
                                                                 {
-                                                                    // if(this.authorized)
-                                                                    // {
+                                                                    if(this.authorized)
+                                                                    {
                                                                         if(enabledSrc) this.linkedItem.src = enabledSrc.src;
-                                                                        removeElementClass(this.linkedItem, disabledElementClass);
+                                                                        // removeElementClass(this.linkedItem, disabledElementClass);
+                                                                        this.linkedItem.disabled = false;
 																		removeElementClass(this.linkedItem, hoverElementClass);
 																		this.linkedItem.onmouseover = function() { addElementClass(this, hoverElementClass); };
                                                         				this.linkedItem.onmouseout = function() { removeElementClass(this, hoverElementClass); };
-                                                                    // }
-                                                                    // else
-                                                                    // {                                                                        
-                                                                    //     if(disabledSrc) this.linkedItem.src = disabledSrc.src;
-                                                                    //     addElementClass(this.linkedItem, disabledElementClass);
-																	// 	removeElementClass(this.linkedItem, hoverElementClass);
-																	// 	this.linkedItem.onmouseover = function() { ; };
-                                                        			// 	this.linkedItem.onmouseout = function() { ; };
-                                                                    // }
+                                                                    }
+                                                                    else
+                                                                    {                                                                        
+                                                                        if(disabledSrc)
+                                                                        {
+                                                                            this.linkedItem.src = disabledSrc.src;                                                                             
+                                                                        }
+                                                                        // addElementClass(this.linkedItem, disabledElementClass);
+                                                                        if(this.linkedItem.id !='Pause') this.linkedItem.disabled = true;
+																		removeElementClass(this.linkedItem, hoverElementClass);
+																		this.linkedItem.onmouseover = function() { ; };
+                                                        				this.linkedItem.onmouseout = function() { ; };
+                                                                    }
                                                                     if(this.active)
                                                                     {
                                                                         addElementClass(this.linkedItem, activeElementClass);
@@ -450,6 +457,16 @@ function NixxisCreateCommands(owner)
                                                                 ;
                                                             }
                                                         }
+                                                        // else
+                                                        // {
+                                                        //     if(this!=null&& this.linkedItem!=null&& this.linkedItem.id !='Pause' && !isAuthorized) 
+                                                        //     {
+                                                        //         this.linkedItem.disabled = true;
+                                                        //         removeElementClass(this.linkedItem, hoverElementClass);
+                                                        //         this.linkedItem.onmouseover = function() { ; };
+                                                        //         this.linkedItem.onmouseout = function() { ; };
+                                                        //     }
+                                                        // }
                                                     };
                                 };
 }

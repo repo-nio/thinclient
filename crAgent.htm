@@ -22,6 +22,7 @@
     <script type="text/javascript" language="javascript" src="CrToolbox/CrToolboxControl.js"></script>
     <script type="text/javascript" language="javascript" src="CrToolbox/CrToolboxControlVisual.js"></script>
     <script type="text/javascript" language="javascript" src="jsTools/dbgWindow.js"></script>
+    <link rel="stylesheet" href="jsTools/jscalendar-1.0/calendar-v3.css"></script>
     <script type="text/javascript" language="javascript" src="jsCommon/NixxisCommonObj.js"></script>
     <script type="text/javascript" language="javascript" src="jsAgent/agentPanels.js"></script>
     <script type="text/javascript" language="javascript" src="jsAgent/agentWindowCfg.js"></script>
@@ -29,7 +30,8 @@
     <script type="text/javascript" language="javascript">
       var ClientLink;
       
-      function initInstance(){        
+      function initInstance()
+      {        
 
         
 
@@ -49,7 +51,7 @@
         
         if (const_Debug) dbgStartWindow();
   
-        debugger;
+        
         
         // DebugLog("NixxisLink...");
         ClientLink = new NixxisClientLink;
@@ -79,16 +81,22 @@
   
         if (const_DebugToolbar) SetDebug(true);
 
-        window.setTimeout("ClientConnect();", 3000, "javascript");
+        window.setTimeout("ClientConnect();", 500, "javascript");
         
         // debugger;
 
         document.body.nextSibling;
-        }
-  
-        function exitInstance()
+      }
+
+      function exitInstance()
+      {
+        debugger;
+
+        // sessionStorage.removeItem('reloadedOn');
+
+        if (sessionStorage.getItem('reloadedOn') == null) 
         {
-          debugger;
+          console.log('page was not reloaded');
 
           try
           {			
@@ -99,9 +107,12 @@
           }
           catch(e)
           {
-              ;
+            ;
           }
         }
+
+        sessionStorage.setItem('reloadedOn', new Date());
+      }
   
       function onBeforeUnloadAction()
       {
@@ -236,20 +247,21 @@
           </button>
 
           <!-- Mini mode -->
-          <button class="btn-1" data-mode="1" id="MiniMode">
+          <button class="btn-1" data-mode="#modalAgentLogout" id="AgentLogout">
             <div class="icon">
-              <img src="./assets/icons/Agent_MiniMode_50.png" alt="icon"
-                   class="NixxisButton" id="MiniMode"              
+              <img src="./assets/icons/Admin_BacktoCockpit_50.png" alt="icon"
+                   class="NixxisButton" id="AgentLogout"              
               />
             </div>
-            <span id="MiniMode">Mini mode</span>
+            <span id="AgentLogout">Logout</span>
           </button>
         </div>
 
         <!-- Buttons -->
         <div class="column when-ready grid-buttons" id="VoiceToolStrip">
           <!-- Disposition -->
-          <button class="btn-1" data-target="#disposition">
+          <!-- data-target="#disposition" -->
+          <button class="btn-1" data-target="#Select-qual" id="Selectqual">
             <div class="icon">
               <img
                 src="./assets/icons/Agent_Command_SetQualification_50.png" alt="icon"
@@ -260,18 +272,18 @@
           </button>
 
           <!-- Contact history -->
-          <button class="btn-1">
+          <button class="btn-1" id="ContactHistory" disabled>
             <div class="icon">
               <img
                 src="./assets/icons/Agent_Command_ShowContatHistory_50.png" alt="icon"
-                class="NixxisButton" id=""
+                class="NixxisButton" id="ContactHistory"
               />
             </div>
-            <span id="">Contact history</span>
+            <span id="ContactHistory">Contact history</span>
           </button>
 
           <!-- Extend -->
-          <button class="btn-1">
+          <button class="btn-1" id="ExtendWrapup">
             <div class="icon">
               <img
                 src="./assets/icons/Agent_Command_ExtendTime_50.png" alt="icon"
@@ -296,7 +308,7 @@
           <button class="btn-1" id="VoiceHold">
             <div class="icon">
               <img
-                src="./assets/icons/Agent_Command_Voice_Forward_50.png" alt="icon"
+                src="./assets/icons/Agent_Command_Voice_Hold_50.png" alt="icon"
                 class="NixxisButton" id="VoiceHold"
               />
             </div>
@@ -335,6 +347,41 @@
             </div>
             <span id="VoiceRecord">Record</span>
           </button>
+
+          <!-- Forward -->
+          <button class="btn-1" id="VoiceForward">
+            <div class="icon">
+              <img
+                src="./assets/icons/Agent_Command_Voice_Forward_50.png" alt="icon"
+                class="NixxisButton" id="VoiceForward"
+              />
+            </div>
+            <span id="VoiceForward">Forward</span>
+          </button>
+
+          <!-- Transfer -->
+          <button class="btn-1" id="VoiceTransfer">
+            <div class="icon">
+              <img
+                src="./assets/icons/Agent_Command_Voice_Transfer_50.png" alt="icon"
+                class="NixxisButton" id="VoiceTransfer"
+              />
+            </div>
+            <span id="VoiceTransfer">Transfer</span>
+          </button>
+
+          <!-- Conference -->
+          <button class="btn-1" id="VoiceConference">
+            <div class="icon">
+              <img
+                src="./assets/icons/Agent_Command_Voice_Conference_50.png" alt="icon"
+                class="NixxisButton" id="VoiceConference"
+              />
+            </div>
+            <span id="VoiceConference">Conference</span>
+          </button>
+
+          
         </div>
 
         <!-- Status -->

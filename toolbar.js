@@ -689,7 +689,7 @@ function NixxisClientLink(sessionId, baseLocation)
                                 };
     this.disconnect = function()
                                 {
-									debugger;
+									// debugger;
 					if(connected)
 					{
 	                                    // processCommandResponse(this.connection.executeCommand('~logout'));
@@ -1233,7 +1233,7 @@ function NixxisClientLink(sessionId, baseLocation)
 	this.commands.RequestAssistance = new this.commands.newCommand(this, this.codes.commandCodes.RequestAssistance, function()
 	{
 		debugger;
-		 this.clientLink.connection.executeCommand(this.commandCode);
+		this.clientLink.connection.executeCommand(this.commandCode);
 		
 
 		// this.clientLink.connection.links[1].open('GET', this.clientLink.connection.baseLocation + '?action=requestassistance', false);
@@ -1254,16 +1254,58 @@ function NixxisClientLink(sessionId, baseLocation)
 		// catch(e) {}
 	});
 //	this.commands.VoiceNewCall = new this.commands.newCommand(this, this.codes.commandCodes.VoiceNewCall);		
-	this.commands.VoiceHold = new this.commands.newCommand(this, this.codes.commandCodes.VoiceHold);			
-	this.commands.VoiceRetrieve = new this.commands.newCommand(this, this.codes.commandCodes.VoiceRetrieve);		
-	this.commands.VoiceTransfer = new this.commands.newCommand(this, this.codes.commandCodes.VoiceTransfer);		
-	//this.commands.VoiceForward = new this.commands.newCommand(this, this.codes.commandCodes.VoiceForward);		
-	this.commands.VoiceConference = new this.commands.newCommand(this, this.codes.commandCodes.VoiceConference);	
-	this.commands.VoiceHangup = new this.commands.newCommand(this, this.codes.commandCodes.VoiceHangup);		
+	
+	// this.commands.VoiceHold = new this.commands.newCommand(this, this.codes.commandCodes.VoiceHold);
+	this.commands.VoiceHold = new this.commands.newCommand(this, this.codes.commandCodes.VoiceHold, function() 
+	{
+		addElementClass($("ExtendWrapup"),'active');
+		removeElementClass($("VoiceHold"),'active');
+		this.clientLink.connection.executeCommand(this.commandCode);
+	});
+
+	
+	// this.commands.VoiceRetrieve = new this.commands.newCommand(this, this.codes.commandCodes.VoiceRetrieve);		
+	this.commands.VoiceRetrieve = new this.commands.newCommand(this, this.codes.commandCodes.VoiceRetrieve, function() 
+	{
+		addElementClass($("ExtendWrapup"),'active');
+		removeElementClass($("VoiceRetrieve"),'active');
+		this.clientLink.connection.executeCommand(this.commandCode);
+	});		
+	
+	// this.commands.VoiceTransfer = new this.commands.newCommand(this, this.codes.commandCodes.VoiceTransfer);
+	this.commands.VoiceTransfer = new this.commands.newCommand(this, this.codes.commandCodes.VoiceTransfer, function() 
+	{
+		addElementClass($("ExtendWrapup"),'active');
+		removeElementClass($("VoiceTransfer"),'active');
+		this.clientLink.connection.executeCommand(this.commandCode);
+	});
+	
+	
+	//this.commands.VoiceForward = new this.commands.newCommand(this, this.codes.commandCodes.VoiceForward);
+	
+	// this.commands.VoiceConference = new this.commands.newCommand(this, this.codes.commandCodes.VoiceConference);
+	this.commands.VoiceConference = new this.commands.newCommand(this, this.codes.commandCodes.VoiceConference, function() 
+	{		
+		addElementClass($("ExtendWrapup"),'active');
+		removeElementClass($("VoiceConference"),'active');
+		this.clientLink.connection.executeCommand(this.commandCode);
+	});	
+	
+	
+	// this.commands.VoiceHangup = new this.commands.newCommand(this, this.codes.commandCodes.VoiceHangup);
+	this.commands.VoiceHangup = new this.commands.newCommand(this, this.codes.commandCodes.VoiceHangup, function() 
+	{		
+		addElementClass($("ExtendWrapup"),'active');
+		removeElementClass($("VoiceHangup"),'active');
+		this.clientLink.connection.executeCommand(this.commandCode);
+	});	
+
+
 	this.commands.VoiceRecord = new this.commands.newCommand(this, this.codes.commandCodes.VoiceRecord, function() 
                                 {
 									if(this.authorized)
                                     {
+										VoiceRecordSetStartStop();
                             			this.clientLink.connection.executeCommand(this.commandCode, arguments[0], (this.active) ? 'False' : 'True');
                                     }
                                     return null;
@@ -1341,6 +1383,8 @@ function NixxisClientLink(sessionId, baseLocation)
 	                            {
 	                                if(this.authorized)
 	                                {
+										addElementClass($("ExtendWrapup"),'active');
+										removeElementClass($("VoiceForward"),'active');
 	                                    if(arguments.length > 0)
 	                                    {
 	                                        //window.alert(arguments[0]);

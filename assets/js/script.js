@@ -26,7 +26,7 @@
         if(button.childNodes.length > 3 && (button.childNodes[3].id == 'Pause' || button.childNodes[3].id == 'WaitForCall'))
         {
           $('button.btn-1').removeClass('active');
-        }
+        }       
         else if(button.childNodes.length > 3)
         {
           var allbtns = $('button.btn-1');
@@ -37,8 +37,8 @@
 
             if(item.childNodes.length > 3 && item.childNodes[3].id != 'Pause' && item.childNodes[3].id != 'WaitForCall')
             {
-              removeElementClass(allbtns[i], 'active');              
-            }            
+              removeElementClass(allbtns[i], 'active');
+            }
           }
         }
         else
@@ -65,7 +65,7 @@
         }
         else
         {
-          $(".when-ready").removeClass("active");
+          // $(".when-ready").removeClass("active");
         }
 
         if (_switch) {
@@ -79,7 +79,7 @@
           }
 
           if (_switch === "break") {
-            $(".when-ready").removeClass("active");
+            // $(".when-ready").removeClass("active");
             // $("#state").text("Break")
           }
 

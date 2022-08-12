@@ -495,6 +495,9 @@ var crNewCallDialog =
 	},
 	ButtonDial : function()
 	{
+		removeElementClass($('dial-pad'), 'active');
+		removeElementClass($('backdrop'), 'active');
+
 	    if (!crNewCallDialog.crClientLink) return;
 	
 		debugger;
@@ -514,9 +517,6 @@ var crNewCallDialog =
 			i++;
 		}
 		crNewCallDialog.Close();
-
-		removeElementClass($('dial-pad'), 'active');
-		removeElementClass($('backdrop'), 'active');		
 	},	
 	ButtonClear : function()
 	{

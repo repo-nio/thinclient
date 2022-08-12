@@ -407,6 +407,10 @@ body {
           flex: 1;
 }
 
+.modal.width500 {
+  width: 600px;
+}
+
 .modal .modal-footer {
   -webkit-box-pack: end;
       -ms-flex-pack: end;
@@ -535,3 +539,24 @@ body {
   color: #fff;
 }
 
+.modal .labelDispositionUL
+{
+  color: #fff;
+  position: relative;
+  left: -5px;
+  
+  /* padding: 0px;
+  margin-left: 5px; */
+}
+
+/* .modal .labelDispositionUL:hover
+{
+  background-color: #00809F;
+  color: #fff;
+} */
+
+.modal .labelDispositionUL span.selected
+{
+  background-color: #00cffd;
+  color: #fff;
+}

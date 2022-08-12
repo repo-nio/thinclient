@@ -10,5 +10,5 @@ if (["#break", ""].includes(hash)) {
 	
   showMessage("You are currently on a break!", "Click on ready to start working", "/agent/v3/assets/animations/Agent_pause.gif");
 } else if (hash === "#ready") {
-  showMessage("You are waiting fo contact", "", "/agent/v3/assets/animations/Agent_waiting.gif");
+  showMessage("You are waiting for contact", "", "/agent/v3/assets/animations/Agent_waiting.gif");
 }

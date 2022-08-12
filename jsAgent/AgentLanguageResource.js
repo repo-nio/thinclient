@@ -124,7 +124,7 @@ var CrResource =
 			SearchMode : ["Search Mode","Search Mode"],
 			
 			VoiceNewCall : ["Manual dial", "Manual dial"], //Added V3
-			MiniMode : ["Mini mode", "Mini mode"], //Added V3
+			AgentLogout : ["Quit", "Quit"], //Added V3
 			SendAlert : ["Send alert", "Send alert"], //Added V3
 			Pickup : ["Contact Pickup", "Contact Pickup"], //Added V3
 		},
