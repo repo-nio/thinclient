@@ -979,6 +979,12 @@ var crPauseCodePanel =
 		// removeElementClass($('team'), 'active');
 		removeElementClass($('backdrop'), 'active');
 		removeElementClass($('break-reason'), 'active');
+
+		if(ClientLink.commands.WaitForCall.active)
+		{
+			 removeElementClass($('Pause'), 'active');
+			 addElementClass($('WaitForCall'), 'active');
+		}
 	}
 }
 
