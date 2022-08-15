@@ -1145,7 +1145,7 @@ function NixxisClientLink(sessionId, baseLocation)
 
 	this.commands.WaitForCall = new this.commands.newCommand(this, this.codes.commandCodes.WaitForCall, function()	
 	                            {
-									debugger;
+									// debugger;
 
 	                                if(this.authorized)
 	                                {

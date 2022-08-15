@@ -157,7 +157,7 @@ function ClientConnect()
 var startdatetime;
 function DisplayDateTimeElapsed()
 {
-	//debugger;
+	// debugger;
 
 	if(startdatetime == null)
 	{
@@ -652,7 +652,7 @@ function AgentStateOnline(contactInfo)
 	$("Info_AgentState").textContent = 'Online';
 	addElementClass($('Info_AgentReadyVoiceIndication'), 'active');
 
-	startdatetime=new Date();
+	startdatetime = new Date();
 }
 function SetReadyBreakBasedOnAgentState(state)
 {
@@ -665,27 +665,10 @@ function SetReadyBreakBasedOnAgentState(state)
 	else url.hash = 'break';
 
 	$('contactViewerObject').setAttribute("data", url.href);
-
-	if(state =='Waiting (V)')
-	{
-		// $('Ready').click();	
-		// showMessage("You are currently on a break!", "Click on ready to start working", "./assets/animations/Agent waiting.gif");
-	   
-		
-		// $('imgEmdedAgentStateGIF').setAttribute("src", './assets/animations/Agent waiting.gif');
-	}
-	else if(state =='Break')
-	{
-		// $('Pause').click();
-		// showMessage("You are currently on a break!", "Click on ready to start working", "./assets/animations/Agent pause.gif");
-		
-
-		// $('imgEmdedAgentStateGIF').setAttribute("src", './assets/animations/Agent pause.gif');
-	}
 }
 function CloseScript()
 {
-	debugger;
+	// debugger;
 
 	ClientLink.TerminateContact(ClientLink.Contacts.Get(ClientLink.Contacts.ActiveContactId));
 	SetAgentInfoStat();
@@ -696,9 +679,6 @@ function CloseScript()
 	$('NixxisAgent').style.display ='none';
 
 	WaitFor_StateChanged(true, true);
-	// $('contactViewerObject').setAttribute("data", '');
-	
-	// SetReadyBreakBasedOnAgentState();
 
 	removeElementClass($('VoiceToolStrip'),'active');
 	removeElementClass($('voiceStatusToolStrip'),'active');
@@ -1187,8 +1167,10 @@ function SetTabButtonClass(control, key)
 					}
 					else
 					{
-						if (_Contact.__ContactUpdate) {
-							switch (_Contact.__AgentAction) {
+						if (_Contact.__ContactUpdate) 
+						{
+							switch (_Contact.__AgentAction) 
+							{
 								case "H":
 									addElementClass(control, "TabBtnLeftChatHoldAction");
 									control.onmouseover = function(){
@@ -1219,7 +1201,7 @@ function SetTabButtonClass(control, key)
 									}
 									break;
 							}
-							}
+						}
 						else {
 							switch (_Contact.__AgentAction) {
 								case "H":
@@ -1709,6 +1691,8 @@ function dbgQualification()
 	//alert("PreText:" + response);
 	//var responseAtt = this.ClientLink.getAttachments('4d0cb4de70314da39186075cd91ad119');
 	//alert("Att:" + responseAtt);
+
+	if(! $('ExtendWrapup').disabled) addElementClass($('ExtendWrapup'), 'active');
 	crQualPanel.Show(List);
 }
 var dbgMsg = ["Msg1", "Msg2", "Msg3"];
