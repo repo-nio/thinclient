@@ -1232,7 +1232,7 @@ var crAgentLogout =
 		
 		var _BODY = '';	    
 
-		_BODY += '<div class="modal active" id="modalAgentLogout">';
+		_BODY += '<div class="modal active" id="modalAgentLogout" >';
 		_BODY += '	<div class="modal-header">';
 		_BODY += '		<h4>Confirm Quit</h4>';
 		_BODY += '	</div>';
@@ -1246,6 +1246,8 @@ var crAgentLogout =
 		_BODY += '</div>';
 					
 		crAgentLogout.Form.txWorkArea[1].innerHTML = _BODY;
+
+		$('modalAgentLogout').style.height = 200 + 'px';
 
 		crAgentLogout.ShowList($('modalAgentLogoutworkspace'));
 		
@@ -1313,7 +1315,9 @@ var crAgentLogout =
 		removeElementClass($('backdrop'), 'active');
 		removeElementClass($('modalAgentLogout'), 'active');
 
+		debugger;
 		// window.location.href = "CrAgentlogin.htm";
+		// window.location.href = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1) + 'CrLoginScreen.htm';
 		location.reload();
 	},
 	ButtonClose : function()
