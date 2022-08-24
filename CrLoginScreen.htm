@@ -50,39 +50,19 @@
 					{
 						try 
 						{
-							alert(CrResource.LoginScreen["Msg" + _Pair[1]]);
+                            $("lblErrorMessage").innerHTML  = CrResource.LoginScreen["Msg" + _Pair[1]];
 						}catch(e){}
 					}
 				}
-			}
-	
+			}	
 			
 			crLoadingScreen.crLoadingMsg = CrResource.Common.LoadingMsg;
 			crLoadingScreen.Init();
-			
-/*            _BtnReset = new toolboxButton("ButtonReset", CrResource.Buttons._Reset, function() { resetForm(); });
-            _BtnReset.txAbsolute = false; _BtnReset.txParent = $('divBtnReset');
-            _BtnReset.txIcon = new toolboxImage("img\\btnIcon_Cancel.png", new toolboxSize(16, 16));
-            _BtnReset.txIcon.txShow = true;
-            _BtnReset.Show();
-
-            _BtnSubmit = new toolboxButton("ButtonSubmit", CrResource.Buttons._Submit, function() { submitForm(); });
-            _BtnSubmit.txAbsolute = false; _BtnSubmit.txParent = $('divBtnSubmit');
-            _BtnSubmit.txIcon = new toolboxImage("img\\btnIcon_Ok.png", new toolboxSize(16, 16));
-            _BtnSubmit.txIcon.txShow = true;
-            _BtnSubmit.Show();
-            
-            _BtnHelp = new toolboxButton("ButtonHelp", CrResource.Buttons._Help, function() { ShowHelp(); });
-            _BtnHelp.txAbsolute = false; _BtnHelp.txParent = $('divBtnHelp');
-            _BtnHelp.txIcon = new toolboxImage("img\\btnIcon_Help.png", new toolboxSize(16, 16));
-            _BtnHelp.txIcon.txShow = true;
-            _BtnHelp.Show();   
-*/			
         }
         function ShowHelp()
         {
-            var dashboardLocation = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1) + CrResource.HelpFile.Login;
-            window.open(dashboardLocation, 'SupervisionHelp', 'left=0,top=0,height=400 ,width=800, toolbar=no, location=no,directories=yes,status=yes,menubar=yes,scrollbars=yes,copyhistory=no,resizable=yes');
+            // var dashboardLocation = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1) + CrResource.HelpFile.Login;
+            // window.open(dashboardLocation, 'SupervisionHelp', 'left=0,top=0,height=400 ,width=800, toolbar=no, location=no,directories=yes,status=yes,menubar=yes,scrollbars=yes,copyhistory=no,resizable=yes');
         }
         function submitForm()
         {
