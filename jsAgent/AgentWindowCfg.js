@@ -131,6 +131,7 @@ function ClientConnect()
 	// sessionStorage.setItem('reloadedOn', new Date());
     DebugLog("Nixxislink connect...");
     ClientLink.connect();
+	ForceBreakOnAgentReload();
 	SetAgentInfoStat();
     DebugLog("Loading pause page...");
 	crLoadingScreen.Visible(false);
@@ -151,6 +152,36 @@ function ClientConnect()
 		// addElementClass($('WaitForCall'), 'active');
 		$('WaitForCall').click();
 		addElementClass($('Info_AgentReadyVoiceIndication'), 'active');
+	}
+
+	if(ClientLink.AgentId == null || ClientLink.AgentId == '')
+	{
+		location.reload();
+	}
+}
+
+function ForceBreakOnAgentReload()
+{
+	if (window.performance) 
+	{	  
+	  console.info(performance.navigation.type);
+
+	  if (performance.navigation.type == performance.navigation.TYPE_RELOAD) 
+	  {
+		console.info( "page reloaded" );
+		debugger;
+		try
+		{			
+			ClientLink.disconnect();
+			DisposeClient();
+			ClientLink.dispose();
+			ClientLink = null;
+		}
+		catch(e)
+		{
+			;
+		}
+	  }
 	}
 }
 
@@ -740,7 +771,7 @@ function $D(value)
 }
 function SetAgentInfoStat()
 {
-	$('Info_AgtName_Account').innerHTML = $D(ClientLink.UserName)+' ('+$D(ClientLink.UserAccount)+')';
+	$('Info_AgtName_Account').innerHTML = $D(ClientLink.UserName)+' ('+$D(ClientLink.Extension)+')';
 
 	// $('Info_AgtName').innerHTML = $D(ClientLink.UserName);
 	// $('Info_AgtAccount').innerHTML = $D(ClientLink.UserAccount);

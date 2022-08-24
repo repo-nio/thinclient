@@ -459,6 +459,7 @@ function NixxisClientLink(sessionId, baseLocation)
 	this.UserAccount = "";
 	this.UserName = "";
 	this.Description = "";
+	this.Extension = "";	
 	this.AgentId = "";
 	this.UserLastWarning = "";
 	this.UserQueueStates = new Array();
@@ -579,6 +580,8 @@ function NixxisClientLink(sessionId, baseLocation)
                                     {
                                         var responseLines = response.split('\r\n');
 
+										// debugger;
+										
                                         for(var i = 0; i < responseLines.length; i++)
                                         {
 											if(this.debugDiv)
@@ -597,6 +600,8 @@ function NixxisClientLink(sessionId, baseLocation)
                                                     myself.UserName = value;
 												if(key == 'description')
 													myself.Description = value;
+												if(key == 'extension')
+                                                    myself.Extension = value;
 												if(key == 'agentid')
 													myself.AgentId = value;
                                                 if(key == 'contact')
