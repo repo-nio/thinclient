@@ -42,7 +42,7 @@
   // <!IS_BROWSER>			
   //           //document.domain = "nixxisdemo.com";
         
-        window.document.title = "Nixxis agent desktop version " + const_AgentVersionDisplay;
+        window.document.title = "Nixxis agent desktop " + const_AgentVersionDisplay;
       
         // OnToolboxResize.Add(this, pageResize);
         crLoadingScreen.crLoadingMsg = CrResource.Common.LoadingMsg;
@@ -81,7 +81,7 @@
   
         if (const_DebugToolbar) SetDebug(true);
 
-        window.setTimeout("ClientConnect();", 500, "javascript");
+        window.setTimeout("ClientConnect();", 0, "javascript");
         
         // debugger;
 
@@ -109,13 +109,15 @@
           {
             ;
           }
-        }
+        }        
 
         sessionStorage.setItem('reloadedOn', new Date());
       }
   
       function onBeforeUnloadAction()
       {
+        // debugger;
+        // ForceBreakOnAgentReload();
         return "Do you want to logout?";
       }
        
@@ -272,7 +274,7 @@
           </button>
 
           <!-- Contact history -->
-          <button class="btn-1" id="ContactHistory" disabled>
+          <!-- <button class="btn-1" id="ContactHistory" disabled>
             <div class="icon">
               <img
                 src="./assets/icons/Agent_Command_ShowContatHistory_50.png" alt="icon"
@@ -280,7 +282,7 @@
               />
             </div>
             <span id="ContactHistory">Contact history</span>
-          </button>
+          </button> -->
 
           <!-- Extend -->
           <button class="btn-1" id="ExtendWrapup">
@@ -338,7 +340,7 @@
           </button>
 
           <!-- Record -->
-          <button class="btn-1" id="VoiceRecord">
+          <!-- <button class="btn-1" id="VoiceRecord">
             <div class="icon">
               <img
                 src="./assets/icons/Agent_Command_Voice_Record_50.png" alt="icon"
@@ -346,7 +348,7 @@
               />
             </div>
             <span id="VoiceRecord">Record</span>
-          </button>
+          </button> -->
 
           <!-- Forward -->
           <button class="btn-1" id="VoiceForward">
@@ -455,11 +457,11 @@
                     <img src="./assets/icons/Agent_ReadyVoiceIndication_25.png" alt="icon" id="Info_AgentReadyVoiceIndication"
                          class="NixxisButton"/>
                   </button>
-                  <button class="btn-2">                    
+                  <button class="btn-2" style="display:none;">                    
                     <img src="./assets/icons/Agent_ReadyChatIndication_25.png" alt="icon" id="Info_AgentReadyChatIndication"
                          class="NixxisButton"/>
                   </button>
-                  <button class="btn-2">
+                  <button class="btn-2" style="display:none;">
                     <img src="./assets/icons/Agent_ReadyMailIndication_25.png" alt="icon" id="Info_AgentReadyMailIndication"
                          class="NixxisButton"/>
                   </button>
