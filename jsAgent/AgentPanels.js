@@ -1298,7 +1298,7 @@ var crAgentLogout =
 	ButtonOk : function()
 	{
 		// debugger;
-	
+
 		try
 		{			
 			ClientLink.disconnect();
@@ -1316,9 +1316,11 @@ var crAgentLogout =
 		removeElementClass($('modalAgentLogout'), 'active');
 
 		debugger;
+
+		expireActiveCookies('contactroutehttpserversessionid');
 		// window.location.href = "CrAgentlogin.htm";
-		// window.location.href = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1) + 'CrLoginScreen.htm';
-		location.reload();
+		window.location.href = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1) + 'CrLoginScreen.htm';
+		// location.reload();
 	},
 	ButtonClose : function()
 	{
@@ -1328,4 +1330,30 @@ var crAgentLogout =
 		removeElementClass($('backdrop'), 'active');
 		removeElementClass($('modalAgentLogout'), 'active');
 	},
+}
+
+function expireActiveCookies(name) {
+    var pathname = location.pathname.replace(/\/$/, ''),
+        segments = pathname.split('/'),
+        paths = [];
+
+    for (var i = 0, l = segments.length, path; i < l; i++) {
+        path = segments.slice(0, i + 1).join('/');
+
+        paths.push(path);       // as file
+        paths.push(path + '/'); // as directory
+    }
+
+    expireAllCookies(name, paths);
+}
+
+function expireAllCookies(name, paths) {
+    var expires = new Date(0).toUTCString();
+
+    // expire null-path cookies as well
+    document.cookie = name + '=; expires=' + expires;
+
+    for (var i = 0, l = paths.length; i < l; i++) {
+        document.cookie = name + '=; path=' + paths[i] + '; expires=' + expires;
+    }
 }
