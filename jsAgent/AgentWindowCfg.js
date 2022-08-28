@@ -129,15 +129,18 @@ function DisposeClient()
 function ClientConnect()
 {
 	// sessionStorage.setItem('reloadedOn', new Date());
-    DebugLog("Nixxislink connect...");
+    
+	if(startdatetime == null) startdatetime = new Date();
+
+	DebugLog("Nixxislink connect...");
+	
     ClientLink.connect();	
 	SetAgentInfoStat();
     DebugLog("Loading pause page...");
 	crLoadingScreen.Visible(false);
 
 	ForceBreakOnAgentReload();
-	// window.setTimeout(ForceBreakOnAgentReload(), 100);
-
+	
 	// window.setTimeout(DisplayDateTimeElapsed, 100);
 	DisplayDateTimeElapsed();
 
@@ -157,7 +160,7 @@ function ClientConnect()
 		addElementClass($('Info_AgentReadyVoiceIndication'), 'active');
 	}
 
-	debugger;
+	// debugger;
 	if(ClientLink.AgentId == null || ClientLink.AgentId == '')
 	{
 		location.reload();
@@ -166,6 +169,8 @@ function ClientConnect()
 
 function ForceBreakOnAgentReload()
 {
+	debugger;
+
 	if (window.performance) 
 	{	  
 	  console.info(performance.navigation.type);
@@ -176,11 +181,12 @@ function ForceBreakOnAgentReload()
 		debugger;
 		try
 		{			
+			CloseScript();
 			ClientLink.connection.executeCommand('3');
 			removeElementClass($('WaitForCall'), 'active');
 			$('WaitForCall').disabled = false;
 			
-		    const sleep = ms => new Promise(r => setTimeout(r, 2000));
+		    // const sleep = ms => new Promise(r => setTimeout(r, 2000));
 
 			// location.reload();
 		}
@@ -188,6 +194,22 @@ function ForceBreakOnAgentReload()
 		{
 			;
 		}
+	  }
+	  else
+	  {
+
+		console.info( "CLOSED page" );
+		// try
+		// {			
+		// 	ClientLink.disconnect();
+		// 	DisposeClient();
+		// 	ClientLink.dispose();
+		// 	ClientLink = null;				
+		// }
+		// catch(e)
+		// {
+		// 	;
+		// }
 	  }
 	}
 }
@@ -197,10 +219,7 @@ function DisplayDateTimeElapsed()
 {
 	// debugger;
 
-	if(startdatetime == null)
-	{
-		startdatetime = new Date();
-	}
+	if(startdatetime == null) startdatetime = new Date();
 
 	var enddatetime = new Date();
 	var timediff = enddatetime-startdatetime;
@@ -484,7 +503,7 @@ function nixxislink_AgentWarning(message)
 }
 function nixxislink_AgentQueueState(state)
 {
-	debugger;
+	// debugger;
 	
 	$("Info_QueueHighPriority").innerHTML = state[0] +' - '+ state[2];
 	$("Info_QueueWaiting").innerHTML = state[1];
