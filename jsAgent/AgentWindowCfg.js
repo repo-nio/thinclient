@@ -130,13 +130,16 @@ function ClientConnect()
 {
 	// sessionStorage.setItem('reloadedOn', new Date());
     DebugLog("Nixxislink connect...");
-    ClientLink.connect();
-	ForceBreakOnAgentReload();
+    ClientLink.connect();	
 	SetAgentInfoStat();
     DebugLog("Loading pause page...");
 	crLoadingScreen.Visible(false);
 
-	window.setTimeout(DisplayDateTimeElapsed, 1000);
+	ForceBreakOnAgentReload();
+	// window.setTimeout(ForceBreakOnAgentReload(), 100);
+
+	// window.setTimeout(DisplayDateTimeElapsed, 100);
+	DisplayDateTimeElapsed();
 
 	// debugger;
 	if(!ClientLink.commands.WaitForCall.active)
@@ -154,6 +157,7 @@ function ClientConnect()
 		addElementClass($('Info_AgentReadyVoiceIndication'), 'active');
 	}
 
+	debugger;
 	if(ClientLink.AgentId == null || ClientLink.AgentId == '')
 	{
 		location.reload();
@@ -172,10 +176,13 @@ function ForceBreakOnAgentReload()
 		debugger;
 		try
 		{			
-			ClientLink.disconnect();
-			DisposeClient();
-			ClientLink.dispose();
-			ClientLink = null;
+			ClientLink.connection.executeCommand('3');
+			removeElementClass($('WaitForCall'), 'active');
+			$('WaitForCall').disabled = false;
+			
+		    const sleep = ms => new Promise(r => setTimeout(r, 2000));
+
+			// location.reload();
 		}
 		catch(e)
 		{
@@ -477,17 +484,19 @@ function nixxislink_AgentWarning(message)
 }
 function nixxislink_AgentQueueState(state)
 {
-	// debugger;
+	debugger;
 	
-	$("Info_QueueHighPriority").innerHTML = state[0] +' - '+ state[1];
+	$("Info_QueueHighPriority").innerHTML = state[0] +' - '+ state[2];
 	$("Info_QueueWaiting").innerHTML = state[1];
 	
-	if(state[1] != null && state[1] != '' && state[1] != '0')
+	if(state[1] != null && state[1] != '' && state[1] != '0'
+		&& state[0] != null && state[0] != '' && state[0] != '0') addElementClass($("divAgentStatus"),'highlightRed');
+	else if(state[1] != null && state[1] != '' && state[1] != '0') addElementClass($("divAgentStatus"),'highlight');
+	else 
 	{
-		addElementClass($("divAgentStatus"),'highlight');
-	}
-	else
 		removeElementClass($("divAgentStatus"),'highlight');
+		removeElementClass($("divAgentStatus"),'highlightRed');
+	}
 
 	DebugLog("nixxislink_AgentQueueState. message:" + state);
 }
@@ -715,6 +724,8 @@ function CloseScript()
 	removeElementClass($('voiceStatusToolStrip'),'active');
 	removeElementClass($('ExtendWrapup'),'active');
 	$('ExtendWrapup').disabled = true;
+	$('WaitForCall').disabled = false;
+	$('SearchMode').disabled = false;
 }
 function NewContact(contactInfo)
 {
@@ -773,9 +784,6 @@ function SetAgentInfoStat()
 {
 	$('Info_AgtName_Account').innerHTML = $D(ClientLink.UserName)+' ('+$D(ClientLink.Extension)+')';
 
-	// $('Info_AgtName').innerHTML = $D(ClientLink.UserName);
-	// $('Info_AgtAccount').innerHTML = $D(ClientLink.UserAccount);
-
 	var _Contact;
 	
 	if (ClientLink.Contacts.ActiveContactId) 
@@ -791,6 +799,10 @@ function SetAgentInfoStat()
 			$('Info_ContactActivity').innerHTML = $D(_Contact.Context);
 			$('Info_ContactTo').innerHTML = $D(_Contact.To);
 			$('Info_ContactCustomer').innerHTML = $D(_Contact.Customer);
+
+
+			if(_Contact.State == 'C') $('CloseScript').disabled = true;
+			else $('CloseScript').disabled = false;
 						
 			stopDisplayContactActivityTimer = false;
 			DisplayContactActivityDateTimeElapsed();
