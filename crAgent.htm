@@ -31,29 +31,18 @@
       var ClientLink;
       
       function initInstance()
-      {        
-
+      {
         // debugger;
 
-  // <!IS_BROWSER Firefox>
-  //           try { document.domain = document.domain.substring(document.domain.lastIndexOf('.', document.domain.lastIndexOf('.') - 1) + 1); }
-  //       catch(e) {;}
-  //       //alert("CrAgent.htm: " + document.domain);
-  // <!IS_BROWSER>			
-  //           //document.domain = "nixxisdemo.com";
-        
         window.document.title = "Nixxis agent desktop " + const_AgentVersionDisplay;
-      
+
         // OnToolboxResize.Add(this, pageResize);
         crLoadingScreen.crLoadingMsg = CrResource.Common.LoadingMsg;
         crLoadingScreen.Init();
         crLoadingScreen.Visible(true);
         
         if (const_Debug) dbgStartWindow();
-  
         
-        
-        // DebugLog("NixxisLink...");
         ClientLink = new NixxisClientLink;
         
         ClientLink.linkToolStrip_V3($("AgentToolStrip"));
@@ -75,13 +64,13 @@
         
         DebugLog("Init window...");
         
-        
         Init_Window();
         pageResize();
   
         if (const_DebugToolbar) SetDebug(true);
 
-        window.setTimeout("ClientConnect();", 0, "javascript");
+        ClientConnect();
+        // window.setTimeout("ClientConnect();", 0, "javascript");
         
         // debugger;
 
@@ -90,9 +79,7 @@
 
       function exitInstance()
       {
-        debugger;
-
-        // sessionStorage.removeItem('reloadedOn');
+          // sessionStorage.removeItem('reloadedOn');
 
         if (sessionStorage.getItem('reloadedOn') == null) 
         {
@@ -109,7 +96,7 @@
           {
             ;
           }
-        }        
+        }
 
         sessionStorage.setItem('reloadedOn', new Date());
       }
