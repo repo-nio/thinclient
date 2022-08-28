@@ -249,6 +249,13 @@ body {
   padding: 0px;
 }
 
+.footer .column .view.highlightRed {
+  margin: 0px;
+  border: 3px solid red;
+  border-radius: 5px;
+  padding: 0px;
+}
+
 .footer .column .view ul .row {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
@@ -306,7 +313,7 @@ body {
 }
 
 .footer .column .status {
-  background-color: #58a100;
+  background-color: #00cffd;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
