@@ -197,19 +197,7 @@ function ForceBreakOnAgentReload()
 	  }
 	  else
 	  {
-
 		console.info( "CLOSED page" );
-		// try
-		// {			
-		// 	ClientLink.disconnect();
-		// 	DisposeClient();
-		// 	ClientLink.dispose();
-		// 	ClientLink = null;				
-		// }
-		// catch(e)
-		// {
-		// 	;
-		// }
 	  }
 	}
 }
@@ -807,7 +795,7 @@ function SetAgentInfoStat()
 	
 	if (ClientLink.Contacts.ActiveContactId) 
 	{
-		// debugger;
+		debugger;
 			
 		DebugLog("SetAgentInfoStat. Contact " + ClientLink.Contacts.ActiveContactId);
 		_Contact = ClientLink.Contacts.Get(ClientLink.Contacts.ActiveContactId);
@@ -820,9 +808,24 @@ function SetAgentInfoStat()
 			$('Info_ContactCustomer').innerHTML = $D(_Contact.Customer);
 
 
-			if(_Contact.State == 'C') $('CloseScript').disabled = true;
-			else $('CloseScript').disabled = false;
-						
+			if(_Contact.State == 'C') 
+			{
+				$('CloseScript').disabled = true;
+				if(_Contact.__AgentAction = 'W') 
+				{
+					AgentStateOnline();
+				}
+			}
+			else 
+			{
+				$('CloseScript').disabled = false;
+				if(_Contact.__AgentAction = 'W') 
+				{
+					AgentStateWorking();
+					removeElementClass($('ExtendWrapup'),'active');
+				}
+			}
+
 			stopDisplayContactActivityTimer = false;
 			DisplayContactActivityDateTimeElapsed();
 		}
