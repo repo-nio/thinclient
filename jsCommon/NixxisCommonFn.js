@@ -263,3 +263,30 @@ function LoadJavascriptScript(url)
 	if (load) document.write('<script type="text/javascript" src="'+ url +'"></script>');
 }
 */
+
+
+function expireActiveCookies(name) {
+    var pathname = location.pathname.replace(/\/$/, ''),
+        segments = pathname.split('/'),
+        paths = [];
+
+    for (var i = 0, l = segments.length, path; i < l; i++) {
+        path = segments.slice(0, i + 1).join('/');
+
+        paths.push(path);       // as file
+        paths.push(path + '/'); // as directory
+    }
+
+    expireAllCookies(name, paths);
+}
+
+function expireAllCookies(name, paths) {
+    var expires = new Date(0).toUTCString();
+
+    // expire null-path cookies as well
+    document.cookie = name + '=; expires=' + expires;
+
+    for (var i = 0, l = paths.length; i < l; i++) {
+        document.cookie = name + '=; path=' + paths[i] + '; expires=' + expires;
+    }
+}

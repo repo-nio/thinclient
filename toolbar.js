@@ -704,8 +704,9 @@ function NixxisClientLink(sessionId, baseLocation)
 										this.connection.links[1].send(null);
 
         	                            this.connection.close();
-                	                    connected = false;
+                	                    connected = false;										
 					}
+					expireActiveCookies('contactroutehttpserversessionid');
                                 };
     this.saveData = function(key, value)
                                 {
@@ -1209,7 +1210,7 @@ function NixxisClientLink(sessionId, baseLocation)
 	                            });	
 	this.commands.Pause = new this.commands.newCommand(this, this.codes.commandCodes.Pause, function()	
 		                            {
-										debugger;
+										// debugger;
 
 										// return this.clientLink.connection.executeCommand(this.commandCode);
 
@@ -1237,7 +1238,7 @@ function NixxisClientLink(sessionId, baseLocation)
 	this.commands.ExtendWrapup = new this.commands.newCommand(this, this.codes.commandCodes.ExtendWrapup);		
 	this.commands.RequestAssistance = new this.commands.newCommand(this, this.codes.commandCodes.RequestAssistance, function()
 	{
-		debugger;
+		// debugger;
 		this.clientLink.connection.executeCommand(this.commandCode);
 		
 

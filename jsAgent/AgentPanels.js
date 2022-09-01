@@ -509,6 +509,11 @@ function btnQualOk_OnClick()
 		// else
 		// 	callbackPhone = info.To;
 		////alert (callbackPhone);
+
+		if (_Contact && _Contact.ContactListId && $('CloseScript').disabled == true)
+		{
+			$('CloseScript').disabled = false;
+		}
 	}
 	catch(e)
 	{ 
@@ -785,7 +790,7 @@ var crPauseCodePanel =
 
 	Init : function()
 	{
-		debugger;
+		// debugger;
 
 		crPauseCodePanel.Form = new toolboxForm("PauseCodes");
 		crPauseCodePanel.Form.txParent = document.body;
@@ -1139,7 +1144,7 @@ var crTeamSelectPanel =
 	//
 	Select_OnClick : function(sender)
 	{
-		debugger;
+		// debugger;
 
 		var div = sender.currentTarget;
 		var childs = div.childNodes;
@@ -1315,9 +1320,9 @@ var crAgentLogout =
 		removeElementClass($('backdrop'), 'active');
 		removeElementClass($('modalAgentLogout'), 'active');
 
-		debugger;
+		// debugger;
 
-		expireActiveCookies('contactroutehttpserversessionid');
+		// expireActiveCookies('contactroutehttpserversessionid');
 		// window.location.href = "CrAgentlogin.htm";
 		// window.location.href = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1) + 'CrLoginScreen.htm';
 		location.reload();
@@ -1332,28 +1337,3 @@ var crAgentLogout =
 	},
 }
 
-function expireActiveCookies(name) {
-    var pathname = location.pathname.replace(/\/$/, ''),
-        segments = pathname.split('/'),
-        paths = [];
-
-    for (var i = 0, l = segments.length, path; i < l; i++) {
-        path = segments.slice(0, i + 1).join('/');
-
-        paths.push(path);       // as file
-        paths.push(path + '/'); // as directory
-    }
-
-    expireAllCookies(name, paths);
-}
-
-function expireAllCookies(name, paths) {
-    var expires = new Date(0).toUTCString();
-
-    // expire null-path cookies as well
-    document.cookie = name + '=; expires=' + expires;
-
-    for (var i = 0, l = paths.length; i < l; i++) {
-        document.cookie = name + '=; path=' + paths[i] + '; expires=' + expires;
-    }
-}
