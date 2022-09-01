@@ -139,10 +139,10 @@ function ClientConnect()
     DebugLog("Loading pause page...");
 	crLoadingScreen.Visible(false);
 
-	ForceBreakOnAgentReload();
+	// ForceBreakOnAgentReload();
 	
-	// window.setTimeout(DisplayDateTimeElapsed, 100);
-	DisplayDateTimeElapsed();
+	window.setTimeout(DisplayDateTimeElapsed, 1000);
+	// DisplayDateTimeElapsed();
 
 	// debugger;
 	if(!ClientLink.commands.WaitForCall.active)
@@ -218,7 +218,7 @@ function DisplayDateTimeElapsed()
 	
 	if( ClientLink.UserLastWarning[0]?.includes("Session%20disconnected%20due%20to%20new%20login%20request"))
 	{
-		setSessionDisconnectedMessage();
+		setSessionDisconnectedMessage('Session disconnected due to new login request');
 	}
 	else
 	{
@@ -229,9 +229,9 @@ function DisplayDateTimeElapsed()
 	setTimeout(DisplayDateTimeElapsed, 1000);
 }
 
-function setSessionDisconnectedMessage()
+function setSessionDisconnectedMessage(msg)
 {
-	$("Info_QueueWaitingHeader").textContent  = 'Session disconnected due to new login request';
+	$("Info_QueueWaitingHeader").textContent  = msg;
 	$("Info_QueueWaiting").textContent  = '';
 
 	$("Info_QueueHighPriorityHeader").textContent  = '';
@@ -657,7 +657,7 @@ function tabContacts_OnDockChange(newDock, oldDock)
 //--> < Function >
 function AgentStatePause()
 {	
-	debugger;
+	// debugger;
 	
 	if(crPauseCodePanel !=null && crPauseCodePanel.CurrentSelected !=null && crPauseCodePanel.CurrentSelected.childNodes !=null
 		&& crPauseCodePanel.CurrentSelected.childNodes !='' && crPauseCodePanel.CurrentSelected.childNodes.length > 0)
@@ -716,6 +716,12 @@ function SetReadyBreakBasedOnAgentState(state)
 function CloseScript()
 {
 	// debugger;
+	// _Contact = ClientLink.Contacts.Get(ClientLink.Contacts.ActiveContactId);
+	// if (_Contact && _Contact.ContactListId)
+	// {
+	// 	return;
+	// }
+
 
 	ClientLink.TerminateContact(ClientLink.Contacts.Get(ClientLink.Contacts.ActiveContactId));
 	SetAgentInfoStat();
@@ -777,6 +783,7 @@ function GetContactState(state)
 		case "C": return CrResource.ContactState.Connected;
 		case "D": return CrResource.ContactState.Disconnected;
 		case "P": return CrResource.ContactState.Preview;
+		case "H": return CrResource.ContactState.Hold;
 		default: return "";
 	}
 }
@@ -795,7 +802,7 @@ function SetAgentInfoStat()
 	
 	if (ClientLink.Contacts.ActiveContactId) 
 	{
-		debugger;
+		// debugger;
 			
 		DebugLog("SetAgentInfoStat. Contact " + ClientLink.Contacts.ActiveContactId);
 		_Contact = ClientLink.Contacts.Get(ClientLink.Contacts.ActiveContactId);
@@ -806,7 +813,6 @@ function SetAgentInfoStat()
 			$('Info_ContactActivity').innerHTML = $D(_Contact.Context);
 			$('Info_ContactTo').innerHTML = $D(_Contact.To);
 			$('Info_ContactCustomer').innerHTML = $D(_Contact.Customer);
-
 
 			if(_Contact.State == 'C') 
 			{
@@ -825,6 +831,15 @@ function SetAgentInfoStat()
 					removeElementClass($('ExtendWrapup'),'active');
 				}
 			}
+
+			// if (_Contact.ContactListId && _Contact.State == 'P')
+			// {
+				
+			// 	var actList = _Contact.Activity.split('.');
+			// 	var gc = ClientLink.getQualifications(actList[0]);
+
+			// 	$('CloseScript').disabled = true;
+			// }
 
 			stopDisplayContactActivityTimer = false;
 			DisplayContactActivityDateTimeElapsed();
@@ -1747,6 +1762,7 @@ function dbgSearchMode()
 }
 function dbgQualification()
 {
+	debugger;
 	//ClientLink.getQualifications('df6c41f0b24f43ecb558d498f00c934d'));
 	var Q = new QualificationInfo(ClientLink);
 	var info = ClientLink.Contacts.Get(ClientLink.Contacts.ActiveContactId);

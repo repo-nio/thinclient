@@ -75,7 +75,8 @@ var CrResource =
 		Alerting : "Alerting",
 		Connected : "Connected",
 		Disconnected : "Disconnected",
-		Preview : "Preview"
+		Preview : "Preview",
+		Hold : "Hold"
 	},
 	Common : 
 	{
@@ -187,7 +188,8 @@ var CrResource_Fr =
 		Alerting : "Alerting", //TO DO
 		Connected : "Connected", //TO DO
 		Disconnected : "Disconnected", //TO DO
-		Preview : "Preview" //TO DO
+		Preview : "Preview", //TO DO
+		Hold : "Hold" //TO DO
 	},
       Common : 
       {
