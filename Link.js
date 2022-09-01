@@ -193,8 +193,39 @@ function NixxisCreateConnection(owner)
                                     this.eventTimer = window.setTimeout('__activeClientLinks["' + this.connectionId + '"].connection.' + OBJNAME('restartEvents') + '()', 60000, 'javascript');
                                     
                                     this.links[this.eventLink].onreadystatechange = this.eventStateChanged;
-                                    this.links[this.eventLink].open('GET', this.baseLocation + '__events?to=10&seq=' + this.eventSequence.toString() + '&rpt=' + (++this.eventRepeat).toString(), true);
-                                    this.links[this.eventLink].send(null);
+
+                                    try
+                                    {
+                                        this.links[this.eventLink].open('GET', this.baseLocation + '__events?to=10&seq=' + this.eventSequence.toString() + '&rpt=' + (++this.eventRepeat).toString(), true);
+                                        this.links[this.eventLink].send(null);
+
+                                        if (this.links[this.eventLink].readyState == 4 && this.links[this.eventLink].status == 0) 
+                                        {
+                                            // alert("Unknown Error Occured. Server response not received.");
+                                            setSessionDisconnectedMessage('Link to server is broken');
+                                        }
+                                    }
+                                    catch(e)
+                                    {
+                                        // debugger;
+                                        try
+                                        {
+                                            console.info('GET EVENT');
+                                            console.info(this.links[this.eventLink].readyState);
+                                            console.info(this.links[this.eventLink].status);
+                                            
+                                            if (this.links[this.eventLink].readyState == 4 && this.links[this.eventLink].status == 0) 
+                                            {
+                                                setSessionDisconnectedMessage('Link to server is broken');
+                                            }
+
+                                            this.links[this.eventLink].abort();
+                                        }
+                                        catch(e2)
+                                        {
+                                            ;
+                                        }
+                                    }
                                 };    
 
     owner.connection.stopEvents = function()
