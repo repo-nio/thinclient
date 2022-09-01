@@ -1322,7 +1322,7 @@ var crAgentLogout =
 
 		// debugger;
 
-		// expireActiveCookies('contactroutehttpserversessionid');
+		expireActiveCookies('contactroutehttpserversessionid');
 		// window.location.href = "CrAgentlogin.htm";
 		// window.location.href = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1) + 'CrLoginScreen.htm';
 		location.reload();
