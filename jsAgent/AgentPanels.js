@@ -309,6 +309,8 @@ var crQualPanel =
 		if(crQualPanel.crInt_OpenWindow) crQualPanel.Init(tree);
 
 		if (arguments.length > 0) crQualPanel.ShowTree(arguments[0], $('modalSelectqualworkspace'));
+
+		$('btnSelectqualOk').style.display = "none";
 	},
 	CreateBranch : function(branch, level)
 	{
@@ -416,6 +418,7 @@ var crQualPanel =
 		if (this.crPositiveUpdatable) $("txtNixxisQualOptPos").value = this.crPositive;
 		
 		crQualPanel.CurrentSelected = this;
+		$('btnSelectqualOk').style.display = "inline";
 	},
 	OptionClear : function()
 	{
@@ -510,6 +513,8 @@ function btnQualOk_OnClick()
 		// 	callbackPhone = info.To;
 		////alert (callbackPhone);
 
+		crQualPanel.OptionClear();
+
 		if (_Contact && _Contact.ContactListId && $('CloseScript').disabled == true)
 		{
 			$('CloseScript').disabled = false;
@@ -533,6 +538,7 @@ function btnQualCancel_OnClick()
 {
 	debugger;
 	
+	crQualPanel.OptionClear();
 	if(crQualPanel != null && crQualPanel.CurrentSelected != null) crQualPanel.CurrentSelected.crAction = -1;
 	// crQualPanel.Form.setVisibility(false);
 
