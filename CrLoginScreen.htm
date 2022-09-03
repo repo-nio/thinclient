@@ -31,6 +31,7 @@
     */		
     function StartInit()
             {
+                expireActiveCookies('contactroutehttpserversessionid');
                 window.document.title = "Nixxis client login " + const_VersionDisplay;
                 var _Location = window.document.URL;
                 
@@ -68,6 +69,7 @@
             }
             function submitForm()
             {
+                expireActiveCookies('contactroutehttpserversessionid');
                 //debugger;
                 if($("userAccount").value == "")
                 {			
