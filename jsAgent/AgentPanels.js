@@ -631,8 +631,9 @@ var crSearchModePanel =
 		if(crSearchModePanel.crInt_OpenWindow)
 			crSearchModePanel.Init(tree);
 		
-		if (arguments.length > 0) 
-			crSearchModePanel.ShowTree(arguments[0], $('modalSearchworkspace'));
+		if (arguments.length > 0) crSearchModePanel.ShowTree(arguments[0], $('modalSearchworkspace'));
+
+		$('btnSearchOk').style.display = "none";
 	},
 	CreateBranch : function(branch, level)
 	{
@@ -696,6 +697,7 @@ var crSearchModePanel =
 
 		if(target.nodeName?.toLowerCase() == 'li' )
 		{
+			$('btnSearchOk').style.display = "inline";
 			crSearchModePanel.CurrentSelected = target;
 			addElementClass(target, 'active');			
 		}
@@ -807,7 +809,7 @@ var crPauseCodePanel =
 		
 		_BODY += '	</div>';
 		_BODY += '	<div class="modal-footer">';
-		_BODY += '		<button id ="btnBreakreasonOk" >Ok</button>';
+		_BODY += '		<button id ="btnBreakreasonOk">Ok</button>';
 		_BODY += '		<button id ="btnBreakreasonClose" >Cancel</button>';
 		_BODY += '	</div>';
 		_BODY += '</div>';
@@ -855,8 +857,9 @@ var crPauseCodePanel =
 			addElementClass($('break-reason'), 'active');	
 		}
 		
-		if (arguments.length > 0)
-			crPauseCodePanel.ShowList(arguments[0], $('modalBreakreasonWorkspace'));
+		if (arguments.length > 0) crPauseCodePanel.ShowList(arguments[0], $('modalBreakreasonWorkspace'));
+
+		$('btnBreakreasonOk').style.display = "none";
 	},
 	CreateList : function(list)
 	{
@@ -940,6 +943,7 @@ var crPauseCodePanel =
 		catch(e)
 		{;}
 		
+		$('btnBreakreasonOk').style.display = "inline";
 		crPauseCodePanel.CurrentSelected = this;
 		
 		if (this.crPositiveUpdatable) $("txtNixxisQualOptPos").value = this.crPositive;
@@ -1067,8 +1071,12 @@ var crTeamSelectPanel =
 		if(crTeamSelectPanel.crInt_OpenWindow)
 			crTeamSelectPanel.Init(list);
 		
-		if (arguments.length > 0) 
-			crTeamSelectPanel.ShowList(arguments[0], $('modalworkspace'));
+		if (arguments.length > 0)
+		{
+			 crTeamSelectPanel.ShowList(arguments[0], $('modalworkspace'));
+			 $('btnTeamOk').style.display = "inline";
+		}
+		else $('btnTeamOk').style.display = "none";
 	},
 
 	CreateList : function(list)
