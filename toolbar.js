@@ -1202,7 +1202,7 @@ function NixxisClientLink(sessionId, baseLocation)
 	                                        else
 	                                        {
 	                                        	return this.clientLink.connection.executeCommand(this.commandCode);
-						}
+											}
 	                                    }
 	                                }
 	                                
@@ -1265,7 +1265,7 @@ function NixxisClientLink(sessionId, baseLocation)
 	this.commands.VoiceHold = new this.commands.newCommand(this, this.codes.commandCodes.VoiceHold, function() 
 	{
 		addElementClass($("ExtendWrapup"),'active');
-		removeElementClass($("VoiceHold"),'active');
+		// removeElementClass($("VoiceHold"),'active');
 		this.clientLink.connection.executeCommand(this.commandCode);
 	});
 
@@ -1275,6 +1275,7 @@ function NixxisClientLink(sessionId, baseLocation)
 	{
 		addElementClass($("ExtendWrapup"),'active');
 		removeElementClass($("VoiceRetrieve"),'active');
+		removeElementClass($("VoiceHold"),'active');
 		this.clientLink.connection.executeCommand(this.commandCode);
 	});		
 	
@@ -1293,7 +1294,7 @@ function NixxisClientLink(sessionId, baseLocation)
 	this.commands.VoiceConference = new this.commands.newCommand(this, this.codes.commandCodes.VoiceConference, function() 
 	{		
 		addElementClass($("ExtendWrapup"),'active');
-		removeElementClass($("VoiceConference"),'active');
+		// removeElementClass($("VoiceConference"),'active');
 		this.clientLink.connection.executeCommand(this.commandCode);
 	});	
 	
@@ -1302,7 +1303,7 @@ function NixxisClientLink(sessionId, baseLocation)
 	this.commands.VoiceHangup = new this.commands.newCommand(this, this.codes.commandCodes.VoiceHangup, function() 
 	{		
 		addElementClass($("ExtendWrapup"),'active');
-		removeElementClass($("VoiceHangup"),'active');
+		// removeElementClass($("VoiceHangup"),'active');
 		this.clientLink.connection.executeCommand(this.commandCode);
 	});	
 
