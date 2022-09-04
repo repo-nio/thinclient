@@ -392,6 +392,11 @@ body {
   top: 50%;
 }
 
+.modal.manulDialerCustom {
+  height: 350px;
+  width: 350px;
+}
+
 .modal.active {
   visibility: visible;
   opacity: 1;
@@ -461,19 +466,19 @@ body {
   margin-top: 12px;
   display: -ms-grid;
   display: grid;
-  height: 80%;
-  gap: 4px;
+  height: 74%;
+  gap: 1px;
 }
 
 .dial .buttons .btn-3 {
-  background-color: #404040;
+  background-color: #676767;
   font-size: x-large;
   color: #fff;
   cursor: pointer;
 }
 
 .dial :not(.buttons) button {
-  background-color: #404040;
+  background-color: #676767;
   margin-left: 8px;
   cursor: pointer;
   max-width: 50px;
