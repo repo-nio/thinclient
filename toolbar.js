@@ -1265,7 +1265,7 @@ function NixxisClientLink(sessionId, baseLocation)
 	this.commands.VoiceHold = new this.commands.newCommand(this, this.codes.commandCodes.VoiceHold, function() 
 	{
 		addElementClass($("ExtendWrapup"),'active');
-		// removeElementClass($("VoiceHold"),'active');
+		// removeElementClass($("VoiceHold"),'active');		
 		this.clientLink.connection.executeCommand(this.commandCode);
 	});
 
@@ -1275,7 +1275,7 @@ function NixxisClientLink(sessionId, baseLocation)
 	{
 		addElementClass($("ExtendWrapup"),'active');
 		removeElementClass($("VoiceRetrieve"),'active');
-		removeElementClass($("VoiceHold"),'active');
+		removeElementClass($("VoiceHold"),'active');		
 		this.clientLink.connection.executeCommand(this.commandCode);
 	});		
 	
