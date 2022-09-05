@@ -265,7 +265,7 @@ function LoadJavascriptScript(url)
 */
 
 
-function expireActiveCookies(name) {
+function clearActiveCookies(name) {
     var pathname = location.pathname.replace(/\/$/, ''),
         segments = pathname.split('/'),
         paths = [];
@@ -277,10 +277,10 @@ function expireActiveCookies(name) {
         paths.push(path + '/'); // as directory
     }
 
-    expireAllCookies(name, paths);
+    clearAllCookies(name, paths);
 }
 
-function expireAllCookies(name, paths) {
+function clearAllCookies(name, paths) {
     var expires = new Date(0).toUTCString();
 
     // expire null-path cookies as well

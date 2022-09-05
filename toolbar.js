@@ -706,7 +706,7 @@ function NixxisClientLink(sessionId, baseLocation)
         	                            this.connection.close();
                 	                    connected = false;										
 					}
-					expireActiveCookies('contactroutehttpserversessionid');
+					clearActiveCookies('contactroutehttpserversessionid');
                                 };
     this.saveData = function(key, value)
                                 {
