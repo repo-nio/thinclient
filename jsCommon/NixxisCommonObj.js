@@ -381,7 +381,7 @@ var crNewCallDialog =
 
 		_BODY += '<div class="modal manulDialerCustom" id="dial-pad">';
 		_BODY += '	<div class="modal-header">';
-		_BODY += '		<h4>Dial pad</h4>';
+		_BODY += '		<h4>Manual Dialing...</h4>';
 		_BODY += '	</div>';
 		_BODY += '	<div class="modal-content dial">';
 		_BODY += '		<div class="d-flex">';
