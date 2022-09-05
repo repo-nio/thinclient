@@ -205,7 +205,7 @@ function ForceBreakOnAgentReload()
 var startdatetime;
 function DisplayDateTimeElapsed()
 {
-	// debugger;
+	debugger;
 
 	if(startdatetime == null) startdatetime = new Date();
 
@@ -832,14 +832,7 @@ function SetAgentInfoStat()
 				}
 			}
 
-			// if (_Contact.ContactListId && _Contact.State == 'P')
-			// {
-				
-			// 	var actList = _Contact.Activity.split('.');
-			// 	var gc = ClientLink.getQualifications(actList[0]);
-
-			// 	$('CloseScript').disabled = true;
-			// }
+			VoiceButtonsbehaviourWhenCallHold(_Contact.State);
 
 			stopDisplayContactActivityTimer = false;
 			DisplayContactActivityDateTimeElapsed();
@@ -869,6 +862,15 @@ function SetAgentInfoStat()
 	}
 }
 
+
+function VoiceButtonsbehaviourWhenCallHold(CurrentAction)
+{
+	$("VoiceHangup").disabled = (CurrentAction == 'H');
+	
+	$("CloseScript").disabled = (CurrentAction == 'H' || CurrentAction == 'C');
+	$("SearchMode").disabled = (CurrentAction == 'H' || CurrentAction == 'C');
+	$("AgentLogout").disabled = (CurrentAction == 'H' || CurrentAction == 'C');
+}
 
 // -- > Display contact active duration
 
