@@ -139,6 +139,8 @@ function ClientConnect()
     DebugLog("Loading pause page...");
 	crLoadingScreen.Visible(false);
 
+
+	window.localStorage.setItem("NixxisAgentLoginUser", ClientLink.UserName + ";"+ ClientLink.Extension);
 	// ForceBreakOnAgentReload();
 	
 	window.setTimeout(DisplayDateTimeElapsed, 1000);

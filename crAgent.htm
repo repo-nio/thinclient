@@ -80,7 +80,7 @@
       function exitInstance()
       {
           // sessionStorage.removeItem('reloadedOn');
-
+          localStorage.setItem("NixxisAgentLoginUser", '');
         if (sessionStorage.getItem('reloadedOn') == null) 
         {
           console.log('page was not reloaded');
