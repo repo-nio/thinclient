@@ -1114,6 +1114,7 @@ var crTeamSelectPanel =
 
 				var insideCheckBox = document.createElement('input');
 				insideCheckBox.type = "checkbox";
+				insideCheckBox.onclick = crTeamSelectPanel.Select_OnClick;
 
 				if (list.Items[index].Active)
 				{			
@@ -1158,9 +1159,19 @@ var crTeamSelectPanel =
 	//
 	Select_OnClick : function(sender)
 	{
-		// debugger;
+		debugger;
+		var div = null;
+		
+		if(sender.currentTarget.tagName == 'INPUT') 
+		{
+			div = sender.currentTarget.parentNode;
+			var childs = div.childNodes;
+			childs[0].checked = !childs[0].checked;
+			return;
+		}
+		else div = sender.currentTarget;
 
-		var div = sender.currentTarget;
+		div = sender.currentTarget;		
 		var childs = div.childNodes;
 
 		childs[0].checked = !childs[0].checked;
@@ -1194,7 +1205,7 @@ var crTeamSelectPanel =
 	
 	ButtonOk : function()
 	{
-		// debugger;
+		debugger;
 	
 		var allSpans = $('divBodyItems').getElementsByTagName('span');
 		
