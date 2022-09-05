@@ -207,7 +207,7 @@ function ForceBreakOnAgentReload()
 var startdatetime;
 function DisplayDateTimeElapsed()
 {
-	debugger;
+	// debugger;
 
 	if(startdatetime == null) startdatetime = new Date();
 
@@ -379,6 +379,8 @@ function nixxislink_ConactAdded(contactInfo)
 	$('NixxisAgent').src = contactInfo.ScriptUrl;
 	$('NixxisAgent').style.display ='inline';
 
+	$("AgentLogout").disabled = true;
+
 	// $('contactViewerObject').setAttribute("data", contactInfo.ScriptUrl);
 }
 function nixxislink_ContactRemoved(contactInfo)
@@ -399,6 +401,7 @@ function nixxislink_ContactRemoved(contactInfo)
 	removeElementClass($('ExtendWrapup'),'active');
 	
 	$('ExtendWrapup').disabled = true;
+	$("AgentLogout").disabled = false;
 }
 function nixxislink_ContactStateChanged(contactInfo)
 {
@@ -741,6 +744,7 @@ function CloseScript()
 	$('ExtendWrapup').disabled = true;
 	$('WaitForCall').disabled = false;
 	$('SearchMode').disabled = false;
+	$("AgentLogout").disabled = false;
 }
 function NewContact(contactInfo)
 {
@@ -867,11 +871,10 @@ function SetAgentInfoStat()
 
 function VoiceButtonsbehaviourWhenCallHold(CurrentAction)
 {
-	$("VoiceHangup").disabled = (CurrentAction == 'H');
+	if(CurrentAction != 'P') $("VoiceHangup").disabled = (CurrentAction == 'H');
 	
 	$("CloseScript").disabled = (CurrentAction == 'H' || CurrentAction == 'C');
 	$("SearchMode").disabled = (CurrentAction == 'H' || CurrentAction == 'C');
-	$("AgentLogout").disabled = (CurrentAction == 'H' || CurrentAction == 'C');
 }
 
 // -- > Display contact active duration
