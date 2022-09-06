@@ -386,7 +386,7 @@ var crNewCallDialog =
 		_BODY += '	<div class="modal-content dial">';
 		_BODY += '		<div class="d-flex">';
 		_BODY += '			<input id="MCNum" class="MCNum" type="text" MAXLENGTH="100"/>';
-		_BODY += '			<button id="MCallDialPad_Clear" style ="margin: 0px -2px 0px 0px;">';
+		_BODY += '			<button id="MCallDialPad_Clear" style ="margin: 0px 2px 0px 5px;">';
 		_BODY += '				<img src="./assets/icons/Agent_AddressBookEntryType_Agent_Off_25.png" alt="icon" />';
 		_BODY += '			</button>';
 		_BODY += '			<button id="MCallDialPad_Dial">';
