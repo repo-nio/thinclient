@@ -487,17 +487,7 @@ function NixxisCreateCommands(owner)
                                                             {
                                                                 ;
                                                             }
-                                                        }
-                                                        // else
-                                                        // {
-                                                        //     if(this!=null&& this.linkedItem!=null&& this.linkedItem.id !='Pause' && !isAuthorized) 
-                                                        //     {
-                                                        //         this.linkedItem.disabled = true;
-                                                        //         removeElementClass(this.linkedItem, hoverElementClass);
-                                                        //         this.linkedItem.onmouseover = function() { ; };
-                                                        //         this.linkedItem.onmouseout = function() { ; };
-                                                        //     }
-                                                        // }
+                                                        }                                                        
                                                     };
                                 };
 }
