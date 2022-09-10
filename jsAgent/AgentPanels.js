@@ -1270,7 +1270,7 @@ var crAgentLogout =
 		
 		_BODY += '	</div>';
 		_BODY += '	<div class="modal-footer">';
-		_BODY += '		<button id ="btnAgentLogoutOk">Ok</button>';
+		_BODY += '		<button id ="btnAgentLogoutOk">Logout</button>';
 		_BODY += '		<button id ="btnAgentLogoutClose">Cancel</button>';
 		_BODY += '	</div>';
 		_BODY += '</div>';
@@ -1308,9 +1308,11 @@ var crAgentLogout =
 		mainDIV.id = "divBodyItems";
 		mainDIV.className = "modal-content-item";
 
+		mainDIV.style = "text-align: center; padding-top: 10%; background-color : #2e2e2e;";
+
 		var insideSpan = document.createElement('span');
 		insideSpan.className = "labelcheckbox";
-		insideSpan.textContent = 'Click Ok to logout.';
+		insideSpan.textContent = 'Click Logout to end this session and logout.';
 
 		mainDIV.appendChild(insideSpan);
 
