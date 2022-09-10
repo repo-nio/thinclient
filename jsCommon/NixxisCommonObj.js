@@ -309,7 +309,7 @@ var crNewCallDialog =
 	
 	Call : function(link, cmd, clientlink)
 	{
-		debugger;
+		// debugger;
 
 		crNewCallDialog.crLink = link;
 		crNewCallDialog.crCmd = cmd;
@@ -370,7 +370,7 @@ var crNewCallDialog =
 	},
 	Show : function()
 	{
-		debugger;
+		// debugger;
 
 	    crNewCallDialog.crWindow = new toolboxForm("MCall");
 	    crNewCallDialog.crWindow.txParent = document.body;
@@ -500,7 +500,7 @@ var crNewCallDialog =
 
 	    if (!crNewCallDialog.crClientLink) return;
 	
-		debugger;
+		// debugger;
 	    //this.setConnected();
 	    var _Element = $('MCNum');
 	    if(!_Element) return;
