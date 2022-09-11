@@ -890,10 +890,8 @@ function removeClass_V3(control, className)
 	{
 		if(lst[i] == className)
 		{			
-			// control.className = lst.slice(0,i).concat(lst.slice(i+1)).join(' ');
-			// break;
-
-			control.className = control.className.replace(' ' + className,'');
+			if(control.className.includes(' ')) control.className = control.className.replace(' ' + className,'');
+			else control.className = control.className.replace(className,'');
 		}
 	}
 }
