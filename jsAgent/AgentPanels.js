@@ -718,7 +718,7 @@ var crSearchModePanel =
 	//
 	btnOk_OnClick: function()
 	{
-		debugger;
+		// debugger;
 
 		if(crSearchModePanel !=null && crSearchModePanel.CurrentSelected != null && crSearchModePanel.CurrentSelected != '')
 		{
@@ -743,7 +743,7 @@ var crSearchModePanel =
 	},
 	btnCancel_OnClick : function()
 	{
-		debugger;
+		// debugger;
 		
 		crSearchModePanel.CurrentSelected = null;
 
