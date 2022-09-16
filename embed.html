@@ -7,8 +7,42 @@
     <title>App</title>
     <link rel="stylesheet" href="/agent/v3/assets/css/style.css" />
     <script src="/agent/v3/assets/js/jquery.min.js"></script>
+
+    <script type="text/javascript" language="javascript">
+
+      function $(element)
+      {
+          if (typeof element == 'string') { element = document.getElementById(element);}
+          return element;
+      }
+
+      function initInstance()
+      {
+        debugger;
+        const urlParams = new URLSearchParams(window.location.search);
+        const agentstate = urlParams.get('agentstate');
+        
+        if(agentstate)
+        {
+          if(agentstate == 'agentready')
+          {
+            $('message_h1').innerHTML = "You are waiting for contact";
+            $('message_p').innerHTML = '';
+            $('imgEmdedAgentStateGIF').src = window.origin + "/agent/v3/assets/animations/Agent_waiting.gif";
+          }
+          else
+          {
+            $('message_h1').innerHTML = "You are currently on a break!";
+            $('message_p').innerHTML = 'Click on ready to start working';
+            $('imgEmdedAgentStateGIF').src = window.origin + "/agent/v3/assets/animations/Agent_pause.gif";
+          }
+        }
+      }      
+    </script>
+
+
   </head>
-  <body>
+  <body onload="javascript: initInstance();">
     <div id="app">
       <div class="content">
         <!-- Background -->
@@ -24,8 +58,8 @@
         data-break-image="/agent/v3/assets/animations/Agent_pause.gif"
               data-ready-image="/agent/v3/assets/animations/Agent_waiting.gif" -->
         <div class="message">
-          <h1>You are currently on a break!</h1>
-          <p>Click on ready to start working</p>
+          <h1 id="message_h1">You are currently on a break!</h1>
+          <p id="message_p">Click on ready to start working</p>
           <div class="animation">
             <img id="imgEmdedAgentStateGIF"
               src="/agent/v3/assets/animations/Agent_pause.gif"

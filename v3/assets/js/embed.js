@@ -1,9 +1,9 @@
 const hash = window.location.hash;
 
 function showMessage(message, subtitle, image) {
-  $(".message h1").text(message);
-  $(".message p").text(subtitle);
-  $(".message img").attr("src", image);
+  // $(".message h1").text(message);
+  // $(".message p").text(subtitle);
+  // $(".message img").attr("src", image);
 }
 
 if (["#break", ""].includes(hash)) {

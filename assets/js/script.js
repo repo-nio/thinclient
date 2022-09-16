@@ -20,8 +20,11 @@
        
         // debugger;
 
-        if(button.childNodes.length > 3 && button.childNodes[3].id == 'RequestAssistance' )
+        if(button.childNodes.length > 3 && (button.childNodes[3].id == 'Pause' || button.childNodes[3].id == 'WaitForCall'
+            ||button.childNodes[3].id == 'RequestAssistance'))
+        {
           return;
+        }
 
         if(button.childNodes.length > 3 && (button.childNodes[3].id == 'Pause' || button.childNodes[3].id == 'WaitForCall'))
         {
