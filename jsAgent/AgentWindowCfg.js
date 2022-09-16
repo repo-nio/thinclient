@@ -111,7 +111,6 @@ function ClientConnect()
 	crLoadingScreen.Visible(false);
 
 	window.localStorage.setItem("NixxisAgentLoginUser", ClientLink.UserName + ";"+ ClientLink.Extension);
-	// ForceBreakOnAgentReload();
 	
 	// window.setTimeout(DisplayDateTimeElapsed, 1000);
 	DisplayDateTimeElapsed();
@@ -491,14 +490,6 @@ function nixxislink_ContactRemoved(contactInfo)
 	//contactInfo.__Panel = null;
 	
 	SetAgentInfoStat();
-
-	// removeElementClass($('VoiceToolStrip'),'active');
-	// removeElementClass($('voiceStatusToolStrip'),'active');
-	// removeElementClass($('ExtendWrapup'),'active');
-	
-	// $('ExtendWrapup').disabled = true;
-	// $("AgentLogout").disabled = false;
-	// $("SearchMode").disabled = false;
 }
 function nixxislink_ContactStateChanged(contactInfo)
 {
@@ -580,7 +571,11 @@ function nixxislink_AgentWarning(message)
 
 	if(message != '')
 	{
-		$("Info_AgentSessionDurationHeader").textContent  = message;
+		// The%20call%20failed%20%280023052562413%20-%3E%20487%2CNoAnswer%29.,0
+
+		if(message?.includes("The%20call%20failed%")) $("Info_AgentSessionDurationHeader").textContent  = 'Call failed - No Answer';
+		else $("Info_AgentSessionDurationHeader").textContent  = message;
+
 		$("Info_AgentSessionDuration").textContent ='';
 	}
 	else
@@ -622,26 +617,31 @@ function WaitFor_StateChanged(authorized, active)
         DebugLog("Waiting Call");
 		AgentStateWaiting();
 	}
+	else if(ClientLink.commands.Pause.active)
+	{
+		DebugLog("Pause");
+		AgentStatePause();
+	}
 	else
 	{
-		if(ClientLink.commands.WaitForMail.active)
-		{
-	        DebugLog("Waiting Mail");
-			AgentStateWaiting();
-		}
-		else
-		{
-			if(ClientLink.commands.WaitForChat.active)
-			{
-		        DebugLog("Waiting Chat");
-				AgentStateWaiting();
-			}
-			else
-			{
-		        DebugLog("Pause");
-				AgentStatePause();
-			}
-		}
+		// if(ClientLink.commands.WaitForMail.active)
+		// {
+	    //     DebugLog("Waiting Mail");
+		// 	AgentStateWaiting();
+		// }
+		// else
+		// {
+		// 	if(ClientLink.commands.WaitForChat.active)
+		// 	{
+		//         DebugLog("Waiting Chat");
+		// 		AgentStateWaiting();
+		// 	}
+		// 	else
+		// 	{
+		//         DebugLog("Pause");
+		// 		AgentStatePause();
+		// 	}
+		// }
 	}
     
 	// SetAgentInfoStat();
@@ -761,6 +761,13 @@ function AgentStatePause()
 {	
 	// debugger;
 	
+	removeElementClass($('Info_AgentReadyVoiceIndication'), 'active');
+	addElementClass($('Pause'), 'active');
+	removeElementClass($('WaitForCall'), 'active');
+	SetReadyBreakBasedOnAgentState('break');
+
+	if(_CurrentContacts != null && _CurrentContacts.length > 0) return;
+
 	if(crPauseCodePanel !=null && crPauseCodePanel.CurrentSelected !=null && crPauseCodePanel.CurrentSelected.childNodes !=null
 		&& crPauseCodePanel.CurrentSelected.childNodes !='' && crPauseCodePanel.CurrentSelected.childNodes.length > 0)
 	{
@@ -770,8 +777,7 @@ function AgentStatePause()
 		$("Info_AgentState").textContent = 'Break';
 	
 	startdatetime = new Date();
-	removeElementClass($('Info_AgentReadyVoiceIndication'), 'active');
-	
+		
 	// _NoTabPagePanel.setUrl("CrAgentPause.htm");	
 }
 
@@ -793,11 +799,17 @@ function AgentStateWorking()
 function AgentStateWaiting()
 {
 	// debugger;
+
+	if(_CurrentContacts != null && _CurrentContacts.length > 0) return;
 	
 	$("Info_AgentState").textContent = AGENT_WAITING;
 	startdatetime = new Date();
 	addElementClass($('Info_AgentReadyVoiceIndication'), 'active');
-	
+
+	addElementClass($('WaitForCall'), 'active');
+	removeElementClass($('Pause'), 'active');
+	SetReadyBreakBasedOnAgentState(AGENT_WAITING);
+
 	// _NoTabPagePanel.setUrl("CrAgentWaiting.htm");	
 }
 function AgentStateOnline(contactInfo)
@@ -809,54 +821,24 @@ function AgentStateOnline(contactInfo)
 }
 function SetReadyBreakBasedOnAgentState(state)
 {
-	// debugger;
+	debugger;
 
 	const url = new URL(window.location.href);
-	url.pathname = url.pathname + "/../embed.html"
-
-	if(state == AGENT_WAITING) url.hash = 'ready';
-	else url.hash = 'break';
-
-	$('contactViewerObject').setAttribute("data", url.href);
+	if(state == AGENT_WAITING) 
+	{
+		$('contactViewerObject').setAttribute("data", url.origin + "/agent/embed.html?agentstate=agentready");
+	}
+	else
+	{		
+		$('contactViewerObject').setAttribute("data", url.origin + "/agent/embed.html?agentstate=break");
+	}
 }
 function CloseScript()
 {
 	// debugger;
 
-	// var actList = _CurrentContacts[_CurrentContacts.length - 1].Campaign.split('.');
-	// let kkr= ClientLink.getQualifications(actList[0]);
-
 	ClientLink.TerminateContact(ClientLink.Contacts.Get(ClientLink.Contacts.ActiveContactId));
 	SetAgentInfoStat();
-	
-	// if(ClientLink.Contacts.ActiveContactId)
-	// {
-	// 	_CurrentContacts.pop(ClientLink.Contacts.ActiveContactId);
-	// 	ClientLink.Contacts.Remove(ClientLink.Contacts.Get(ClientLink.Contacts.ActiveContactId));
-
-	// 	if(_CurrentContacts.length > 0) 
-	// 	{
-	// 		ClientLink.Contacts.ActiveContactId = _CurrentContacts[_CurrentContacts.length - 1].Id;
-	// 	}
-	// 	else
-	// 	{
-	// 		$('contactViewerObject').style.display = "inline";
-
-	// 		$('NixxisAgent').src = "about:blank";
-	// 		$('NixxisAgent').style.display ='none';
-
-	// 		removeElementClass($('VoiceToolStrip'),'active');
-	// 		removeElementClass($('voiceStatusToolStrip'),'active');
-	// 		removeElementClass($('ExtendWrapup'),'active');
-	// 		$('ExtendWrapup').disabled = true;
-	// 		$('WaitForCall').disabled = false;
-	// 		$('SearchMode').disabled = false;
-	// 		$("AgentLogout").disabled = false;
-	// 	}
-	// }
-
-	// removeElementClass($('CloseScript'),'active');
-	// WaitFor_StateChanged(true, true);
 }
 function NewContact(contactInfo)
 {
@@ -928,10 +910,13 @@ function RemoveContact(contactInfo)
 		$('WaitForCall').disabled = false;
 		$('SearchMode').disabled = false;
 		$("AgentLogout").disabled = false;
+
+		if($('contactViewerObject').agentState == 'ready') AgentStateWaiting();
+		else AgentStatePause();
 	}
 
 	removeElementClass($('CloseScript'),'active');
-	WaitFor_StateChanged(true, true);
+	// WaitFor_StateChanged(true, true);
 }
 //**********************************************************
 //**********************************************************
