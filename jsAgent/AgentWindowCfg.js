@@ -191,7 +191,7 @@ function DisplayDateTimeElapsed()
 	{
 		setSessionDisconnectedMessage('Session disconnected due to new login request');
 	}
-	else
+	else if($("Info_AgentReadyVoiceIndication").style.display != "none")
 	{
 		$("Info_AgentSessionDurationHeader").textContent = 'Duration:';
 		$("Info_AgentSessionDuration").textContent = seconds;
@@ -217,8 +217,25 @@ function setSessionDisconnectedMessage(msg)
 	$("Info_AgtName_Account").textContent  = '';
 
 	$("Info_AgentReadyVoiceIndication").style.display = "none";
-	$("Info_AgentReadyChatIndication").style.display = "none";
-	$("Info_AgentReadyMailIndication").style.display = "none";
+	// $("Info_AgentReadyChatIndication").style.display = "none";
+	// $("Info_AgentReadyMailIndication").style.display = "none";
+}
+
+function defaultSetAgentInfoLabels()
+{
+	$("Info_QueueWaitingHeader").textContent  = 'Waiting contacts:';
+	$("Info_QueueWaiting").textContent  = '0';
+
+	$("Info_QueueHighPriorityHeader").textContent  = 'Priority contacts:';
+	$("Info_QueueHighPriority").textContent  = '0 - 0';
+
+	$("Info_AgentStateHeader").textContent  = 'State:';
+	$("Info_AgentState").textContent  = 'Break';
+
+	$("Info_AgentSessionDurationHeader").textContent  = 'Duration:';
+	$("Info_AgtName_Account").textContent  = '';
+
+	$("Info_AgentReadyVoiceIndication").style.display = "inline";
 }
 
 function pageResize()
@@ -477,6 +494,8 @@ function voicestatus_clicked(sender)
 function nixxislink_ContactRemoved(contactInfo)
 {
 	// debugger;
+
+	defaultSetAgentInfoLabels();
 	_CurrentContacts.pop(contactInfo);
     DebugLog("nixxislink_ContactRemoved. Remove contact " + contactInfo.Id);
 	contactInfo.__AgentAction = "E";
@@ -571,12 +590,7 @@ function nixxislink_AgentWarning(message)
 
 	if(message != '')
 	{
-		// The%20call%20failed%20%280023052562413%20-%3E%20487%2CNoAnswer%29.,0
-
-		if(message?.includes("The%20call%20failed%")) $("Info_AgentSessionDurationHeader").textContent  = 'Call failed - No Answer';
-		else $("Info_AgentSessionDurationHeader").textContent  = message;
-
-		$("Info_AgentSessionDuration").textContent ='';
+		setSessionDisconnectedMessage(decodeURIComponent(message));
 	}
 	else
 	{
@@ -940,7 +954,8 @@ function $D(value)
 }
 function SetAgentInfoStat()
 {
-	$('Info_AgtName_Account').innerHTML = $D(ClientLink.UserName)+' ('+$D(ClientLink.Extension)+')';
+	if($("Info_AgentReadyVoiceIndication").style.display != "none")
+		$('Info_AgtName_Account').innerHTML = $D(ClientLink.UserName)+' ('+$D(ClientLink.Extension)+')';
 
 	var _Contact;
 	
@@ -963,7 +978,8 @@ function SetAgentInfoStat()
 				$('CloseScript').disabled = true;
 				if(_Contact.__AgentAction = 'W') 
 				{
-					if($("Info_AgentState").textContent != AGENT_ONLINE) AgentStateOnline();
+					if($("Info_AgentState").textContent != AGENT_ONLINE && $("Info_AgentReadyVoiceIndication").style.display != "none") 
+						AgentStateOnline();
 				}
 			}
 			else 
@@ -971,7 +987,9 @@ function SetAgentInfoStat()
 				$('CloseScript').disabled = false;
 				if(_Contact.__AgentAction = 'W') 
 				{
-					if($("Info_AgentState").textContent != AGENT_WORKING) AgentStateWorking();
+					if($("Info_AgentState").textContent != AGENT_WORKING && $("Info_AgentReadyVoiceIndication").style.display != "none")
+						AgentStateWorking();
+					
 					removeElementClass($('ExtendWrapup'),'active');
 				}
 			}
