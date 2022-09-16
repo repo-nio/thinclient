@@ -799,16 +799,16 @@ function AgentStateWorking()
 function AgentStateWaiting()
 {
 	// debugger;
+	
+	addElementClass($('WaitForCall'), 'active');
+	removeElementClass($('Pause'), 'active');
+	SetReadyBreakBasedOnAgentState(AGENT_WAITING);
 
 	if(_CurrentContacts != null && _CurrentContacts.length > 0) return;
 	
 	$("Info_AgentState").textContent = AGENT_WAITING;
 	startdatetime = new Date();
 	addElementClass($('Info_AgentReadyVoiceIndication'), 'active');
-
-	addElementClass($('WaitForCall'), 'active');
-	removeElementClass($('Pause'), 'active');
-	SetReadyBreakBasedOnAgentState(AGENT_WAITING);
 
 	// _NoTabPagePanel.setUrl("CrAgentWaiting.htm");	
 }
