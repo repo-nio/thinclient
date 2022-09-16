@@ -445,7 +445,15 @@ function NixxisCreateCommands(owner)
                                                                 {
                                                                     if(this.authorized)
                                                                     {
-                                                                        if(enabledSrc) this.linkedItem.src = enabledSrc.src;
+                                                                        if(enabledSrc) 
+                                                                        {
+                                                                            this.linkedItem.src = enabledSrc.src;
+
+                                                                            if(this.linkedItem.id =='WaitForCall')
+                                                                                $('contactViewerObject').agentState = 'ready';
+                                                                            if(this.linkedItem.id =='Pause')
+                                                                                $('contactViewerObject').agentState = 'pause';
+                                                                        }
                                                                         // removeElementClass(this.linkedItem, disabledElementClass);
                                                                         this.linkedItem.disabled = false;
 																		removeElementClass(this.linkedItem, hoverElementClass);
