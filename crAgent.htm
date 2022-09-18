@@ -110,11 +110,15 @@
        
       window.onbeforeunload = function(e)
       {
-        //alert("this will be closed");
-         var ev=(e)? e: window.event;
-         if((ev.clientX<0) || (ev.clientY<0))
+        // debugger;
+        
+        if(document.activeElement && document.activeElement.id == 'btnAgentLogoutOk')
         {
-            return onBeforeUnloadAction();
+          console.info( "onbeforeunload" );
+        }
+        else
+        {
+          return onBeforeUnloadAction();
         }
       }
       </script>
