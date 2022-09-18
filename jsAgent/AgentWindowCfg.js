@@ -112,6 +112,8 @@ function ClientConnect()
 
 	window.localStorage.setItem("NixxisAgentLoginUser", ClientLink.UserName + ";"+ ClientLink.Extension);
 	
+	$('divAgentStatus').onclick = onAgentStatusClick;
+
 	// window.setTimeout(DisplayDateTimeElapsed, 1000);
 	DisplayDateTimeElapsed();
 
@@ -173,6 +175,27 @@ function ForceBreakOnAgentReload()
 	}
 }
 
+function onAgentStatusClick()
+{
+	if($("Info_AgentReadyVoiceIndication").style.display == "none")
+	{
+		$("Info_AgentReadyVoiceIndication").style.display = "inline";
+
+		$("Info_QueueWaitingHeader").textContent  = 'Waiting contacts:';
+		$("Info_QueueWaiting").textContent  = '0';
+
+		$("Info_QueueHighPriorityHeader").textContent  = 'Priority contacts:';
+		$("Info_QueueHighPriority").textContent  = '0 - 0';
+
+		$("Info_AgentStateHeader").textContent  = 'State:';
+		$("Info_AgentState").textContent  = 'Break';
+
+		$("Info_AgentSessionDurationHeader").textContent  = 'Duration:';
+
+		$("Info_AgtName_Account").innerHTML  = $D(ClientLink.UserName)+' ('+$D(ClientLink.Extension)+')';
+	}
+}
+
 var startdatetime;
 function DisplayDateTimeElapsed()
 {
@@ -217,8 +240,6 @@ function setSessionDisconnectedMessage(msg)
 	$("Info_AgtName_Account").textContent  = '';
 
 	$("Info_AgentReadyVoiceIndication").style.display = "none";
-	// $("Info_AgentReadyChatIndication").style.display = "none";
-	// $("Info_AgentReadyMailIndication").style.display = "none";
 }
 
 function defaultSetAgentInfoLabels()
