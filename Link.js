@@ -75,7 +75,7 @@ function NixxisCreateConnection(owner)
                                     for(var i = 1; i < arguments.length; i++)
                                     {
                                         if(arguments[i] != null && arguments[i] != 'undefined')
-                                            data += escape(arguments[i].toString()) + '\n';
+                                            data += encodeURIComponent(arguments[i].toString()) + '\r\n';
                                     }
 /*
                                     if(this.eventTimer)
