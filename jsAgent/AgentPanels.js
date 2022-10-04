@@ -385,7 +385,7 @@ var crQualPanel =
 	},
 	Select_OnClick : function()
 	{
-		debugger;
+		// debugger;
 		try
 		{
 			var allSpans = $('ulForDisposition').getElementsByTagName('span');
@@ -515,7 +515,7 @@ function btnQualOk_OnClick()
 
 		crQualPanel.OptionClear();
 
-		if (_Contact && _Contact.ContactListId && $('CloseScript').disabled == true)
+		if ($('CloseScript').disabled == true)
 		{
 			$('CloseScript').disabled = false;
 		}
@@ -525,8 +525,8 @@ function btnQualOk_OnClick()
 		callback="";
 		callbackPhone="";
 	}
-		
-	ClientLink.setQualification(contactId, qualification, callback, callbackPhone);
+
+	ClientLink.setQualification(contactId, qualification, 'DTE='+callback, 'NUM='+callbackPhone);
 	crQualPanel.CurrentSelected.crAction = -1;
 	// crQualPanel.Form.setVisibility(false);
 
@@ -536,8 +536,6 @@ function btnQualOk_OnClick()
 };
 function btnQualCancel_OnClick()
 {
-	debugger;
-	
 	crQualPanel.OptionClear();
 	if(crQualPanel != null && crQualPanel.CurrentSelected != null) crQualPanel.CurrentSelected.crAction = -1;
 	// crQualPanel.Form.setVisibility(false);

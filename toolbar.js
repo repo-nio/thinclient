@@ -738,7 +738,7 @@ function NixxisClientLink(sessionId, baseLocation)
 		if(connected)
 		{
 			if (!contactId) return null;
-			return this.connection.executeCommand('~setinfo',this.codes.infoCodes.Qualifications , contactId, qualificationId, callbackDateTime, callbackPhone);
+			return this.connection.executeCommand('~setinfo',this.codes.infoCodes.Qualifications , contactId, qualificationId, callbackDateTime, callbackPhone, 'VAL=0');
 		}
 	};
 	this.getQualifications = function(activityId)
