@@ -625,9 +625,12 @@ function nixxislink_AgentQueueState(state)
 {
 	// debugger;
 	
-	$("Info_QueueHighPriority").innerHTML = state[0] +' - '+ state[2];
-	$("Info_QueueWaiting").innerHTML = state[1];
-	
+	if($("Info_AgentReadyVoiceIndication").style.display != "none")
+	{
+		$("Info_QueueHighPriority").innerHTML = state[0] +' - '+ state[2];
+		$("Info_QueueWaiting").innerHTML = state[1];
+	}
+
 	if(state[1] != null && state[1] != '' && state[1] != '0'
 		&& state[0] != null && state[0] != '' && state[0] != '0') addElementClass($("divAgentStatus"),'highlightRed');
 	else if(state[1] != null && state[1] != '' && state[1] != '0') addElementClass($("divAgentStatus"),'highlight');
