@@ -6,7 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nixxis Client v3</title>
     <link rel="stylesheet" href="./v3/assets/css/style.css" />
-    <script type="text/javascript" language="javascript" src="./v3/assets/js/jquery.min.js"></script>
+    <link rel="stylesheet" href="./assets/css/modals.css">
+    <script src="./assets/js/jquery.min.js"></script>
+    <script defer src="./v3/assets/js/modals.js"></script>
     <link rel="icon" type="image/png" href="./favicon.png" />
 
 
@@ -124,8 +126,6 @@
       </script>
   </head>
 
-
-
   <body onload="javascript: initInstance();" onunload="javascript: exitInstance();">
     <div id="app">
       <div class="content">
@@ -140,13 +140,14 @@
       </div>
       <div class="footer" id="divFooter">
         <!-- Buttons -->
-        <div class="column grid-buttons" id="AgentToolStrip">
+        <div class="column grid-buttons resize-div" id="AgentToolStrip">
           <!-- Quit -->
           <!-- <button class="btn-1">
             <div class="icon">
               <img
                 src="./assets/icons/Agent_AddressBookEntryType_Agent_Off_25.png" alt="icon"
                 class="NixxisButton" id="CloseScript" />
+              />
             </div>
             <span id="CloseScript">Quit</span>
           </button> -->
@@ -156,7 +157,7 @@
           <!-- data-switch="ready" -->
           <button class="btn-1" data-switch="ready" id="WaitForCall">
             <div class="icon">
-              <img src="./assets/icons/Agent_Command_Ready_50.png" alt="icon"
+              <img src="./assets/icons/Agent_Command_Ready_50.png" alt="icon" 
                    class="NixxisButton" id="WaitForCall"/>
             </div>
             <span id="WaitForCall">Ready</span>
@@ -191,20 +192,6 @@
             </div>
             <span id="SearchMode">Search mode</span>
           </button>
-
-          <!-- Pickup -->
-
-          <!-- Pickup = remove it, same as priority pickup. Discussed with Fawaaz 06152022  -->
-
-          <!-- <button class="btn-1">
-            <div class="icon">
-              <img
-                src="./assets/icons/Agent_Command_ContactPickup_50.png" alt="icon"
-                class="NixxisButton" id=""
-              />
-            </div>
-            <span id="Pickup">Pickup</span>
-          </button> -->
 
           <!-- Manual dial -->
           <button class="btn-1" data-target="#dial-pad" id="VoiceNewCall">
@@ -243,15 +230,15 @@
           <button class="btn-1" data-mode="#modalAgentLogout" id="AgentLogout">
             <div class="icon">
               <img src="./assets/icons/Admin_BacktoCockpit_50.png" alt="icon"
-                   class="NixxisButton" id="AgentLogout"              
-              />
+                   class="NixxisButton" id="AgentLogout"/>              
             </div>
             <span id="AgentLogout">Logout</span>
           </button>
         </div>
 
+
         <!-- Buttons -->
-        <div class="column when-ready grid-buttons" id="VoiceToolStrip">
+        <div class="column when-ready grid-buttons resize-div" id="VoiceToolStrip">
           <!-- Disposition -->
           <!-- data-target="#disposition" -->
           <button class="btn-1" data-target="#Select-qual" id="Selectqual">
@@ -262,18 +249,7 @@
               />
             </div>
             <span id="Selectqual">Disposition</span>
-          </button>
-
-          <!-- Contact history -->
-          <!-- <button class="btn-1" id="ContactHistory" disabled>
-            <div class="icon">
-              <img
-                src="./assets/icons/Agent_Command_ShowContatHistory_50.png" alt="icon"
-                class="NixxisButton" id="ContactHistory"
-              />
-            </div>
-            <span id="ContactHistory">Contact history</span>
-          </button> -->
+          </button>          
 
           <!-- Extend -->
           <button class="btn-1" id="ExtendWrapup" style="display:none;">
@@ -340,7 +316,6 @@
             </div>
             <span id="VoiceRecord">Record</span>
           </button>
-
           <!-- Forward -->
           <button class="btn-1" id="VoiceForward">
             <div class="icon">
@@ -374,18 +349,20 @@
             <span id="VoiceConference">Conference</span>
           </button>
 
-          
         </div>
 
+
         <!-- Status -->
-        <div class="column when-ready" id="voiceStatusToolStrip">
-          <div class="statusparent" id="voiceStatusInfoParent">
+        <div class="column when-ready" id="voiceStatusToolStrip" >
+          <div class="status" id="voiceStatusInfoParent">
+           
           </div>
         </div>
 
 
-        <!-- Info -->
-        <div class="column">
+        <!-- Info --> 
+        <div class="column" id="bottom-right">
+
           <ul id="txPropertyGrid_AgentInfo" class="txPropertyGrid" style="display:none;"></ul>
           <li id="PropertyGridCat_Agent" Class="txPropertyGridCategory" style="display:none;"><script>document.writeln(CrResource.infoBox.titleAgt);</script></li>
           <li id="PropertyGridCat_Queue" Class="txPropertyGridCategory" style="display:none;"><script>document.writeln(CrResource.infoBox.titleQueue);</script></li>
@@ -393,45 +370,51 @@
           <div id="NixxisAgentContactArea" class="NixxisAgentContactArea" style="display:none;"> </div> 
 
           <div class="view" id="divAgentStatus">
-            <ul >
-              <li class="row">
-                <span class="label" id="Info_QueueWaitingHeader">Waiting contacts:</span>
-                <span class="value" id="Info_QueueWaiting">0</span>
-              </li>
-              <li class="row">
-                <span class="label" id="Info_QueueHighPriorityHeader">Priority contacts:</span>
-                <span class="value" id="Info_QueueHighPriority">0 - 0</span>
-              </li>
-              <li class="row">
-                <span class="label" id="Info_AgentStateHeader">State:</span>
-                <span class="value" id="Info_AgentState">Break</span>
-              </li>
-              <li class="row">
-                <span class="label" id="Info_AgentSessionDurationHeader">Duration:</span>
-                <span class="value" id="Info_AgentSessionDuration">00:00:00</span>
-              </li>
-              <li class="row">
-                <span id="Info_AgtName_Account">Formateur Nixxis (10008)</span>
-
-                <div class="d-flex">
-                  <button class="btn-2">
+            <table class="table" style="color: #c2c2c2;">
+              <tr class="row">
+                <td><span class="label" id="Info_QueueWaitingHeader">Waiting contacts:</span></td>
+                <td><span class="value" id="Info_QueueWaiting">0</span></td>
+              </tr>
+              <tr class="row">
+                <td><span class="label" id="Info_QueueHighPriorityHeader">Priority contacts:</span></td>
+                <td><span class="value" id="Info_QueueHighPriority">0 - 0</span></td>
+              </tr>
+              <tr class="row">
+                <td><span class="label" id="Info_AgentStateHeader">State:</span></td>
+                <td><span class="value" id="Info_AgentState">Break</span></td>
+              </tr>
+              <tr class="row">
+                <td><span class="label" id="Info_AgentSessionDurationHeader">Duration:</span></td>
+                <td><span class="value" id="Info_AgentSessionDuration">00:00:00</span></td>
+              </tr>
+              <tr class="row">
+                <td><span id="Info_AgtName_Account">Formateur Nixxis (10008)</span></td>
+                <td>
+                  <div class="d-flex">
+                    <button class="btn-2">
                     <img src="./assets/icons/Agent_ReadyVoiceIndication_25.png" alt="icon" id="Info_AgentReadyVoiceIndication"
                          class="NixxisButton"/>
-                  </button>
+                    </button>
                   <button class="btn-2" style="display:none;">                    
                     <img src="./assets/icons/Agent_ReadyChatIndication_25.png" alt="icon" id="Info_AgentReadyChatIndication"
                          class="NixxisButton"/>
-                  </button>
+                    </button>
                   <button class="btn-2" style="display:none;">
                     <img src="./assets/icons/Agent_ReadyMailIndication_25.png" alt="icon" id="Info_AgentReadyMailIndication"
                          class="NixxisButton"/>
-                  </button>
-                </div>
-              </li>
-            </ul>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </table>
           </div>
         </div>
       </div>
+
+      <div id="exit-modal" onclick="exitModal()"></div>
+      <div id="first-modal" onclick="showModal('first')"></div>
+      <div id="second-modal" onclick="showModal('second')"></div>
+
     </div>
 
     <!-- Break -->
@@ -486,7 +469,7 @@
       </div>
       <div class="modal-content dial">
         <div class="d-flex">
-          <input id="dial" type="tel" />          
+          <input id="dial" type="tel" />
           <button id="dial-clear">
             <img src="./assets/icons/Agent_AddressBookEntryType_Agent_Off_25.png" alt="icon" />
           </button>
@@ -515,6 +498,7 @@
     </div> -->
 
     <div class="backdrop" id="backdrop"></div>
+    <script src="./assets/js/CrToolbox.js"></script>
     <script src="./assets/js/script.js"></script>
   </body>
 </html>

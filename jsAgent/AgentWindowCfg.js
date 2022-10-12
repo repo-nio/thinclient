@@ -113,7 +113,8 @@ function ClientConnect()
 	window.localStorage.setItem("NixxisAgentLoginUser", ClientLink.UserName + ";"+ ClientLink.Extension);
 	
 	$('divAgentStatus').onclick = onAgentStatusClick;
-
+	ShowHideVoiceToolStripIcons(false);
+	ShowHideVoiceStatusToolStripIcons(false);
 	// window.setTimeout(DisplayDateTimeElapsed, 1000);
 	DisplayDateTimeElapsed();
 
@@ -331,7 +332,7 @@ function PropertyGridHeight()
 
 function nixxislink_ConactAdded(contactInfo)
 {
-	// debugger;
+	debugger;
 
 	if(_CurrentContacts)
 	{
@@ -354,8 +355,10 @@ function nixxislink_ConactAdded(contactInfo)
 	if (contactInfo.Media == "V") 
 	{
 		contactInfo.__ContactUpdate = true;
-		addElementClass($('VoiceToolStrip'),'active');
-		addElementClass($('voiceStatusToolStrip'),'active');
+		// addElementClass($('VoiceToolStrip'),'active');
+		ShowHideVoiceToolStripIcons(true);
+		// addElementClass($('voiceStatusToolStrip'),'active');
+		ShowHideVoiceStatusToolStripIcons(true);
 
 		if(contactInfo.Context == 'Customer service')
 		{
@@ -473,6 +476,8 @@ function addVoiceStatus(contactInfo)
 }
 function setVoiceDisplayStatus()
 {
+	addElementClass($('voiceStatusInfoParent'), 'statusparent');
+
 	if(_CurrentContacts.length == 1)
 	{
 		removeElementClass($('voicestatus_'+_CurrentContacts[0].Id), 'small');
@@ -489,14 +494,14 @@ function setVoiceDisplayStatus()
 
 			$('voicestatus_'+_CurrentContacts[i].Id).style = 'background-color: #676767;';
 		}
-
+		
 		$('voicestatus_'+_CurrentContacts[_CurrentContacts.length - 1].Id).style = 'background-color: #00cffd;';
 		$('voicestatus_'+_CurrentContacts[_CurrentContacts.length - 1].Id).scrollIntoView(false);
 	}
 }
 function voicestatus_clicked(sender)
 {
-	// debugger;
+	debugger;
 	if(sender && sender.ContactInfo)
 	{
 		ClientLink.SetActiveContact(sender.ContactInfo);
@@ -514,7 +519,7 @@ function voicestatus_clicked(sender)
 }
 function nixxislink_ContactRemoved(contactInfo)
 {
-	// debugger;
+	debugger;
 
 	defaultSetAgentInfoLabels();
 	_CurrentContacts.pop(contactInfo);
@@ -873,7 +878,7 @@ function SetReadyBreakBasedOnAgentState(state)
 }
 function CloseScript()
 {
-	// debugger;
+	debugger;
 
 	ClientLink.TerminateContact(ClientLink.Contacts.Get(ClientLink.Contacts.ActiveContactId));
 	SetAgentInfoStat();
@@ -881,7 +886,7 @@ function CloseScript()
 function NewContact(contactInfo)
 {
 	//var _TabId = contactInfo.Id;
-	// debugger;
+	debugger;
 
 	var _TabPage = tabContacts.txTabPages.GetNextFreeTab(contactInfo.Media);
 	if(!_TabPage)
@@ -905,7 +910,7 @@ function NewContact(contactInfo)
 }
 function RemoveContact(contactInfo)
 {
-	// debugger;	
+	debugger;	
 
 	////debugger;
 	// var key = contactInfo.__TabId;
@@ -941,8 +946,10 @@ function RemoveContact(contactInfo)
 		$('NixxisAgent').src = "about:blank";
 		$('NixxisAgent').style.display ='none';
 
-		removeElementClass($('VoiceToolStrip'),'active');
-		removeElementClass($('voiceStatusToolStrip'),'active');
+		// removeElementClass($('VoiceToolStrip'),'active');
+		ShowHideVoiceToolStripIcons(false);
+		// removeElementClass($('voiceStatusToolStrip'),'active');
+		ShowHideVoiceStatusToolStripIcons(false);
 		removeElementClass($('ExtendWrapup'),'active');
 		$('ExtendWrapup').disabled = true;
 		$('WaitForCall').disabled = false;
@@ -955,6 +962,32 @@ function RemoveContact(contactInfo)
 
 	removeElementClass($('CloseScript'),'active');
 	// WaitFor_StateChanged(true, true);
+}
+function ShowHideVoiceToolStripIcons(canDisplay)
+{
+	// debugger;
+
+	var displayStyle ='display:none;';
+
+	if(canDisplay) displayStyle ='';
+	
+	var allButtons = $('VoiceToolStrip').getElementsByTagName('button');;
+		
+	if(allButtons != null)
+	{			
+		for(var i = 0; i < allButtons.length; i++)
+		{
+			allButtons[i].style = displayStyle;
+		}
+	}
+}
+function ShowHideVoiceStatusToolStripIcons(canDisplay)
+{
+	var displayStyle ='display:none;';
+
+	if(canDisplay) displayStyle ='';
+	
+	$('voiceStatusInfoParent').style = displayStyle;
 }
 //**********************************************************
 //**********************************************************
