@@ -977,6 +977,8 @@ function ShowHideVoiceToolStripIcons(canDisplay)
 	{			
 		for(var i = 0; i < allButtons.length; i++)
 		{
+			if(allButtons[i].id == 'ExtendWrapup') continue;
+
 			allButtons[i].style = displayStyle;
 		}
 	}
