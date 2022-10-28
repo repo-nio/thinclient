@@ -637,7 +637,7 @@ function nixxislink_AgentQueueState(state)
 	}
 
 	if(state[1] != null && state[1] != '' && state[1] != '0'
-		&& state[0] != null && state[0] != '' && state[0] != '0') addElementClass($("divAgentStatus"),'highlightRed');
+		&& state[0] != null && state[0] != '' && state[0] != '0') addElementClass($("divAgentStatus"),'highlight');
 	else if(state[1] != null && state[1] != '' && state[1] != '0') addElementClass($("divAgentStatus"),'highlight');
 	else 
 	{
