@@ -1,4 +1,5 @@
 *.Safari.*
 *.Firefox.*
 *.Unknown.*
-staticfiles.rar
+# staticfiles.rar
+*.rar*
