@@ -1362,3 +1362,122 @@ var crAgentLogout =
 	},
 }
 
+
+
+//
+//Agent Reload Warning
+//
+var crAgentReloadWarning = 
+{
+	WorkSpace : null,
+	Form : null,
+	
+	crFormBtnCancel: null,
+	crFormBtnOk: null,
+	crInt_OpenWindow : null, //Bool to see if the from already exists
+
+	crFormActionCancelled : null,
+
+	Init : function()
+	{
+		// debugger;
+		
+		crAgentReloadWarning.Form = new toolboxForm("AgentReloadWarning");
+		crAgentReloadWarning.Form.txParent = document.body;
+		crAgentReloadWarning.Form.Show();
+		crAgentReloadWarning.Form.onFormExit = crAgentReloadWarning.Close;			
+		
+		var _BODY = '';	    
+
+		_BODY += '<div class="modal active" id="modalAgentReloadWarning" >';
+		_BODY += '	<div class="modal-header">';
+		_BODY += '		<h4>Confirm Reload</h4>';
+		_BODY += '	</div>';
+		_BODY += '	<div class="modal-teamcontent" id="modalAgentReloadWarningworkspace">';
+		
+		_BODY += '	</div>';
+		_BODY += '	<div class="modal-footer">';
+		_BODY += '		<button id ="btnAgentReloadWarningOk">Reload</button>';
+		_BODY += '		<button id ="btnAgentReloadWarningClose">Cancel</button>';
+		_BODY += '	</div>';
+		_BODY += '</div>';
+		
+		crAgentReloadWarning.Form.txWorkArea[1].innerHTML = _BODY;
+
+		$('modalAgentReloadWarning').style.height = 200 + 'px';
+
+		crAgentReloadWarning.ShowList($('modalAgentReloadWarningworkspace'));
+		
+		crAgentReloadWarning.crFormBtnCancel = new toolboxButton("btnbtnAgentReloadWarningClose", "Cancel", function() { crAgentReloadWarning.ButtonClose(); });
+		crAgentReloadWarning.crFormBtnCancel.txAbsolute = false;
+		crAgentReloadWarning.crFormBtnCancel.txParent = $('btnAgentReloadWarningClose');
+
+		crAgentReloadWarning.crFormBtnCancel.txAlt = "Cancel";
+		crAgentReloadWarning.crFormBtnCancel.txTitle = "Cancel";
+		crAgentReloadWarning.crFormBtnCancel.Show();
+
+		crAgentReloadWarning.crFormBtnOk = new toolboxButton("btnbtnAgentReloadWarningOk", "Ok", function() { crAgentReloadWarning.ButtonOk(); });
+		crAgentReloadWarning.crFormBtnOk.txAbsolute = false;
+		crAgentReloadWarning.crFormBtnOk.txParent = $('btnAgentReloadWarningOk');
+
+		crAgentReloadWarning.crFormBtnOk.txAlt = "Ok";
+		crAgentReloadWarning.crFormBtnOk.txTitle = "Ok";
+		crAgentReloadWarning.crFormBtnOk.Show();
+	},
+
+	ShowList : function(workspace)
+	{
+		// debugger;
+
+		workspace.innerHTML = "";
+
+		var mainDIV = document.createElement('div');
+		mainDIV.id = "divBodyItems";
+		mainDIV.className = "modal-content-item";
+
+		mainDIV.style = "text-align: center; padding-top: 10%; background-color : #2e2e2e;";
+
+		var insideSpan = document.createElement('span');
+		insideSpan.className = "labelcheckbox";
+		insideSpan.textContent = 'Click reload to reload this page.';
+
+		mainDIV.appendChild(insideSpan);
+
+		workspace.appendChild(mainDIV);
+	},
+
+	Show : function () 
+	{
+		if(crAgentReloadWarning.Form == null) 
+		{
+			crAgentReloadWarning.Init();
+		}
+
+		crAgentReloadWarning.crFormActionCancelled = null;
+		addElementClass($('backdrop'), 'active');
+		addElementClass($('modalAgentReloadWarning'), 'active');
+
+		// $('modalAgentReloadWarning').dialog();
+	},
+
+	ButtonOk : function()
+	{
+		crAgentReloadWarning.crFormActionCancelled = false;		
+
+		removeElementClass($('backdrop'), 'active');
+		removeElementClass($('modalAgentReloadWarning'), 'active');
+
+		location.reload();
+	},
+
+	ButtonClose : function()
+	{
+		crAgentReloadWarning.crFormActionCancelled = true;
+		// debugger;
+		
+		crAgentReloadWarning.myPopup.response = "Not ok!"
+		crAgentReloadWarning.myPopup.Close();
+		removeElementClass($('backdrop'), 'active');
+		removeElementClass($('modalAgentReloadWarning'), 'active');
+	},
+}
