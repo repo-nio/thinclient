@@ -4,6 +4,9 @@
   backdrop.on('click', () => {
     $('.modal.active').removeClass('active');
     backdrop.removeClass('active');
+
+    let btnManualDial = document.getElementById('VoiceNewCall');
+    removeElementClass(btnManualDial, 'active');
   });
 
   $(".modal [data-close]").on('click', (ev) => {
