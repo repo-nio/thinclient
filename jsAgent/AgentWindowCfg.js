@@ -111,7 +111,11 @@ function ClientConnect()
 	crLoadingScreen.Visible(false);
 
 	window.localStorage.setItem("NixxisAgentLoginUser", ClientLink.UserName + ";"+ ClientLink.Extension);
+	debugger;
+	window.localStorage.setItem("NixxisAgentLoginUser_History", ClientLink.UserAccount);
+	window.localStorage.setItem("NixxisAgentLoginUserExtension_History", ClientLink.Extension);
 	
+
 	$('divAgentStatus').onclick = onAgentStatusClick;
 	ShowHideVoiceToolStripIcons(false);
 	ShowHideVoiceStatusToolStripIcons(false);

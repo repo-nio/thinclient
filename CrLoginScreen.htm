@@ -57,10 +57,18 @@
                             }catch(e){}
                         }
                     }
-                }	
+                }
                 
                 crLoadingScreen.crLoadingMsg = CrResource.Common.LoadingMsg;
                 crLoadingScreen.Init();
+
+                debugger;
+                
+                let NixxisAgentLoginUser_History = window.localStorage.getItem("NixxisAgentLoginUser_History");
+                if(NixxisAgentLoginUser_History) $("userAccount").value = NixxisAgentLoginUser_History;
+
+                let NixxisAgentLoginUserExtension_History = window.localStorage.getItem("NixxisAgentLoginUserExtension_History");
+                if(NixxisAgentLoginUserExtension_History) $("extension").value = NixxisAgentLoginUserExtension_History;                
             }
             function ShowHelp()
             {
