@@ -1424,9 +1424,16 @@ function NixxisClientLink(sessionId, baseLocation)
 	                                    {
 	                                        //window.open(this.clientLink.newCallDialog + '?link=' + this.clientLink.connection.connectionId + '&cmd=VoiceNewCall', 'NewVoiceCall', 'height=200,width=400,dependent=1,toolbar=0,menubar=0,scrollbars=0,resizable=0,location=0,directories=0,status=0,dialog=1');
 											var _contactInfo = this.clientLink.Contacts.Get(this.clientLink.Contacts.ActiveContactId);
-											if (_contactInfo) {
-												if (_contactInfo.__AgentAction == "P") 
+											if (_contactInfo) 
+											{
+												// if (_contactInfo.__AgentAction == "P" || _contactInfo.State == "P") 
+												// 	crNewCallDialog.crNumToCall = _contactInfo.To;
+												if (_contactInfo.Media == 'V' && _contactInfo.Direction == "O" && _contactInfo.State == "P")
 													crNewCallDialog.crNumToCall = _contactInfo.To;
+												else if (_contactInfo.Media == 'V' && _contactInfo.Direction == "I" && _contactInfo.State == "C")
+													crNewCallDialog.crNumToCall = _contactInfo.From;
+												else
+													crNewCallDialog.crNumToCall = '';
 											}
 											crNewCallDialog.Call(this.clientLink.connection.connectionId, "VoiceNewCall", myself);
 	                                    }
