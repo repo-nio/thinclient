@@ -435,7 +435,7 @@ var crQualPanel =
 		var dte =  new Date();
 		var dte1 = new Date(dte.getFullYear(), dte.getMonth(), dte.getDate() + 1, dte.getHours(), 0, 0);
 		crQualPanel.Calen = new Calendar(1,  dte1.toString(), dateChanged, null);
-		crQualPanel.Calen.showsTime = true;
+		crQualPanel.Calen.showsTime = false;
 		crQualPanel.Calen.time24 = true;
 		crQualPanel.Calen.setDateFormat("%Y%m%d%H%M");
 		crQualPanel.Calen.create(el);

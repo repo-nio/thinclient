@@ -32,14 +32,14 @@ Calendar = function (firstDayOfWeek, dateStr, onSelected, onClose) {
 	this.dateFormat = Calendar._TT["DEF_DATE_FORMAT"];
 	this.ttDateFormat = Calendar._TT["TT_DATE_FORMAT"];
 	this.isPopup = true;
-	this.weekNumbers = true;
+	this.weekNumbers = false;
 	this.firstDayOfWeek = typeof firstDayOfWeek == "number" ? firstDayOfWeek : Calendar._FD; // 0 for Sunday, 1 for Monday, etc.
 	this.showsOtherMonths = false;
 	this.dateStr = dateStr;
 	this.ar_days = null;
 	this.showsTime = false;
 	this.time24 = true;
-	this.yearStep = 2;
+	this.yearStep = 1;
 	this.hiliteToday = true;
 	this.multiple = null;
 	// HTML elements
@@ -57,6 +57,8 @@ Calendar = function (firstDayOfWeek, dateStr, onSelected, onClose) {
 	// Information
 	this.dateClicked = false;
 	this.timeChanged = false;
+
+	this.WEEK_ROWS_TO_DISPLAY = 1;
 
 	// one-time initializations
 	if (typeof Calendar._SDN == "undefined") {
@@ -241,6 +243,16 @@ Calendar.findMonth = function(el) {
 	return null;
 };
 
+
+// Calendar.findWeek = function(el) {
+// 	if (typeof el.week != "undefined") {
+// 		return el;
+// 	} else if (typeof el.parentNode.week != "undefined") {
+// 		return el.parentNode;
+// 	}
+// 	return null;
+// };
+
 Calendar.findYear = function(el) {
 	if (typeof el.year != "undefined") {
 		return el;
@@ -251,6 +263,38 @@ Calendar.findYear = function(el) {
 };
 
 Calendar.showMonthsCombo = function () {
+	var cal = Calendar._C;
+	if (!cal) {
+		return false;
+	}
+	var cal = cal;
+	var cd = cal.activeDiv;
+	var mc = cal.monthsCombo;
+	if (cal.hilitedMonth) {
+		Calendar.removeClass(cal.hilitedMonth, "hilite");
+	}
+	if (cal.activeMonth) {
+		Calendar.removeClass(cal.activeMonth, "active");
+	}
+	var mon = cal.monthsCombo.getElementsByTagName("div")[cal.date.getMonth()];
+	Calendar.addClass(mon, "active");
+	cal.activeMonth = mon;
+	var s = mc.style;
+	s.display = "block";
+	if (cd.navtype < 0)
+		s.left = cd.offsetLeft + "px";
+	else {
+		var mcw = mc.offsetWidth;
+		if (typeof mcw == "undefined")
+			// Konqueror brain-dead techniques
+			mcw = 50;
+		s.left = (cd.offsetLeft + cd.offsetWidth - mcw) + "px";
+	}
+	s.top = (cd.offsetTop + cd.offsetHeight) + "px";
+};
+
+
+Calendar.showWeeksCombo = function () {
 	var cal = Calendar._C;
 	if (!cal) {
 		return false;
@@ -819,7 +863,7 @@ Calendar.prototype.create = function (_par) {
 	var tbody = Calendar.createElement("tbody", table);
 	this.tbody = tbody;
 
-	for (i = 6; i > 0; --i) {
+	for (i = this.WEEK_ROWS_TO_DISPLAY; i > 0; --i) {
 		row = Calendar.createElement("tr", tbody);
 		if (this.weekNumbers) {
 			cell = Calendar.createElement("td", row);
@@ -1117,7 +1161,7 @@ Calendar.prototype._init = function (firstDayOfWeek, date) {
 	var ar_days = this.ar_days = new Array();
 	var weekend = Calendar._TT["WEEKEND"];
 	var dates = this.multiple ? (this.datesCells = {}) : null;
-	for (var i = 0; i < 6; ++i, row = row.nextSibling) {
+	for (var i = 0; i < this.WEEK_ROWS_TO_DISPLAY; ++i, row = row.nextSibling) {
 		var cell = row.firstChild;
 		if (this.weekNumbers) {
 			cell.className = "day wn";
