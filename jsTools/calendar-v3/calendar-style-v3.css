@@ -1,0 +1,132 @@
+*{ 
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+}
+
+.calenderBox 
+{
+    width:288px;
+    margin:0;
+    min-height: 300px;
+}
+
+.calenderBox button
+{ 
+    background:#eee;
+    box-shadow:none;
+    border:0 none;
+    outline:0 none;
+    padding:8px; 
+    border-radius:5px;
+    cursor:pointer;    
+}
+
+.calenderBox button.btnNext 
+{
+    min-height: 52px;
+}
+
+.calenderBox button.month 
+{
+    width:100%;
+    margin-bottom:3px
+}
+
+.calender 
+{ 
+    width:100%;
+    float:left;
+}
+
+.dateBoxMain 
+{
+    display:flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dateBoxMain ul 
+{ 
+    list-style:none;
+}
+
+.dateBoxMain ul li
+{ 
+    list-style:none;
+    display:flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.dateBoxMain ul li div.dateBox 
+{
+    float:left;
+    margin:0 2px;
+    background:#eee;
+    padding:5px 3px;
+    border-radius:5px;
+    cursor:pointer;
+    /*min-width: 32px;*/
+}
+
+.dateBoxMain ul li div.dateBox.active 
+{ 
+    background:#09F;
+    color:#FFF;
+}
+
+.dateBoxMain ul li div.dateBox div 
+{ 
+    display:block;
+    text-align:center;    
+}
+
+.dateBoxMain ul li div.dateBox .day
+{
+    border-radius: 100%;
+    width: 22px;
+    height: 22px;
+    text-align: center;
+    padding-top: 2px;
+    margin-bottom: 2px;
+}
+
+.dateBoxMain ul li div.dateBox.active .day
+{
+    border: 1px solid #FFF;
+}
+
+.timeSlap 
+{ 
+    width:100%;
+    float:left;
+    margin-top:5px
+}
+
+.timeSlap ul 
+{
+    list-style:none;
+    width:100%;
+    float:left;
+    height:195px;
+    overflow-y:scroll;
+}
+
+.timeSlap ul li 
+{ 
+    width:100%;
+    float:left;
+    margin:1px 0;
+    background:#eee;
+    padding:6px 15px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.timeSlap ul li.active 
+{ 
+    background:#09F;
+    color:#FFF;
+}

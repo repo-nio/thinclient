@@ -308,6 +308,7 @@ var crQualPanel =
 
 		if(crQualPanel.crInt_OpenWindow) crQualPanel.Init(tree);
 
+		
 		if (arguments.length > 0) crQualPanel.ShowTree(arguments[0], $('modalSelectqualworkspace'));
 
 		$('btnSelectqualOk').style.display = "none";
@@ -427,30 +428,96 @@ var crQualPanel =
 	},
 	OptionAddDateTime : function()
 	{
-		var el = window.document.createElement("div");
-		el.className = "labelDispositionUL";
-		el.id = 'NixxisQualOptionDateTime';
+		debugger;
+		// var el = window.document.createElement("div");
+		// el.className = "labelDispositionUL";
+		// el.id = 'NixxisQualOptionDateTime';
 
-		crQualPanel.OptionSpace.appendChild(el);
-		var dte =  new Date();
-		var dte1 = new Date(dte.getFullYear(), dte.getMonth(), dte.getDate() + 1, dte.getHours(), 0, 0);
-		crQualPanel.Calen = new Calendar(1,  dte1.toString(), dateChanged, null);
-		crQualPanel.Calen.showsTime = false;
-		crQualPanel.Calen.time24 = true;
-		crQualPanel.Calen.setDateFormat("%Y%m%d%H%M");
-		crQualPanel.Calen.create(el);
+		// crQualPanel.OptionSpace.appendChild(el);
+		// var dte =  new Date();
+		// var dte1 = new Date(dte.getFullYear(), dte.getMonth(), dte.getDate() + 1, dte.getHours(), 0, 0);
+		// crQualPanel.Calen = new Calendar(1,  dte1.toString(), dateChanged, null);
+		// crQualPanel.Calen.showsTime = false;
+		// crQualPanel.Calen.time24 = true;
+		// crQualPanel.Calen.setDateFormat("%Y%m%d%H%M");
+		// crQualPanel.Calen.create(el);
 
+		// var el = window.document.createElement("div");
+		// el.className = "labelDispositionUL";
+		// el.innerHTML = '<label id="lblNixxisQualOptPos" for="NixxisQualOptPos">Callback destination</label><input type="text" name="NixxisQualOptPos" id="txtNixxisQualOptPos" value=""/>';
+		
+		
 		var el = window.document.createElement("div");
-		el.className = "labelDispositionUL";
-		el.innerHTML = '<label id="lblNixxisQualOptPos" for="NixxisQualOptPos">Callback destination</label><input type="text" name="NixxisQualOptPos" id="txtNixxisQualOptPos" value=""/>';
+		// el.className = "labelDispositionUL";
+		// el.id = 'NixxisQualOptionDateTime';
+
+		var _BODY = '';	    
+		_BODY += '<div class="calenderBox">';
+		_BODY += '	<div class="calender">';
+		_BODY += '		<button class="month" id="MonthName">November 2022</button>';
+		_BODY += '			<div class="dateBoxMain">';
+		_BODY += '				<button class="btnNext left" onclick="javascript: getPreviousWeek();"> << </button>';
+		_BODY += '					<div class="dateCnt">';
+		_BODY += '						<ul>';
+		_BODY += '							<li>';
+		_BODY += '								<div class="dateBox" id="dateBox1">';
+		_BODY += '									<div class="day" id="Day1">S</div>';
+		_BODY += '									<div class="date" id="Day1Date">06</div>';
+		_BODY += '								</div>';
+		_BODY += '								<div class="dateBox" id="dateBox2">';
+		_BODY += '									<div class="day" id="Day2">S</div>';
+		_BODY += '									<div class="date" id="Day2Date">06</div>';
+		_BODY += '								</div>';
+		_BODY += '								<div class="dateBox" id="dateBox3">';
+		_BODY += '									<div class="day" id="Day3">S</div>';
+		_BODY += '									<div class="date" id="Day3Date">06</div>';
+		_BODY += '								</div>';
+		_BODY += '								<div class="dateBox" id="dateBox4">';
+		_BODY += '									<div class="day" id="Day4">S</div>';
+		_BODY += '									<div class="date" id="Day4Date">06</div>';
+		_BODY += '								</div>';
+		_BODY += '								<div class="dateBox" id="dateBox5">';
+		_BODY += '									<div class="day" id="Day5">S</div>';
+		_BODY += '									<div class="date" id="Day5Date">06</div>';
+		_BODY += '								</div>';
+		_BODY += '								<div class="dateBox" id="dateBox6">';
+		_BODY += '									<div class="day" id="Day6">S</div>';
+		_BODY += '									<div class="date" id="Day6Date">06</div>';
+		_BODY += '								</div>';
+		_BODY += '								<div class="dateBox" id="dateBox7">';
+		_BODY += '									<div class="day" id="Day7">S</div>';
+		_BODY += '									<div class="date" id="Day7Date">06</div>';
+		_BODY += '								</div>';
+		_BODY += '							</li>';
+		_BODY += '						</ul>';
+		_BODY += '					</div>';
+		_BODY += '				<button class="btnNext right" onclick="javascript: getNextWeek();"> >> </button>';
+		_BODY += '			</div>';
+		_BODY += '		<div class="timeSlap">';
+		_BODY += '			<ul id="TimeOptions">';
+		_BODY += '			</ul>';
+		_BODY += '		</div>';
+		_BODY += '	</div>';		
+		_BODY += '</div>';
+		
+		el.innerHTML = _BODY;
 		crQualPanel.OptionSpace.appendChild(el);
+
+		var elInput = window.document.createElement("div");
+		// elInput.className = "labelDispositionUL";
+		elInput.style.top = 10 + 'px';
+		elInput.innerHTML = '<label id="lblNixxisQualOptPos" for="NixxisQualOptPos" style="color: #fff;">Callback destination</label><input type="text" name="NixxisQualOptPos" id="txtNixxisQualOptPos" value=""/>';
+		
+		crQualPanel.OptionSpace.appendChild(elInput);
+
+		LoadDateTimeInstance();
 
 		var info = ClientLink.Contacts.Get(ClientLink.Contacts.ActiveContactId);
 
 		if (info.Direction == "I") $('txtNixxisQualOptPos').value = info.From;
 		else $('txtNixxisQualOptPos').value = info.To;
 
-		$('NixxisQualOptionDateTime').style.height = 175 + 'px';
+		// $('NixxisQualOptionDateTime').style.height = 175 + 'px';
 	},
 	OptionAddPosValue : function()
 	{
@@ -491,7 +558,10 @@ function btnQualOk_OnClick()
 	
 	try
 	{
-		var dte = crQualPanel.Calen.date;
+		debugger;
+		// var dte = crQualPanel.Calen.date;
+
+		var dte = getQualificationSelectedDateInCalendar();
 		var xxDay = dte.getDate().toString();
 		if (xxDay.length == 1) xxDay = "0" + xxDay;
 		var xxMonth = (dte.getMonth() + 1).toString();

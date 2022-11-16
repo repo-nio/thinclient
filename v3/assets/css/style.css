@@ -489,7 +489,8 @@ body {
 }
 
 .modal.width500 {
-  width: 600px;
+  width: 620px;
+  min-height: 440px;
 }
 
 .modal .modal-footer {
