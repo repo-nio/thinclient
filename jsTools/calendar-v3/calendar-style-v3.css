@@ -31,7 +31,8 @@
 .calenderBox button.month 
 {
     width:100%;
-    margin-bottom:3px
+    margin-bottom:3px;
+    font-size: 15px;
 }
 
 .calender 
