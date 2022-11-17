@@ -651,6 +651,7 @@ var crSearchModePanel =
 		crSearchModePanel.Form.txParent = document.body;
 		crSearchModePanel.Form.Show();
 		crSearchModePanel.Form.onFormExit = crSearchModePanel.Close;			
+		crSearchModePanel.Form.style = '{ top: 0px; left: 0px; z-index: 2; max-height: 0px;'
 		
 		var _BODY = '';	    
 
