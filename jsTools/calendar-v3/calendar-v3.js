@@ -31,8 +31,8 @@ function LoadDateTimeInstance()
     DisplayTimeOptions();
 
     // debugger;
-    if(selectedDate == null) selectedDate = new Date();
-
+    // if(selectedDate == null) selectedDate = new Date();
+    selectedDate = new Date();
     setMonthNameYear();
 
     let mySundayDate = getSundayFromDate(selectedDate);
