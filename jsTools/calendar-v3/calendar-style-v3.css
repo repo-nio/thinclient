@@ -1,6 +1,6 @@
 *{ 
-    margin:0;
-    padding:0;
+    margin:0px;
+    padding:-1px;
     box-sizing: border-box;
 }
 
@@ -112,6 +112,7 @@
     float:left;
     height:195px;
     overflow-y:scroll;
+    padding: 0px;
 }
 
 .timeSlap ul li 

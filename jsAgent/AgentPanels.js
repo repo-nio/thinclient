@@ -458,7 +458,7 @@ var crQualPanel =
 		_BODY += '			<div class="dateBoxMain">';
 		_BODY += '				<button class="btnNext left" onclick="javascript: getPreviousWeek();"> << </button>';
 		_BODY += '					<div class="dateCnt">';
-		_BODY += '						<ul>';
+		_BODY += '						<ul style="margin: unset; padding: 0px;">';
 		_BODY += '							<li>';
 		_BODY += '								<div class="dateBox" id="dateBox1">';
 		_BODY += '									<div class="day" id="Day1">S</div>';
