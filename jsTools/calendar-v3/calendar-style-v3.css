@@ -13,7 +13,8 @@
 
 .calenderBox button
 { 
-    background:#eee;
+    background:#757575;
+    color: silver;
     box-shadow:none;
     border:0 none;
     outline:0 none;
@@ -64,7 +65,8 @@
 {
     float:left;
     margin:0 2px;
-    background:#eee;
+    background:#4F4F4F;
+    color: silver;
     padding:5px 3px;
     border-radius:5px;
     cursor:pointer;
@@ -73,8 +75,8 @@
 
 .dateBoxMain ul li div.dateBox.active 
 { 
-    background:#09F;
-    color:#FFF;
+    background:#19CDFF;
+    color:#333333;    
 }
 
 .dateBoxMain ul li div.dateBox div 
@@ -95,7 +97,8 @@
 
 .dateBoxMain ul li div.dateBox.active .day
 {
-    border: 1px solid #FFF;
+    border: 1px solid #333333;
+    /* color: silver; */
 }
 
 .timeSlap 
@@ -120,7 +123,8 @@
     width:100%;
     float:left;
     margin:1px 0;
-    background:#eee;
+    background:#4F4F4F;
+    color: silver;
     padding:6px 15px;
     border-radius:8px;
     cursor:pointer;
@@ -128,6 +132,16 @@
 
 .timeSlap ul li.active 
 { 
-    background:#09F;
-    color:#FFF;
+    background:#19CDFF;
+    color:#333333;
+}
+
+.TimeScrollbar::-webkit-scrollbar 
+{
+    background: #333333;
+}
+
+.TimeScrollbar::-webkit-scrollbar-thumb 
+{
+    background: silver;
 }

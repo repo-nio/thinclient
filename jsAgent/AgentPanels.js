@@ -494,7 +494,7 @@ var crQualPanel =
 		_BODY += '				<button class="btnNext right" onclick="javascript: getNextWeek();"> >> </button>';
 		_BODY += '			</div>';
 		_BODY += '		<div class="timeSlap">';
-		_BODY += '			<ul id="TimeOptions">';
+		_BODY += '			<ul id="TimeOptions" class="TimeScrollbar">';
 		_BODY += '			</ul>';
 		_BODY += '		</div>';
 		_BODY += '	</div>';		
