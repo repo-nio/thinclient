@@ -487,7 +487,7 @@ function setVoiceDisplayStatus()
 		removeElementClass($('voicestatus_'+_CurrentContacts[0].Id), 'small');
 		removeElementClass($('voiceULControl_'+_CurrentContacts[0].Id), 'ULsmall');
 		
-		$('voicestatus_'+_CurrentContacts[0].Id).style = 'background-color: #00cffd;';
+		$('voicestatus_'+_CurrentContacts[0].Id).style = 'background-color: #00cffd; justify-content: center !important;';
 	}
 	else if(_CurrentContacts.length > 1)
 	{
