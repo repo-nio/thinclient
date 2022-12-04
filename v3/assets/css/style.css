@@ -656,3 +656,26 @@ body {
   background-color: #00cffd;
   color: #fff;
 }
+
+.V3InputStyle {
+  background: #4F4F4F;
+  border: 1px solid #bbb;
+  outline: 0;
+  padding: 3px 5px;
+  color: #bbb;
+  border-radius: 3px;
+  -webkit-transition-duration: 0.5s;
+  -moz-transition-duration: 0.5s;
+  -o-transition-duration: 0.5s;
+  transition-duration: 0.5s;
+}
+
+  .V3InputStyle:hover
+  {
+    border: 1px solid #00cffd;
+  }
+  .V3InputStyle:focus {
+      background: #4F4F4F;
+      border: 1px solid rgb(229 229 231);
+      color: rgb(229 229 231);
+  }

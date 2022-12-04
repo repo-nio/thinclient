@@ -92,7 +92,7 @@ var CrResource =
 	},
 	QualificationForm : 
 	{
-		title : "Choose qualification"
+		title : "Select disposition..."
 	},
 	pagePause : 
 	{

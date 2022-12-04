@@ -506,7 +506,7 @@ var crQualPanel =
 		var elInput = window.document.createElement("div");
 		// elInput.className = "labelDispositionUL";
 		elInput.style.top = 10 + 'px';
-		elInput.innerHTML = '<label id="lblNixxisQualOptPos" for="NixxisQualOptPos" style="color: #fff;">Callback destination</label><input type="text" name="NixxisQualOptPos" id="txtNixxisQualOptPos" value=""/>';
+		elInput.innerHTML = '<label id="lblNixxisQualOptPos" for="NixxisQualOptPos" style="color: #fff;">Callback destination</label><input type="text" class="V3InputStyle" name="NixxisQualOptPos" id="txtNixxisQualOptPos" value=""/>';
 		
 		crQualPanel.OptionSpace.appendChild(elInput);
 
