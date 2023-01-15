@@ -519,6 +519,17 @@ function voicestatus_clicked(sender)
 
 		$('voicestatus_' + sender.ContactInfo.Id).style = 'background-color: #00cffd;';
 		sender.ContactInfo.isInUse = true;
+
+		if(sender.ContactInfo.ScriptUrl)
+	{
+		$('NixxisAgent').src = sender.ContactInfo.ScriptUrl;
+		$('NixxisAgent').style.display ='inline';
+	}
+	else
+	{
+		$('NixxisAgent').src = "about:blank";
+		$('NixxisAgent').style.display ='none';
+	}
 	}
 }
 function nixxislink_ContactRemoved(contactInfo)

@@ -537,7 +537,7 @@ var crNewCallDialog =
 	},
 	ButtonClose : function()
 	{
-		debugger;
+		// debugger;
 		
 		removeElementClass($('dial-pad'), 'active');
 		removeElementClass($('backdrop'), 'active');
