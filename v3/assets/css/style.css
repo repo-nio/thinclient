@@ -674,8 +674,44 @@ body {
   {
     border: 1px solid #00cffd;
   }
+
   .V3InputStyle:focus {
       background: #4F4F4F;
       border: 1px solid rgb(229 229 231);
       color: rgb(229 229 231);
+  }
+
+  .ManualDialHistoryListDiv
+  {
+    max-width: 230px;
+    background: #4F4F4F;
+    min-height: 170px;    
+    position: inherit;
+    z-index: 9;
+    margin: -197px 0px 0px 2px;
+
+    display: flex;
+    justify-content: flex-end;
+    flex-direction: column;
+  }
+
+  .ManualDialHistoryItemDiv
+  {
+    background: #676767;
+    border: 1px;
+    margin: 1px;
+    border-radius: 3px;
+  }
+
+  .ManualDialHistoryItemDiv:hover
+  {
+    background: #00cffd;
+    color: white;
+  }
+
+  .ManualDialHistoryItemSpan
+  {    
+    color: #dad7d7;
+    font-size: 12px;
+    padding-left: 10px;
   }
