@@ -311,6 +311,8 @@ var crNewCallDialog =
 	{
 		// debugger;
 
+		HideAllDialogModals();
+
 		crNewCallDialog.crLink = link;
 		crNewCallDialog.crCmd = cmd;
 		crNewCallDialog.crClientLink = clientlink;

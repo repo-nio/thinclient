@@ -303,15 +303,20 @@ var crQualPanel =
 	},
 	Show : function (tree)
 	{
+		HideAllDialogModals();
+
 		if (crQualPanel.Form) crQualPanel.crInt_OpenWindow = false;
 		else crQualPanel.crInt_OpenWindow = true;
 
 		if(crQualPanel.crInt_OpenWindow) crQualPanel.Init(tree);
-
 		
 		if (arguments.length > 0) crQualPanel.ShowTree(arguments[0], $('modalSelectqualworkspace'));
 
 		$('btnSelectqualOk').style.display = "none";
+
+		addElementClass($('Select-qual'), 'active');
+		addElementClass($('Selectqual'), 'active');
+		addElementClass($('backdrop'), 'active');
 	},
 	CreateBranch : function(branch, level)
 	{
@@ -698,6 +703,8 @@ var crSearchModePanel =
 	{
 		// debugger;
 
+		HideAllDialogModals();
+
 		if (crSearchModePanel.Form)
 			crSearchModePanel.crInt_OpenWindow = false;
 		else
@@ -707,6 +714,9 @@ var crSearchModePanel =
 			crSearchModePanel.Init(tree);
 		
 		if (arguments.length > 0) crSearchModePanel.ShowTree(arguments[0], $('modalSearchworkspace'));
+
+		addElementClass($('search-mode'), 'active');
+		addElementClass($('backdrop'), 'active');
 
 		$('btnSearchOk').style.display = "none";
 	},
@@ -917,6 +927,8 @@ var crPauseCodePanel =
 	},
 	Show : function (list) 
 	{
+		HideAllDialogModals();
+
 		crPauseCodePanel.CurrentSelected = null;
 
 		if (crPauseCodePanel.Form)
@@ -1138,6 +1150,8 @@ var crTeamSelectPanel =
 
 	Show : function (list) 
 	{
+		HideAllDialogModals();
+
 		if (crTeamSelectPanel.Form)
 			crTeamSelectPanel.crInt_OpenWindow = false;
 		else
@@ -1152,6 +1166,10 @@ var crTeamSelectPanel =
 			 $('btnTeamOk').style.display = "inline";
 		}
 		else $('btnTeamOk').style.display = "none";
+
+		addElementClass($('team'), 'active');
+		// addElementClass($('TeamSelection'), 'active');
+		addElementClass($('backdrop'), 'active');
 	},
 
 	CreateList : function(list)
@@ -1390,6 +1408,8 @@ var crAgentLogout =
 
 	Show : function () 
 	{
+		HideAllDialogModals();
+
 		if(crAgentLogout.Form == null) crAgentLogout.Init();
 		
 		addElementClass($('backdrop'), 'active');
@@ -1519,6 +1539,8 @@ var crAgentReloadWarning =
 
 	Show : function () 
 	{
+		HideAllDialogModals();
+
 		if(crAgentReloadWarning.Form == null) 
 		{
 			crAgentReloadWarning.Init();

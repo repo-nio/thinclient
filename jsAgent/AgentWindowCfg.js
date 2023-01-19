@@ -2045,3 +2045,34 @@ function btnMiniMode()
 
 	crAgentLogout.Show();
 }
+
+function HideAllDialogModals()
+{
+	debugger;
+	// Manual Dial
+	if($('dial-pad')) removeElementClass($('dial-pad'), 'active');
+	if($('VoiceNewCall')) removeElementClass($('VoiceNewCall'), 'active');
+
+	// search mode
+	if($('search-mode')) removeElementClass($('search-mode'), 'active');
+
+	// team selection 
+	if($('team')) removeElementClass($('team'), 'active');
+	if($('TeamSelection')) removeElementClass($('TeamSelection'), 'active');
+
+	// Agent Logout
+	if($('AgentLogout')) removeElementClass($('AgentLogout'), 'active');
+	if($('modalAgentLogout')) removeElementClass($('modalAgentLogout'), 'active');
+
+	// Agent Reload Warning
+	if($('modalAgentReloadWarning')) removeElementClass($('modalAgentReloadWarning'), 'active');
+
+	// Select Quanlification
+	if($('Select-qual')) removeElementClass($('Select-qual'), 'active');
+	if($('Selectqual')) removeElementClass($('Selectqual'), 'active');
+
+	// Break Reason
+	if($('break-reason')) removeElementClass($('break-reason'), 'active');
+
+	if($('backdrop')) removeElementClass($('backdrop'), 'active');
+}
