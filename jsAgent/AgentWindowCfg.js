@@ -336,7 +336,7 @@ function PropertyGridHeight()
 
 function nixxislink_ConactAdded(contactInfo)
 {
-	debugger;
+	// debugger;
 
 	if(_CurrentContacts)
 	{
@@ -400,7 +400,7 @@ function nixxislink_ConactAdded(contactInfo)
 		$('InfoContactTo_'+ contactInfo.Id).textContent = contactInfo.To;
 	}
 	
-	// debugger;
+	debugger;
 
 	// NewContact(contactInfo);
 	
@@ -409,16 +409,7 @@ function nixxislink_ConactAdded(contactInfo)
 
 	$('contactViewerObject').style.display = "none";
 	
-	if(contactInfo.ScriptUrl)
-	{
-		$('NixxisAgent').src = contactInfo.ScriptUrl;
-		$('NixxisAgent').style.display ='inline';
-	}
-	else
-	{
-		$('NixxisAgent').src = "about:blank";
-		$('NixxisAgent').style.display ='none';
-	}
+	DisplayScriptURLs(contactInfo.ScriptUrl);	
 
 	$("AgentLogout").disabled = true;
 	$("SearchMode").disabled = true;
@@ -520,16 +511,7 @@ function voicestatus_clicked(sender)
 		$('voicestatus_' + sender.ContactInfo.Id).style = 'background-color: #00cffd;';
 		sender.ContactInfo.isInUse = true;
 
-		if(sender.ContactInfo.ScriptUrl)
-	{
-		$('NixxisAgent').src = sender.ContactInfo.ScriptUrl;
-		$('NixxisAgent').style.display ='inline';
-	}
-	else
-	{
-		$('NixxisAgent').src = "about:blank";
-		$('NixxisAgent').style.display ='none';
-	}
+		DisplayScriptURLs(sender.ContactInfo.ScriptUrl);
 	}
 }
 function nixxislink_ContactRemoved(contactInfo)
@@ -942,24 +924,19 @@ function RemoveContact(contactInfo)
 		
 		_CurrentContacts[_CurrentContacts.length - 1].isInUse = true;
 
-		// if(_CurrentContacts[_CurrentContacts.length - 1].ScriptUrl)
-		// {
-			$('NixxisAgent').src = _CurrentContacts[_CurrentContacts.length - 1].ScriptUrl;
-			$('NixxisAgent').style.display ='inline';	
-		// }
-		// else
-		// {
-		// 	$('NixxisAgent').src = "about:blank";
-		// 	$('NixxisAgent').style.display ='none';	
-		// }
+		DisplayScriptURLs( _CurrentContacts[_CurrentContacts.length - 1].ScriptUrl);
+		// $('NixxisAgent').src = _CurrentContacts[_CurrentContacts.length - 1].ScriptUrl;
+		// $('NixxisAgent').style.display ='inline';
 	}
 	else
 	{
 		_CurrentContacts = [];
 		$('contactViewerObject').style.display = "inline";
+		$('masterTab').style.display ='none';
+		$('masterTab').innerHTML = '';
 
-		$('NixxisAgent').src = "about:blank";
-		$('NixxisAgent').style.display ='none';
+		// $('NixxisAgent').src = "about:blank";
+		// $('NixxisAgent').style.display ='none';
 
 		// removeElementClass($('VoiceToolStrip'),'active');
 		ShowHideVoiceToolStripIcons(false);
@@ -2048,7 +2025,7 @@ function btnMiniMode()
 
 function HideAllDialogModals()
 {
-	debugger;
+	// debugger;
 	// Manual Dial
 	if($('dial-pad')) removeElementClass($('dial-pad'), 'active');
 	if($('VoiceNewCall')) removeElementClass($('VoiceNewCall'), 'active');
@@ -2075,4 +2052,125 @@ function HideAllDialogModals()
 	if($('break-reason')) removeElementClass($('break-reason'), 'active');
 
 	if($('backdrop')) removeElementClass($('backdrop'), 'active');
+}
+
+function DisplayScriptURLs(scriptURLLink)
+{
+	// debugger;
+	var vals = scriptURLLink.split('|');
+	$('masterTab').style.display ='block';
+	$('masterTab').innerHTML = '';
+	$('contactViewerObject').style.display = "none";
+
+	if(vals !=null && vals.length > 0)
+	{
+		// "bin://Nixxis.Client.Agent.TabbedBrowser, NixxisAgentControl"
+		if(vals[0] !=null && vals[0]?.includes('TabbedBrowser'))
+		{
+			var divTagBox = document.createElement('div');
+			divTagBox.className = "tabBox";
+			var ulTagBox = document.createElement('ul');
+
+			var divTagURLBox = document.createElement('div');
+			divTagURLBox.className = "tabCntBox";			
+
+			for(var j = 1; j < vals.length; j++)
+			{
+				var liTagBox = document.createElement('li');
+
+				var spanTagBox = document.createElement('span');
+				if(j == 1) spanTagBox.className = 'active';
+				else spanTagBox.className = '';
+
+				spanTagBox.id = 'spanTagBox' + j;
+				spanTagBox.onclick = liTagBoxSelect_OnClick;
+				spanTagBox.innerHTML = vals[j];
+
+				liTagBox.appendChild(spanTagBox);
+				ulTagBox.appendChild(liTagBox);
+
+				var childdivTagURLBox = document.createElement('div');
+				childdivTagURLBox.id = 'childdivTagURLBox' + j;
+				childdivTagURLBox.className = "tabCnt";
+				if(j == 1) childdivTagURLBox.style.display = 'block';
+				else childdivTagURLBox.style.display = 'none';
+
+				var childIframeTagURLBox = GetNewIframe();
+
+				childIframeTagURLBox.setAttribute("src",vals[j]);
+				// childIframeTagURLBox.src = vals[j];
+
+				childdivTagURLBox.appendChild(childIframeTagURLBox);
+				divTagURLBox.appendChild(childdivTagURLBox);
+			}
+
+			divTagBox.appendChild(ulTagBox);
+			$('masterTab').appendChild(divTagBox);
+			$('masterTab').appendChild(divTagURLBox);
+
+			var divMDSpanTag = document.createElement('span');
+			divMDSpanTag.className = "ManualDialHistoryItemSpan";
+			if(history[i] !=null && history[i] != '') divMDSpanTag.innerHTML = history[i];
+
+			divMDTag.appendChild(divMDSpanTag);
+
+			$('manualDialHistoryListDiv').appendChild(divMDTag);
+		}
+		else
+		{
+			var childIframe = GetNewIframe();
+			childIframe.id = 'NixxisAgent';
+			$('masterTab').appendChild(childIframe);
+
+			if(scriptURLLink)
+			{
+				$('NixxisAgent').src = scriptURLLink;
+				$('NixxisAgent').style.display ='inline';
+			}
+			else
+			{
+				$('NixxisAgent').src = "about:blank";
+				$('NixxisAgent').style.display ='none';
+			}
+		}
+	}
+}
+
+function liTagBoxSelect_OnClick(sender)
+{
+	// debugger;	
+	const spanList = $('masterTab').getElementsByTagName("span");
+	const divList = $('masterTab').getElementsByTagName("div");
+
+	if(spanList !=null && spanList.length > 0)
+	{
+		for(var j = 0; j < spanList.length; j++)
+			spanList[j].className = '';
+	}
+
+	if(divList !=null && divList.length > 0)
+	{
+		for(var j = 0; j < divList.length; j++)
+		{
+			if(divList[j].id?.includes('childdivTagURLBox')) divList[j].style.display = 'none';
+		}
+	}
+	
+	var idNo = sender.currentTarget.id?.substring('spanTagBox'.length, sender.currentTarget.id.length);
+
+	$('spanTagBox'+idNo).className = 'active';
+	$('childdivTagURLBox'+idNo).style.display = 'block';
+}
+
+function GetNewIframe()
+{
+	var childIframeTagURLBox = document.createElement('iframe');
+	childIframeTagURLBox.allowtransparency = 'true';
+
+	childIframeTagURLBox.frameborder='0';
+	childIframeTagURLBox.height = '100%';
+	childIframeTagURLBox.width = '100%';
+	childIframeTagURLBox.style="border: 0px;";
+
+	return childIframeTagURLBox;
 }

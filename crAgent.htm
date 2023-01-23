@@ -140,11 +140,12 @@
   <body onload="javascript: initInstance();" onunload="javascript: exitInstance();">
     <div id="app">
       <div class="content">
-        <iframe src="about:blank" style="display:none;" id="NixxisAgent"
-                sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-pointer-lock allow-top-navigation"
-                frameborder="0" allowtransparency="true" height="100%" width="100%" >
-        </iframe>
-
+        <div class="masterTab" id="masterTab" style="display:none;">
+          <!-- <iframe src="about:blank" style="display:none;" id="NixxisAgent"
+                  sandbox="allow-same-origin allow-scripts allow-popups allow-forms allow-pointer-lock allow-top-navigation"
+                  frameborder="0" allowtransparency="true" height="100%" width="100%" >
+          </iframe> -->
+        </div>
                 <!-- frameborder="0" scrolling="no" allowtransparency="true" 
                 style="display:none; background-color:Transparent;" -->
         <object data="./embed.html" type="text/html" id="contactViewerObject"></object>

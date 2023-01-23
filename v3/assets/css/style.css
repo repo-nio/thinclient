@@ -715,3 +715,13 @@ body {
     font-size: 12px;
     padding-left: 10px;
   }
+
+
+.masterTab { width: 100%; float: left; height: 100%;}
+.masterTab .tabBox { width: 100%; float: left; background: transparent;}
+.masterTab .tabBox ul { width: 100%; float: left; list-style: none; margin: 0; padding: 0;}
+.masterTab .tabBox ul li { float: left; margin: 0; padding: 0;}
+.masterTab .tabBox ul li span  { float: left; padding: 10px; background: #404040; color: #fff;}
+.masterTab .tabBox ul li span.active  { background: #00cffd; color: #000;}
+.masterTab .tabCntBox { width: 100%;  height: calc(100% - 40px); display: flex; padding: 10px; background: #222;}
+.masterTab .tabCntBox .tabCnt { width: 100%; display: none; background: #fff;}
