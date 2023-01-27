@@ -126,7 +126,7 @@ body {
 }
 
 .footer {
-  border-top: 2px solid silver;
+  border: 2px solid silver;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -280,17 +280,17 @@ body {
 }
 
 .footer .column .view.highlight {
-  margin: 3px;
+  margin: 1px;
   border: 3px solid #FFA524;
   border-radius: 5px;
-  padding: 0px;
+  height: -webkit-fill-available;
 }
 
 .footer .column .view.highlightRed {
-  margin: 3px;
+  margin: 1px;
   border: 3px solid red;
   border-radius: 5px;
-  padding: 0px;
+  height: -webkit-fill-available;
 }
 
 .footer #bottom-right .view .row {
