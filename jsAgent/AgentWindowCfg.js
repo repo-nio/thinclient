@@ -111,7 +111,7 @@ function ClientConnect()
 	crLoadingScreen.Visible(false);
 
 	window.localStorage.setItem("NixxisAgentLoginUser", ClientLink.UserName + ";"+ ClientLink.Extension);
-	debugger;
+	// debugger;
 	window.localStorage.setItem("NixxisAgentLoginUser_History", ClientLink.UserAccount);
 	window.localStorage.setItem("NixxisAgentLoginUserExtension_History", ClientLink.Extension);
 	
@@ -414,6 +414,7 @@ function nixxislink_ConactAdded(contactInfo)
 	$("AgentLogout").disabled = true;
 	$("SearchMode").disabled = true;
 }
+
 function addVoiceStatus(contactInfo)
 {
 
@@ -469,6 +470,7 @@ function addVoiceStatus(contactInfo)
 	// $('voicestatus_' + contactInfo.Id).ContactInfo = contactInfo;
 	// $('voicestatus_' + contactInfo.Id).onclick = function(){voicestatus_clicked(this);}
 }
+
 function setVoiceDisplayStatus()
 {
 	addElementClass($('voiceStatusInfoParent'), 'statusparent');
@@ -494,6 +496,7 @@ function setVoiceDisplayStatus()
 		$('voicestatus_'+_CurrentContacts[_CurrentContacts.length - 1].Id).scrollIntoView(false);
 	}
 }
+
 function voicestatus_clicked(sender)
 {
 	debugger;
@@ -514,6 +517,7 @@ function voicestatus_clicked(sender)
 		DisplayScriptURLs(sender.ContactInfo.ScriptUrl);
 	}
 }
+
 function nixxislink_ContactRemoved(contactInfo)
 {
 	debugger;
@@ -2104,17 +2108,10 @@ function DisplayScriptURLs(scriptURLLink)
 				divTagURLBox.appendChild(childdivTagURLBox);
 			}
 
+			debugger;
 			divTagBox.appendChild(ulTagBox);
 			$('masterTab').appendChild(divTagBox);
 			$('masterTab').appendChild(divTagURLBox);
-
-			var divMDSpanTag = document.createElement('span');
-			divMDSpanTag.className = "ManualDialHistoryItemSpan";
-			if(history[i] !=null && history[i] != '') divMDSpanTag.innerHTML = history[i];
-
-			divMDTag.appendChild(divMDSpanTag);
-
-			$('manualDialHistoryListDiv').appendChild(divMDTag);
 		}
 		else
 		{
