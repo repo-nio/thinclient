@@ -337,7 +337,6 @@ var crNewCallDialog =
 		}
 
 		$('manualDialHistoryListDiv').style.display = "none";
-		
 		$("MCNum").focus();		
 	},
 	Clear : function()
@@ -487,7 +486,7 @@ var crNewCallDialog =
 		addElementClass($('dial-pad'), 'active');
 		addElementClass($('backdrop'), 'active');
 	    
-		oninput="handleValueChange()"
+		// oninput="handleValueChange()"
 
 		$('MCNum').addEventListener('input', crNewCallDialog.Input_Changed);
 	    this.setStatus(CrResource.newContactForm.statusEnterNumber);		
@@ -525,7 +524,8 @@ var crNewCallDialog =
 	{
 		removeElementClass($('dial-pad'), 'active');
 		removeElementClass($('backdrop'), 'active');
-
+		if($('VoiceNewCall')) removeElementClass($('VoiceNewCall'), 'active');
+		
 	    if (!crNewCallDialog.crClientLink) return;
 	
 		// debugger;
