@@ -160,7 +160,7 @@ body {
 #AgentToolStrip .btn-1 img, #VoiceToolStrip .btn-1 img {
   display: block;
   margin: 0 auto;
-  width: 100%;
+  /* width: 100%; */
 }
 
 
@@ -280,10 +280,10 @@ body {
 }
 
 .footer .column .view.highlight {
-  margin: 1px;
+  /* margin: 3px; */
   border: 3px solid #FFA524;
   border-radius: 5px;
-  height: -webkit-fill-available;
+  height: 135px;
 }
 
 .footer .column .view.highlightRed {
