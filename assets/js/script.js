@@ -1,13 +1,13 @@
 (function ($) {
   const backdrop = $('.backdrop');
 
-  backdrop.on('click', () => {
-    $('.modal.active').removeClass('active');
-    backdrop.removeClass('active');
+  // backdrop.on('click', () => {
+  //   $('.modal.active').removeClass('active');
+  //   backdrop.removeClass('active');
 
-    let btnManualDial = document.getElementById('VoiceNewCall');
-    removeElementClass(btnManualDial, 'active');
-  });
+  //   let btnManualDial = document.getElementById('VoiceNewCall');
+  //   removeElementClass(btnManualDial, 'active');
+  // });
 
   $(".modal [data-close]").on('click', (ev) => {
     $(ev.currentTarget).closest('.modal').removeClass('active');
