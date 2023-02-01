@@ -3,7 +3,6 @@ var _NoTabPagePanel;
 var _MsgCount=-1;
 var _Msg = ["Hello. I need some flight information please.", "Hello. I want to book a flight."];
 var _Test_ChatId = ""; 
-var _CurrentContacts = [];
 
 function GetChatMsg()
 {
@@ -78,8 +77,7 @@ function DisposeClient()
 		// tabContacts.txParent[txTabControlPart.selector] = null;
 		// tabContacts.txParent[txTabControlPart.page] = null;
 		// _NoTabPagePanel = null;
-		_CurrentContacts = null;
-		
+				
 	    ClientLink.ContactAdded.Remove(this, nixxislink_ConactAdded);
 	    ClientLink.ContactStateChanged.Remove(this, nixxislink_ContactStateChanged);
 		ClientLink.ContactRemoved.Remove(this, nixxislink_ContactRemoved);
@@ -336,18 +334,9 @@ function PropertyGridHeight()
 
 function nixxislink_ConactAdded(contactInfo)
 {
-	debugger;
-
-	// if(_CurrentContacts)
-	// {
-	// 	for(var i = 0; i < _CurrentContacts.length; i++)
-	// 	{
-	// 		_CurrentContacts[i].isInUse = false;
-	// 	}
-	// }
+	debugger;	
 
 	contactInfo.isInUse = true;
-	// _CurrentContacts.push(contactInfo);
 
 	DebugLog("nixxislink_ConactAdded. Add contact " + contactInfo.Id);
 	contactInfo.__AgentAction = "S";
@@ -578,7 +567,6 @@ function nixxislink_ContactRemoved(contactInfo)
 	debugger;
 
 	defaultSetAgentInfoLabels();
-	// _CurrentContacts.pop(contactInfo);
     DebugLog("nixxislink_ContactRemoved. Remove contact " + contactInfo.Id);
 	contactInfo.__AgentAction = "E";
 	//contactInfo.__Panel.dispose();
@@ -1012,7 +1000,6 @@ function RemoveContact(contactInfo)
 	}
 	else
 	{
-		_CurrentContacts = [];
 		$('contactViewerObject').style.display = "inline";
 		$('masterTab').style.display ='none';
 		$('masterTab').innerHTML = '';
