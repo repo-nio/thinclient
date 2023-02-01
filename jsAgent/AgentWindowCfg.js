@@ -336,18 +336,18 @@ function PropertyGridHeight()
 
 function nixxislink_ConactAdded(contactInfo)
 {
-	// debugger;
+	debugger;
 
-	if(_CurrentContacts)
-	{
-		for(var i = 0; i < _CurrentContacts.length; i++)
-		{
-			_CurrentContacts[i].isInUse = false;
-		}
-	}
+	// if(_CurrentContacts)
+	// {
+	// 	for(var i = 0; i < _CurrentContacts.length; i++)
+	// 	{
+	// 		_CurrentContacts[i].isInUse = false;
+	// 	}
+	// }
 
 	contactInfo.isInUse = true;
-	_CurrentContacts.push(contactInfo);
+	// _CurrentContacts.push(contactInfo);
 
 	DebugLog("nixxislink_ConactAdded. Add contact " + contactInfo.Id);
 	contactInfo.__AgentAction = "S";
@@ -400,7 +400,7 @@ function nixxislink_ConactAdded(contactInfo)
 		$('InfoContactTo_'+ contactInfo.Id).textContent = contactInfo.To;
 	}
 	
-	debugger;
+	// debugger;
 
 	// NewContact(contactInfo);
 	
@@ -412,7 +412,7 @@ function nixxislink_ConactAdded(contactInfo)
 	DisplayScriptURLs(contactInfo.ScriptUrl);	
 
 	$("AgentLogout").disabled = true;
-	$("SearchMode").disabled = true;
+	$("SearchMode").disabled = true;	
 }
 
 function addVoiceStatus(contactInfo)
@@ -473,27 +473,72 @@ function addVoiceStatus(contactInfo)
 
 function setVoiceDisplayStatus()
 {
+	debugger;
 	addElementClass($('voiceStatusInfoParent'), 'statusparent');
 
-	if(_CurrentContacts.length == 1)
-	{
-		removeElementClass($('voicestatus_'+_CurrentContacts[0].Id), 'small');
-		removeElementClass($('voiceULControl_'+_CurrentContacts[0].Id), 'ULsmall');
-		
-		$('voicestatus_'+_CurrentContacts[0].Id).style = 'background-color: #00cffd; justify-content: center !important;';
-	}
-	else if(_CurrentContacts.length > 1)
-	{
-		for(var i = 0; i < _CurrentContacts.length; i++)
-		{
-			addElementClass($('voicestatus_'+_CurrentContacts[i].Id), 'small');
-			addElementClass($('voiceULControl_'+_CurrentContacts[i].Id), 'ULsmall');
+	var contctlst = ClientLink.Contacts.GetAll();
+	var contctlstKeys =  Object.keys(contctlst);
 
-			$('voicestatus_'+_CurrentContacts[i].Id).style = 'background-color: #676767;';
+	if(contctlstKeys.length == 1)
+	{
+		if(contctlstKeys[0].indexOf('_') == 0) contctlstKeys[0] = contctlstKeys[0].slice(1,contctlstKeys[0].length);
+
+		var conct = ClientLink.Contacts.Get(contctlstKeys[0]);
+		SetQualificationIconShowHideBasedONActivity(conct);
+
+		removeElementClass($('voicestatus_'+conct.Id), 'small');
+		removeElementClass($('voiceULControl_'+conct.Id), 'ULsmall');
+		$('InfoContactState_'+ conct.Id).innerHTML = $D(GetContactState(conct.State));
+
+		$('voicestatus_'+conct.Id).style = 'background-color: #00cffd; justify-content: center !important;';
+	}
+	else if(contctlstKeys.length > 1)
+	{
+		for(var i = 0; i < contctlstKeys.length; i++)
+		{
+			if(contctlstKeys[i].indexOf('_') == 0) contctlstKeys[i] = contctlstKeys[i].slice(1,contctlstKeys[i].length);
+
+			var conct = ClientLink.Contacts.Get(contctlstKeys[i]);			
+
+			addElementClass($('voicestatus_'+conct.Id), 'small');
+			addElementClass($('voiceULControl_'+conct.Id), 'ULsmall');
+
+			$('InfoContactState_'+ conct.Id).innerHTML = $D(GetContactState(conct.State));
+			$('voicestatus_'+ conct.Id).style = 'background-color: #676767;';
 		}
 		
-		$('voicestatus_'+_CurrentContacts[_CurrentContacts.length - 1].Id).style = 'background-color: #00cffd;';
-		$('voicestatus_'+_CurrentContacts[_CurrentContacts.length - 1].Id).scrollIntoView(false);
+		var conct = null;
+		if(ClientLink.Contacts.ActiveContactId)
+		{
+			conct = ClientLink.Contacts.Get(ClientLink.Contacts.ActiveContactId);
+		}
+		else
+		{
+			var icount = contctlstKeys.length - 1;
+			if(contctlstKeys[icount].indexOf('_') == 0) contctlstKeys[icount] = contctlstKeys[icount].slice(1,contctlstKeys[icount].length);
+			conct = ClientLink.Contacts.Get(contctlstKeys[icount]);
+		}
+
+		SetQualificationIconShowHideBasedONActivity(conct);
+		$('voicestatus_'+ conct.Id).style = 'background-color: #00cffd;';
+		$('voicestatus_'+ conct.Id).scrollIntoView(false);
+	}
+}
+
+function SetQualificationIconShowHideBasedONActivity(currentContact)
+{
+	var activitylist = null;
+	try{ activitylist = currentContact.Activity.split('.'); } catch(e) {activitylist = [this.Activity]; }
+
+	if(activitylist != null && activitylist.length > 0 && activitylist[0] != '')
+	{
+		$('Selectqual').disabled = false;
+		// addElementClass($('Selectqual'), 'active');
+	}
+	else
+	{
+		$('Selectqual').disabled = true;
+		// removeElementClass($('Selectqual'), 'active');
 	}
 }
 
@@ -505,13 +550,23 @@ function voicestatus_clicked(sender)
 		ClientLink.SetActiveContact(sender.ContactInfo);
 		ClientLink.Contacts.Get(sender.ContactInfo.Id).__ContactUpdate = false;
 
-		for(var i = 0; i < _CurrentContacts.length; i++)
+		var contctlst = ClientLink.Contacts.GetAll();
+		var contctlstKeys =  Object.keys(contctlst);		
+
+		for(var i = 0; i < contctlstKeys.length; i++)
 		{
-			_CurrentContacts[i].isInUse = false;
-			$('voicestatus_' + _CurrentContacts[i].Id).style = 'background-color: #676767;';
+			if(contctlstKeys[i].indexOf('_') == 0) contctlstKeys[i] = contctlstKeys[i].slice(1,contctlstKeys[i].length);
+
+			var conct = ClientLink.Contacts.Get(contctlstKeys[i]);
+
+			conct.isInUse = false;
+			$('voicestatus_' + conct.Id).style = 'background-color: #676767;';
+			$('InfoContactState_'+ conct.Id).innerHTML = $D(GetContactState(conct.State));
 		}
 
+		SetQualificationIconShowHideBasedONActivity(sender.ContactInfo);
 		$('voicestatus_' + sender.ContactInfo.Id).style = 'background-color: #00cffd;';
+		$('voicestatus_'+ sender.ContactInfo.Id).scrollIntoView(false);
 		sender.ContactInfo.isInUse = true;
 
 		DisplayScriptURLs(sender.ContactInfo.ScriptUrl);
@@ -523,7 +578,7 @@ function nixxislink_ContactRemoved(contactInfo)
 	debugger;
 
 	defaultSetAgentInfoLabels();
-	_CurrentContacts.pop(contactInfo);
+	// _CurrentContacts.pop(contactInfo);
     DebugLog("nixxislink_ContactRemoved. Remove contact " + contactInfo.Id);
 	contactInfo.__AgentAction = "E";
 	//contactInfo.__Panel.dispose();
@@ -539,49 +594,56 @@ function nixxislink_ContactRemoved(contactInfo)
 }
 function nixxislink_ContactStateChanged(contactInfo)
 {
+	// debugger;
     DebugLog("nixxislink_ContactStateChanged. contactId " + contactInfo.Id + ". State " + contactInfo.State + ". Media " + contactInfo.Media);
-	                if(contactInfo.State == 'A')
-						contactInfo.__AgentAction = "S";
-	                if(contactInfo.State == 'P')
-						contactInfo.__AgentAction = "P";						
-	                if(contactInfo.State == 'C')
-						contactInfo.__AgentAction = "O";
-					if(contactInfo.State == 'D')
-						contactInfo.__AgentAction = "W";
-						
-					if ((contactInfo.State == 'A' && !ClientLink.Contacts.ActiveContactId) || contactInfo.State == 'C' || contactInfo.State == 'P') {
-						ClientLink.SetActiveContact(contactInfo);
-						if (contactInfo.Media == "V")
-							tabContacts.SelectTabPage(contactInfo.__TabId);
-						
-						try {
-						//document.getElementById('Application').OnContactConnected(contactInfo);
-						} 
-						catch (e) {
-							;
-						}
-					}
-					else 
-						if (contactInfo.State == 'D') {
-							try 
-							{
-								if (contactInfo.Media == "M") 
-								
-								{
-									DebugLog("nixxislink_ContactStateChanged. contactId " + contactInfo.Id + ". Disable edit mail.");
-									contactInfo.__Panel.SetDisableReply();
-								}
-							//document.getElementById('Application').OnContactDisconnected(contactInfo);
-							} 
-							catch (e) {
-								;
-							}
-							
-							//ClientLink.TerminateContact(contactInfo);
-						}
-					////debugger;
-					SetTabButtonClass($(toolboxTabControlNixxisRenderManager.txTab_TabButtonItem + contactInfo.__TabId), contactInfo.Id);
-					SetAgentInfoStat();						
+	
+	if(contactInfo.State == 'A')
+		contactInfo.__AgentAction = "S";
+	if(contactInfo.State == 'P')
+		contactInfo.__AgentAction = "P";
+	if(contactInfo.State == 'C')
+		contactInfo.__AgentAction = "O";
+	if(contactInfo.State == 'D')
+		contactInfo.__AgentAction = "W";
+		
+	if ((contactInfo.State == 'A' && !ClientLink.Contacts.ActiveContactId) || contactInfo.State == 'C' || contactInfo.State == 'P') 
+	{
+		ClientLink.SetActiveContact(contactInfo);
+		if (contactInfo.Media == "V")
+			tabContacts.SelectTabPage(contactInfo.__TabId);
+		
+		try 
+		{
+			//document.getElementById('Application').OnContactConnected(contactInfo);
+		} 
+		catch (e) 
+		{
+			;
+		}
+	}
+	else if (contactInfo.State == 'D') 
+	{
+		try 
+		{
+			if (contactInfo.Media == "M") 
+			
+			{
+				DebugLog("nixxislink_ContactStateChanged. contactId " + contactInfo.Id + ". Disable edit mail.");
+				contactInfo.__Panel.SetDisableReply();
+			}
+		//document.getElementById('Application').OnContactDisconnected(contactInfo);
+		} 
+		catch (e) {
+			;
+		}
+		
+		//ClientLink.TerminateContact(contactInfo);
+	}
+	
+	SetTabButtonClass($(toolboxTabControlNixxisRenderManager.txTab_TabButtonItem + contactInfo.__TabId), contactInfo.Id);
+
+	debugger;
+	SetAgentInfoStat();
 }
 function nixxislink_ContactTopLabelChange(contactInfo, text)
 {
@@ -637,9 +699,16 @@ function nixxislink_AgentQueueState(state)
 		$("Info_QueueWaiting").innerHTML = state[1];
 	}
 
-	if(state[1] != null && state[1] != '' && state[1] != '0'
-		&& state[0] != null && state[0] != '' && state[0] != '0') addElementClass($("divAgentStatus"),'highlight');
-	else if(state[1] != null && state[1] != '' && state[1] != '0') addElementClass($("divAgentStatus"),'highlight');
+	if(state[1] != null && state[1] != '' && state[1] != '0' && state[0] != null && state[0] != '' && state[0] != '0') 
+	{
+		removeElementClass($("PriorityPickup"),'active');
+		addElementClass($("divAgentStatus"),'highlight');
+	}
+	else if(state[1] != null && state[1] != '' && state[1] != '0')
+	{
+		removeElementClass($("PriorityPickup"),'active');
+		addElementClass($("divAgentStatus"),'highlight');
+	}
 	else 
 	{
 		removeElementClass($("divAgentStatus"),'highlight');
@@ -693,6 +762,8 @@ function WaitFor_StateChanged(authorized, active)
 
 function VoiceHold_StateChanged(authorized, active)
 {
+	// debugger;
+	
 	DebugLog("VoiceHold_StateChanged. authorized:" + authorized + ". active:" + active );
 	if (!authorized) return;
 	if(active)
@@ -705,6 +776,8 @@ function VoiceHold_StateChanged(authorized, active)
         DebugLog("online");
 		ClientLink.Contacts.Get(ClientLink.Contacts.ActiveContactId).__AgentAction = "O";
     }
+
+	setVoiceDisplayStatus();
 }
 function VoiceRetrieve_StateChanged(authorized, active)
 {
@@ -810,7 +883,7 @@ function AgentStatePause()
 	removeElementClass($('WaitForCall'), 'active');
 	SetReadyBreakBasedOnAgentState('break');
 
-	if(_CurrentContacts != null && _CurrentContacts.length > 0) return;
+	if(ClientLink.Contacts.GetAllCount() > 0) return;
 
 	if(crPauseCodePanel !=null && crPauseCodePanel.CurrentSelected !=null && crPauseCodePanel.CurrentSelected.childNodes !=null
 		&& crPauseCodePanel.CurrentSelected.childNodes !='' && crPauseCodePanel.CurrentSelected.childNodes.length > 0)
@@ -848,7 +921,7 @@ function AgentStateWaiting()
 	removeElementClass($('Pause'), 'active');
 	SetReadyBreakBasedOnAgentState(AGENT_WAITING);
 
-	if(_CurrentContacts != null && _CurrentContacts.length > 0) return;
+	if(ClientLink.Contacts.GetAllCount() > 0) return;
 	
 	$("Info_AgentState").textContent = AGENT_WAITING;
 	startdatetime = new Date();
@@ -920,17 +993,22 @@ function RemoveContact(contactInfo)
 	// tabContacts.txTabPages.Clear(key)
 	// DebugLog("Tab removed:" + key);	
 
-	if(_CurrentContacts.length > 0) 
+	if(ClientLink.Contacts.GetAllCount() > 0) 
 	{
-		var newId = _CurrentContacts[_CurrentContacts.length - 1].Id;
+		var contctlst = ClientLink.Contacts.GetAll();
+		var contctlstKeys =  Object.keys(contctlst);
+
+		var icount = contctlstKeys.length - 1;
+		if(contctlstKeys[icount].indexOf('_') == 0) contctlstKeys[icount] = contctlstKeys[icount].slice(1,contctlstKeys[icount].length);
+		var conct = ClientLink.Contacts.Get(contctlstKeys[icount]);
+
+		var newId = conct.Id;
 		ClientLink.SetActiveContact(ClientLink.Contacts.Get(newId));
 		ClientLink.Contacts.Get(newId).__ContactUpdate = false;
 		
-		_CurrentContacts[_CurrentContacts.length - 1].isInUse = true;
+		conct.isInUse = true;
 
-		DisplayScriptURLs( _CurrentContacts[_CurrentContacts.length - 1].ScriptUrl);
-		// $('NixxisAgent').src = _CurrentContacts[_CurrentContacts.length - 1].ScriptUrl;
-		// $('NixxisAgent').style.display ='inline';
+		DisplayScriptURLs( conct.ScriptUrl);
 	}
 	else
 	{
@@ -2032,14 +2110,14 @@ function HideAllDialogModals()
 	// debugger;
 	// Manual Dial
 	if($('dial-pad')) removeElementClass($('dial-pad'), 'active');
-	if($('VoiceNewCall')) removeElementClass($('VoiceNewCall'), 'active');
+	// if($('VoiceNewCall')) removeElementClass($('VoiceNewCall'), 'active');
 
 	// search mode
 	if($('search-mode')) removeElementClass($('search-mode'), 'active');
 
 	// team selection 
 	if($('team')) removeElementClass($('team'), 'active');
-	if($('TeamSelection')) removeElementClass($('TeamSelection'), 'active');
+	// if($('TeamSelection')) removeElementClass($('TeamSelection'), 'active');
 
 	// Agent Logout
 	if($('AgentLogout')) removeElementClass($('AgentLogout'), 'active');
