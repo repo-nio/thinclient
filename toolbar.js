@@ -403,6 +403,16 @@ function ContactsList(link)
                 return internalList['_' + id];
             };
 
+	this.GetAll = function()
+			{
+				return internalList;
+			};
+	this.GetAllCount = function()
+			{
+				if(internalList == null) return 0;
+				else return Object.keys(internalList).length;
+			};
+
 	this.SetActiveContactId = function(contactId)
 		    {
 			    if(contactId != this.ActiveContactId)
