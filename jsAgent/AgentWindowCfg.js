@@ -228,7 +228,18 @@ function DisplayDateTimeElapsed()
 
 function setSessionDisconnectedMessage(msg)
 {
-	$("Info_QueueWaitingHeader").textContent  = msg;
+	// debugger;
+	var cleanedmsg = msg;
+	
+	if(msg)
+	{
+		var msgArr = msg.split(',');
+
+		if(msgArr && msgArr.length > 3) cleanedmsg = (msgArr[1] + ',' + msgArr[2]).formatString(msgArr.slice(3, msgArr.length));
+		else if(msgArr && msgArr.length > 2) cleanedmsg = msgArr[1].formatString(msgArr.slice(2, msgArr.length));
+	}
+
+	$("Info_QueueWaitingHeader").textContent  = cleanedmsg;
 	$("Info_QueueWaiting").textContent  = '';
 
 	$("Info_QueueHighPriorityHeader").textContent  = '';
@@ -244,6 +255,15 @@ function setSessionDisconnectedMessage(msg)
 
 	$("Info_AgentReadyVoiceIndication").style.display = "none";
 }
+
+String.prototype.formatString = function (args) 
+{
+	return this.replace(/{([0-9]+)}/g, function (match, index) 
+	{
+		// check if the argument is present
+		return typeof args[index] == 'undefined' ? match : args[index];
+	});
+};
 
 function defaultSetAgentInfoLabels()
 {
@@ -713,39 +733,7 @@ function WaitFor_StateChanged(authorized, active)
 	
 	if (!authorized) return;
 	
-	if(ClientLink.commands.WaitForCall.active)
-	{
-        DebugLog("Waiting Call");
-		AgentStateWaiting();
-	}
-	else if(ClientLink.commands.Pause.active)
-	{
-		DebugLog("Pause");
-		AgentStatePause();
-	}
-	else
-	{
-		// if(ClientLink.commands.WaitForMail.active)
-		// {
-	    //     DebugLog("Waiting Mail");
-		// 	AgentStateWaiting();
-		// }
-		// else
-		// {
-		// 	if(ClientLink.commands.WaitForChat.active)
-		// 	{
-		//         DebugLog("Waiting Chat");
-		// 		AgentStateWaiting();
-		// 	}
-		// 	else
-		// 	{
-		//         DebugLog("Pause");
-		// 		AgentStatePause();
-		// 	}
-		// }
-	}
-    
-	// SetAgentInfoStat();
+	RefreshLastAgentState();
 }
 
 function VoiceHold_StateChanged(authorized, active)
@@ -862,44 +850,10 @@ function tabContacts_OnDockChange(newDock, oldDock)
 	}
 }
 //--> < Function >
-function AgentStatePause()
-{	
-	// debugger;
-	
-	removeElementClass($('Info_AgentReadyVoiceIndication'), 'active');
-	addElementClass($('Pause'), 'active');
-	removeElementClass($('WaitForCall'), 'active');
-	SetReadyBreakBasedOnAgentState('break');
-
-	if(ClientLink.Contacts.GetAllCount() > 0) return;
-
-	if(crPauseCodePanel !=null && crPauseCodePanel.CurrentSelected !=null && crPauseCodePanel.CurrentSelected.childNodes !=null
-		&& crPauseCodePanel.CurrentSelected.childNodes !='' && crPauseCodePanel.CurrentSelected.childNodes.length > 0)
-	{
-		$("Info_AgentState").textContent = 'Break - ' + crPauseCodePanel.CurrentSelected.childNodes[1].textContent;
-	}
-	else
-		$("Info_AgentState").textContent = 'Break';
-	
-	startdatetime = new Date();
-		
-	// _NoTabPagePanel.setUrl("CrAgentPause.htm");	
-}
 
 const AGENT_WORKING = 'Working';
 const AGENT_WAITING = 'Waiting (V)';
 const AGENT_ONLINE = 'Online';
-
-function AgentStateWorking()
-{	
-	// debugger;
-
-	$("Info_AgentState").textContent = AGENT_WORKING;
-	startdatetime = new Date();
-	removeElementClass($('Info_AgentReadyVoiceIndication'), 'active');
-
-	// _NoTabPagePanel.setUrl("CrAgentPause.htm");
-}
 
 function AgentStateWaiting()
 {
@@ -909,25 +863,82 @@ function AgentStateWaiting()
 	removeElementClass($('Pause'), 'active');
 	SetReadyBreakBasedOnAgentState(AGENT_WAITING);
 
-	if(ClientLink.Contacts.GetAllCount() > 0) return;
-	
-	$("Info_AgentState").textContent = AGENT_WAITING;
-	startdatetime = new Date();
 	addElementClass($('Info_AgentReadyVoiceIndication'), 'active');
+}
+function AgentStatePause()
+{	
+	// debugger;
+	
+	removeElementClass($('Info_AgentReadyVoiceIndication'), 'active');
+	addElementClass($('Pause'), 'active');
+	removeElementClass($('WaitForCall'), 'active');
+	SetReadyBreakBasedOnAgentState('break');
 
-	// _NoTabPagePanel.setUrl("CrAgentWaiting.htm");	
+	if(crPauseCodePanel !=null && crPauseCodePanel.CurrentSelected !=null && crPauseCodePanel.CurrentSelected.childNodes !=null
+		&& crPauseCodePanel.CurrentSelected.childNodes !='' && crPauseCodePanel.CurrentSelected.childNodes.length > 0)
+	{
+		return 'Break - ' + crPauseCodePanel.CurrentSelected.childNodes[1].textContent;
+	}
+	else
+		return 'Break';
 }
 function AgentStateOnline(contactInfo)
 {
 	$("Info_AgentState").textContent = AGENT_ONLINE;
 	addElementClass($('Info_AgentReadyVoiceIndication'), 'active');
 
-	startdatetime = new Date();
+	// startdatetime = new Date();
+}
+function AgentStateWorking()
+{	
+	// debugger;
+
+	$("Info_AgentState").textContent = AGENT_WORKING;
+	// startdatetime = new Date();
+	removeElementClass($('Info_AgentReadyVoiceIndication'), 'active');
+}
+function RefreshLastAgentState()
+{
+	debugger;
+	var NewAgentState = $("Info_AgentState").textContent;
+
+	if(ClientLink.Contacts.GetAllCount() > 0) NewAgentState = AGENT_ONLINE;
+	else
+	{
+		if(ClientLink.commands.WaitForCall.active) 
+		{
+			AgentStateWaiting()
+			NewAgentState = AGENT_WAITING;
+		}
+		else if(ClientLink.commands.Pause.active) 
+		{
+			NewAgentState = AgentStatePause();
+		}
+		else
+		{
+
+		}
+	}
+
+	var m_LastAgentState = $("Info_AgentState").textContent;
+
+	if(NewAgentState != m_LastAgentState)
+	{
+		if(!m_LastAgentState.startsWith(NewAgentState)) m_LastAgentState = NewAgentState;
+		
+		SetLastAgentState(m_LastAgentState, new Date());
+	}
+}
+function SetLastAgentState(description, startTime)
+{
+	var m_LastAgentState = $("Info_AgentState").textContent;
+
+	if (m_LastAgentState != description) $("Info_AgentState").textContent = description;
+	if (startdatetime != startTime) startdatetime = startTime;
 }
 function SetReadyBreakBasedOnAgentState(state)
 {
-	debugger;
-
+	// debugger;
 	const url = new URL(window.location.href);
 	if(state == AGENT_WAITING) 
 	{
@@ -947,9 +958,6 @@ function CloseScript()
 }
 function NewContact(contactInfo)
 {
-	//var _TabId = contactInfo.Id;
-	debugger;
-
 	var _TabPage = tabContacts.txTabPages.GetNextFreeTab(contactInfo.Media);
 	if(!_TabPage)
 	{
@@ -966,20 +974,12 @@ function NewContact(contactInfo)
 	_TabPage.txUserData = contactInfo.ContentLink;
 	contactInfo.__TabId = _TabPage.txName;	
 	tabContacts.txTabPages.Visible(_TabPage, true);
-	//tabContacts.txTabPages.Visible(_TabPage, false);
 	
 	DebugLog("Tab added:" + contactInfo.__TabId);
 }
 function RemoveContact(contactInfo)
 {
-	debugger;	
-
-	////debugger;
-	// var key = contactInfo.__TabId;
-
-	//T tabContacts.txTabPages.Remove(contactInfo.Id);	
-	// tabContacts.txTabPages.Clear(key)
-	// DebugLog("Tab removed:" + key);	
+	debugger;
 
 	if(ClientLink.Contacts.GetAllCount() > 0) 
 	{
@@ -1003,10 +1003,7 @@ function RemoveContact(contactInfo)
 		$('contactViewerObject').style.display = "inline";
 		$('masterTab').style.display ='none';
 		$('masterTab').innerHTML = '';
-
-		// $('NixxisAgent').src = "about:blank";
-		// $('NixxisAgent').style.display ='none';
-
+		
 		// removeElementClass($('VoiceToolStrip'),'active');
 		ShowHideVoiceToolStripIcons(false);
 		// removeElementClass($('voiceStatusToolStrip'),'active');
@@ -1017,12 +1014,12 @@ function RemoveContact(contactInfo)
 		$('SearchMode').disabled = false;
 		$("AgentLogout").disabled = false;
 
-		if($('contactViewerObject').agentState == 'ready') AgentStateWaiting();
-		else AgentStatePause();
+		// if($('contactViewerObject').agentState == 'ready') AgentStateWaiting();
+		// else AgentStatePause();
+		RefreshLastAgentState();
 	}
 
 	removeElementClass($('CloseScript'),'active');
-	// WaitFor_StateChanged(true, true);
 }
 function ShowHideVoiceToolStripIcons(canDisplay)
 {
@@ -2095,6 +2092,9 @@ function btnMiniMode()
 function HideAllDialogModals()
 {
 	// debugger;
+
+	if($('backdrop') &&  $('backdrop').className?.includes('active')) return;
+
 	// Manual Dial
 	if($('dial-pad')) removeElementClass($('dial-pad'), 'active');
 	// if($('VoiceNewCall')) removeElementClass($('VoiceNewCall'), 'active');
