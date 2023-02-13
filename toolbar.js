@@ -141,6 +141,7 @@ function ContactInfo(media, id)
     this.Id = null;
 	this.Media = ' ';
 	this.State = ' ';
+	this.StateLastChangedDateTime = ' ';
 	this.From = null;
 	this.To = null;
 	this.UUI = null;
@@ -223,7 +224,10 @@ function ContactInfo(media, id)
                 else if(key == 'media')
                     this.Media = unescape(value);
                 else if(key == 'state')
+				{
                     this.State = unescape(value);
+					this.StateLastChangedDateTime = new Date();
+				}
                 else if(key == 'from')
                     this.From = unescape(value);
                 else if(key == 'to')
@@ -1009,7 +1013,7 @@ function NixxisClientLink(sessionId, baseLocation)
                                                 if(params[1] != contactInfo.State)
                                                 {
                                                     contactInfo.State = params[1];
-                                                    
+                                                    contactInfo.StateLastChangedDateTime = new Date(); 
                                                     if(contactInfo.State != 'X')
                                                     {
                                                         try
