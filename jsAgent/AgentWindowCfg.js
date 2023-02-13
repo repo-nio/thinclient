@@ -363,7 +363,7 @@ function nixxislink_ConactAdded(contactInfo)
 
 	addVoiceStatus(contactInfo);
 	setVoiceDisplayStatus();
-	DisplayContactActivityDateTimeElapsed(contactInfo.Id , null);
+	DisplayContactActivityDateTimeElapsed(contactInfo , null);
 
 	if (contactInfo.Media == "V") 
 	{
@@ -426,82 +426,289 @@ function nixxislink_ConactAdded(contactInfo)
 
 function addVoiceStatus(contactInfo)
 {
+	debugger;
+
+	// var elementToRemove = $('voiceStatusToolStripflexResizerTag');
+	// if(elementToRemove)
+	// {
+	// 	// var elementToRemoveFrom = document.getElementById('voiceStatusToolStrip');
+	// 	elementToRemove.remove();
+	// }
+
+	var chilrens = $('voiceStatusToolStrip').children;
+
+    if(chilrens)
+    {       
+        for(var i = 0; i < chilrens.length; i++)
+        {
+            var child = chilrens[i];
+            
+			if(child && child.className?.includes('active')) removeElementClass($(child.id),'active');
+        }
+    }
+
+	var childActiveCount = ClientLink.Contacts.GetAllCount();
+	var childActiveCountToConsider = (childActiveCount == 1);
+
+	if(!childActiveCountToConsider) ResizeFirstActiveContact(false);
 
 	var voiceDIV = document.createElement('div');
 	voiceDIV.id = 'voicestatus_' + contactInfo.Id;
-	voiceDIV.className = 'status';	
+	voiceDIV.className = 'status cardBoxLayer active';	
 
 	var _BODY = '';
 
-	// _BODY += '<div class="status" id= "voicestatus_' + contactInfo.Id + '">';
-	_BODY += '	<div>';
-	_BODY += '		<img src="./assets/icons/Agent_MediaType_Outbound_25.png" alt="icon" />';
-	_BODY += '	</div>';
+	_BODY += '	<div><img src="./assets/icons/Agent_MediaType_Outbound_25.png" alt="icon" /></div>';
 	
 	_BODY += '	<div>';
-	_BODY += '		<ul id="voiceULControl_' + contactInfo.Id + '">';
-	_BODY += '			<li class="row">';
-	_BODY += '				<strong id="InfoContactActivity_' + contactInfo.Id + '"></strong>';
-	_BODY += '				<span id="InfoContactStatusDuration_' + contactInfo.Id + '"></span>';
-	_BODY += '			</li>';
+	_BODY += '		<table id="voiceULControl_' + contactInfo.Id + '">';
+	_BODY += '			<tr class="row">';
+	_BODY += '				<td colspan="2"><strong id="InfoContactActivity_' + contactInfo.Id + '"></strong></td>';
+	_BODY += '				<td colspan="2"><span id="InfoContactStatusDuration_' + contactInfo.Id + '"></strong></span>';
+	_BODY += '			</tr>';
 
-	_BODY += '			<li class="row">';
-	_BODY += '				<span >From:</span>';
-	_BODY += '				<span id="InfoContactOriginator_' + contactInfo.Id + '"></span>';
-	_BODY += '			</li>';
+	_BODY += '			<tr class="row" id="trRowParent1" >';
+	_BODY += '				<td><span >From:</span></td>';
+	_BODY += '				<td><span id="InfoContactOriginator_' + contactInfo.Id + '"></span></td>';
 
-	_BODY += '			<li class="row">';
-	_BODY += '				<span>To:</span>';
-	_BODY += '				<span id="InfoContactTo_' + contactInfo.Id + '"></span>';
-	_BODY += '			</li>';
+	if(childActiveCountToConsider) _BODY += '<tr class="row" id="trRowChild1">';
+	
+	_BODY += '				<td><span>To:</span></td>';
+	_BODY += '				<td><span id="InfoContactTo_' + contactInfo.Id + '"></span></td>';
+	
+	if(childActiveCountToConsider) _BODY += '</tr';
+	
+	_BODY += '			</tr>';
 
-	_BODY += '			<li class="row">';
-	_BODY += '				<span>State:</span>';
-	_BODY += '				<span id="InfoContactState_' + contactInfo.Id + '"></span>';
-	_BODY += '			</li>';
+	_BODY += '			<tr class="row" id="trRowParent2">';
+	_BODY += '				<td><span>State:</span></td>';
+	_BODY += '				<td><span id="InfoContactState_' + contactInfo.Id + '"></span></td>';
 
-	_BODY += '			<li class="row">';
-	_BODY += '				<span>Customer:</span>';
-	_BODY += '				<span id="InfoContactCustomer_' + contactInfo.Id + '"></span>';
-	_BODY += '			</li>';
+	if(childActiveCountToConsider) _BODY += '<tr class="row" id="trRowChild2">';
 
-	_BODY += '		</ul>';
+	_BODY += '				<td><span style="margin-left: -12px;">&nbsp;&nbsp;&nbsp;Customer:</span></td>';
+	_BODY += '				<td><span id="InfoContactCustomer_' + contactInfo.Id + '"></span></td>';
+
+	if(childActiveCountToConsider) _BODY += '</tr';
+
+	_BODY += '			</tr>';
+
+	_BODY += '		</table>';
 	_BODY += '	</div>';
-	// _BODY += '</div>';
 
 	voiceDIV.innerHTML = _BODY;
 	voiceDIV.ContactInfo = contactInfo;
 	voiceDIV.onclick = function(){voicestatus_clicked(this);}
+		
+	$('voiceStatusToolStrip').appendChild(voiceDIV);
 
-	// $('voiceStatusInfoParent').innerHTML += _BODY;	
-	$('voiceStatusInfoParent').appendChild(voiceDIV);
+	// var flexResizerTag = document.createElement('flex-resizer');
+	// flexResizerTag.id = 'voiceStatusToolStripflexResizerTag';
+	// $('voiceStatusToolStrip').appendChild(flexResizerTag);
 
-	// $('voicestatus_' + contactInfo.Id).ContactInfo = contactInfo;
-	// $('voicestatus_' + contactInfo.Id).onclick = function(){voicestatus_clicked(this);}
+	SetRecordDisplayBasedOnActiveContactStatus(false);
+	SetWidthOfBoxActiveContactVoiceStatusToolStrip();
+	SetZindexOfActiveContactsVoiceStatusToolStrip();
+}
+
+function ResizeFirstActiveContact(canViewFullBox)
+{
+	// debugger;
+	var contctlst = ClientLink.Contacts.GetAll();
+	var contctlstKeys =  Object.keys(contctlst);
+	var i = 0;
+	if(contctlstKeys[i].indexOf('_') == 0) contctlstKeys[i] = contctlstKeys[i].slice(1,contctlstKeys[i].length);
+
+	var firstContact = ClientLink.Contacts.Get(contctlstKeys[i]);
+	var firstContactDiv = $('voicestatus_' + firstContact.Id);
+
+	var _BODY = '';
+
+	_BODY += '	<div><img src="./assets/icons/Agent_MediaType_Outbound_25.png" alt="icon" /></div>';
+	
+	_BODY += '	<div>';
+	_BODY += '		<table id="voiceULControl_' + firstContact.Id + '">';
+	_BODY += '			<tr class="row">';
+	_BODY += '				<td colspan="2"><strong id="InfoContactActivity_' + firstContact.Id + '"></strong></td>';
+	_BODY += '				<td colspan="2"><span id="InfoContactStatusDuration_' + firstContact.Id + '"></strong></span>';
+	_BODY += '			</tr>';
+
+	_BODY += '			<tr class="row" id="trRowParent1" >';
+	_BODY += '				<td><span >From:</span></td>';
+	_BODY += '				<td><span id="InfoContactOriginator_' + firstContact.Id + '"></span></td>';
+
+	if(canViewFullBox) _BODY += '<tr class="row" id="trRowChild1">';
+	
+	_BODY += '				<td><span>To:</span></td>';
+	_BODY += '				<td><span id="InfoContactTo_' + firstContact.Id + '"></span></td>';
+	
+	if(canViewFullBox) _BODY += '</tr';
+	
+	_BODY += '			</tr>';
+
+	_BODY += '			<tr class="row" id="trRowParent2">';
+	_BODY += '				<td><span>State:</span></td>';
+	_BODY += '				<td><span id="InfoContactState_' + firstContact.Id + '"></span></td>';
+
+	if(canViewFullBox) _BODY += '<tr class="row" id="trRowChild2">';
+
+	_BODY += '				<td><span style="margin-left: -12px;">&nbsp;&nbsp;&nbsp;Customer:</span></td>';
+	_BODY += '				<td><span id="InfoContactCustomer_' + firstContact.Id + '"></span></td>';
+
+	if(canViewFullBox) _BODY += '</tr';
+
+	_BODY += '			</tr>';
+
+	_BODY += '		</table>';
+	_BODY += '	</div>';
+
+	firstContactDiv.innerHTML = _BODY;
+}
+
+function voicestatus_clicked(sender)
+{
+	debugger;
+
+	var chilrens = $('voiceStatusToolStrip').children;
+
+    if(chilrens)
+    {       
+        for(var i = 0; i < chilrens.length; i++)
+        {
+            var child = chilrens[i];
+            
+			if(child && child.className?.includes('active')) removeElementClass($(child.id),'active');
+        }
+    }
+
+	addElementClass($(sender.id),'active');
+
+	if(sender && sender.ContactInfo)
+	{
+		ClientLink.SetActiveContact(sender.ContactInfo);
+		ClientLink.Contacts.Get(sender.ContactInfo.Id).__ContactUpdate = false;
+
+		var contctlst = ClientLink.Contacts.GetAll();
+		var contctlstKeys =  Object.keys(contctlst);		
+
+		for(var i = 0; i < contctlstKeys.length; i++)
+		{
+			if(contctlstKeys[i].indexOf('_') == 0) contctlstKeys[i] = contctlstKeys[i].slice(1,contctlstKeys[i].length);
+
+			var conct = ClientLink.Contacts.Get(contctlstKeys[i]);
+			conct.isInUse = false;
+			// $('InfoContactState_'+ conct.Id).innerHTML = $D(GetContactState(conct.State));
+		}
+
+		SetQualificationIconShowHideBasedONActivity(sender.ContactInfo);
+		SetRecordDisplayBasedOnActiveContactStatus(sender.ContactInfo.RecordInProgress);
+		sender.ContactInfo.isInUse = true;
+
+		DisplayScriptURLs(sender.ContactInfo.ScriptUrl);
+		SetWidthOfBoxActiveContactVoiceStatusToolStrip();
+		SetZindexOfActiveContactsVoiceStatusToolStrip();
+	}
+}
+
+
+function SetWidthOfBoxActiveContactVoiceStatusToolStrip()
+{
+	debugger;
+    var chilrens = document.querySelectorAll('#voiceStatusToolStrip')[0].children;
+
+    if(chilrens)
+    {
+		var childrenLength = chilrens.length;
+        var childHeight = (120 / childrenLength); // in px;
+
+        var parentWidth = 100; // 100 %
+        var widthOffset = 4;
+        var childWidth = (parentWidth - (childrenLength * widthOffset));
+
+        var ival = 3;
+
+		var childIndex = 0;
+		for(var i = 0; i < childrenLength; i++)
+        {
+            var child = chilrens[i];
+			if(child.tagName.toLowerCase() != 'div') continue;
+            if(child.className?.includes('active')) childIndex = i;
+        }
+
+        for(var i = 0; i < chilrens.length; i++)
+        {
+            var child = chilrens[i];
+            if(child.tagName.toLowerCase() != 'div') continue;
+
+            if(childrenLength == 1) child.style.height = 'calc(100% - 10px)';            
+            else if(childrenLength == 2) child.style.height = 'calc(50% - 10px)';
+            else
+            {
+				if(i < childIndex)
+                {
+                    child.style.width = childWidth + '%';
+                    
+                    child.style.marginLeft = ((parentWidth - childWidth)/2) + '%';
+                    childWidth = childWidth + widthOffset;
+                }
+                else if(i > childIndex)
+                {
+                    child.style.width = childWidth + '%';
+                    
+                    child.style.marginLeft = ((parentWidth - childWidth)/2) + '%';
+                    childWidth = childWidth - widthOffset;
+                }
+            }
+                        
+            child.style.marginTop = ival + 'px';
+            child.OriginalMarginTop = child.style.marginTop;
+            ival = ival + childHeight;
+        }
+    }
+}
+
+function SetZindexOfActiveContactsVoiceStatusToolStrip()
+{
+	// debugger;
+
+    var chilrens = document.querySelectorAll('#voiceStatusToolStrip')[0].children;
+    var childIndex = 0;
+
+    if(chilrens)
+    {       
+        for(var i = 0; i < chilrens.length; i++)
+        {
+            var child = chilrens[i];
+			if(child.tagName.toLowerCase() != 'div') continue;
+            if(child.className?.includes('active')) 
+            {
+                childIndex = i;
+                child.style.zIndex = 99;
+            }
+        }
+
+        if(childIndex > 0)
+        {
+            for(var i = 0; i < chilrens.length; i++)
+            {
+                var child = chilrens[i];
+				if(child.tagName.toLowerCase() != 'div') continue;
+
+                if(i < childIndex) child.style.zIndex = 99 - (childIndex - i);                
+                if(i > childIndex) child.style.zIndex = 99 - (childIndex + i);
+            }
+        }
+    }
 }
 
 function setVoiceDisplayStatus()
 {
 	debugger;
-	addElementClass($('voiceStatusInfoParent'), 'statusparent');
 
 	var contctlst = ClientLink.Contacts.GetAll();
 	var contctlstKeys =  Object.keys(contctlst);
 
-	if(contctlstKeys.length == 1)
-	{
-		if(contctlstKeys[0].indexOf('_') == 0) contctlstKeys[0] = contctlstKeys[0].slice(1,contctlstKeys[0].length);
-
-		var conct = ClientLink.Contacts.Get(contctlstKeys[0]);
-		SetQualificationIconShowHideBasedONActivity(conct);
-
-		removeElementClass($('voicestatus_'+conct.Id), 'small');
-		removeElementClass($('voiceULControl_'+conct.Id), 'ULsmall');
-		$('InfoContactState_'+ conct.Id).innerHTML = $D(GetContactState(conct.State));
-
-		$('voicestatus_'+conct.Id).style = 'background-color: #00cffd; justify-content: center !important;';
-	}
-	else if(contctlstKeys.length > 1)
+	if(contctlstKeys && contctlstKeys.length > 0)
 	{
 		for(var i = 0; i < contctlstKeys.length; i++)
 		{
@@ -509,11 +716,11 @@ function setVoiceDisplayStatus()
 
 			var conct = ClientLink.Contacts.Get(contctlstKeys[i]);			
 
-			addElementClass($('voicestatus_'+conct.Id), 'small');
-			addElementClass($('voiceULControl_'+conct.Id), 'ULsmall');
-
-			$('InfoContactState_'+ conct.Id).innerHTML = $D(GetContactState(conct.State));
-			$('voicestatus_'+ conct.Id).style = 'background-color: #676767;';
+			$('InfoContactOriginator_'+ conct.Id).innerHTML = $D(conct.From);
+			$('InfoContactActivity_'+ conct.Id).innerHTML = $D(conct.Context);
+			$('InfoContactTo_'+ conct.Id).innerHTML = $D(conct.To);
+			$('InfoContactCustomer_'+ conct.Id).innerHTML = $D(conct.Customer);
+			// $('InfoContactState_'+ conct.Id).innerHTML = $D(GetContactState(conct.State));
 		}
 		
 		var conct = null;
@@ -529,8 +736,6 @@ function setVoiceDisplayStatus()
 		}
 
 		SetQualificationIconShowHideBasedONActivity(conct);
-		$('voicestatus_'+ conct.Id).style = 'background-color: #00cffd;';
-		$('voicestatus_'+ conct.Id).scrollIntoView(false);
 	}
 }
 
@@ -542,43 +747,10 @@ function SetQualificationIconShowHideBasedONActivity(currentContact)
 	if(activitylist != null && activitylist.length > 0 && activitylist[0] != '')
 	{
 		$('Selectqual').disabled = false;
-		// addElementClass($('Selectqual'), 'active');
 	}
 	else
 	{
 		$('Selectqual').disabled = true;
-		// removeElementClass($('Selectqual'), 'active');
-	}
-}
-
-function voicestatus_clicked(sender)
-{
-	debugger;
-	if(sender && sender.ContactInfo)
-	{
-		ClientLink.SetActiveContact(sender.ContactInfo);
-		ClientLink.Contacts.Get(sender.ContactInfo.Id).__ContactUpdate = false;
-
-		var contctlst = ClientLink.Contacts.GetAll();
-		var contctlstKeys =  Object.keys(contctlst);		
-
-		for(var i = 0; i < contctlstKeys.length; i++)
-		{
-			if(contctlstKeys[i].indexOf('_') == 0) contctlstKeys[i] = contctlstKeys[i].slice(1,contctlstKeys[i].length);
-
-			var conct = ClientLink.Contacts.Get(contctlstKeys[i]);
-
-			conct.isInUse = false;
-			$('voicestatus_' + conct.Id).style = 'background-color: #676767;';
-			$('InfoContactState_'+ conct.Id).innerHTML = $D(GetContactState(conct.State));
-		}
-
-		SetQualificationIconShowHideBasedONActivity(sender.ContactInfo);
-		$('voicestatus_' + sender.ContactInfo.Id).style = 'background-color: #00cffd;';
-		$('voicestatus_'+ sender.ContactInfo.Id).scrollIntoView(false);
-		sender.ContactInfo.isInUse = true;
-
-		DisplayScriptURLs(sender.ContactInfo.ScriptUrl);
 	}
 }
 
@@ -592,13 +764,15 @@ function nixxislink_ContactRemoved(contactInfo)
 	//contactInfo.__Panel.dispose();
 	
 	RemoveContact(contactInfo);
-	$('voiceStatusInfoParent').removeChild($('voicestatus_'+contactInfo.Id));
+	$('voiceStatusToolStrip').removeChild($('voicestatus_'+contactInfo.Id));
 	setVoiceDisplayStatus();
 
 	//PurgeElement(contactInfo.__Panel);
 	//contactInfo.__Panel = null;
 	
 	SetAgentInfoStat();
+	SetWidthOfBoxActiveContactVoiceStatusToolStrip();
+	SetZindexOfActiveContactsVoiceStatusToolStrip();
 }
 function nixxislink_ContactStateChanged(contactInfo)
 {
@@ -650,7 +824,7 @@ function nixxislink_ContactStateChanged(contactInfo)
 	
 	SetTabButtonClass($(toolboxTabControlNixxisRenderManager.txTab_TabButtonItem + contactInfo.__TabId), contactInfo.Id);
 
-	debugger;
+	// debugger;
 	SetAgentInfoStat();
 }
 function nixxislink_ContactTopLabelChange(contactInfo, text)
@@ -867,7 +1041,7 @@ function AgentStateWaiting()
 }
 function AgentStatePause()
 {	
-	// debugger;
+	debugger;
 	
 	removeElementClass($('Info_AgentReadyVoiceIndication'), 'active');
 	addElementClass($('Pause'), 'active');
@@ -899,7 +1073,7 @@ function AgentStateWorking()
 }
 function RefreshLastAgentState()
 {
-	debugger;
+	// debugger;
 	var NewAgentState = $("Info_AgentState").textContent;
 
 	if(ClientLink.Contacts.GetAllCount() > 0) NewAgentState = AGENT_ONLINE;
@@ -996,7 +1170,12 @@ function RemoveContact(contactInfo)
 		
 		conct.isInUse = true;
 
+		addElementClass($('voicestatus_' + conct.Id),'active');
 		DisplayScriptURLs( conct.ScriptUrl);
+		var childActiveCount = ClientLink.Contacts.GetAllCount();
+		var childActiveCountToConsider = (childActiveCount == 1);
+
+		ResizeFirstActiveContact(childActiveCountToConsider);
 	}
 	else
 	{
@@ -1043,11 +1222,13 @@ function ShowHideVoiceToolStripIcons(canDisplay)
 }
 function ShowHideVoiceStatusToolStripIcons(canDisplay)
 {
+	return;
+
 	var displayStyle ='display:none;';
 
 	if(canDisplay) displayStyle ='';
 	
-	$('voiceStatusInfoParent').style = displayStyle;
+	$('voiceStatusToolStrip').style = displayStyle;
 }
 //**********************************************************
 //**********************************************************
@@ -1084,13 +1265,14 @@ function SetAgentInfoStat()
 		_Contact = ClientLink.Contacts.Get(ClientLink.Contacts.ActiveContactId);
 		if (_Contact)
 		{
-			$('InfoContactState_'+ _Contact.Id).innerHTML = $D(GetContactState(_Contact.State));
-			$('InfoContactOriginator_'+ _Contact.Id).innerHTML = $D(_Contact.From);
-			$('InfoContactActivity_'+ _Contact.Id).innerHTML = $D(_Contact.Context);
-			$('InfoContactTo_'+ _Contact.Id).innerHTML = $D(_Contact.To);
-			$('InfoContactCustomer_'+ _Contact.Id).innerHTML = $D(_Contact.Customer);
+			// debugger;
+			// if($('InfoContactState_'+ _Contact.Id)) $('InfoContactState_'+ _Contact.Id).innerHTML = $D(GetContactState(_Contact.State));
+			if($('InfoContactOriginator_'+ _Contact.Id)) $('InfoContactOriginator_'+ _Contact.Id).innerHTML = $D(_Contact.From);
+			if($('InfoContactActivity_'+ _Contact.Id)) $('InfoContactActivity_'+ _Contact.Id).innerHTML = $D(_Contact.Context);
+			if($('InfoContactTo_'+ _Contact.Id)) $('InfoContactTo_'+ _Contact.Id).innerHTML = $D(_Contact.To);
+			if($('InfoContactCustomer_'+ _Contact.Id) )$('InfoContactCustomer_'+ _Contact.Id).innerHTML = $D(_Contact.Customer);
 
-			if(_Contact.State == 'C') 
+			if(_Contact.State == 'C' || _Contact.State == 'H') 
 			{
 				$('CloseScript').disabled = true;
 				if(_Contact.__AgentAction = 'W') 
@@ -1118,12 +1300,12 @@ function SetAgentInfoStat()
 		else
 		{
 			DebugLog("SetAgentInfoStat. Contact not found");
-			$('InfoContactState_'+ ClientLink.Contacts.ActiveContactId).innerHTML = "&nbsp;";
-			$('InfoContactOriginator_'+ ClientLink.Contacts.ActiveContactId).innerHTML = "&nbsp;";
-			$('InfoContactActivity_'+ ClientLink.Contacts.ActiveContactId).innerHTML = "&nbsp;";
-			$('InfoContactTo_'+ ClientLink.Contacts.ActiveContactId).innerHTML = "&nbsp;";
-			$('InfoContactCustomer_'+ ClientLink.Contacts.ActiveContactId).innerHTML = "&nbsp;"
-		}
+			if($('InfoContactState_'+ ClientLink.Contacts.ActiveContactId)) $('InfoContactState_'+ ClientLink.Contacts.ActiveContactId).innerHTML = "&nbsp;";
+			if($('InfoContactOriginator_'+ ClientLink.Contacts.ActiveContactId)) $('InfoContactOriginator_'+ ClientLink.Contacts.ActiveContactId).innerHTML = "&nbsp;";
+			if($('InfoContactActivity_'+ ClientLink.Contacts.ActiveContactId)) $('InfoContactActivity_'+ ClientLink.Contacts.ActiveContactId).innerHTML = "&nbsp;";
+			if($('InfoContactTo_'+ ClientLink.Contacts.ActiveContactId)) $('InfoContactTo_'+ ClientLink.Contacts.ActiveContactId).innerHTML = "&nbsp;";
+			if($('InfoContactCustomer_'+ ClientLink.Contacts.ActiveContactId)) $('InfoContactCustomer_'+ ClientLink.Contacts.ActiveContactId).innerHTML = "&nbsp;"
+		}		
 	}
 	else {
 		// debugger;
@@ -1154,21 +1336,30 @@ function VoiceButtonsbehaviourWhenCallHold(CurrentAction)
 // -- > Display contact active duration
 
 
-function DisplayContactActivityDateTimeElapsed(_ContactId, contactActivityStartDatetime)
+function DisplayContactActivityDateTimeElapsed(contactInfo, contactActivityStartDatetime)
 {
 	// debugger;
 
-	if($("InfoContactStatusDuration_"+_ContactId) == null) return;
+	if($("InfoContactStatusDuration_"+contactInfo.Id) == null) return;
 
 	if(contactActivityStartDatetime == null) contactActivityStartDatetime = new Date();
 	
 	var timediff = new Date() - contactActivityStartDatetime;
-	
 	var seconds = FormatTime(timediff);
+	$("InfoContactStatusDuration_" + contactInfo.Id).textContent = seconds;
+
+	if(contactInfo.StateLastChangedDateTime && String(contactInfo.StateLastChangedDateTime).trim().length > 0)
+	{
+		var timediffStateChanged = new Date() - contactInfo.StateLastChangedDateTime;
+		var secondsStateChanged = FormatTime(timediffStateChanged);	
+		$('InfoContactState_'+ contactInfo.Id).innerHTML = $D(GetContactState(contactInfo.State)) + '   '+ String(secondsStateChanged);
+	}
+	else
+	{
+		$('InfoContactState_'+ contactInfo.Id).innerHTML = $D(GetContactState(contactInfo.State));
+	}
 	
-	$("InfoContactStatusDuration_"+_ContactId).textContent = seconds;
-	
-	setTimeout(function() { DisplayContactActivityDateTimeElapsed(_ContactId, contactActivityStartDatetime); }, 1000);
+	setTimeout(function() { DisplayContactActivityDateTimeElapsed(contactInfo, contactActivityStartDatetime); }, 1000);
 }
 
 
@@ -1974,38 +2165,31 @@ function VoiceRecordSetStartStop()
 	// debugger;
 	addElementClass($("ExtendWrapup"),'active');
 
-	if($('VoiceRecord').className) lst = $('VoiceRecord').className.split(' '); else lst = new Array();
+	var activeContact = ClientLink.Contacts.Get(ClientLink.Contacts.ActiveContactId);
 
-	var CanStartrecording = false;
-
-	if(lst == null || lst.length == 0) CanStartrecording = false;
-	else
+	if(activeContact)
 	{
-		for(var i = 0; i < lst.length; i++) 
-		{
-			if(lst[i] != null && lst[i]?.toLowerCase() == 'active') 
-			{
-				if(CanStartrecording == true)
-				{
-					removeElementClass($('VoiceRecord'),'active');
-					CanStartrecording = false;
-					break;
-				}
-
-				CanStartrecording = true;
-			}
-		}
+		activeContact.RecordInProgress = !activeContact.RecordInProgress;
+		SetRecordDisplayBasedOnActiveContactStatus(activeContact.RecordInProgress);
 	}
+	else SetRecordDisplayBasedOnActiveContactStatus(false);
+}
 
-	if(CanStartrecording)
+function SetRecordDisplayBasedOnActiveContactStatus(isRecording)
+{
+	// debugger;
+	if(isRecording && isRecording == true)
 	{
+		addElementClass($('VoiceRecord'), 'active');
 		$('VoiceRecord').childNodes[3].innerText = "Stop Recording";
 		$('VoiceRecord').childNodes[3].title = "Stop Recording";
 	}
 	else
 	{
+		// stop record
 		$('VoiceRecord').childNodes[3].innerText = "Record"
 		$('VoiceRecord').childNodes[3].title = "Record";
+		removeElementClass($('VoiceRecord'), 'active');
 	}
 }
 
@@ -2153,7 +2337,9 @@ function DisplayScriptURLs(scriptURLLink)
 
 				spanTagBox.id = 'spanTagBox' + j;
 				spanTagBox.onclick = liTagBoxSelect_OnClick;
-				spanTagBox.innerHTML = vals[j];
+
+				if(vals[j] && vals[j].length > 30) spanTagBox.innerHTML = vals[j]?.substring(0,30) + '...';
+				else spanTagBox.innerHTML = vals[j];
 
 				liTagBox.appendChild(spanTagBox);
 				ulTagBox.appendChild(liTagBox);
