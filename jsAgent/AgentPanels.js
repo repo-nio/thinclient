@@ -267,8 +267,8 @@ var crQualPanel =
 			_BODY += '		<br style="clear:both;"/>';
 			_BODY += '	</div>';
 			_BODY += '	<div class="modal-footer">';
-			_BODY += '		<button id ="btnSelectqualOk" >Ok</button>';
-			_BODY += '		<button id ="btnSelectqualClose" >Cancel</button>';
+			_BODY += '		<button id ="btnSelectqualOk" class="NixxisDefaultButtonStyle">Ok</button>';
+			_BODY += '		<button id ="btnSelectqualClose" class="NixxisDefaultButtonStyle" >Cancel</button>';
 			_BODY += '	</div>';
 			_BODY += '</div>';
 					
@@ -668,8 +668,8 @@ var crSearchModePanel =
 		
 		_BODY += '	</div>';
 		_BODY += '	<div class="modal-footer">';
-		_BODY += '		<button id ="btnSearchOk" >Ok</button>';
-		_BODY += '		<button id ="btnSearchClose" >Cancel</button>';
+		_BODY += '		<button id ="btnSearchOk" class="NixxisDefaultButtonStyle" >Preview</button>';
+		_BODY += '		<button id ="btnSearchClose" class="NixxisDefaultButtonStyle" >Cancel</button>';
 		_BODY += '	</div>';
 		_BODY += '</div>';
 					
@@ -776,12 +776,23 @@ var crSearchModePanel =
 	},
 	Select_OnClick : function(sender)
 	{
-		// debugger;
+		debugger;
 
 		var target = sender.currentTarget;
 
 		if(target.nodeName?.toLowerCase() == 'li' )
 		{
+			var chilrens = target.parentNode.children;
+			if(chilrens)
+			{
+				for(var i = 0; i < chilrens.length; i++)
+				{
+					var child = chilrens[i];
+					if(child.tagName.toLowerCase() != 'li') continue;
+					removeElementClass(child, 'active');	
+				}
+			}
+
 			$('btnSearchOk').style.display = "inline";
 			crSearchModePanel.CurrentSelected = target;
 			addElementClass(target, 'active');			
@@ -894,8 +905,8 @@ var crPauseCodePanel =
 		
 		_BODY += '	</div>';
 		_BODY += '	<div class="modal-footer">';
-		_BODY += '		<button id ="btnBreakreasonOk">Ok</button>';
-		_BODY += '		<button id ="btnBreakreasonClose" >Cancel</button>';
+		_BODY += '		<button id ="btnBreakreasonOk" class="NixxisDefaultButtonStyle">Ok</button>';
+		_BODY += '		<button id ="btnBreakreasonClose" class="NixxisDefaultButtonStyle" >Cancel</button>';
 		_BODY += '	</div>';
 		_BODY += '</div>';
 					
@@ -1116,8 +1127,8 @@ var crTeamSelectPanel =
 		
 		_BODY += '	</div>';
 		_BODY += '	<div class="modal-footer">';
-		_BODY += '		<button id ="btnTeamOk">Ok</button>';
-		_BODY += '		<button id ="btnTeamClose">Cancel</button>';
+		_BODY += '		<button id ="btnTeamOk" class="NixxisDefaultButtonStyle">Ok</button>';
+		_BODY += '		<button id ="btnTeamClose" class="NixxisDefaultButtonStyle">Cancel</button>';
 		_BODY += '	</div>';
 		_BODY += '</div>';
 					
@@ -1357,8 +1368,8 @@ var crAgentLogout =
 		
 		_BODY += '	</div>';
 		_BODY += '	<div class="modal-footer">';
-		_BODY += '		<button id ="btnAgentLogoutOk">Logout</button>';
-		_BODY += '		<button id ="btnAgentLogoutClose">Cancel</button>';
+		_BODY += '		<button id ="btnAgentLogoutOk" class="NixxisDefaultButtonStyle">Logout</button>';
+		_BODY += '		<button id ="btnAgentLogoutClose" class="NixxisDefaultButtonStyle">Cancel</button>';
 		_BODY += '	</div>';
 		_BODY += '</div>';
 					
@@ -1488,8 +1499,8 @@ var crAgentReloadWarning =
 		
 		_BODY += '	</div>';
 		_BODY += '	<div class="modal-footer">';
-		_BODY += '		<button id ="btnAgentReloadWarningOk">Reload</button>';
-		_BODY += '		<button id ="btnAgentReloadWarningClose">Cancel</button>';
+		_BODY += '		<button id ="btnAgentReloadWarningOk" class="NixxisDefaultButtonStyle">Reload</button>';
+		_BODY += '		<button id ="btnAgentReloadWarningClose" class="NixxisDefaultButtonStyle">Cancel</button>';
 		_BODY += '	</div>';
 		_BODY += '</div>';
 		
