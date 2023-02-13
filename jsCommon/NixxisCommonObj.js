@@ -390,10 +390,10 @@ var crNewCallDialog =
 		_BODY += '		<div class="d-flex">';
 		_BODY += '			<input id="MCNum" class="MCNum" type="text" MAXLENGTH="100"/>';
 		_BODY += '			<button id="MCallDialPad_Clear" style ="margin: 0px 2px 0px 5px;">';
-		_BODY += '				<img src="./assets/icons/Agent_AddressBookEntryType_Agent_Off_25.png" alt="icon" />';
+		_BODY += '				<img src="./assets/icons/Agent_AddressBookEntryType_Agent_Off_36.png" alt="icon" style="margin-left: -3px;"/>';
 		_BODY += '			</button>';
 		_BODY += '			<button id="MCallDialPad_Dial">';
-		_BODY += '				<img src="./assets/icons/Agent_Command_ReadyVoice_50.png" alt="icon" />';
+		_BODY += '				<img src="./assets/icons/Agent_Command_ReadyVoice_50.png" alt="icon" style="margin-left: -3px;"/>';
 		_BODY += '			</button>';
 		_BODY += '		</div>';
 		_BODY += '		<div class="buttons">';
@@ -406,7 +406,7 @@ var crNewCallDialog =
 		_BODY += '			<button id="MCallDialPad_7" class="btn-3">7</button>';
 		_BODY += '			<button id="MCallDialPad_8" class="btn-3">8</button>';
 		_BODY += '			<button id="MCallDialPad_9" class="btn-3">9</button>';
-		_BODY += '			<button id="MCallDialPad_Star" class="btn-3">*</button>';
+		_BODY += '			<button id="MCallDialPad_Star" class="btn-3" style="font-size: 42px; line-height: 0; padding-top: 24px;">*</button>';
 		_BODY += '			<button id="MCallDialPad_0" class="btn-3">0</button>';
 		_BODY += '			<button id="MCallDialPad_Hash" class="btn-3">#</button>';
 		_BODY += '		</div>';
@@ -424,7 +424,7 @@ var crNewCallDialog =
 		_BODY += '		</div>';
 		_BODY += '	</div>';
 		_BODY += '	<div class="modal-footer">';
-		_BODY += '		<button id ="MCallDialPad_Close">Close</button>';
+		_BODY += '		<button id ="MCallDialPad_Close" class="NixxisDefaultButtonStyle">Close</button>';
 		_BODY += '	</div>';
 		_BODY += '</div>';
 
