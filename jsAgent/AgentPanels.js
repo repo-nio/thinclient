@@ -958,6 +958,7 @@ var crPauseCodePanel =
 		if (arguments.length > 0) crPauseCodePanel.ShowList(arguments[0], $('modalBreakreasonWorkspace'));
 
 		$('btnBreakreasonOk').style.display = "none";
+		addElementClass($('Pause'), 'active');
 	},
 	CreateList : function(list)
 	{
@@ -1079,7 +1080,7 @@ var crPauseCodePanel =
 	},
 	btnCancel_OnClick: function()
 	{
-		// debugger;
+		debugger;
 
 		crPauseCodePanel.Form.setVisibility(false);
 
@@ -1089,8 +1090,12 @@ var crPauseCodePanel =
 
 		if(ClientLink.commands.WaitForCall.active)
 		{
-			 removeElementClass($('Pause'), 'active');
-			 addElementClass($('WaitForCall'), 'active');
+			removeElementClass($('Pause'), 'active');
+			addElementClass($('WaitForCall'), 'active');
+		}
+		else if(!ClientLink.commands.Pause.active)
+		{
+			removeElementClass($('Pause'), 'active');
 		}
 	}
 }
