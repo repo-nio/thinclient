@@ -1316,8 +1316,8 @@ function NixxisClientLink(sessionId, baseLocation)
 	// this.commands.VoiceHangup = new this.commands.newCommand(this, this.codes.commandCodes.VoiceHangup);
 	this.commands.VoiceHangup = new this.commands.newCommand(this, this.codes.commandCodes.VoiceHangup, function() 
 	{		
-		addElementClass($("ExtendWrapup"),'active');
-		// removeElementClass($("VoiceHangup"),'active');
+		// addElementClass($("ExtendWrapup"),'active');
+		removeElementClass($("VoiceHangup"),'active');
 		this.clientLink.connection.executeCommand(this.commandCode);
 	});	
 
@@ -1390,7 +1390,11 @@ function NixxisClientLink(sessionId, baseLocation)
 	this.commands.ChatHold = new this.commands.newCommand(this, this.codes.commandCodes.ChatHold);			
 	this.commands.ChatRetrieve = new this.commands.newCommand(this, this.codes.commandCodes.ChatRetrieve);		
 	this.commands.ChatHangup = new this.commands.newCommand(this, this.codes.commandCodes.ChatHangup);		
-	this.commands.PriorityPickup = new this.commands.newCommand(this, this.codes.commandCodes.PriorityPickup);
+	this.commands.PriorityPickup = new this.commands.newCommand(this, this.codes.commandCodes.PriorityPickup, function()
+	{
+		removeElementClass($("PriorityPickup"),'active');
+		this.clientLink.connection.executeCommand(this.commandCode, arguments[0]);
+	});
 	this.commands.TerminateContact = new this.commands.newCommand(this, this.codes.commandCodes.TerminateContact, function()
 	                            {
 	                                if(this.authorized && this.clientLink.Contacts.ActiveContactId)
