@@ -325,7 +325,7 @@ body {
   display: -ms-flexbox;
   display: flex;
   border: unset;
-  opacity: 0.5;
+  opacity: 0.15;
   height: 28px;
   padding: 2px;
   width: 28px;
@@ -393,7 +393,7 @@ body {
 }
 
 .footer .column .status img {
-  height: 25px;
+  height: auto;
 }
 
 .footer .column .status ul li {
@@ -774,8 +774,14 @@ body {
 .masterTab .tabBox ul li { float: left; margin: 0; padding: 0;}
 .masterTab .tabBox ul li span  { float: left; padding: 10px; background: #404040; color: #fff;}
 .masterTab .tabBox ul li span.active  { background: #00cffd; color: #000;}
-.masterTab .tabCntBox { width: 100%;  height: calc(100% - 40px); display: flex; padding: 10px; background: #222;}
-.masterTab .tabCntBox .tabCnt { width: 100%; display: none; background: #fff;}
+.masterTab .tabCntBox { width: 100%;  height: calc(100% - 40px); 
+  /* display: flex;  */
+  padding: 10px; background: #222;}
+.masterTab .tabCntBox .tabCnt { width: 100%; 
+  /* display: none; */
+   background: #fff; 
+  /* display: contents; */
+}
 
 
 
