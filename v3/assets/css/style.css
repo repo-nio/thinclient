@@ -147,6 +147,8 @@ body {
 
 .table{
   width: 100%;
+  background: linear-gradient(0deg, rgba(46,46,46,1) 0%, rgba(78,78,78,1) 100%);
+  border-radius: 3px;
 }
 
 #AgentToolStrip .btn-1, #VoiceToolStrip .btn-1 {
@@ -280,10 +282,11 @@ body {
 }
 
 .footer .column .view.highlight {
-  /* margin: 3px; */
+  margin: 3px;
+  padding: 3px;
   border: 3px solid #FFA524;
   border-radius: 5px;
-  height: 135px;
+  height: auto;
 }
 
 .footer .column .view.highlightRed {
@@ -297,7 +300,7 @@ body {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  margin-bottom: 4px;
+  margin-bottom: 0px;
   color: silver;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -305,8 +308,8 @@ body {
 }
 
 .footer #bottom-right .view .row td span {
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 12px;
+  font-weight: 400;
 }
 
 .footer #bottom-right .view table .btn-2 {
@@ -336,7 +339,7 @@ body {
 }
 
 .footer #bottom-right .view table .btn-2:hover {
-  opacity: 1;
+  opacity: none;
 }
 
 
@@ -769,9 +772,14 @@ body {
       }
 
 .masterTab { width: 100%; float: left; height: 100%;}
-.masterTab .tabBox { width: 100%; float: left; background: transparent;}
+.masterTab .tabBox { width: 100%; float: left; background: transparent; font-size: 12px;}
 .masterTab .tabBox ul { width: 100%; float: left; list-style: none; margin: 0; padding: 0;}
 .masterTab .tabBox ul li { float: left; margin: 0; padding: 0;}
+.masterTab .tabBox ul li:hover 
+{
+  background:#0CF;
+  color: #000;
+}
 .masterTab .tabBox ul li span  { float: left; padding: 10px; background: #404040; color: #fff;}
 .masterTab .tabBox ul li span.active  { background: #00cffd; color: #000;}
 .masterTab .tabCntBox { width: 100%;  height: calc(100% - 40px); 
