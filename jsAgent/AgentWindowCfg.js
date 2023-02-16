@@ -1081,6 +1081,7 @@ function AgentStatePause()
 }
 function AgentStateOnline(contactInfo)
 {
+	debugger;
 	$("Info_AgentState").textContent = AGENT_ONLINE;
 	addElementClass($('Info_AgentReadyVoiceIndication'), 'active');
 
@@ -1096,10 +1097,10 @@ function AgentStateWorking()
 }
 function RefreshLastAgentState()
 {
-	// debugger;
+	debugger;
 	var NewAgentState = $("Info_AgentState").textContent;
 
-	if(ClientLink.Contacts.GetAllCount() > 0) NewAgentState = AGENT_ONLINE;
+	if(ClientLink.Contacts.GetAllCount() > 0) NewAgentState = AGENT_WORKING;
 	else
 	{
 		if(ClientLink.commands.WaitForCall.active) 
@@ -1121,15 +1122,18 @@ function RefreshLastAgentState()
 		}
 	}
 
+	var _resetDateTime = false;
 	if(ClientLink.commands.WaitForCall.active) 
 	{
 		addElementClass($('WaitForCall'), 'active');
-		removeElementClass($('Pause'), 'active');		
+		removeElementClass($('Pause'), 'active');
+		_resetDateTime = true;
 	}
 	else if(ClientLink.commands.Pause.active) 
 	{
 		removeElementClass($('WaitForCall'), 'active');
 		addElementClass($('Pause'), 'active');
+		_resetDateTime = true;
 	}	
 
 	var m_LastAgentState = $("Info_AgentState").textContent;
@@ -1140,6 +1144,14 @@ function RefreshLastAgentState()
 		
 		SetLastAgentState(m_LastAgentState, new Date());
 	}
+
+	// if(NewAgentState != m_LastAgentState)
+	// {
+	// 	if(!m_LastAgentState.startsWith(NewAgentState)) m_LastAgentState = NewAgentState;
+
+	// 	if(_resetDateTime) SetLastAgentState(m_LastAgentState, new Date());
+	// 	else SetLastAgentState(m_LastAgentState, startdatetime);		
+	// }
 }
 function SetLastAgentState(description, startTime)
 {
@@ -1314,25 +1326,28 @@ function SetAgentInfoStat()
 			if($('InfoContactTo_'+ _Contact.Id)) $('InfoContactTo_'+ _Contact.Id).innerHTML = $D(_Contact.To);
 			if($('InfoContactCustomer_'+ _Contact.Id) )$('InfoContactCustomer_'+ _Contact.Id).innerHTML = $D(_Contact.Customer);
 
+			if(_Contact.Context == 'Customer service') AgentStateOnline();
+			else AgentStateWorking();
+
 			if(_Contact.State == 'C' || _Contact.State == 'H') 
 			{
 				$('CloseScript').disabled = true;
-				if(_Contact.__AgentAction = 'W') 
-				{
-					if($("Info_AgentState").textContent != AGENT_ONLINE && $("Info_AgentReadyVoiceIndication").style.display != "none") 
-						AgentStateOnline();
-				}
+				// if(_Contact.__AgentAction = 'W') 
+				// {
+				// 	if($("Info_AgentState").textContent != AGENT_ONLINE && $("Info_AgentReadyVoiceIndication").style.display != "none") 
+				// 		AgentStateOnline();
+				// }
 			}
 			else 
 			{
 				$('CloseScript').disabled = false;
-				if(_Contact.__AgentAction = 'W') 
-				{
-					if($("Info_AgentState").textContent != AGENT_WORKING && $("Info_AgentReadyVoiceIndication").style.display != "none")
-						AgentStateWorking();
+				// if(_Contact.__AgentAction = 'W') 
+				// {
+				// 	if($("Info_AgentState").textContent != AGENT_WORKING && $("Info_AgentReadyVoiceIndication").style.display != "none")
+				// 		AgentStateWorking();
 					
-					removeElementClass($('ExtendWrapup'),'active');
-				}				
+				// 	removeElementClass($('ExtendWrapup'),'active');
+				// }				
 			}
 
 			// stopDisplayContactActivityTimer = false;			
