@@ -116,7 +116,7 @@ function FormatTime(milliseconds)
     var hr = Math.floor(min/60);
     min = min % 60;
     t = TimeTwo(min) + ":" + t;
-    t = hr + ":" + t;
+    t = TimeTwo(hr) + ":" + t;
     
     //var day = Math.floor(hr/60);
     //hr = hr % 60;
