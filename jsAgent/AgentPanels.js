@@ -776,7 +776,7 @@ var crSearchModePanel =
 	},
 	Select_OnClick : function(sender)
 	{
-		debugger;
+		// debugger;
 
 		var target = sender.currentTarget;
 
@@ -814,11 +814,11 @@ var crSearchModePanel =
 		{
 			ClientLink.commands.SearchMode.execute(crSearchModePanel.CurrentSelected.crId);
 			addAgentFooter();
-			AgentStateWorking();
+			RefreshLastAgentState();
 
 			// AgentStateWorking();
 
-			window.setTimeout(AgentStateWorking, 1000);
+			window.setTimeout(RefreshLastAgentState, 1000);
 		}
 		else
 		{
