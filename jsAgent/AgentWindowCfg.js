@@ -378,15 +378,14 @@ function nixxislink_ConactAdded(contactInfo)
 			addElementClass($('ExtendWrapup'),'active');
 			removeElementClass($('CloseScript'),'active');
 			$('ExtendWrapup').disabled = false;
-			AgentStateOnline();
 		}
 		else
 		{
 			removeElementClass($('ExtendWrapup'),'active');
 			removeElementClass($('CloseScript'),'active');
 			$('ExtendWrapup').disabled = true;
-			AgentStateWorking();
 		}
+		RefreshLastAgentState();
 	}
 	else 
 	{
@@ -429,13 +428,6 @@ function addVoiceStatus(contactInfo)
 {
 	// debugger;
 
-	// var elementToRemove = $('voiceStatusToolStripflexResizerTag');
-	// if(elementToRemove)
-	// {
-	// 	// var elementToRemoveFrom = document.getElementById('voiceStatusToolStrip');
-	// 	elementToRemove.remove();
-	// }
-
 	var chilrens = $('voiceStatusToolStrip').children;
 
     if(chilrens)
@@ -459,7 +451,10 @@ function addVoiceStatus(contactInfo)
 
 	var _BODY = '';
 
-	_BODY += '	<div><img src="./assets/icons/Agent_MediaType_Outbound_36.png" alt="icon" /></div>';
+	if(contactInfo.Direction == 'I')
+		_BODY += '	<div><img src="./assets/icons/Agent_MediaType_Outbound_25.png" alt="icon" style="transform: rotate(180deg);" /></div>';
+	else 
+		_BODY += '	<div><img src="./assets/icons/Agent_MediaType_Outbound_25.png" alt="icon" /></div>';
 	
 	_BODY += '	<div>';
 	_BODY += '		<table id="voiceULControl_' + contactInfo.Id + '">';
@@ -525,7 +520,10 @@ function ResizeFirstActiveContact(canViewFullBox)
 
 	var _BODY = '';
 
-	_BODY += '	<div><img src="./assets/icons/Agent_MediaType_Outbound_36.png" alt="icon" /></div>';
+	if(firstContact.Direction == 'I')
+		_BODY += '	<div><img src="./assets/icons/Agent_MediaType_Outbound_50.png" alt="icon" style="transform: rotate(180deg);" /></div>';
+	else 
+		_BODY += '	<div><img src="./assets/icons/Agent_MediaType_Outbound_50.png" alt="icon" /></div>';
 	
 	_BODY += '	<div>';
 	_BODY += '		<table id="voiceULControl_' + firstContact.Id + '">';
@@ -763,17 +761,13 @@ function setVoiceDisplayStatus()
 
 function SetQualificationIconShowHideBasedONActivity(currentContact)
 {
+	// debugger;
 	var activitylist = null;
 	try{ activitylist = currentContact.Activity.split('.'); } catch(e) {activitylist = [this.Activity]; }
 
-	if(activitylist != null && activitylist.length > 0 && activitylist[0] != '')
-	{
-		$('Selectqual').disabled = false;
-	}
-	else
-	{
-		$('Selectqual').disabled = true;
-	}
+	if(currentContact.Direction == 'I') $('Selectqual').disabled = false;
+	else if(activitylist != null && activitylist.length > 0 && activitylist[0] != '') $('Selectqual').disabled = false;
+	else $('Selectqual').disabled = true;
 }
 
 function nixxislink_ContactRemoved(contactInfo)
@@ -783,15 +777,11 @@ function nixxislink_ContactRemoved(contactInfo)
 	defaultSetAgentInfoLabels();
     DebugLog("nixxislink_ContactRemoved. Remove contact " + contactInfo.Id);
 	contactInfo.__AgentAction = "E";
-	//contactInfo.__Panel.dispose();
 	
 	RemoveContact(contactInfo);
 	$('voiceStatusToolStrip').removeChild($('voicestatus_'+contactInfo.Id));
 	setVoiceDisplayStatus();
 
-	//PurgeElement(contactInfo.__Panel);
-	//contactInfo.__Panel = null;
-	
 	SetAgentInfoStat();
 	SetWidthOfBoxActiveContactVoiceStatusToolStrip();
 	SetZindexOfActiveContactsVoiceStatusToolStrip();
@@ -1084,15 +1074,12 @@ function AgentStateOnline(contactInfo)
 	debugger;
 	$("Info_AgentState").textContent = AGENT_ONLINE;
 	addElementClass($('Info_AgentReadyVoiceIndication'), 'active');
-
-	// startdatetime = new Date();
 }
 function AgentStateWorking()
 {	
 	// debugger;
 
 	$("Info_AgentState").textContent = AGENT_WORKING;
-	// startdatetime = new Date();
 	removeElementClass($('Info_AgentReadyVoiceIndication'), 'active');
 }
 function RefreshLastAgentState()
@@ -1325,32 +1312,17 @@ function SetAgentInfoStat()
 			if($('InfoContactActivity_'+ _Contact.Id)) $('InfoContactActivity_'+ _Contact.Id).innerHTML = $D(_Contact.Context);
 			if($('InfoContactTo_'+ _Contact.Id)) $('InfoContactTo_'+ _Contact.Id).innerHTML = $D(_Contact.To);
 			if($('InfoContactCustomer_'+ _Contact.Id) )$('InfoContactCustomer_'+ _Contact.Id).innerHTML = $D(_Contact.Customer);
-
-			if(_Contact.Context == 'Customer service') AgentStateOnline();
-			else AgentStateWorking();
+			 
+			AgentStateWorking();
 
 			if(_Contact.State == 'C' || _Contact.State == 'H') 
 			{
 				$('CloseScript').disabled = true;
-				// if(_Contact.__AgentAction = 'W') 
-				// {
-				// 	if($("Info_AgentState").textContent != AGENT_ONLINE && $("Info_AgentReadyVoiceIndication").style.display != "none") 
-				// 		AgentStateOnline();
-				// }
 			}
 			else 
 			{
 				$('CloseScript').disabled = false;
-				// if(_Contact.__AgentAction = 'W') 
-				// {
-				// 	if($("Info_AgentState").textContent != AGENT_WORKING && $("Info_AgentReadyVoiceIndication").style.display != "none")
-				// 		AgentStateWorking();
-					
-				// 	removeElementClass($('ExtendWrapup'),'active');
-				// }				
-			}
-
-			// stopDisplayContactActivityTimer = false;			
+			}	
 		}
 		else
 		{
@@ -2433,6 +2405,8 @@ function DisplayScriptURLs(contactInfo)
 				else childdivTagURLBox.style.display = 'none';
 
 				var childIframeTagURLBox = GetNewIframe();
+				childIframeTagURLBox.TabHeaderControl =  spanTagBox;
+				childIframeTagURLBox.onload = LoadIframeTitleToTabTitle;
 
 				childIframeTagURLBox.setAttribute("src",vals[j]);
 				// childIframeTagURLBox.src = vals[j];
@@ -2468,6 +2442,18 @@ function DisplayScriptURLs(contactInfo)
 
 		ShowActiveContactScriptURLs(contactInfo);
 	}
+}
+
+function LoadIframeTitleToTabTitle(sender)
+{
+	debugger;
+
+	var iframe = sender.currentTarget;
+
+	// if(iframe)
+	// {
+	// 	iframe.TabHeaderControl.innerHTML = 
+	// }
 }
 
 function ShowActiveContactScriptURLs(conct)
