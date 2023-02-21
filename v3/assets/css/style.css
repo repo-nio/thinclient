@@ -774,13 +774,13 @@ body {
 .masterTab { width: 100%; float: left; height: 100%;}
 .masterTab .tabBox { width: 100%; float: left; background: transparent; font-size: 12px;}
 .masterTab .tabBox ul { width: 100%; float: left; list-style: none; margin: 0; padding: 0;}
-.masterTab .tabBox ul li { float: left; margin: 0; padding: 0;}
-.masterTab .tabBox ul li:hover 
-{
-  background:#0CF;
-  color: #000;
+.masterTab .tabBox ul li { float: left; margin: 0; padding: 0; border: 1px solid #555F73; border-radius: 1px;}
+.masterTab .tabBox ul li span  { float: left; padding: 10px; background: #404040; color: #fff; 
+  -webkit-transition-duration:0.5s; -moz-transition-duration:0.5s; 
+  -o-transition-duration: 0.5s; transition-duration:0.5s; cursor: pointer;
 }
-.masterTab .tabBox ul li span  { float: left; padding: 10px; background: #404040; color: #fff;}
+.masterTab .tabBox ul li span:hover  { background: #00809F; color: #fff;}
+
 .masterTab .tabBox ul li span.active  { background: #00cffd; color: #000;}
 .masterTab .tabCntBox { width: 100%;  height: calc(100% - 40px); 
   /* display: flex;  */
