@@ -897,44 +897,43 @@ var crPauseCodePanel =
 		
 		var _BODY = '';	    
 
-		_BODY += '<div class="modal active" id="break-reason">';
-		_BODY += '	<div class="modal-header">';
-		_BODY += '		<h4>Break reason</h4>';
-		_BODY += '	</div>';
-		_BODY += '	<div class="modal-content" id="modalBreakreasonWorkspace">';
+		// _BODY += '<div class="modal active" id="break-reason">';
+		// _BODY += '	<div class="modal-header">';
+		// _BODY += '		<h4>Break reason</h4>';
+		// _BODY += '	</div>';
+		// _BODY += '	<div class="modal-content" id="modalBreakreasonWorkspace">';
 		
+		// _BODY += '	</div>';
+		// _BODY += '	<div class="modal-footer">';
+		// _BODY += '		<button id ="btnBreakreasonOk" class="NixxisDefaultButtonStyle">Ok</button>';
+		// _BODY += '		<button id ="btnBreakreasonClose" class="NixxisDefaultButtonStyle" >Cancel</button>';
+		// _BODY += '	</div>';
+		// _BODY += '</div>';
+
+		_BODY += '<div class="modal checkBoxModal active" id="break-reason">';
+		_BODY += '	<div class="modal-header">';
+		_BODY += '		<h4><img src="./assets/icons/Agent_Dialog_Pause.ico" width="16" height="16" alt="icon" /> Break reason</h4>';
+		_BODY += '		<button class="close-btn" data-close>close</button>';
 		_BODY += '	</div>';
-		_BODY += '	<div class="modal-footer">';
-		_BODY += '		<button id ="btnBreakreasonOk" class="NixxisDefaultButtonStyle">Ok</button>';
-		_BODY += '		<button id ="btnBreakreasonClose" class="NixxisDefaultButtonStyle" >Cancel</button>';
-		_BODY += '	</div>';
+		_BODY += '<div class="modal-content" id="modalBreakreasonWorkspace">';
+		_BODY += '</div>';
+		_BODY += '<div class="modal-footer">';
+		_BODY += '	<button class="c-btn" id ="btnBreakreasonOk">&nbsp;&nbsp;OK&nbsp;&nbsp;</button>';
+		_BODY += '	<button class="c-btn" id ="btnBreakreasonClose" data-close>Cancel</button>';
 		_BODY += '</div>';
 					
 		crPauseCodePanel.Form.txWorkArea[1].innerHTML = _BODY;
-		
-		crPauseCodePanel.crFormBtnCancel = new toolboxButton("btnbtnBreakreasonClose", "Cancel", function() { crPauseCodePanel.btnCancel_OnClick(); });
-		crPauseCodePanel.crFormBtnCancel.txAbsolute = false;
-		crPauseCodePanel.crFormBtnCancel.txParent = $('btnBreakreasonClose');
-		
-		crPauseCodePanel.crFormBtnCancel.txAlt = "Cancel";
-		crPauseCodePanel.crFormBtnCancel.txTitle = "Cancel";      
-		crPauseCodePanel.crFormBtnCancel.Show();
-
-		crPauseCodePanel.crFormBtnOk = new toolboxButton("btnbtnBreakreasonOk", "Ok", function() { crPauseCodePanel.btnOk_OnClick(); });
-		crPauseCodePanel.crFormBtnOk.txAbsolute = false;
-		crPauseCodePanel.crFormBtnOk.txParent = $('btnBreakreasonOk');
-		
-		crPauseCodePanel.crFormBtnOk.txAlt = "Ok";
-		crPauseCodePanel.crFormBtnOk.txTitle = "Ok";      
-		crPauseCodePanel.crFormBtnOk.Show();			
-
+			
+		// debugger;
+		$('btnBreakreasonOk').onclick = crPauseCodePanel.btnOk_OnClick;
+		$('btnBreakreasonClose').onclick = crPauseCodePanel.btnCancel_OnClick;
 		$('btnBreakreasonClose').focus();
 	},
 
 	ShowList : function(list, workspace)
 	{
 		workspace.innerHTML = "";
-		workspace.appendChild(crPauseCodePanel.CreateList(list));
+		crPauseCodePanel.CreateList(list, workspace);
 	},
 	Show : function (list) 
 	{
@@ -958,67 +957,62 @@ var crPauseCodePanel =
 		if (arguments.length > 0) crPauseCodePanel.ShowList(arguments[0], $('modalBreakreasonWorkspace'));
 
 		$('btnBreakreasonOk').style.display = "none";
+
+		var breakItems = $('modalBreakreasonWorkspace');
+		if(breakItems.childNodes.length > 0 && breakItems.childNodes[0].crId != null)
+		{
+			breakItems.childNodes[0].childNodes[0].checked = 'checked';
+			crPauseCodePanel.CurrentSelected = breakItems.childNodes[0];
+			$('btnBreakreasonOk').style.display = "inline";
+		}
+
 		addElementClass($('Pause'), 'active');
 	},
-	CreateList : function(list)
+	CreateList : function(list, workspace)
 	{
-		var superMainDIV = $('divBodyItems');
-		
-		if(superMainDIV == null)
-		{
-			superMainDIV = document.createElement('div');
-			superMainDIV.id = "divBodyItems";
-		}
-		else{
-			superMainDIV.innerHTML = '';
-		}
+		debugger;
 		
 		if(list.Count() > 0)
 		{
 			for(index in list.Items)
 			{
-				var mainDIV = document.createElement('div');
-				
-				mainDIV.className = "modal-content-item";
-				
-				// debugger;
+				var container = document.createElement('label');
+				container.className = 'container';
+				container.crId = list.Items[index].Id;
 
-				mainDIV.onclick = crPauseCodePanel.Select_OnClick;
-				mainDIV.onmouseenter = crPauseCodePanel.Select_OnHover;
-				mainDIV.onmouseleave = crPauseCodePanel.Select_OnHoverOut;
+				var containerinput = document.createElement('input');
+				containerinput.type = 'checkbox';				
 
-				var insideCheckBox = document.createElement('div');
-				// insideCheckBox.type = "checkbox";
+				var containerspan = document.createElement('span');
+				containerspan.className = 'checkmark';
+				containerspan.innerHTML = '<div>' + list.Items[index].Description + '</div>';
+
+				container.appendChild(containerinput);
+				container.appendChild(containerspan);
 				
-				// mainDIV.style.backgroundColor ='#00809F';
+				container.onclick = crPauseCodePanel.Select_OnClick;
 
-				mainDIV.appendChild(insideCheckBox);
-
-				var insideSpan = document.createElement('span');
-				insideSpan.className = "labelcheckbox";
-				insideSpan.textContent = list.Items[index].Description;
-				insideSpan.crId = list.Items[index].Id;
-				
-				mainDIV.appendChild(insideSpan);
-				superMainDIV.appendChild(mainDIV);
+				workspace.appendChild(container);
 			}
-
-			return superMainDIV;
 		}
 		else
 		{
-			var mainDIV = document.createElement('div');
-			mainDIV.id = "divBodyItems";
-			mainDIV.className = "modal-content-item";
-			
-			var insideSpan = document.createElement('span');
-			insideSpan.className = "labelcheckbox";
-			insideSpan.textContent = 'No Items';
+			var container = document.createElement('label');
+			container.className = 'container';
+			container.crId = null;
 
-			mainDIV.appendChild(insideSpan);
+			var containerinput = document.createElement('input');
+			containerinput.type = 'checkbox';
 
-			return mainDIV;
-		}		
+			var containerspan = document.createElement('span');
+			// containerspan.className = 'checkmark';
+			containerspan.innerHTML = '<div>' + 'No Items' + '</div>';
+
+			container.appendChild(containerinput);
+			container.appendChild(containerspan);
+
+			workspace.appendChild(container);
+		}
 	},
 
 
@@ -1030,14 +1024,13 @@ var crPauseCodePanel =
 		// debugger;
 		try
 		{
-			if(crPauseCodePanel.CurrentSelected != null && crPauseCodePanel.CurrentSelected != '' )
+			var breakItems = $('modalBreakreasonWorkspace');
+			for(var i = 0; i < breakItems.childNodes.length; i++)
 			{
-				if(this.childNodes[1].crId != crPauseCodePanel.CurrentSelected.childNodes[1].crId) 
-				{
-					this.style.backgroundColor = '#00809F';
-					crPauseCodePanel.CurrentSelected.style.backgroundColor = 'rgb(81, 80, 80)';
-				}
+				breakItems.childNodes[i].childNodes[0].checked = '';
 			}
+
+			this.childNodes[0].checked = 'checked';
 		}
 		catch(e)
 		{;}
@@ -1047,30 +1040,13 @@ var crPauseCodePanel =
 		
 		if (this.crPositiveUpdatable) $("txtNixxisQualOptPos").value = this.crPositive;
 	},
-	Select_OnHover : function(sender)
-	{
-		var div = sender.currentTarget;
-		div.style.backgroundColor ='#00809F';
-	},
-
-	Select_OnHoverOut : function(sender)
-	{
-		var div = sender.currentTarget;
-
-		if(crPauseCodePanel.CurrentSelected != null && crPauseCodePanel.CurrentSelected != '' )
-		{
-			if(div.childNodes[1].crId == crPauseCodePanel.CurrentSelected.childNodes[1].crId) return;			
-		}
-
-		div.style.backgroundColor ='rgb(81, 80, 80)';
-	},
 	btnOk_OnClick: function()
 	{
 		// debugger;
 
 		if (crPauseCodePanel.CurrentSelected) 
 		{
-			ClientLink.commands.Pause.execute(crPauseCodePanel.CurrentSelected.childNodes[1].crId);
+			ClientLink.commands.Pause.execute(crPauseCodePanel.CurrentSelected.crId);
 
 			removeElementClass($('backdrop'), 'active');
 			removeElementClass($('break-reason'), 'active');
