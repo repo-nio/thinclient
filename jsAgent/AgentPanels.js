@@ -893,27 +893,14 @@ var crPauseCodePanel =
 		crPauseCodePanel.Form = new toolboxForm("PauseCodes");
 		crPauseCodePanel.Form.txParent = document.body;
 		crPauseCodePanel.Form.Show();
-		crPauseCodePanel.Form.onFormExit = crPauseCodePanel.Close;			
+		crPauseCodePanel.Form.onFormExit = crPauseCodePanel.Close;
 		
 		var _BODY = '';	    
-
-		// _BODY += '<div class="modal active" id="break-reason">';
-		// _BODY += '	<div class="modal-header">';
-		// _BODY += '		<h4>Break reason</h4>';
-		// _BODY += '	</div>';
-		// _BODY += '	<div class="modal-content" id="modalBreakreasonWorkspace">';
-		
-		// _BODY += '	</div>';
-		// _BODY += '	<div class="modal-footer">';
-		// _BODY += '		<button id ="btnBreakreasonOk" class="NixxisDefaultButtonStyle">Ok</button>';
-		// _BODY += '		<button id ="btnBreakreasonClose" class="NixxisDefaultButtonStyle" >Cancel</button>';
-		// _BODY += '	</div>';
-		// _BODY += '</div>';
 
 		_BODY += '<div class="modal checkBoxModal active" id="break-reason">';
 		_BODY += '	<div class="modal-header">';
 		_BODY += '		<h4><img src="./assets/icons/Agent_Dialog_Pause.ico" width="16" height="16" alt="icon" /> Break reason</h4>';
-		_BODY += '		<button class="close-btn" data-close>close</button>';
+		_BODY += '		<button class="close-btn" id ="btnBreakreasonCloseTop" data-close>close</button>';
 		_BODY += '	</div>';
 		_BODY += '<div class="modal-content" id="modalBreakreasonWorkspace">';
 		_BODY += '</div>';
@@ -923,10 +910,10 @@ var crPauseCodePanel =
 		_BODY += '</div>';
 					
 		crPauseCodePanel.Form.txWorkArea[1].innerHTML = _BODY;
-			
-		// debugger;
+
 		$('btnBreakreasonOk').onclick = crPauseCodePanel.btnOk_OnClick;
 		$('btnBreakreasonClose').onclick = crPauseCodePanel.btnCancel_OnClick;
+		$('btnBreakreasonCloseTop').onclick = crPauseCodePanel.btnCancel_OnClick;
 		$('btnBreakreasonClose').focus();
 	},
 
@@ -1096,40 +1083,28 @@ var crTeamSelectPanel =
 		crTeamSelectPanel.Form = new toolboxForm("TeamSelection");
 		crTeamSelectPanel.Form.txParent = document.body;
 		crTeamSelectPanel.Form.Show();
-		crTeamSelectPanel.Form.onFormExit = crTeamSelectPanel.Close;			
+		crTeamSelectPanel.Form.onFormExit = crTeamSelectPanel.Close;
 		
 		var _BODY = '';	    
 
-		_BODY += '<div class="modal active" id="team">';
+		_BODY += '<div class="modal checkBoxModal active" id="team">';
 		_BODY += '	<div class="modal-header">';
-		_BODY += '		<h4>Team</h4>';
+		_BODY += '		<h4><img src="./assets/icons/Agent_Dialog_TeamSelection.ico" width="16" height="16" alt="icon" /> Team</h4>';
+		_BODY += '		<button class="close-btn" id = "btnTeamCloseTop" data-close>close</button>';
 		_BODY += '	</div>';
-		_BODY += '	<div class="modal-teamcontent" id="modalworkspace">';
-		
+		_BODY += '	<div class="modal-content" id="modalworkspace">';
 		_BODY += '	</div>';
 		_BODY += '	<div class="modal-footer">';
-		_BODY += '		<button id ="btnTeamOk" class="NixxisDefaultButtonStyle">Ok</button>';
-		_BODY += '		<button id ="btnTeamClose" class="NixxisDefaultButtonStyle">Cancel</button>';
+		_BODY += '		<button class="c-btn" id ="btnTeamOk">&nbsp;&nbsp;OK&nbsp;&nbsp;</button>';
+		_BODY += '		<button class="c-btn" id ="btnTeamClose" data-close>Cancel</button>';
 		_BODY += '	</div>';
 		_BODY += '</div>';
 					
 		crTeamSelectPanel.Form.txWorkArea[1].innerHTML = _BODY;
 		
-		crTeamSelectPanel.crFormBtnCancel = new toolboxButton("btnbtnTeamClose", "Cancel", function() { crTeamSelectPanel.ButtonClose(); });
-		crTeamSelectPanel.crFormBtnCancel.txAbsolute = false;
-		crTeamSelectPanel.crFormBtnCancel.txParent = $('btnTeamClose');
-		
-		crTeamSelectPanel.crFormBtnCancel.txAlt = "Cancel";
-		crTeamSelectPanel.crFormBtnCancel.txTitle = "Cancel";      
-		crTeamSelectPanel.crFormBtnCancel.Show();
-
-		crTeamSelectPanel.crFormBtnOk = new toolboxButton("btnbtnTeamOk", "Ok", function() { crTeamSelectPanel.ButtonOk(); });
-		crTeamSelectPanel.crFormBtnOk.txAbsolute = false;
-		crTeamSelectPanel.crFormBtnOk.txParent = $('btnTeamOk');
-		
-		crTeamSelectPanel.crFormBtnOk.txAlt = "Ok";
-		crTeamSelectPanel.crFormBtnOk.txTitle = "Ok";      
-		crTeamSelectPanel.crFormBtnOk.Show();			
+		$('btnTeamOk').onclick = crTeamSelectPanel.ButtonOk;
+		$('btnTeamClose').onclick = crTeamSelectPanel.ButtonClose;
+		$('btnTeamCloseTop').onclick = crTeamSelectPanel.ButtonClose;
 
 		$('btnTeamClose').focus();		
 	},
@@ -1137,11 +1112,12 @@ var crTeamSelectPanel =
 	ShowList : function(list, workspace)
 	{
 		workspace.innerHTML = "";		
-		workspace.appendChild(crTeamSelectPanel.CreateList(list));		
+		crTeamSelectPanel.CreateList(list, workspace);		
 	},
 
 	Show : function (list) 
 	{
+		// debugger;
 		HideAllDialogModals();
 
 		if (crTeamSelectPanel.Form)
@@ -1164,71 +1140,54 @@ var crTeamSelectPanel =
 		addElementClass($('backdrop'), 'active');
 	},
 
-	CreateList : function(list)
+	CreateList : function(list, workspace)
 	{
-		var superMainDIV = $('divBodyItems');
-		
-		if(superMainDIV == null)
-		{
-			superMainDIV = document.createElement('div');
-			superMainDIV.id = "divBodyItems";
-		}
-		else{
-			superMainDIV.innerHTML = '';
-		}
+		// debugger;
 		
 		if(list.Count() > 0)
 		{
 			for(index in list.Items)
 			{
-				var mainDIV = document.createElement('div');
-				
-				mainDIV.className = "modal-content-item";
-				
-				// debugger;
+				var container = document.createElement('label');
+				container.className = 'container';
+				container.crId = list.Items[index].Id;
 
-				mainDIV.onclick = crTeamSelectPanel.Select_OnClick;
-				mainDIV.onmouseenter = crTeamSelectPanel.Select_OnHover;
-				mainDIV.onmouseleave = crTeamSelectPanel.Select_OnHoverOut;
+				var containerinput = document.createElement('input');
+				containerinput.type = 'checkbox';
+				containerinput.crActive = list.Items[index].Active;
+				containerinput.crActiveNewValue = list.Items[index].Active;
 
-				var insideCheckBox = document.createElement('input');
-				insideCheckBox.type = "checkbox";
-				insideCheckBox.onclick = crTeamSelectPanel.Select_OnClick;
+				if(containerinput.crActive) containerinput.checked = true;
 
-				if (list.Items[index].Active)
-				{			
-					insideCheckBox.checked = true;
-					mainDIV.style.backgroundColor ='#00809F';
-				}
+				var containerspan = document.createElement('span');
+				containerspan.className = 'checkmark';
+				containerspan.innerHTML = '<div>' + list.Items[index].Description + '</div>';
 
-				mainDIV.appendChild(insideCheckBox);
+				container.appendChild(containerinput);
+				container.appendChild(containerspan);
 
-				var insideSpan = document.createElement('span');
-				insideSpan.className = "labelcheckbox";
-				insideSpan.textContent = list.Items[index].Description
-				insideSpan.crId = list.Items[index].Id;
-				insideSpan.crActive = list.Items[index].Active;
-				insideSpan.crActiveNewValue = list.Items[index].Active;
-				mainDIV.appendChild(insideSpan);
+				containerinput.onclick = crTeamSelectPanel.Select_OnClick;
 
-				superMainDIV.appendChild(mainDIV);
+				workspace.appendChild(container);
 			}
-
-			return superMainDIV;
-		}
+		} 
 		else
 		{
-			var mainDIV = document.createElement('div');
-			mainDIV.id = "divBodyItems";
-			mainDIV.className = "modal-content-item";
-			
-			var insideSpan = document.createElement('span');
-			insideSpan.className = "labelcheckbox";
-			insideSpan.textContent = 'No Items';
+			var container = document.createElement('label');
+			container.className = 'container';
+			container.crId = null;
 
-			mainDIV.appendChild(insideSpan);
+			var containerinput = document.createElement('input');
+			containerinput.type = 'checkbox';
 
-			return mainDIV;
+			var containerspan = document.createElement('span');
+			// containerspan.className = 'checkmark';
+			containerspan.innerHTML = '<div>' + 'No Items' + '</div>';
+
+			container.appendChild(containerinput);
+			container.appendChild(containerspan);
+
+			workspace.appendChild(container);
 		}		
 	},
 
@@ -1238,69 +1197,34 @@ var crTeamSelectPanel =
 	//
 	Select_OnClick : function(sender)
 	{
-		debugger;
-		var div = null;
+		// debugger;
 		
-		if(sender.currentTarget.tagName == 'INPUT') 
+		if(sender.currentTarget.tagName?.toLowerCase() == 'input') 
 		{
-			div = sender.currentTarget.parentNode;
-			var childs = div.childNodes;
-			childs[0].checked = !childs[0].checked;
+			var childControl = sender.currentTarget;
+
+			if(childControl.checked == 'checked' || childControl.checked) childControl.checked = '';
+			else childControl.checked = false;
+
+			childControl.crActiveNewValue = !childControl.crActiveNewValue;
 			return;
 		}
-		else div = sender.currentTarget;
-
-		div = sender.currentTarget;		
-		var childs = div.childNodes;
-
-		childs[0].checked = !childs[0].checked;
-		childs[1].crActiveNewValue = !childs[1].crActiveNewValue;
-
-		if(childs[0].checked)
-		{
-			div.style.backgroundColor ='#00809F';
-		}
-		else
-		{
-			div.style.backgroundColor ='rgb(81, 80, 80)';
-		}
 	},
-
-	Select_OnHover : function(sender)
-	{
-		var div = sender.currentTarget;
-		div.style.backgroundColor ='#00809F';
-	},
-
-	Select_OnHoverOut : function(sender)
-	{
-		var div = sender.currentTarget;
-
-		var childs = div.childNodes;
-
-		if(childs==null || !childs[0].checked)
-			div.style.backgroundColor ='rgb(81, 80, 80)';
-	},
-	
 	ButtonOk : function()
 	{
-		debugger;
-	
-		var allSpans = $('divBodyItems').getElementsByTagName('span');
-		
-		if(allSpans != null)
+		// debugger;
+
+		var teamItems = $('modalworkspace');
+		for(var i = 0; i < teamItems.childNodes.length; i++)
 		{
-			for(var i = 0; i < allSpans.length; i++)
+			var child = teamItems.childNodes[i];
+
+			if(child.childNodes[0].crActiveNewValue != child.childNodes[0].crActive)
 			{
-				var child = allSpans[i];
-
-				if(child.crActiveNewValue != child.crActive)
-				{
-					ClientLink.setActivateTeam(child.crId, child.crActiveNewValue);
-				}
+				ClientLink.setActivateTeam(child.crId, child.childNodes[0].crActiveNewValue);
 			}
-		}	
-
+		}
+		
 		removeElementClass($('team'), 'active');
 		removeElementClass($('backdrop'), 'active');
 		removeElementClass($('TeamSelection'), 'active');
