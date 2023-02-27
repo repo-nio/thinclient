@@ -662,34 +662,24 @@ var crSearchModePanel =
 
 		_BODY += '<div class="modal active" id="search-mode">';
 		_BODY += '	<div class="modal-header">';
-		_BODY += '		<h4>Search mode</h4>';
+		_BODY += '		<h4><img src="./assets/icons/Agent_Dialog_SearchMode.ico" width="16" height="16" alt="icon" /> Search mode</h4>';
+		_BODY += '		<button class="close-btn" id ="btnSearchCloseTop" data-close>close</button>';
 		_BODY += '	</div>';
-		_BODY += '	<div class="modal-content" id="modalSearchworkspace">';
-		
+		_BODY += '	<div class="modal-content">';
+		_BODY += '		<ul class="accordionModal" id="modalSearchworkspace">';
+		_BODY += '		</ul>';
 		_BODY += '	</div>';
 		_BODY += '	<div class="modal-footer">';
-		_BODY += '		<button id ="btnSearchOk" class="NixxisDefaultButtonStyle" >Preview</button>';
-		_BODY += '		<button id ="btnSearchClose" class="NixxisDefaultButtonStyle" >Cancel</button>';
+		_BODY += '		<button class="c-btn" id ="btnSearchOk">Preview</button>';
+		_BODY += '		<button class="c-btn" id ="btnSearchClose" data-close>Cancel</button>';
 		_BODY += '	</div>';
 		_BODY += '</div>';
-					
-		crSearchModePanel.Form.txWorkArea[1].innerHTML = _BODY;
-		
-		crSearchModePanel.crFormBtnCancel = new toolboxButton("btnbtnSearchClose", "Cancel", function() { crSearchModePanel.btnCancel_OnClick(); });
-		crSearchModePanel.crFormBtnCancel.txAbsolute = false;
-		crSearchModePanel.crFormBtnCancel.txParent = $('btnSearchClose');
-		
-		crSearchModePanel.crFormBtnCancel.txAlt = "Cancel";
-		crSearchModePanel.crFormBtnCancel.txTitle = "Cancel";      
-		crSearchModePanel.crFormBtnCancel.Show();
 
-		crSearchModePanel.crFormBtnOk = new toolboxButton("btnbtnSearchOk", "Ok", function() { crSearchModePanel.btnOk_OnClick(); });
-		crSearchModePanel.crFormBtnOk.txAbsolute = false;
-		crSearchModePanel.crFormBtnOk.txParent = $('btnSearchOk');
-		
-		crSearchModePanel.crFormBtnOk.txAlt = "Ok";
-		crSearchModePanel.crFormBtnOk.txTitle = "Ok";      
-		crSearchModePanel.crFormBtnOk.Show();			
+		crSearchModePanel.Form.txWorkArea[1].innerHTML = _BODY;
+
+		$('btnSearchOk').onclick = crSearchModePanel.btnOk_OnClick;
+		$('btnSearchClose').onclick = crSearchModePanel.btnCancel_OnClick;
+		$('btnSearchCloseTop').onclick = crSearchModePanel.btnCancel_OnClick;
 
 		$('btnSearchClose').focus();
 	},
@@ -697,7 +687,7 @@ var crSearchModePanel =
 	ShowTree : function(tree, workspace)
 	{
 		workspace.innerHTML = "";
-		workspace.appendChild(crSearchModePanel.CreateBranch(tree, crSearchModePanel._sysLevel));
+		crSearchModePanel.CreateBranch(tree, crSearchModePanel._sysLevel, workspace);
 	},
 	Show : function (tree)
 	{
@@ -718,40 +708,50 @@ var crSearchModePanel =
 		addElementClass($('search-mode'), 'active');
 		addElementClass($('backdrop'), 'active');
 
-		$('btnSearchOk').style.display = "none";
+		$('btnSearchOk').disabled = true;
 	},
-	CreateBranch : function(branch, level)
+	CreateBranch : function(branch, level, workspace)
 	{
-		// debugger;
-
-		var mainTag = null;
+		debugger;
 
 		if(branch.Count() > 0)
 		{
-			// debugger;			
+			debugger;
+			var iCount = 0;
 
 			for(index in branch.Children)
 			{
 				if (branch.Children[index].Count() > 0)
 				{
-					var mainTag = document.createElement('ul');
+					var mainTag = document.createElement('li');
+					var mainTitleTag = document.createElement('div');
 
-					mainTag.className = "labelSearchModeUL";
-					mainTag.textContent = branch.Children[index].Description;
-					mainTag.crId = branch.Children[index].Id;
-					mainTag.onclick = crSearchModePanel.Select_OnClick;					
+					if(iCount == 0) mainTitleTag.className = 'acclink active';
+					else mainTitleTag.className = 'acclink';
 
+					mainTitleTag.innerHTML = branch.Children[index].Description;
+					mainTitleTag.crId = branch.Children[index].Id;
+					// mainTitleTag.onclick = crSearchModePanel.Select_OnClick;
+
+					var childDiv = document.createElement('div');
+					childDiv.className = 'accord-detail';
+					var iChildCount = 0;
 					for(idx in branch.Children[index].Children)
 					{
-						var lispan = document.createElement('li');
+						var childPara = document.createElement('p');
+						
+						childPara.innerHTML = branch.Children[index].Children[idx].Description;
+						childPara.crId = branch.Children[index].Children[idx].Id;
+						childPara.onclick = crSearchModePanel.Select_OnClick;
 
-						lispan.className = "labelSearchMode";
-						lispan.textContent = branch.Children[index].Children[idx].Description;
-						lispan.crId = branch.Children[index].Children[idx].Id;
-						lispan.onclick = crSearchModePanel.Select_OnClick;	
-
-						mainTag.appendChild(lispan);
+						childDiv.appendChild(childPara);
+						iChildCount++;
 					}
+
+					iCount++;
+					mainTag.appendChild(mainTitleTag);
+					if(iChildCount > 0) mainTag.appendChild(childDiv);
+					workspace.appendChild(mainTag);
 				}
 				else
 				{
@@ -769,38 +769,21 @@ var crSearchModePanel =
 			insideSpan.className = "labelSearchMode";
 			insideSpan.textContent = 'No Items';
 
-			mainTag.appendChild(insideSpan);
+			workspace.appendChild(insideSpan);
 		}
-
-		return mainTag;
 	},
 	Select_OnClick : function(sender)
 	{
-		// debugger;
+		debugger;
 
 		var target = sender.currentTarget;
 
-		if(target.nodeName?.toLowerCase() == 'li' )
+		if(target.nodeName?.toLowerCase() == 'p' )
 		{
-			var chilrens = target.parentNode.children;
-			if(chilrens)
-			{
-				for(var i = 0; i < chilrens.length; i++)
-				{
-					var child = chilrens[i];
-					if(child.tagName.toLowerCase() != 'li') continue;
-					removeElementClass(child, 'active');	
-				}
-			}
-
-			$('btnSearchOk').style.display = "inline";
+			$('btnSearchOk').disabled = false;
 			crSearchModePanel.CurrentSelected = target;
 			addElementClass(target, 'active');			
 		}
-		else
-		{
-
-		}		
 	},
 
 	//
@@ -899,7 +882,7 @@ var crPauseCodePanel =
 
 		_BODY += '<div class="modal checkBoxModal active" id="break-reason">';
 		_BODY += '	<div class="modal-header">';
-		_BODY += '		<h4><img src="./assets/icons/Agent_Dialog_Pause.ico" width="16" height="16" alt="icon" /> Break reason</h4>';
+		_BODY += '		<h4><img src="./assets/icons/Agent_Dialog_Pause.ico" width="16" height="16" alt="icon" /> Select a break...</h4>';
 		_BODY += '		<button class="close-btn" id ="btnBreakreasonCloseTop" data-close>close</button>';
 		_BODY += '	</div>';
 		_BODY += '<div class="modal-content" id="modalBreakreasonWorkspace">';
@@ -1089,7 +1072,7 @@ var crTeamSelectPanel =
 
 		_BODY += '<div class="modal checkBoxModal active" id="team">';
 		_BODY += '	<div class="modal-header">';
-		_BODY += '		<h4><img src="./assets/icons/Agent_Dialog_TeamSelection.ico" width="16" height="16" alt="icon" /> Team</h4>';
+		_BODY += '		<h4><img src="./assets/icons/Agent_Dialog_TeamSelection.ico" width="16" height="16" alt="icon" /> Team selection...</h4>';
 		_BODY += '		<button class="close-btn" id = "btnTeamCloseTop" data-close>close</button>';
 		_BODY += '	</div>';
 		_BODY += '	<div class="modal-content" id="modalworkspace">';
@@ -1203,7 +1186,7 @@ var crTeamSelectPanel =
 		{
 			var childControl = sender.currentTarget;
 
-			if(childControl.checked == 'checked' || childControl.checked) childControl.checked = '';
+			if(childControl.checked == 'checked' || childControl.checked) childControl.checked = true;
 			else childControl.checked = false;
 
 			childControl.crActiveNewValue = !childControl.crActiveNewValue;
