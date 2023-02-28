@@ -246,52 +246,39 @@ var crQualPanel =
 
 	Init : function()
 	{
-		// if (!crQualPanel.WorkSpace) 
-		// {
-			crQualPanel.Form = new toolboxForm("QualificationForm");
-			crQualPanel.Form.txParent = document.body;
-			crQualPanel.Form.Show();
-			crQualPanel.Form.onFormExit = crQualPanel.Close;			
+		debugger;
+		crQualPanel.Form = new toolboxForm("QualificationForm");
+		crQualPanel.Form.txParent = document.body;
+		crQualPanel.Form.Show();
+		crQualPanel.Form.onFormExit = crQualPanel.Close;			
 
-			var _BODY = '';	    
+		var _BODY = '';	    
 
-			_BODY += '<div class="modal width500 active" id="Select-qual">';
-			_BODY += '	<div class="modal-header">';
-			_BODY += '		<h4>'+ CrResource.QualificationForm.title +'</h4>';
-			_BODY += '	</div>';
-			_BODY += '	<div class="modal-content" >';
-			_BODY += '		<div style="width: 50%; float:left" id="modalSelectqualworkspace">';
-			_BODY += '		</div>';
-			_BODY += '		<div style="width: 50%; float:right" id="QualificationPanel">';
-			_BODY += '		</div>';
-			_BODY += '		<br style="clear:both;"/>';
-			_BODY += '	</div>';
-			_BODY += '	<div class="modal-footer">';
-			_BODY += '		<button id ="btnSelectqualOk" class="NixxisDefaultButtonStyle">Ok</button>';
-			_BODY += '		<button id ="btnSelectqualClose" class="NixxisDefaultButtonStyle" >Cancel</button>';
-			_BODY += '	</div>';
-			_BODY += '</div>';
-					
-			crQualPanel.Form.txWorkArea[1].innerHTML = _BODY;
+		_BODY += '<div class="modal active" id="Select-qual">';
+		_BODY += '	<div class="modal-header">';
+		_BODY += '		<h4><img src="./assets/icons/Agent_Dialog_Qualifications.ico" width="16" height="16" alt="icon" /> '+ CrResource.QualificationForm.title +'</h4>';
+		_BODY += '		<button class="close-btn" id ="btnSelectqualCloseTop" data-close>close</button>';
+		_BODY += '	</div> ';
+		_BODY += '	<div class="modal-content" style="display: flex;">';
+		_BODY += '		<div class="dispositionCnt" id="modalSelectqualworkspace">';
+		_BODY += '		</div>';
+		_BODY += '		<div class="calenderBox" id="QualificationPanel">';
+		_BODY += '		</div>';
+		_BODY += '	</div>';
+		_BODY += '	<div class="modal-footer">';
+		_BODY += '		<button class="c-btn" id ="btnSelectqualOk">&nbsp;&nbsp;OK&nbsp;&nbsp;</button>';
+		_BODY += '		<button class="c-btn" id ="btnSelectqualClose" data-close>Cancel</button>';
+		_BODY += '	 </div>';
+		_BODY += '</div>';
+				
+		crQualPanel.Form.txWorkArea[1].innerHTML = _BODY;
 
-			crQualPanel.crFormBtnCancel = new toolboxButton("btnbtnSelectqualClose", "Cancel", function() { btnQualCancel_OnClick(); });
-			crQualPanel.crFormBtnCancel.txAbsolute = false;
-			crQualPanel.crFormBtnCancel.txParent = $('btnSelectqualClose');
+		$('btnSelectqualClose').onclick = btnQualCancel_OnClick;
+		$('btnSelectqualCloseTop').onclick = btnQualCancel_OnClick;
+		$('btnSelectqualOk').onclick = btnQualOk_OnClick;
 
-			crQualPanel.crFormBtnCancel.txAlt = "Cancel";
-			crQualPanel.crFormBtnCancel.txTitle = "Cancel";      
-			crQualPanel.crFormBtnCancel.Show();
-
-			crQualPanel.crFormBtnOk = new toolboxButton("btnbtnSelectqualOk", "Ok", function() { btnQualOk_OnClick(); });
-			crQualPanel.crFormBtnOk.txAbsolute = false;
-			crQualPanel.crFormBtnOk.txParent = $('btnSelectqualOk');
-
-			crQualPanel.crFormBtnOk.txAlt = "Ok";
-			crQualPanel.crFormBtnOk.txTitle = "Ok";      
-			crQualPanel.crFormBtnOk.Show();
-
-			crQualPanel.OptionSpace = $('QualificationPanel');
-			$('btnSelectqualClose').focus();
+		crQualPanel.OptionSpace = $('QualificationPanel');
+		$('btnSelectqualClose').focus();
 	},
 
 	ShowTree : function(tree, workspace)
@@ -299,83 +286,134 @@ var crQualPanel =
 		crQualPanel._sysLevel = 0;
 
 		workspace.innerHTML = "";
-		workspace.appendChild(crQualPanel.CreateBranch(tree.Children, crQualPanel._sysLevel));
+		crQualPanel.CreateBranch(tree.Children, crQualPanel._sysLevel, workspace);
 	},
 	Show : function (tree)
 	{
 		HideAllDialogModals();
-
+		debugger;
 		if (crQualPanel.Form) crQualPanel.crInt_OpenWindow = false;
 		else crQualPanel.crInt_OpenWindow = true;
 
 		if(crQualPanel.crInt_OpenWindow) crQualPanel.Init(tree);
-		
+
 		if (arguments.length > 0) crQualPanel.ShowTree(arguments[0], $('modalSelectqualworkspace'));
 
-		$('btnSelectqualOk').style.display = "none";
+		$('btnSelectqualOk').disabled = true;
+
+		crQualPanel.OptionSpace = $('QualificationPanel');
 
 		addElementClass($('Select-qual'), 'active');
 		addElementClass($('Selectqual'), 'active');
 		addElementClass($('backdrop'), 'active');
 	},
-	CreateBranch : function(branch, level)
+	CreateBranch : function(branch, level, workspace)
 	{
-		var mainEl = document.createElement('UL');
-		mainEl.id = "ulForDisposition";
-		mainEl.className = "labelDispositionUL";
-	
-		if (level == 0) 
-		{
-			// mainEl.style.paddingLeft = "5px";
-			// mainEl.style.marginTop = "2px";
-		}
-
+		// debugger;
 		if(branch.Count() > 0)
 		{
+			var node = document.createElement('ul');
+			node.className = 'accordionDisposition';
+
 			for(index in branch.Items)
 			{
-				var node = document.createElement('LI');
-				// node.className = "labelDispositionUL";
-
-				var innerEl = document.createElement('SPAN');
-				innerEl.className = "labelDispositionUL";
-				// var icon = document.createElement('IMG');
-
-				if (branch.Items[index].Children.Count() > 0) 
+				if (branch.Items[index].Children.Count() == 0)
 				{
-					// icon.src = "img/Qual_Open.png";
-					// innerEl.crIsCollapsed = false;
-					// innerEl.onclick = crQualPanelIcon_Onclick;
+					var branchNode = document.createElement('li');
+					branchNode.className = 'btnBox';
+	
+					var innerBranchNode = document.createElement('button');
+					innerBranchNode.innerHTML = branch.Items[index].Description;
+					innerBranchNode.onclick = crQualPanel.Select_OnClick;
+					innerBranchNode.crId = branch.Items[index].Id;
+					innerBranchNode.crAction = branch.Items[index].Action;
+					innerBranchNode.crPositive = branch.Items[index].Positive;
+					innerBranchNode.crPositiveUpdatable = branch.Items[index].PositiveUpdatable;
+	
+					branchNode.appendChild(innerBranchNode);
+					node.appendChild(branchNode);
 				}
-				else 
+				else
 				{
-					// icon.src = "img/Qual_None.png";
-					// node.onmouseover = function() { addElementClass(this, 'hover'); };
-					// node.onmouseout = function() { removeElementClass(this, 'hover'); };
-					innerEl.onclick = crQualPanel.Select_OnClick;					
-				}
-						
-				// innerEl.appendChild(icon);
-				innerEl.innerHTML += branch.Items[index].Description;
-				innerEl.crId = branch.Items[index].Id;
-				innerEl.crAction = branch.Items[index].Action;
-				innerEl.crPositive = branch.Items[index].Positive;
-				innerEl.crPositiveUpdatable = branch.Items[index].PositiveUpdatable;
+					var branchNode = document.createElement('li');
+					var innerBranchNode = document.createElement('div');
+					innerBranchNode.className = 'acclink';
+					innerBranchNode.innerHTML = branch.Items[index].Description;
+					innerBranchNode.onclick = crQualPanel.Select_OnClick;
+
+					var innerDetailBranchNode = document.createElement('div');
+					innerDetailBranchNode.className = 'accord-detail';
+					
+					var innerULnode = document.createElement('ul');
+					innerULnode.className = 'accord-detail-inner';
+
+					for(indexC in branch.Items[index].Children.Items)
+					{
+						if (branch.Items[index].Children.Items[indexC].Children.Count() == 0)
+						{
+							var innerChildLINode = document.createElement('li');
+			
+							var innerChildButtonNode = document.createElement('button');
+							innerChildButtonNode.innerHTML = branch.Items[index].Children.Items[indexC].Description;
+							innerChildButtonNode.onclick = crQualPanel.Select_OnClick;
+							innerChildButtonNode.crId = branch.Items[index].Children.Items[indexC].Id;
+							innerChildButtonNode.crAction = branch.Items[index].Children.Items[indexC].Action;
+							innerChildButtonNode.crPositive = branch.Items[index].Children.Items[indexC].Positive;
+							innerChildButtonNode.crPositiveUpdatable = branch.Items[index].Children.Items[indexC].PositiveUpdatable;
+			
+							innerChildLINode.appendChild(innerChildButtonNode);
+							innerULnode.appendChild(innerChildLINode);
+						}
+						else
+						{
+							var innerChildLINode = document.createElement('li');
+
+							var innerBranchNode2 = document.createElement('div');
+							innerBranchNode2.className = 'acclink';
+							innerBranchNode2.innerHTML = branch.Items[index].Children.Items[indexC].Description;
+							innerBranchNode2.onclick = crQualPanel.Select_OnClick;
+
+							var innerDetailBranchNode2 = document.createElement('div');
+							innerDetailBranchNode2.className = 'accord-detail';
+
+							// debugger;
+							for(indexCD in branch.Items[index].Children.Items[indexC].Children.Items)
+							{
+								var dataNode = branch.Items[index].Children.Items[indexC].Children.Items[indexCD];
+
+								var innerChildButtonNode = document.createElement('button');
+								innerChildButtonNode.innerHTML = dataNode.Description;
+								innerChildButtonNode.onclick = crQualPanel.Select_OnClick;
+								innerChildButtonNode.crId = dataNode.Id;
+								innerChildButtonNode.crAction = dataNode.Action;
+								innerChildButtonNode.crPositive = dataNode.Positive;
+								innerChildButtonNode.crPositiveUpdatable = dataNode.PositiveUpdatable;
 				
-				node.appendChild(innerEl);
-					
-				if(branch.Items[index].Children.Count() > 0)
-				{
-					crQualPanel._sysLevel++;
-					node.appendChild(crQualPanel.CreateBranch(branch.Items[index].Children, crQualPanel._sysLevel));
-					crQualPanel._sysLevel--;
-				}
-					
-				mainEl.appendChild(node);
+								innerDetailBranchNode2.appendChild(innerChildButtonNode);
+							}
+
+							innerChildLINode.appendChild(innerBranchNode2);
+							innerChildLINode.appendChild(innerDetailBranchNode2);							
+							innerULnode.appendChild(innerChildLINode);
+						}
+
+						innerDetailBranchNode.appendChild(innerULnode);
+					}
+
+					branchNode.appendChild(innerBranchNode);
+					branchNode.appendChild(innerDetailBranchNode);
+					node.appendChild(branchNode);
+				}				
 			}
+
+			workspace.appendChild(node);
 		}
 		else
 		{
+			var mainEl = document.createElement('UL');
+			mainEl.id = "ulForDisposition";
+			mainEl.className = "labelDispositionUL";
+			
 			var mainTag = document.createElement('div');
 			mainTag.id = "divDispositionBodyItems";
 			mainTag.className = "modal-content-SearchModeitem";
@@ -385,85 +423,52 @@ var crQualPanel =
 			insideSpan.textContent = 'No Items';
 
 			mainEl.appendChild(mainTag);
+			workspace.appendChild(mainEl);
 		}
-			
-		return mainEl;
 	},
 	Select_OnClick : function()
 	{
 		// debugger;
-		try
-		{
-			var allSpans = $('ulForDisposition').getElementsByTagName('span');
-		
-			if(allSpans != null)
-			{			
-				for(var i = 0; i < allSpans.length; i++)
-				{
-					var child = allSpans[i];
-					child.style.backgroundColor = 'Transparent';	
-				}
-			}
 
-			this.style.backgroundColor = '#00809F';
+		if(this.crAction == null)
+		{
+			crQualPanel.OptionClear();
+			$('btnSelectqualOk').disabled = true;
+			return;
 		}
-		catch(e)
-		{;}
-		
-		// this.parentNode.style.backgroundColor = "#a9a9a9";
-		
+
 		if (crQualPanel.CurrentSelected.crAction != this.crAction) 
 		{
 			crQualPanel.OptionClear();
 			
 			if (this.crPositiveUpdatable) crQualPanel.OptionAddPosValue();
-			
 			if (this.crAction == 4 || this.crAction == 5) crQualPanel.OptionAddDateTime();
 		}
 
 		if (this.crPositiveUpdatable) $("txtNixxisQualOptPos").value = this.crPositive;
 		
 		crQualPanel.CurrentSelected = this;
-		$('btnSelectqualOk').style.display = "inline";
+		$('btnSelectqualOk').disabled = false;
 	},
 	OptionClear : function()
 	{
-		crQualPanel.OptionSpace.innerHTML = "";
+		if(crQualPanel.OptionSpace) crQualPanel.OptionSpace.innerHTML = "";
 		crQualPanel.Calen = null;
 	},
 	OptionAddDateTime : function()
 	{
-		debugger;
-		// var el = window.document.createElement("div");
-		// el.className = "labelDispositionUL";
-		// el.id = 'NixxisQualOptionDateTime';
-
-		// crQualPanel.OptionSpace.appendChild(el);
-		// var dte =  new Date();
-		// var dte1 = new Date(dte.getFullYear(), dte.getMonth(), dte.getDate() + 1, dte.getHours(), 0, 0);
-		// crQualPanel.Calen = new Calendar(1,  dte1.toString(), dateChanged, null);
-		// crQualPanel.Calen.showsTime = false;
-		// crQualPanel.Calen.time24 = true;
-		// crQualPanel.Calen.setDateFormat("%Y%m%d%H%M");
-		// crQualPanel.Calen.create(el);
-
-		// var el = window.document.createElement("div");
-		// el.className = "labelDispositionUL";
-		// el.innerHTML = '<label id="lblNixxisQualOptPos" for="NixxisQualOptPos">Callback destination</label><input type="text" name="NixxisQualOptPos" id="txtNixxisQualOptPos" value=""/>';
-		
+		// debugger;
 		
 		var el = window.document.createElement("div");
-		// el.className = "labelDispositionUL";
-		// el.id = 'NixxisQualOptionDateTime';
-
+		el.className = 'calenderBox';
 		var _BODY = '';	    
-		_BODY += '<div class="calenderBox">';
+		// _BODY += '<div class="calenderBox">';
 		_BODY += '	<div class="calender">';
 		_BODY += '		<button class="month" id="MonthName">November 2022</button>';
 		_BODY += '			<div class="dateBoxMain">';
 		_BODY += '				<button class="btnNext left" onclick="javascript: getPreviousWeek();"> << </button>';
 		_BODY += '					<div class="dateCnt">';
-		_BODY += '						<ul style="margin: unset; padding: 0px;">';
+		_BODY += '						<ul style="padding-inline-start: 0px;">';
 		_BODY += '							<li>';
 		_BODY += '								<div class="dateBox" id="dateBox1">';
 		_BODY += '									<div class="day" id="Day1">S</div>';
@@ -499,21 +504,26 @@ var crQualPanel =
 		_BODY += '				<button class="btnNext right" onclick="javascript: getNextWeek();"> >> </button>';
 		_BODY += '			</div>';
 		_BODY += '		<div class="timeSlap">';
-		_BODY += '			<ul id="TimeOptions" class="TimeScrollbar">';
+		_BODY += '			<ul id="TimeOptions" class="mytsscroll">';
+		_BODY += '			</ul>';
+		_BODY += '		</div>';
+		_BODY += '		<div class="calenderBoxForm">';
+		_BODY += '			<ul style="padding-inline-start: 0px;">';
+		_BODY += '				<li>';
+		_BODY += '					 <label>Callback destination:</label>';
+		_BODY += '					 <input type="text" id="txtNixxisQualOptPos"/>';
+		_BODY += '				</li>';
+		_BODY += '				<li>';
+		_BODY += '					 <label>Comment:</label>';
+		_BODY += '					 <input type="text" id="txtNixxisQualOptPosVal"/>';
+		_BODY += '				</li>';
 		_BODY += '			</ul>';
 		_BODY += '		</div>';
 		_BODY += '	</div>';		
-		_BODY += '</div>';
+		// _BODY += '</div>';
 		
 		el.innerHTML = _BODY;
 		crQualPanel.OptionSpace.appendChild(el);
-
-		var elInput = window.document.createElement("div");
-		// elInput.className = "labelDispositionUL";
-		elInput.style.top = 10 + 'px';
-		elInput.innerHTML = '<label id="lblNixxisQualOptPos" for="NixxisQualOptPos" style="color: #fff;">Callback destination</label><input type="text" class="V3InputStyle" name="NixxisQualOptPos" id="txtNixxisQualOptPos" value=""/>';
-		
-		crQualPanel.OptionSpace.appendChild(elInput);
 
 		LoadDateTimeInstance();
 
@@ -521,34 +531,24 @@ var crQualPanel =
 
 		if (info.Direction == "I") $('txtNixxisQualOptPos').value = info.From;
 		else $('txtNixxisQualOptPos').value = info.To;
-
-		// $('NixxisQualOptionDateTime').style.height = 175 + 'px';
 	},
 	OptionAddPosValue : function()
 	{
 		var el = window.document.createElement("div");
-		el.className = "labelDispositionUL";
-		el.innerHTML = '<label id="lblNixxisQualOptPos" for="NixxisQualOptPos">Postive</label><input type="text" name="NixxisQualOptPos" id="txtNixxisQualOptPos" value=""/>';
+		el.className = "calenderBoxForm";
+
+		var _BODY = '';
+
+		_BODY += '			<ul style="padding-inline-start: 0px;">';
+		_BODY += '				<li>';
+		_BODY += '					 <label>Postive:</label>';
+		_BODY += '					 <input type="text" id="txtNixxisQualOptPos"/>';
+		_BODY += '				</li>';
+		_BODY += '			</ul>';
+
+		el.innerHTML = _BODY;		
 		crQualPanel.OptionSpace.appendChild(el);
 	},
-}
-
-function crQualPanelIcon_Onclick()
-{ 
-	var icon = this.firstChild;
-	var list = this.nextSibling; 
-	if (this.crIsCollapsed) 
-	{
-		removeElementClass(list, "HideBranch");
-		this.crIsCollapsed = false;
-		icon.src = "img/Qual_Open.png";
-	}
-	else
-	{
-		addElementClass(list, "HideBranch");
-		this.crIsCollapsed = true;
-		icon.src = "img/Qual_Closed.png";
-	}
 }
 
 function btnQualOk_OnClick()
@@ -559,12 +559,12 @@ function btnQualOk_OnClick()
 	var qualification = crQualPanel.CurrentSelected.crId;
 	var callback = "";
 	var callbackPhone = "";
+	var callComment = "";
 	var info = ClientLink.Contacts.Get(ClientLink.Contacts.ActiveContactId);
 	
 	try
 	{
-		debugger;
-		// var dte = crQualPanel.Calen.date;
+		// debugger;
 
 		var dte = getQualificationSelectedDateInCalendar();
 		var xxDay = dte.getDate().toString();
@@ -581,6 +581,7 @@ function btnQualOk_OnClick()
 		callback =  xxYear + xxMonth + xxDay + xxHour + xxMin;
 
 		callbackPhone = $('txtNixxisQualOptPos').value;
+		callComment = $('txtNixxisQualOptPosVal').value;
 		////alert(callback);
 		// if (info.Direction == "I")
 		// 	callbackPhone = info.From;
@@ -590,18 +591,16 @@ function btnQualOk_OnClick()
 
 		crQualPanel.OptionClear();
 
-		if ($('CloseScript').disabled == true)
-		{
-			$('CloseScript').disabled = false;
-		}
+		if ($('CloseScript').disabled == true) $('CloseScript').disabled = false;
 	}
 	catch(e)
 	{ 
-		callback="";
-		callbackPhone="";
+		callback = "";
+		callbackPhone = "";
+		callComment = "";
 	}
 
-	ClientLink.setQualification(contactId, qualification, 'DTE='+callback, 'NUM='+callbackPhone);
+	ClientLink.setQualification(contactId, qualification, 'DTE='+callback, 'NUM='+callbackPhone, 'BY='+callComment);
 	crQualPanel.CurrentSelected.crAction = -1;
 	// crQualPanel.Form.setVisibility(false);
 
@@ -611,6 +610,7 @@ function btnQualOk_OnClick()
 };
 function btnQualCancel_OnClick()
 {
+	// debugger;
 	crQualPanel.OptionClear();
 	if(crQualPanel != null && crQualPanel.CurrentSelected != null) crQualPanel.CurrentSelected.crAction = -1;
 	// crQualPanel.Form.setVisibility(false);
@@ -716,7 +716,7 @@ var crSearchModePanel =
 
 		if(branch.Count() > 0)
 		{
-			debugger;
+			// debugger;
 			var iCount = 0;
 
 			for(index in branch.Children)
@@ -1250,14 +1250,15 @@ var crAgentLogout =
 
 		_BODY += '<div class="modal active" id="modalAgentLogout" >';
 		_BODY += '	<div class="modal-header">';
-		_BODY += '		<h4>Confirm Quit</h4>';
+		_BODY += '		<h4><img src="./assets/icons/Supervisor_MessageType_Warning_25.png" width="16" height="16" alt="icon" /> Confirm quit</h4>';
+		_BODY += '		<button class="close-btn" id = "btnAgentLogoutCloseTop" data-close>close</button>';
 		_BODY += '	</div>';
 		_BODY += '	<div class="modal-teamcontent" id="modalAgentLogoutworkspace">';
 		
 		_BODY += '	</div>';
 		_BODY += '	<div class="modal-footer">';
-		_BODY += '		<button id ="btnAgentLogoutOk" class="NixxisDefaultButtonStyle">Logout</button>';
-		_BODY += '		<button id ="btnAgentLogoutClose" class="NixxisDefaultButtonStyle">Cancel</button>';
+		_BODY += '		<button id ="btnAgentLogoutOk" class="c-btn">Logout</button>';
+		_BODY += '		<button id ="btnAgentLogoutClose" class="c-btn">Cancel</button>';
 		_BODY += '	</div>';
 		_BODY += '</div>';
 					
@@ -1266,22 +1267,10 @@ var crAgentLogout =
 		$('modalAgentLogout').style.height = 200 + 'px';
 
 		crAgentLogout.ShowList($('modalAgentLogoutworkspace'));
-		
-		crAgentLogout.crFormBtnCancel = new toolboxButton("btnbtnAgentLogoutClose", "Cancel", function() { crAgentLogout.ButtonClose(); });
-		crAgentLogout.crFormBtnCancel.txAbsolute = false;
-		crAgentLogout.crFormBtnCancel.txParent = $('btnAgentLogoutClose');
 
-		crAgentLogout.crFormBtnCancel.txAlt = "Cancel";
-		crAgentLogout.crFormBtnCancel.txTitle = "Cancel";
-		crAgentLogout.crFormBtnCancel.Show();
-
-		crAgentLogout.crFormBtnOk = new toolboxButton("btnbtnAgentLogoutOk", "Ok", function() { crAgentLogout.ButtonOk(); });
-		crAgentLogout.crFormBtnOk.txAbsolute = false;
-		crAgentLogout.crFormBtnOk.txParent = $('btnAgentLogoutOk');
-
-		crAgentLogout.crFormBtnOk.txAlt = "Ok";
-		crAgentLogout.crFormBtnOk.txTitle = "Ok";
-		crAgentLogout.crFormBtnOk.Show();
+		$('btnAgentLogoutClose').onclick = crAgentLogout.ButtonClose;
+		$('btnAgentLogoutCloseTop').onclick = crAgentLogout.ButtonClose;
+		$('btnAgentLogoutOk').onclick = crAgentLogout.ButtonOk;
 	},
 
 	ShowList : function(workspace)
@@ -1294,7 +1283,7 @@ var crAgentLogout =
 		mainDIV.id = "divBodyItems";
 		mainDIV.className = "modal-content-item";
 
-		mainDIV.style = "text-align: center; padding-top: 10%; background-color : #2e2e2e;";
+		mainDIV.style = "text-align: center; padding-top: 10%; font-size: 12px;";
 
 		var insideSpan = document.createElement('span');
 		insideSpan.className = "labelcheckbox";
