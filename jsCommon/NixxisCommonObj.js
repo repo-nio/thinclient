@@ -330,6 +330,7 @@ var crNewCallDialog =
 			addElementClass($('backdrop'), 'active');
 		}		
 		
+		$('MCNum').value = '';
 		if (crNewCallDialog.crNumToCall) 
 		{
 			$("MCNum").value = crNewCallDialog.crNumToCall;
@@ -382,21 +383,29 @@ var crNewCallDialog =
 	    
 	    var _BODY;	    
 
-		_BODY += '<div class="modal manulDialerCustom" id="dial-pad">';
+		_BODY += '<div class="modal" id="dial-pad">';
 		_BODY += '	<div class="modal-header">';
-		_BODY += '		<h4>Manual Dialing...</h4>';
+		_BODY += '		<h4><img src="./assets/icons/Agent_Dialog_AddressBook.ico" width="16" height="16" alt="icon" /> ';
+		_BODY += '			Manual dialing...';
+		_BODY += '		</h4>';
+		_BODY += '		<button class="close-btn" id ="MCallDialPad_Close" data-close>close</button>';
 		_BODY += '	</div>';
-		_BODY += '	<div class="modal-content dial" style="position: relative;">';
-		_BODY += '		<div class="d-flex">';
-		_BODY += '			<input id="MCNum" class="MCNum" type="text" MAXLENGTH="100"/>';
-		_BODY += '			<button id="MCallDialPad_Clear" style ="margin: 0px 2px 0px 5px;">';
-		_BODY += '				<img src="./assets/icons/Agent_AddressBookEntryType_Agent_Off_36.png" alt="icon" style="margin-left: -3px;"/>';
-		_BODY += '			</button>';
-		_BODY += '			<button id="MCallDialPad_Dial">';
-		_BODY += '				<img src="./assets/icons/Agent_Command_ReadyVoice_50.png" alt="icon" style="margin-left: -3px;"/>';
-		_BODY += '			</button>';
-		_BODY += '		</div>';
+		_BODY += '	<div class="modal-content dial">';
+		_BODY += '		<div class="d-flex dial-typ-box">';
+		_BODY += '			<div class="dial-call-input">';
+		_BODY += '				<button class="btn-2" id="btnMCNumHistory"><i class="fa fa-angle-down"></i></button>';
+		_BODY += '				<input type="tel" MAXLENGTH="100" id="MCNum"/>';
+		_BODY += '				<div class="diel-suggestion-box" id="manualDialHistoryListDiv">';
+		_BODY += '					<ul id="manualDialHistoryListUL" class="manualDialHistoryScrollClass"></ul>';
+		_BODY += '				</div>';
+		_BODY += '			</div>';
+		_BODY += '			<div class="dial-call-box">';
+		_BODY += '				<button class="btn-3" id="MCallDialPad_Clear"><img src="./assets/icons/left-arrow.png" alt="icon" style="height: 18px;width: 18px;opacity: 0.75;"/></button>';
+		_BODY += '				<button class="btn-3" id="MCallDialPad_Dial"><img src="./assets/icons/Agent_Command_ReadyVoice_50.png" alt="icon"  style="height: 25px;width: 25px;opacity: 0.75;transform: rotate(225deg);"/></button>';
+		_BODY += '			</div> ';
+		_BODY += '		</div> ';
 		_BODY += '		<div class="buttons">';
+		// _BODY += '		<button class="btn-3">1</button>';
 		_BODY += '			<button id="MCallDialPad_1" class="btn-3">1</button>';
 		_BODY += '			<button id="MCallDialPad_2" class="btn-3">2</button>';
 		_BODY += '			<button id="MCallDialPad_3" class="btn-3">3</button>';
@@ -406,87 +415,36 @@ var crNewCallDialog =
 		_BODY += '			<button id="MCallDialPad_7" class="btn-3">7</button>';
 		_BODY += '			<button id="MCallDialPad_8" class="btn-3">8</button>';
 		_BODY += '			<button id="MCallDialPad_9" class="btn-3">9</button>';
-		_BODY += '			<button id="MCallDialPad_Star" class="btn-3" style="font-size: 42px; line-height: 0; padding-top: 24px;">*</button>';
+		_BODY += '			<button id="MCallDialPad_Star" class="btn-3" style="line-height: 0; font-size: 40px; padding-top: 16px;">*</button>';
 		_BODY += '			<button id="MCallDialPad_0" class="btn-3">0</button>';
 		_BODY += '			<button id="MCallDialPad_Hash" class="btn-3">#</button>';
 		_BODY += '		</div>';
-		_BODY += '		<div id ="manualDialHistoryListDiv" class ="ManualDialHistoryListDiv" style="display: none;">';
-		// _BODY += '			<div class="ManualDialHistoryItemDiv"><span id="ManualDialHistoryItem1" class="ManualDialHistoryItemSpan">1</span></div>';
-		// _BODY += '			<div class="ManualDialHistoryItemDiv"><span id="ManualDialHistoryItem2" class="ManualDialHistoryItemSpan">2</span></div>';
-		// _BODY += '			<div class="ManualDialHistoryItemDiv"><span id="ManualDialHistoryItem3" class="ManualDialHistoryItemSpan">3</span></div>';
-		// _BODY += '			<div class="ManualDialHistoryItemDiv"><span id="ManualDialHistoryItem4" class="ManualDialHistoryItemSpan">4</span></div>';
-		// _BODY += '			<div class="ManualDialHistoryItemDiv"><span id="ManualDialHistoryItem5" class="ManualDialHistoryItemSpan">5</span></div>';
-		// _BODY += '			<div class="ManualDialHistoryItemDiv"><span id="ManualDialHistoryItem6" class="ManualDialHistoryItemSpan">6</span></div>';
-		// _BODY += '			<div class="ManualDialHistoryItemDiv"><span id="ManualDialHistoryItem7" class="ManualDialHistoryItemSpan">7</span></div>';
-		// _BODY += '			<div class="ManualDialHistoryItemDiv"><span id="ManualDialHistoryItem8" class="ManualDialHistoryItemSpan">8</span></div>';
-		// _BODY += '			<div class="ManualDialHistoryItemDiv"><span id="ManualDialHistoryItem9" class="ManualDialHistoryItemSpan">9</span></div>';
-		// _BODY += '			<div class="ManualDialHistoryItemDiv"><span id="ManualDialHistoryItem10" class="ManualDialHistoryItemSpan">10</span></div>';
-		_BODY += '		</div>';
-		_BODY += '	</div>';
-		_BODY += '	<div class="modal-footer">';
-		_BODY += '		<button id ="MCallDialPad_Close" class="NixxisDefaultButtonStyle">Close</button>';
 		_BODY += '	</div>';
 		_BODY += '</div>';
-
 		
 	    crNewCallDialog.crWindow.txWorkArea[1].innerHTML = _BODY;
 		crNewCallDialog.crTxtPhone = $("MCNum");
 	    
-		// debugger;
-	    crNewCallDialog.CreateButton('0', function() { crNewCallDialog.ButtonClick('0'); });
-	    crNewCallDialog.CreateButton('1', function() { crNewCallDialog.ButtonClick('1'); });
-	    crNewCallDialog.CreateButton('2', function() { crNewCallDialog.ButtonClick('2'); });
-	    crNewCallDialog.CreateButton('3', function() { crNewCallDialog.ButtonClick('3'); });
-	    crNewCallDialog.CreateButton('4', function() { crNewCallDialog.ButtonClick('4'); });
-	    crNewCallDialog.CreateButton('5', function() { crNewCallDialog.ButtonClick('5'); });
-	    crNewCallDialog.CreateButton('6', function() { crNewCallDialog.ButtonClick('6'); });
-	    crNewCallDialog.CreateButton('7', function() { crNewCallDialog.ButtonClick('7'); });
-	    crNewCallDialog.CreateButton('8', function() { crNewCallDialog.ButtonClick('8'); });
-	    crNewCallDialog.CreateButton('9', function() { crNewCallDialog.ButtonClick('9'); });
-	    crNewCallDialog.CreateButton('Star', function() { crNewCallDialog.ButtonClick('Star'); });
-	    crNewCallDialog.CreateButton('Hash', function() { crNewCallDialog.ButtonClick('Hash'); });
-	    
-	    var _Key;
-	    _Key = "Dial";
-	    crNewCallDialog.crDialPadBtn[_Key] = new toolboxButton("btnMCallDialPad_Dial", "Dial", function() { crNewCallDialog.ButtonDial(); });
-	    crNewCallDialog.crDialPadBtn[_Key].txAbsolute = false;
-	    crNewCallDialog.crDialPadBtn[_Key].txParent = $('MCallDialPad_Dial');
-	    
-		crNewCallDialog.crDialPadBtn[_Key].txAlt = "Dial";
-	    crNewCallDialog.crDialPadBtn[_Key].txTitle = "Dial";      
-	    crNewCallDialog.crDialPadBtn[_Key].Show();
-	    
-	    _Key = "Clear";
-	    crNewCallDialog.crDialPadBtn[_Key] = new toolboxButton("btnMCallDialPad_Clear", "Clear", function() { crNewCallDialog.ButtonClear(); });
-	    crNewCallDialog.crDialPadBtn[_Key].txAbsolute = false;
-	    crNewCallDialog.crDialPadBtn[_Key].txParent = $('MCallDialPad_Clear');
-	    
-		crNewCallDialog.crDialPadBtn[_Key].txAlt = "Clear";
-	    crNewCallDialog.crDialPadBtn[_Key].txTitle = "Clear";
-	    crNewCallDialog.crDialPadBtn[_Key].Show();
+		$('MCallDialPad_1').onclick = crNewCallDialog.ButtonClick;
+		$('MCallDialPad_2').onclick = crNewCallDialog.ButtonClick;
+		$('MCallDialPad_3').onclick = crNewCallDialog.ButtonClick;
+		$('MCallDialPad_4').onclick = crNewCallDialog.ButtonClick;
+		$('MCallDialPad_5').onclick = crNewCallDialog.ButtonClick;
+		$('MCallDialPad_6').onclick = crNewCallDialog.ButtonClick;
+		$('MCallDialPad_7').onclick = crNewCallDialog.ButtonClick;
+		$('MCallDialPad_8').onclick = crNewCallDialog.ButtonClick;
+		$('MCallDialPad_9').onclick = crNewCallDialog.ButtonClick;
+		$('MCallDialPad_0').onclick = crNewCallDialog.ButtonClick;
+		$('MCallDialPad_Star').onclick = crNewCallDialog.ButtonClick;
+		$('MCallDialPad_Hash').onclick = crNewCallDialog.ButtonClick;
 
-		_Key = "Close";
-	    crNewCallDialog.crDialPadBtn[_Key] = new toolboxButton("btnMCallDialPad_Close", "Close", function() { crNewCallDialog.ButtonClose(); });
-	    crNewCallDialog.crDialPadBtn[_Key].txAbsolute = false;
-	    crNewCallDialog.crDialPadBtn[_Key].txParent = $('MCallDialPad_Close');
-	    
-		crNewCallDialog.crDialPadBtn[_Key].txAlt = "Close";
-	    crNewCallDialog.crDialPadBtn[_Key].txTitle = "Close";      
-	    crNewCallDialog.crDialPadBtn[_Key].Show();
-
-		_Key = "MCNum";
-		crNewCallDialog.crDialPadBtn[_Key] = new toolboxButton("btnMCNum_CLick", "MCNum", function() { crNewCallDialog.ButtonShowDialHistory(); });
-	    crNewCallDialog.crDialPadBtn[_Key].txAbsolute = false;
-	    crNewCallDialog.crDialPadBtn[_Key].txParent = $('MCNum');
-	    
-		crNewCallDialog.crDialPadBtn[_Key].txAlt = "MCNum";
-	    crNewCallDialog.crDialPadBtn[_Key].txTitle = "MCNum";      
-	    crNewCallDialog.crDialPadBtn[_Key].Show();
+		$('MCallDialPad_Dial').onclick = crNewCallDialog.ButtonDial;
+		$('MCallDialPad_Clear').onclick = crNewCallDialog.ButtonClear;
+		$('MCallDialPad_Close').onclick = crNewCallDialog.ButtonClose;
+		$('btnMCNumHistory').onclick = crNewCallDialog.ButtonShowDialHistory;
 
 		addElementClass($('dial-pad'), 'active');
 		addElementClass($('backdrop'), 'active');
-	    
-		// oninput="handleValueChange()"
 
 		$('MCNum').addEventListener('input', crNewCallDialog.Input_Changed);
 	    this.setStatus(CrResource.newContactForm.statusEnterNumber);		
@@ -514,8 +472,10 @@ var crNewCallDialog =
 	},
 	ButtonClick : function(key)
 	{
+		debugger;
+
 	    var _Element = $('MCNum');
-	    var _Key = key;
+	    var _Key = key.currentTarget.innerHTML;
 	    if (key == 'Star') _Key = '*';
 	    if (key == 'Hash') _Key = '#';
 	    _Element.value += _Key;
@@ -553,12 +513,12 @@ var crNewCallDialog =
 			}
 			else
 			{
-				history = [_Element.value,'','','','','','','','',''];
+				history = [_Element.value,'','','','','','','','','','','','','','','','','','','','','','','','','','',''];
 			}
 
 			window.localStorage.setItem('ManualDialHistory', JSON.stringify(history));
-
-		} catch(e) 
+		} 
+		catch(e) 
 		{
 			var i = 0;
 			i++;
@@ -595,51 +555,54 @@ var crNewCallDialog =
 	},
 	ButtonShowDialHistory : function()
 	{
-		// debugger;
+		debugger;
+		var _Element = $('MCNum');		
+
 		if($('manualDialHistoryListDiv').style.display == "none")
 		{
 			$('manualDialHistoryListDiv').style.display = "";
-
-			$('manualDialHistoryListDiv').innerHTML = '';
+			$('manualDialHistoryListUL').innerHTML = '';
+			
 			var history = JSON.parse(window.localStorage.getItem("ManualDialHistory"));
-
+			var historyIndex = -1;
+			if(_Element.value) historyIndex = history.findIndex(aa=>aa.includes(_Element.value));
+		
 			if(history !=null && history.length > 0)
 			{
-				for(var i = 0; i< 10; i++)
+				for(var i = 0; i< history.length; i++)
 				{
-					var divMDTag = document.createElement('div');
-					divMDTag.className = "ManualDialHistoryItemDiv";
-					divMDTag.onclick = crNewCallDialog.Select_OnClick;
-				
-					var divMDSpanTag = document.createElement('span');
-					divMDSpanTag.className = "ManualDialHistoryItemSpan";
+					var divMDTag = document.createElement('li');
+					
+					var divMDSpanTag = document.createElement('a');
 					divMDSpanTag.innerHTML = history[i];
+					divMDSpanTag.onclick = crNewCallDialog.Select_OnClick;
 
 					divMDTag.appendChild(divMDSpanTag);
+					$('manualDialHistoryListUL').appendChild(divMDTag);
 
-					$('manualDialHistoryListDiv').appendChild(divMDTag);
+					if(historyIndex == i) divMDSpanTag.className = 'active';
 				}
 			}
 			else
 			{
-				var divMDTag = document.createElement('div');
-				divMDTag.className = "ManualDialHistoryItemDiv";
+				var divMDTag = document.createElement('li');
 				divMDTag.onclick = crNewCallDialog.Select_OnClick;
 			
-				var divMDSpanTag = document.createElement('span');
-				divMDSpanTag.className = "ManualDialHistoryItemSpan";
+				var divMDSpanTag = document.createElement('a');
 				divMDSpanTag.innerHTML = '';
 
 				divMDTag.appendChild(divMDSpanTag);
 
-				$('manualDialHistoryListDiv').appendChild(divMDTag);
+				$('manualDialHistoryListUL').appendChild(divMDTag);
 			}
 		}
 		else
 		{
 			$('manualDialHistoryListDiv').style.display = "none";
-			$('manualDialHistoryListDiv').innerHTML = '';
+			$('manualDialHistoryListUL').innerHTML = '';
 		}
+
+		_Element.focus();
 	},
 	Select_OnClick : function(sender)
 	{
@@ -647,12 +610,13 @@ var crNewCallDialog =
 
 		var target = sender.currentTarget;
 
-		if(target.nodeName?.toLowerCase() == 'div' && target.childNodes[0].innerHTML != '')
+		if(target.nodeName?.toLowerCase() == 'a' && target.innerHTML != '')
 		{
 			var _Element = $('MCNum');
-			_Element.value = target.childNodes[0].innerHTML;
+			_Element.value = target.innerHTML;
 			$('manualDialHistoryListDiv').style.display = "none";
-			$('manualDialHistoryListDiv').innerHTML = '';
+			$('manualDialHistoryListUL').innerHTML = '';
+			_Element.focus();
 		}
 	},
 	Input_Changed : function(sender)
@@ -662,39 +626,40 @@ var crNewCallDialog =
 
 		var _Element = $('MCNum');
 		var res = JSON.parse(window.localStorage.getItem("ManualDialHistory"));
-		const history = res.filter(obj => Object.values(obj).some(val => val.includes(_Element.value)));
+		// const history = res.filter(obj => Object.values(obj).some(val => val.includes(_Element.value)));
+		const history = res;
+		var historyIndex = -1;
+		if(_Element.value) historyIndex = history.findIndex(aa=>aa.includes(_Element.value));
 
-		$('manualDialHistoryListDiv').innerHTML = '';
+		$('manualDialHistoryListUL').innerHTML = '';
 		if(history !=null && history.length > 0)
 		{
-			for(var i = 0; i< 10; i++)
+			for(var i = 0; i< history.length; i++)
 			{
-				var divMDTag = document.createElement('div');
-				divMDTag.className = "ManualDialHistoryItemDiv";
-				divMDTag.onclick = crNewCallDialog.Select_OnClick;
-			
-				var divMDSpanTag = document.createElement('span');
-				divMDSpanTag.className = "ManualDialHistoryItemSpan";
+				var divMDTag = document.createElement('li');
+				
+				var divMDSpanTag = document.createElement('a');
+				divMDSpanTag.onclick = crNewCallDialog.Select_OnClick;
 				if(history[i] !=null && history[i] != '') divMDSpanTag.innerHTML = history[i];
 
 				divMDTag.appendChild(divMDSpanTag);
 
-				$('manualDialHistoryListDiv').appendChild(divMDTag);
+				$('manualDialHistoryListUL').appendChild(divMDTag);
+
+				if(historyIndex == i) divMDSpanTag.className = 'active';
 			}
 		}
 		else
 		{
-			var divMDTag = document.createElement('div');
-			divMDTag.className = "ManualDialHistoryItemDiv";
-			divMDTag.onclick = crNewCallDialog.Select_OnClick;
+			var divMDTag = document.createElement('li');
 		
-			var divMDSpanTag = document.createElement('span');
-			divMDSpanTag.className = "ManualDialHistoryItemSpan";
+			var divMDSpanTag = document.createElement('a');			
+			divMDSpanTag.onclick = crNewCallDialog.Select_OnClick;
 			divMDSpanTag.innerHTML = '';
 
 			divMDTag.appendChild(divMDSpanTag);
 
-			$('manualDialHistoryListDiv').appendChild(divMDTag);
+			$('manualDialHistoryListUL').appendChild(divMDTag);
 		}
 	}
 }
