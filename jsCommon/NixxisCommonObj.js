@@ -307,6 +307,8 @@ var crNewCallDialog =
 	crInt_OpenWindow : null, //Bool to see if the from already exists
 	crNumToCall: null, //If this is fill then this will be the default num
 	
+	HistoryOpenDateTime: null,
+	
 	Call : function(link, cmd, clientlink)
 	{
 		// debugger;
@@ -442,6 +444,7 @@ var crNewCallDialog =
 		$('MCallDialPad_Clear').onclick = crNewCallDialog.ButtonClear;
 		$('MCallDialPad_Close').onclick = crNewCallDialog.ButtonClose;
 		$('btnMCNumHistory').onclick = crNewCallDialog.ButtonShowDialHistory;
+		$('dial-pad').onclick = crNewCallDialog.PopupArea_Onclick;
 
 		addElementClass($('dial-pad'), 'active');
 		addElementClass($('backdrop'), 'active');
@@ -549,13 +552,27 @@ var crNewCallDialog =
 		removeElementClass($('dial-pad'), 'active');
 		removeElementClass($('backdrop'), 'active');
 		removeElementClass($('VoiceNewCall'), 'active');
+	},
+	PopupArea_Onclick : function(sender)
+	{
+		if(HistoryOpenDateTime)
+		{
+			// debugger;
+			var diffStamp = new Date() - HistoryOpenDateTime;
+			if(diffStamp < 500) return;
+		}
 
-	    // var _Element = $('MCNum');
-	    // _Element.value = '';
+		if($('manualDialHistoryListDiv').style.display != "none")
+		{
+			$('manualDialHistoryListDiv').style.display = "none";
+			$('manualDialHistoryListUL').innerHTML = '';
+			$('MCNum').focus();
+		}
 	},
 	ButtonShowDialHistory : function()
 	{
-		debugger;
+		// debugger;
+		HistoryOpenDateTime = new Date();
 		var _Element = $('MCNum');		
 
 		if($('manualDialHistoryListDiv').style.display == "none")
