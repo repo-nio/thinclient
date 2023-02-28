@@ -112,26 +112,34 @@
     $("input#dial").val("");
   });
 
+const wrap = document.querySelectorAll('.resize-div');  
+wrap.forEach(function (e) {
+  function outputsize() {
+
+    const width = e.offsetWidth;
+     
+    if (width > 384) {
+      return (e.style.gridTemplateColumns = 'auto auto auto auto auto');
+    }
+    if ((width < 283) & (width > 240)) {
+      return (e.style.gridTemplateColumns = 'auto auto auto');
+    }
+    if ((width < 241) & (width > 150)) {
+      return (e.style.gridTemplateColumns = 'auto auto');
+    }
+    if (width < 151) {
+      return (e.style.gridTemplateColumns = 'auto');
+    }
+    e.style.gridTemplateColumns = 'auto auto auto auto';
+  }
+  outputsize();
+
+  new ResizeObserver(outputsize).observe(e);
+
+});
+
 
 })(jQuery);
-
-
-
-// (function ($) {
-//   $(".close-Script-Trigger").on('click', (ev) => {
-
-//     debugger;
-//     $(".when-ready").removeClass("active");
-//     alert('test');
-//   });
-
-//   function my_fun(){
-//     debugger;
-//     $(".when-ready").removeClass("active");
-//     alert('test');
-// }
-// })(jQuery);
-
 
 
 
