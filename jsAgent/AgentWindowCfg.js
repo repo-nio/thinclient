@@ -267,6 +267,7 @@ String.prototype.formatString = function (args)
 
 function defaultSetAgentInfoLabels()
 {
+	// debugger;
 	$("Info_QueueWaitingHeader").textContent  = 'Waiting contacts:';
 	$("Info_QueueWaiting").textContent  = '0';
 
@@ -774,7 +775,7 @@ function nixxislink_ContactRemoved(contactInfo)
 {
 	debugger;
 
-	defaultSetAgentInfoLabels();
+	// defaultSetAgentInfoLabels();
     DebugLog("nixxislink_ContactRemoved. Remove contact " + contactInfo.Id);
 	contactInfo.__AgentAction = "E";
 	
