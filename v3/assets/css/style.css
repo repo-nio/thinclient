@@ -818,7 +818,7 @@ body {
 }
 .cardBoxLayer:hover {
     background:#0CF;
-    color: #000 !important;
+    color: #fff !important;
 }
 .cardBoxLayer.active {
     background:#58a100;            
