@@ -1013,14 +1013,14 @@ function AgentStatePause()
 function AgentStateOnline(contactInfo)
 {
 	debugger;
-	$("Info_AgentState").textContent = AGENT_ONLINE;
+	if($("Info_AgentReadyVoiceIndication").style.display != "none") $("Info_AgentState").textContent = AGENT_ONLINE;
 	addElementClass($('Info_AgentReadyVoiceIndication'), 'active');
 }
 function AgentStateWorking()
 {	
 	// debugger;
 
-	$("Info_AgentState").textContent = AGENT_WORKING;
+	if($("Info_AgentReadyVoiceIndication").style.display != "none") $("Info_AgentState").textContent = AGENT_WORKING;
 	removeElementClass($('Info_AgentReadyVoiceIndication'), 'active');
 }
 function RefreshLastAgentState()
@@ -1072,20 +1072,12 @@ function RefreshLastAgentState()
 		
 		SetLastAgentState(m_LastAgentState, new Date());
 	}
-
-	// if(NewAgentState != m_LastAgentState)
-	// {
-	// 	if(!m_LastAgentState.startsWith(NewAgentState)) m_LastAgentState = NewAgentState;
-
-	// 	if(_resetDateTime) SetLastAgentState(m_LastAgentState, new Date());
-	// 	else SetLastAgentState(m_LastAgentState, startdatetime);		
-	// }
 }
 function SetLastAgentState(description, startTime)
 {
 	var m_LastAgentState = $("Info_AgentState").textContent;
 
-	if (m_LastAgentState != description) $("Info_AgentState").textContent = description;
+	if (m_LastAgentState != description && $("Info_AgentReadyVoiceIndication").style.display != "none") $("Info_AgentState").textContent = description;
 	if (startdatetime != startTime) startdatetime = startTime;
 }
 function SetReadyBreakBasedOnAgentState(state)
