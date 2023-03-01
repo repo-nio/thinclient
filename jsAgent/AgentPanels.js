@@ -441,14 +441,23 @@ var crQualPanel =
 		{
 			crQualPanel.OptionClear();
 			
-			if (this.crPositiveUpdatable) crQualPanel.OptionAddPosValue();
-			if (this.crAction == 4 || this.crAction == 5) crQualPanel.OptionAddDateTime();
+			if (this.crPositiveUpdatable) 
+			{
+				crQualPanel.OptionAddPosValue();
+				$('btnSelectqualOk').disabled = false;
+			}
+			if (this.crAction == 4 || this.crAction == 5) 
+			{
+				$('btnSelectqualOk').disabled = true;
+				crQualPanel.OptionAddDateTime();
+			}
+			else $('btnSelectqualOk').disabled = false;
 		}
+		else $('btnSelectqualOk').disabled = false;
 
 		if (this.crPositiveUpdatable) $("txtNixxisQualOptPos").value = this.crPositive;
 		
 		crQualPanel.CurrentSelected = this;
-		$('btnSelectqualOk').disabled = false;
 	},
 	OptionClear : function()
 	{
@@ -504,7 +513,7 @@ var crQualPanel =
 		_BODY += '				<button class="btnNext right" onclick="javascript: getNextWeek();"> >> </button>';
 		_BODY += '			</div>';
 		_BODY += '		<div class="timeSlap">';
-		_BODY += '			<ul id="TimeOptions" class="mytsscroll">';
+		_BODY += '			<ul id="TimeOptions" class="mytsscroll" onclick="javascript: DayTime_Selected();">';
 		_BODY += '			</ul>';
 		_BODY += '		</div>';
 		_BODY += '		<div class="calenderBoxForm">';
@@ -548,7 +557,12 @@ var crQualPanel =
 
 		el.innerHTML = _BODY;		
 		crQualPanel.OptionSpace.appendChild(el);
-	},
+	},	
+}
+
+function DayTime_Selected() 
+{
+	$('btnSelectqualOk').disabled = false;
 }
 
 function btnQualOk_OnClick()
