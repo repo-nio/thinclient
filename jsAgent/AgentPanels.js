@@ -246,7 +246,7 @@ var crQualPanel =
 
 	Init : function()
 	{
-		debugger;
+		// debugger;
 		crQualPanel.Form = new toolboxForm("QualificationForm");
 		crQualPanel.Form.txParent = document.body;
 		crQualPanel.Form.Show();
@@ -712,7 +712,7 @@ var crSearchModePanel =
 	},
 	CreateBranch : function(branch, level, workspace)
 	{
-		debugger;
+		// debugger;
 
 		if(branch.Count() > 0)
 		{
@@ -774,7 +774,7 @@ var crSearchModePanel =
 	},
 	Select_OnClick : function(sender)
 	{
-		debugger;
+		// debugger;
 
 		var target = sender.currentTarget;
 
@@ -940,7 +940,7 @@ var crPauseCodePanel =
 	},
 	CreateList : function(list, workspace)
 	{
-		debugger;
+		// debugger;
 		
 		if(list.Count() > 0)
 		{
@@ -1026,7 +1026,7 @@ var crPauseCodePanel =
 	},
 	btnCancel_OnClick: function()
 	{
-		debugger;
+		// debugger;
 
 		crPauseCodePanel.Form.setVisibility(false);
 
