@@ -599,6 +599,8 @@ function SetWidthOfBoxActiveContactVoiceStatusToolStrip()
 			{
 				child.style.height = 'calc(50% - 10px)';
 				child.style.fontSize = '11px';
+				child.style.width = 98 + '%';
+				child.style.marginLeft = 1 + '%';
 			}
             else
             {
