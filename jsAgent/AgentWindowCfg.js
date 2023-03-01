@@ -441,11 +441,6 @@ function addVoiceStatus(contactInfo)
         }
     }
 
-	var childActiveCount = ClientLink.Contacts.GetAllCount();
-	var childActiveCountToConsider = (childActiveCount == 1);
-
-	if(!childActiveCountToConsider) ResizeFirstActiveContact(false);
-
 	var voiceDIV = document.createElement('div');
 	voiceDIV.id = 'voicestatus_' + contactInfo.Id;
 	voiceDIV.className = 'status cardBoxLayer active';	
@@ -453,45 +448,32 @@ function addVoiceStatus(contactInfo)
 	var _BODY = '';
 
 	if(contactInfo.Direction == 'I')
-		_BODY += '	<div><img src="./assets/icons/Agent_MediaType_Outbound_25.png" alt="icon" style="transform: rotate(180deg);" /></div>';
+		_BODY += '	<div id="InfoContactImage"><img src="./assets/icons/Agent_MediaType_Outbound_25.png" alt="icon" style="transform: rotate(180deg);" /></div>';
 	else 
-		_BODY += '	<div><img src="./assets/icons/Agent_MediaType_Outbound_25.png" alt="icon" /></div>';
+		_BODY += '	<div id="InfoContactImage"><img src="./assets/icons/Agent_MediaType_Outbound_25.png" alt="icon" /></div>';
 	
-	_BODY += '	<div>';
-	_BODY += '		<table id="voiceULControl_' + contactInfo.Id + '">';
-	_BODY += '			<tr class="row">';
-	_BODY += '				<td colspan="2"><strong id="InfoContactActivity_' + contactInfo.Id + '"></strong></td>';
-	_BODY += '				<td colspan="2"><span id="InfoContactStatusDuration_' + contactInfo.Id + '"></strong></span>';
-	_BODY += '			</tr>';
-
-	_BODY += '			<tr class="row" id="trRowParent1" >';
-	_BODY += '				<td><span >From:</span></td>';
-	_BODY += '				<td><span id="InfoContactOriginator_' + contactInfo.Id + '"></span></td>';
-
-	if(childActiveCountToConsider) _BODY += '<tr class="row" id="trRowChild1">';
-	
-	_BODY += '				<td><span>To:</span></td>';
-	_BODY += '				<td><span id="InfoContactTo_' + contactInfo.Id + '"></span></td>';
-	
-	if(childActiveCountToConsider) _BODY += '</tr';
-	
-	_BODY += '			</tr>';
-
-	_BODY += '			<tr class="row" id="trRowParent2">';
-	_BODY += '				<td><span>State:</span></td>';
-	_BODY += '				<td><span id="InfoContactState_' + contactInfo.Id + '"></span></td>';
-
-	if(childActiveCountToConsider) _BODY += '<tr class="row" id="trRowChild2">';
-
-	_BODY += '				<td><span style="margin-left: -12px;">&nbsp;&nbsp;&nbsp;Customer:</span></td>';
-	_BODY += '				<td><span id="InfoContactCustomer_' + contactInfo.Id + '"></span></td>';
-
-	if(childActiveCountToConsider) _BODY += '</tr';
-
-	_BODY += '			</tr>';
-
-	_BODY += '		</table>';
-	_BODY += '	</div>';
+		_BODY += '	<div>';
+		_BODY += '		<div class="row d-flex cardBoxRow">';
+		_BODY += '			<div><strong id="InfoContactActivity_' + contactInfo.Id + '"></strong></div>';
+		_BODY += '			<div>&nbsp;<span id="InfoContactStatusDuration_' + contactInfo.Id + '"></span></div>';
+		_BODY += '		</div>';
+		_BODY += '		<div class="row d-flex cardBoxRow">';
+		_BODY += '			<div><span>From:&nbsp;</span></div>';
+		_BODY += '			<div><span id="InfoContactOriginator_' + contactInfo.Id + '"></span></div>';
+		_BODY += '		</div>';
+		_BODY += '		<div class="row d-flex cardBoxRow">';
+		_BODY += '			<div><span>To:&nbsp;</span></div>';
+		_BODY += '			<div><span id="InfoContactTo_' + contactInfo.Id + '"></span></div>';
+		_BODY += '		</div>';
+		_BODY += '		<div class="row d-flex cardBoxRow">';
+		_BODY += '			<div><span>State:&nbsp;</span></div>';
+		_BODY += '			<div><span id="InfoContactState_' + contactInfo.Id + '"></span></div>';
+		_BODY += '		</div>';
+		_BODY += '		<div class="row d-flex cardBoxRow">';
+		_BODY += '			<div><span>Customer:&nbsp;</span></div>';
+		_BODY += '			<div><span id="InfoContactCustomer_' + contactInfo.Id + '"></span></div>';
+		_BODY += '		</div>';
+		_BODY += '	</div>';
 
 	voiceDIV.innerHTML = _BODY;
 	voiceDIV.ContactInfo = contactInfo;
@@ -499,70 +481,17 @@ function addVoiceStatus(contactInfo)
 		
 	$('voiceStatusToolStrip').appendChild(voiceDIV);
 
-	// var flexResizerTag = document.createElement('flex-resizer');
-	// flexResizerTag.id = 'voiceStatusToolStripflexResizerTag';
-	// $('voiceStatusToolStrip').appendChild(flexResizerTag);
-
 	SetRecordDisplayBasedOnActiveContactStatus(false);
 	SetWidthOfBoxActiveContactVoiceStatusToolStrip();
 	SetZindexOfActiveContactsVoiceStatusToolStrip();
+
+	var imgTag = $('voiceStatusToolStrip').getElementsByTagName('img');
+	if(imgTag) imgTag[imgTag.length - 1].src = 'assets/icons/Agent_MediaType_Outbound_50.png';
 }
 
 function ResizeFirstActiveContact(canViewFullBox)
 {
-	// debugger;
-	var contctlst = ClientLink.Contacts.GetAll();
-	var contctlstKeys =  Object.keys(contctlst);
-	var i = 0;
-	if(contctlstKeys[i].indexOf('_') == 0) contctlstKeys[i] = contctlstKeys[i].slice(1,contctlstKeys[i].length);
-
-	var firstContact = ClientLink.Contacts.Get(contctlstKeys[i]);
-	var firstContactDiv = $('voicestatus_' + firstContact.Id);
-
-	var _BODY = '';
-
-	if(firstContact.Direction == 'I')
-		_BODY += '	<div><img src="./assets/icons/Agent_MediaType_Outbound_50.png" alt="icon" style="transform: rotate(180deg);" /></div>';
-	else 
-		_BODY += '	<div><img src="./assets/icons/Agent_MediaType_Outbound_50.png" alt="icon" /></div>';
-	
-	_BODY += '	<div>';
-	_BODY += '		<table id="voiceULControl_' + firstContact.Id + '">';
-	_BODY += '			<tr class="row">';
-	_BODY += '				<td colspan="2"><strong id="InfoContactActivity_' + firstContact.Id + '"></strong></td>';
-	_BODY += '				<td colspan="2"><span id="InfoContactStatusDuration_' + firstContact.Id + '"></strong></span>';
-	_BODY += '			</tr>';
-
-	_BODY += '			<tr class="row" id="trRowParent1" >';
-	_BODY += '				<td><span >From:</span></td>';
-	_BODY += '				<td><span id="InfoContactOriginator_' + firstContact.Id + '"></span></td>';
-
-	if(canViewFullBox) _BODY += '<tr class="row" id="trRowChild1">';
-	
-	_BODY += '				<td><span>To:</span></td>';
-	_BODY += '				<td><span id="InfoContactTo_' + firstContact.Id + '"></span></td>';
-	
-	if(canViewFullBox) _BODY += '</tr';
-	
-	_BODY += '			</tr>';
-
-	_BODY += '			<tr class="row" id="trRowParent2">';
-	_BODY += '				<td><span>State:</span></td>';
-	_BODY += '				<td><span id="InfoContactState_' + firstContact.Id + '"></span></td>';
-
-	if(canViewFullBox) _BODY += '<tr class="row" id="trRowChild2">';
-
-	_BODY += '				<td><span style="margin-left: -12px;">&nbsp;&nbsp;&nbsp;Customer:</span></td>';
-	_BODY += '				<td><span id="InfoContactCustomer_' + firstContact.Id + '"></span></td>';
-
-	if(canViewFullBox) _BODY += '</tr';
-
-	_BODY += '			</tr>';
-
-	_BODY += '		</table>';
-	_BODY += '	</div>';
-
-	firstContactDiv.innerHTML = _BODY;
+	return;	
 }
 
 function voicestatus_clicked(sender)
@@ -609,6 +538,10 @@ function voicestatus_clicked(sender)
 		ShowActiveContactScriptURLs(sender.ContactInfo);
 		SetWidthOfBoxActiveContactVoiceStatusToolStrip();
 		SetZindexOfActiveContactsVoiceStatusToolStrip();
+
+		// debugger;
+		var imgTag = sender.getElementsByTagName('img');
+		if(imgTag) imgTag[0].src = 'assets/icons/Agent_MediaType_Outbound_50.png';
 	}
 }
 
@@ -621,7 +554,6 @@ function SetWidthOfBoxActiveContactVoiceStatusToolStrip()
     if(chilrens)
     {
 		var childrenLength = chilrens.length;
-        // var childHeight = (120 / childrenLength); // in px;
 
 		var parentOffsetHeight = document.querySelectorAll('#voiceStatusToolStrip')[0].offsetHeight;
 		parentOffsetHeight = parentOffsetHeight - 5;
@@ -637,7 +569,6 @@ function SetWidthOfBoxActiveContactVoiceStatusToolStrip()
         var childWidth = (parentWidth - (childrenLength * widthOffset));
 
         var ival = 3;
-		// if(childrenLength == 1 ) ival = 1;
 
 		var childIndex = 0;
 		for(var i = 0; i < childrenLength; i++)
@@ -645,6 +576,13 @@ function SetWidthOfBoxActiveContactVoiceStatusToolStrip()
             var child = chilrens[i];
 			if(child.tagName.toLowerCase() != 'div') continue;
             if(child.className?.includes('active')) childIndex = i;
+			
+			var imgTag = child.getElementsByTagName('img');
+			if(imgTag)
+			{
+				if(childrenLength > 2) imgTag[0].src = 'assets/icons/Agent_MediaType_Outbound_25.png';
+				else imgTag[0].src = 'assets/icons/Agent_MediaType_Outbound_50.png';
+			}
         }
 
         for(var i = 0; i < chilrens.length; i++)
@@ -655,16 +593,16 @@ function SetWidthOfBoxActiveContactVoiceStatusToolStrip()
             if(childrenLength == 1) 
 			{
 				child.style.height = 'calc(100% - 10px)';
-				child.style.fontSize = '14px';
+				child.style.fontSize = '13px';
 			}
             else if(childrenLength == 2) 
 			{
 				child.style.height = 'calc(50% - 10px)';
-				child.style.fontSize = '13px';
+				child.style.fontSize = '11px';
 			}
             else
             {
-				child.style.fontSize = '12px';
+				child.style.fontSize = '9.5px';
 
 				if(i < childIndex)
                 {
