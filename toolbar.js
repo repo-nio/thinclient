@@ -755,6 +755,15 @@ function NixxisClientLink(sessionId, baseLocation)
 			return this.connection.executeCommand('~setinfo',this.codes.infoCodes.Qualifications , contactId, qualificationId, callbackDateTime, callbackPhone, 'VAL=0');
 		}
 	};
+	this.setUUI = function(contactId, UUI)
+	{
+		debugger;
+		if(connected)
+		{
+			if (!contactId) return null;
+			return this.connection.executeCommand('~setinfo', null, '5', contactId, '@@UUI', UUI);
+		}
+	};
 	this.getQualifications = function(activityId)
 	{
 		if(connected)

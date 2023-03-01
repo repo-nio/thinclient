@@ -600,7 +600,9 @@ function btnQualOk_OnClick()
 		callComment = "";
 	}
 
-	ClientLink.setQualification(contactId, qualification, 'DTE='+callback, 'NUM='+callbackPhone, 'BY='+callComment);
+	ClientLink.setQualification(contactId, qualification, 'DTE='+callback, 'NUM='+callbackPhone);
+
+	if(callComment && callComment.length > 0) ClientLink.setUUI(contactId, callComment);
 	crQualPanel.CurrentSelected.crAction = -1;
 	// crQualPanel.Form.setVisibility(false);
 
