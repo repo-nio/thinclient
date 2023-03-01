@@ -134,12 +134,12 @@ var CrResource =
 			//[ Alt, title]
 			voiceLabel : ["Voice commands" ,"Voice commands"],
 			VoiceNewCall : ["New call", "New call"],
-			VoiceHold : ["Hold call", "Hold call"],
-			VoiceRetrieve : ["Retrieve call", "Retrieve call"],
-			VoiceTransfer : ["Transfer call", "Transfer call"],
-			VoiceConference : ["Conference call", "Conference call"],
-			VoiceForward : ["Forward call", "Forward call"],
-			VoiceHangup : ["Hang up call", "Hang up call"]
+			VoiceHold : ["Hold", "Hold"],
+			VoiceRetrieve : ["Retrieve", "Retrieve"],
+			VoiceTransfer : ["Transfer", "Transfer"],
+			VoiceConference : ["Conference", "Conference"],
+			VoiceForward : ["Forward", "Forward"],
+			VoiceHangup : ["Hang up", "Hang up"]
 		},
 		MailToolStrip : 
 		{
