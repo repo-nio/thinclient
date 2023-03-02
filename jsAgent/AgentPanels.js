@@ -760,7 +760,7 @@ var crSearchModePanel =
 						childParaButton.innerHTML = branch.Children[index].Children[idx].Description;
 						childParaButton.crId = branch.Children[index].Children[idx].Id;
 						childParaButton.onclick = crSearchModePanel.Select_OnClick;
-
+						childParaButton.ondblclick = crSearchModePanel.Select_OnDoubleClick;
 						childPara.appendChild(childParaButton);
 						childDiv.appendChild(childPara);
 						iChildCount++;
@@ -801,6 +801,18 @@ var crSearchModePanel =
 			$('btnSearchOk').disabled = false;
 			crSearchModePanel.CurrentSelected = target;
 			addElementClass(target, 'active');			
+		}
+	},
+	Select_OnDoubleClick : function(sender)
+	{
+		// debugger;
+
+		var target = sender.currentTarget;
+
+		if(target.nodeName?.toLowerCase() == 'button' )
+		{
+			crSearchModePanel.CurrentSelected = target;
+			crSearchModePanel.btnOk_OnClick();
 		}
 	},
 
