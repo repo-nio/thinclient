@@ -290,8 +290,8 @@ var crQualPanel =
 	},
 	Show : function (tree)
 	{
+		// debugger;
 		HideAllDialogModals();
-		debugger;
 		if (crQualPanel.Form) crQualPanel.crInt_OpenWindow = false;
 		else crQualPanel.crInt_OpenWindow = true;
 
@@ -923,6 +923,7 @@ var crPauseCodePanel =
 	},
 	Show : function (list) 
 	{
+		// debugger;
 		HideAllDialogModals();
 
 		crPauseCodePanel.CurrentSelected = null;
@@ -935,10 +936,9 @@ var crPauseCodePanel =
 		if(crPauseCodePanel.crInt_OpenWindow)
 			crPauseCodePanel.Init(list);
 		else
-		{
-			addElementClass($('backdrop'), 'active');
-			addElementClass($('break-reason'), 'active');	
-		}
+			addElementClass($('break-reason'), 'active');
+
+		addElementClass($('backdrop'), 'active');
 		
 		if (arguments.length > 0) crPauseCodePanel.ShowList(arguments[0], $('modalBreakreasonWorkspace'));
 
