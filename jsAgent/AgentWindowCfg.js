@@ -594,6 +594,14 @@ function SetWidthOfBoxActiveContactVoiceStatusToolStrip()
 			{
 				child.style.height = 'calc(100% - 10px)';
 				child.style.fontSize = '13px';
+
+				debugger;
+				var spanTags = child.getElementsByTagName('span');
+				if(spanTags)
+				{
+					var span = Array.from(spanTags).filter(aa=>aa.id?.includes('InfoContactStatusDuration_'));
+					if(span) span[0].style.fontSize = '14px';
+				}
 			}
             else if(childrenLength == 2) 
 			{
@@ -601,6 +609,13 @@ function SetWidthOfBoxActiveContactVoiceStatusToolStrip()
 				child.style.fontSize = '11px';
 				child.style.width = 98 + '%';
 				child.style.marginLeft = 1 + '%';
+
+				var spanTags = child.getElementsByTagName('span');
+				if(spanTags)
+				{
+					var span = Array.from(spanTags).filter(aa=>aa.id?.includes('InfoContactStatusDuration_'));
+					if(span) span[0].style.fontSize = '12px';
+				}
 			}
             else
             {
