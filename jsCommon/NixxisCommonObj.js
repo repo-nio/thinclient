@@ -475,13 +475,15 @@ var crNewCallDialog =
 	},
 	ButtonClick : function(key)
 	{
-		debugger;
+		// debugger;
 
 	    var _Element = $('MCNum');
 	    var _Key = key.currentTarget.innerHTML;
 	    if (key == 'Star') _Key = '*';
 	    if (key == 'Hash') _Key = '#';
 	    _Element.value += _Key;
+
+		_Element.focus();
 	},
 	ButtonDial : function()
 	{
@@ -530,8 +532,27 @@ var crNewCallDialog =
 	},	
 	ButtonClear : function()
 	{
+		debugger;
 	    var _Element = $('MCNum');
-	    _Element.value = '';
+	    // _Element.value = '';
+
+		var start = _Element.selectionStart - 1;
+		if(start == -1) 
+		{
+			start = _Element.value.length - 1;
+
+			const value = _Element.value;
+			_Element.value = value.substr(0, start);
+			_Element.setSelectionRange(start, start, "forward");
+		}
+		else
+		{
+			const value = _Element.value;
+			_Element.value = value.substr(0, start) + value.substr(_Element.selectionStart);
+			_Element.setSelectionRange(start, start, "forward");
+		}
+		
+		_Element.focus();
 	},	
 	Init_Callback : function(listbox, window)
 	{
