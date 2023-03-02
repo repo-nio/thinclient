@@ -325,6 +325,8 @@ var crQualPanel =
 					var innerBranchNode = document.createElement('button');
 					innerBranchNode.innerHTML = branch.Items[index].Description;
 					innerBranchNode.onclick = crQualPanel.Select_OnClick;
+					innerBranchNode.ondblclick = crQualPanel.Select_OnDoubleClick;
+
 					innerBranchNode.crId = branch.Items[index].Id;
 					innerBranchNode.crAction = branch.Items[index].Action;
 					innerBranchNode.crPositive = branch.Items[index].Positive;
@@ -340,6 +342,7 @@ var crQualPanel =
 					innerBranchNode.className = 'acclink';
 					innerBranchNode.innerHTML = branch.Items[index].Description;
 					innerBranchNode.onclick = crQualPanel.Select_OnClick;
+					innerBranchNode.ondblclick = crQualPanel.Select_OnDoubleClick;
 
 					var innerDetailBranchNode = document.createElement('div');
 					innerDetailBranchNode.className = 'accord-detail';
@@ -356,6 +359,8 @@ var crQualPanel =
 							var innerChildButtonNode = document.createElement('button');
 							innerChildButtonNode.innerHTML = branch.Items[index].Children.Items[indexC].Description;
 							innerChildButtonNode.onclick = crQualPanel.Select_OnClick;
+							innerChildButtonNode.ondblclick = crQualPanel.Select_OnDoubleClick;
+
 							innerChildButtonNode.crId = branch.Items[index].Children.Items[indexC].Id;
 							innerChildButtonNode.crAction = branch.Items[index].Children.Items[indexC].Action;
 							innerChildButtonNode.crPositive = branch.Items[index].Children.Items[indexC].Positive;
@@ -372,6 +377,7 @@ var crQualPanel =
 							innerBranchNode2.className = 'acclink';
 							innerBranchNode2.innerHTML = branch.Items[index].Children.Items[indexC].Description;
 							innerBranchNode2.onclick = crQualPanel.Select_OnClick;
+							innerBranchNode2.ondblclick = crQualPanel.Select_OnDoubleClick;
 
 							var innerDetailBranchNode2 = document.createElement('div');
 							innerDetailBranchNode2.className = 'accord-detail';
@@ -384,6 +390,8 @@ var crQualPanel =
 								var innerChildButtonNode = document.createElement('button');
 								innerChildButtonNode.innerHTML = dataNode.Description;
 								innerChildButtonNode.onclick = crQualPanel.Select_OnClick;
+								innerChildButtonNode.ondblclick = crQualPanel.Select_OnDoubleClick;
+
 								innerChildButtonNode.crId = dataNode.Id;
 								innerChildButtonNode.crAction = dataNode.Action;
 								innerChildButtonNode.crPositive = dataNode.Positive;
@@ -458,6 +466,34 @@ var crQualPanel =
 		if (this.crPositiveUpdatable) $("txtNixxisQualOptPos").value = this.crPositive;
 		
 		crQualPanel.CurrentSelected = this;
+	},
+	Select_OnDoubleClick : function()
+	{
+		// debugger;
+		$('btnSelectqualOk').disabled = true;
+
+		if(this == null || this.crAction == null)
+		{
+			crQualPanel.OptionClear();
+			return;
+		}
+
+		crQualPanel.CurrentSelected = this;
+		crQualPanel.OptionClear();
+		
+		if (this.crPositiveUpdatable) 
+		{
+			crQualPanel.OptionAddPosValue();
+			btnQualOk_OnClick();
+		}
+		if (this.crAction == 4 || this.crAction == 5) 
+		{
+			crQualPanel.OptionAddDateTime();
+		}
+		else 
+		{
+			btnQualOk_OnClick();
+		}
 	},
 	OptionClear : function()
 	{
