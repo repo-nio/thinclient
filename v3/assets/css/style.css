@@ -136,9 +136,21 @@ body {
 }
 
 
-#AgentToolStrip, #VoiceToolStrip {
+#AgentToolStrip {
   height: 140px;
-  width: 25%;
+  width: 24%;
+  border-right: 2px solid silver;
+  display: grid;
+  grid-template-columns:auto auto auto auto;
+  resize: horizontal;
+  overflow: hidden;
+  min-width: 85px;
+}
+
+
+#VoiceToolStrip {
+  height: 140px;
+  width: 26%;
   border-right: 2px solid silver;
   display: grid;
   grid-template-columns:auto auto auto auto;
@@ -910,7 +922,7 @@ button:disabled:hover, button:disabled:focus, button[disabled]:hover, button[dis
 .accordionModal li .acclink.active::before {content: "\f0d7"; position: absolute; left: 0; top: 1px; font: normal normal normal 14px/1 FontAwesome; font-size: 14px; font-size: inherit; text-rendering: auto;}
 .accordionModal li .accord-detail { width: 100%; float: left; margin-top: 8px; padding-left: 35px;font-size: 12px;}
 .accordionModal li .accord-detail p { margin: 0 0 5px 0; font-size: 12px; line-height: 20px; padding: 0px 6px; -webkit-transition-duration:0.5s; -moz-transition-duration:0.5s; -o-transition-duration: 0.5s; transition-duration:0.5s;}
-.accordionModal li .accord-detail p button { background: transparent; border: 0 none; outline: 0 none; font-size: 12px; line-height: 20px; padding: 0px 6px; -webkit-transition-duration:0.5s; -moz-transition-duration:0.5s; -o-transition-duration: 0.5s; transition-duration:0.5s; color: #cccccc;}
+.accordionModal li .accord-detail p button { background: transparent; border: 0 none; border-radius: 2px;outline: 0 none; font-size: 12px; line-height: 20px; padding: 0px 6px; -webkit-transition-duration:0.5s; -moz-transition-duration:0.5s; -o-transition-duration: 0.5s; transition-duration:0.5s; color: #cccccc;}
 .accordionModal li .accord-detail p button:hover { background-color: #00809f;}
 .accordionModal li .accord-detail p button:focus { background-color: #1bcdfd; color: #000000;}
 
@@ -952,8 +964,8 @@ button:disabled:hover, button:disabled:focus, button[disabled]:hover, button[dis
 .accordionDisposition li .accord-detail p { margin: 0 0 5px 0; font-size: 12px;}
 
 .accordionDisposition button { width: 100%; border:0 none; outline: none; box-shadow: none; background: #333; color: #cfcfcf;  border-radius: 2px; font-size: 12px; text-align:left; padding:5px; -webkit-transition-duration:0.5s; -moz-transition-duration:0.5s; -o-transition-duration: 0.5s; transition-duration:0.5s;}
-.accordionDisposition button:hover { background: #00809f; color: #000; }
-.accordionDisposition button:focus { background: #1bcdfd; color: #000; }
+.accordionDisposition button:hover { background: #244953;}
+.accordionDisposition button:focus { background: #1BCDFD; color: #000; }
 .accordionDisposition li.btnBox { padding-left: 11px;} 
 .accordionDisposition li ul li  .accord-detail { padding-left: 18px;}
 
