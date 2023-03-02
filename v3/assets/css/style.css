@@ -910,8 +910,9 @@ button:disabled:hover, button:disabled:focus, button[disabled]:hover, button[dis
 .accordionModal li .acclink.active::before {content: "\f0d7"; position: absolute; left: 0; top: 1px; font: normal normal normal 14px/1 FontAwesome; font-size: 14px; font-size: inherit; text-rendering: auto;}
 .accordionModal li .accord-detail { width: 100%; float: left; margin-top: 8px; padding-left: 35px;font-size: 12px;}
 .accordionModal li .accord-detail p { margin: 0 0 5px 0; font-size: 12px; line-height: 20px; padding: 0px 6px; -webkit-transition-duration:0.5s; -moz-transition-duration:0.5s; -o-transition-duration: 0.5s; transition-duration:0.5s;}
-.accordionModal li .accord-detail p:hover { background-color: #00809f;}
-.accordionModal li .accord-detail p:focus { background-color: #1bcdfd;}
+.accordionModal li .accord-detail p button { background: transparent; border: 0 none; outline: 0 none; font-size: 12px; line-height: 20px; padding: 0px 6px; -webkit-transition-duration:0.5s; -moz-transition-duration:0.5s; -o-transition-duration: 0.5s; transition-duration:0.5s; color: #cccccc;}
+.accordionModal li .accord-detail p button:hover { background-color: #00809f;}
+.accordionModal li .accord-detail p button:focus { background-color: #1bcdfd; color: #000000;}
 
 /* Checkbox for Team and break */
 .checkBoxModal .container { width: 100%; float: left; min-height: 20px; display: block; position: relative; padding-left: 30px; margin-bottom: 1px; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; color: #d6d4d5}

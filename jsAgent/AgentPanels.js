@@ -755,11 +755,13 @@ var crSearchModePanel =
 					for(idx in branch.Children[index].Children)
 					{
 						var childPara = document.createElement('p');
+						var childParaButton = document.createElement('button');
 						
-						childPara.innerHTML = branch.Children[index].Children[idx].Description;
-						childPara.crId = branch.Children[index].Children[idx].Id;
-						childPara.onclick = crSearchModePanel.Select_OnClick;
+						childParaButton.innerHTML = branch.Children[index].Children[idx].Description;
+						childParaButton.crId = branch.Children[index].Children[idx].Id;
+						childParaButton.onclick = crSearchModePanel.Select_OnClick;
 
+						childPara.appendChild(childParaButton);
 						childDiv.appendChild(childPara);
 						iChildCount++;
 					}
@@ -794,7 +796,7 @@ var crSearchModePanel =
 
 		var target = sender.currentTarget;
 
-		if(target.nodeName?.toLowerCase() == 'p' )
+		if(target.nodeName?.toLowerCase() == 'button' )
 		{
 			$('btnSearchOk').disabled = false;
 			crSearchModePanel.CurrentSelected = target;
