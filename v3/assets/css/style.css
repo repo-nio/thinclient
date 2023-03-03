@@ -169,7 +169,7 @@ body {
 #AgentToolStrip .btn-1, #VoiceToolStrip .btn-1 {
   background-color: transparent;
   border: none;
-  cursor: pointer;
+  /* cursor: pointer; */
   text-align: left;
   height: 70px;
 }
@@ -230,7 +230,7 @@ body {
       -ms-flex-align: center;
           align-items: center;
   overflow: hidden;
-  cursor: pointer;
+  /* cursor: pointer; */
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -339,7 +339,7 @@ body {
       -ms-flex-align: center;
           align-items: center;
   margin-right: 4px;
-  cursor: pointer;
+  /* cursor: pointer; */
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
