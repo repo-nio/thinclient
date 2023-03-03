@@ -758,6 +758,7 @@ var crSearchModePanel =
 		if (arguments.length > 0) crSearchModePanel.ShowTree(arguments[0], $('modalSearchworkspace'));
 
 		addElementClass($('search-mode'), 'active');
+		addElementClass($('SearchMode'), 'active');
 		addElementClass($('backdrop'), 'active');
 
 		$('btnSearchOk').disabled = true;
@@ -871,12 +872,13 @@ var crSearchModePanel =
 		}
 		else
 		{
-			removeElementClass($('SearchMode'), 'active');
+			// removeElementClass($('SearchMode'), 'active');
 			$('contactViewerObject').setAttribute("data", '');
 		}
 
 		crSearchModePanel.CurrentSelected = null;		
 
+		removeElementClass($('SearchMode'), 'active');
 		removeElementClass($('search-mode'), 'active');
 		removeElementClass($('backdrop'), 'active');
 	},
@@ -1368,6 +1370,7 @@ var crAgentLogout =
 		
 		addElementClass($('backdrop'), 'active');
 		addElementClass($('modalAgentLogout'), 'active');
+		addElementClass($('AgentLogout'), 'active');
 	},
 
 	ButtonOk : function()
