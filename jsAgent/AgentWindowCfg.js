@@ -595,7 +595,7 @@ function SetWidthOfBoxActiveContactVoiceStatusToolStrip()
 				child.style.height = 'calc(100% - 10px)';
 				child.style.fontSize = '13px';
 
-				debugger;
+				// debugger;
 				var spanTags = child.getElementsByTagName('span');
 				if(spanTags)
 				{
@@ -606,7 +606,7 @@ function SetWidthOfBoxActiveContactVoiceStatusToolStrip()
             else if(childrenLength == 2) 
 			{
 				child.style.height = 'calc(50% - 10px)';
-				child.style.fontSize = '11px';
+				child.style.fontSize = '10.5px';
 				child.style.width = 98 + '%';
 				child.style.marginLeft = 1 + '%';
 
@@ -614,7 +614,7 @@ function SetWidthOfBoxActiveContactVoiceStatusToolStrip()
 				if(spanTags)
 				{
 					var span = Array.from(spanTags).filter(aa=>aa.id?.includes('InfoContactStatusDuration_'));
-					if(span) span[0].style.fontSize = '12px';
+					if(span) span[0].style.fontSize = '11.5px';
 				}
 			}
             else
@@ -648,6 +648,8 @@ function SetWidthOfBoxActiveContactVoiceStatusToolStrip()
             ival = ival + childOffsetHeight;
         }
     }
+
+	SetPaddingBetweenActiveContacts();
 }
 
 function SetZindexOfActiveContactsVoiceStatusToolStrip()
@@ -682,6 +684,23 @@ function SetZindexOfActiveContactsVoiceStatusToolStrip()
             }
         }
     }
+}
+
+function SetPaddingBetweenActiveContacts()
+{
+	debugger;
+	var child = document.querySelectorAll('#voiceStatusToolStrip')[0];
+	var chilrens = child.getElementsByClassName('row d-flex cardBoxRow');
+	var chilLength = child.children.length;
+	var paddingToAssign = '0px';
+
+	if(chilLength == 1) paddingToAssign = '1px';
+	// else if(chilLength == 2) paddingToAssign = '0.5px';
+
+	for(var i = 0; i < chilrens.length; i++)
+	{
+		if(chilrens[i]) chilrens[i].style.paddingBottom = paddingToAssign;
+	}
 }
 
 function setVoiceDisplayStatus()
@@ -1017,7 +1036,7 @@ function AgentStateWaiting()
 }
 function AgentStatePause()
 {	
-	debugger;
+	// debugger;
 	
 	removeElementClass($('Info_AgentReadyVoiceIndication'), 'active');
 	addElementClass($('Pause'), 'active');
@@ -1034,7 +1053,7 @@ function AgentStatePause()
 }
 function AgentStateOnline(contactInfo)
 {
-	debugger;
+	// debugger;
 	if($("Info_AgentReadyVoiceIndication").style.display != "none") $("Info_AgentState").textContent = AGENT_ONLINE;
 	addElementClass($('Info_AgentReadyVoiceIndication'), 'active');
 }
@@ -1047,7 +1066,7 @@ function AgentStateWorking()
 }
 function RefreshLastAgentState()
 {
-	debugger;
+	// debugger;
 	var NewAgentState = $("Info_AgentState").textContent;
 
 	if(ClientLink.Contacts.GetAllCount() > 0) NewAgentState = AGENT_WORKING;
