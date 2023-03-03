@@ -635,6 +635,13 @@ function SetWidthOfBoxActiveContactVoiceStatusToolStrip()
                     child.style.marginLeft = ((parentWidth - childWidth)/2) + '%';
                     childWidth = childWidth - widthOffset;
                 }
+
+				var spanTags = child.getElementsByTagName('span');
+				if(spanTags)
+				{
+					var span = Array.from(spanTags).filter(aa=>aa.id?.includes('InfoContactStatusDuration_'));
+					if(span) span[0].style.fontSize = '9.5px';
+				}
             }
                         
             child.style.top = ival + '%';
@@ -2216,7 +2223,7 @@ function dbgSearchMode()
 	// debugger;
 	
 	crSearchModePanel.Show(ClientLink.SearchModeCampLst);
-	removeElementClass($('SearchMode'),'active');
+	// removeElementClass($('SearchMode'),'active');
 }
 function dbgQualification()
 {
