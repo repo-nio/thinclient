@@ -415,6 +415,7 @@ var crQualPanel =
 			}
 
 			workspace.appendChild(node);
+			expandCollapseDispositionAccord();
 		}
 		else
 		{
@@ -813,6 +814,8 @@ var crSearchModePanel =
 
 				}				
 			}
+
+			expandCollapseSearchModeAccord();
 		}
 		else
 		{
