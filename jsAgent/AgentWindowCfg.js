@@ -586,6 +586,8 @@ function SetWidthOfBoxActiveContactVoiceStatusToolStrip()
 			}
         }
 
+		if(childrenLength > 2) childOffsetHeight = childOffsetHeight -1;
+
         for(var i = 0; i < chilrens.length; i++)
         {
             var child = chilrens[i];
