@@ -694,7 +694,7 @@ function SetPaddingBetweenActiveContacts()
 	var chilLength = child.children.length;
 	var paddingToAssign = '0px';
 
-	if(chilLength == 1) paddingToAssign = '1px';
+	if(chilLength == 1) paddingToAssign = '4px';
 	// else if(chilLength == 2) paddingToAssign = '0.5px';
 
 	for(var i = 0; i < chilrens.length; i++)
