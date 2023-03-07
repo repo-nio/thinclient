@@ -916,7 +916,7 @@ button:disabled, button[disabled]{ opacity: 0.4; cursor: auto; color: #000;}
 button:disabled:hover, button:disabled:focus, button[disabled]:hover, button[disabled]:focus { background-color: #757575 !important; border: 1px solid #989898; color: #000; box-shadow:inset 0 0 8px #626262; -moz-box-shadow:inset 0 0 8px #626262; -webkit-box-shadow:inset 0 0 8px #626262;}
 
 /*  SEARCH MODE  */
-#search-mode.modal { height: 295px;}
+#search-mode.modal { height: 295px; width: 286px;}
 .accordionModal { width: 100%; float: left; margin: 0; padding: 0; list-style: none;}
 .accordionModal li { width: 100%; float: left; margin: 0 0 10px 0; color: #cccccc;}
 .accordionModal li .acclink { width: 100%; float: left; position: relative; padding: 0 0 0 16px; font-size: 12px;}
@@ -941,10 +941,10 @@ button:disabled:hover, button:disabled:focus, button[disabled]:hover, button[dis
 .checkBoxModal .container input:checked ~ .checkmark:after { display: block;}
 .checkBoxModal .container .checkmark:after { left: 9px; top: 6px; width: 3px; height: 6px; border: solid white; border-width: 0 2px 2px 0; -webkit-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg);}
 
-#team.modal { height: 295px;}
+#team.modal { height: 295px; width: 286px;}
 #team.modal .modal-content { padding: 4px 4px 0px 4px;}
 
-#break-reason.modal { height: 295px;}
+#break-reason.modal { height: 295px; width: 286px;}
 #break-reason.modal .modal-content { padding: 4px 4px 0px 4px;}
 #break-reason.checkBoxModal .container div {left: 6px;}
 #break-reason.checkBoxModal .checkmark:before { display: none;}
@@ -954,7 +954,7 @@ button:disabled:hover, button:disabled:focus, button[disabled]:hover, button[dis
 
 
 
-#Select-qual.modal {height: 395px;width: 490px;}
+#Select-qual.modal {height: 395px;width: 486px;}
 /* #disposition.modal {height: 395px;width: 540px;} */
 
 .accordionDisposition { width: 100%; float: left; margin: 0; padding: 0; list-style: none;}
@@ -1009,4 +1009,6 @@ button:disabled:hover, button:disabled:focus, button[disabled]:hover, button[dis
 
 
 #Select-qual .calenderBoxForm ul li input:focus { border: 1px solid #1bcdfd;}
+
+#dial-pad.modal { width: 306px;}
 
