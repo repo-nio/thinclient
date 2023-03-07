@@ -186,6 +186,7 @@ body {
   width: 25%;
   border-right: 2px solid silver;
   flex: 1;
+  min-width: 200px;
 }
 
 #bottom-right {
