@@ -487,13 +487,13 @@ var crNewCallDialog =
 	},
 	ButtonDial : function()
 	{
+		debugger;
 		removeElementClass($('dial-pad'), 'active');
 		removeElementClass($('backdrop'), 'active');
 		if($('VoiceNewCall')) removeElementClass($('VoiceNewCall'), 'active');
 		
 	    if (!crNewCallDialog.crClientLink) return;
 	
-		// debugger;
 	    //this.setConnected();
 	    var _Element = $('MCNum');
 	    if(!_Element) return;
@@ -532,7 +532,7 @@ var crNewCallDialog =
 	},	
 	ButtonClear : function()
 	{
-		debugger;
+		// debugger;
 	    var _Element = $('MCNum');
 	    // _Element.value = '';
 
@@ -659,7 +659,7 @@ var crNewCallDialog =
 	},
 	Input_Changed : function(sender)
 	{
-		debugger;
+		// debugger;
 		if($('manualDialHistoryListDiv').style.display == "none") return;
 
 		var _Element = $('MCNum');
