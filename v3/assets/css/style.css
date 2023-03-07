@@ -831,7 +831,7 @@ body {
     justify-content: center;
 }
 .cardBoxLayer:hover {
-    background:#0CF;
+    background: linear-gradient(0deg, #04677F 0%, #0087A8 100%);;
     color: #fff !important;
 }
 .cardBoxLayer.active {
