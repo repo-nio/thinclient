@@ -333,6 +333,10 @@ var crNewCallDialog =
 		}		
 		
 		$('MCNum').value = '';
+
+		var history = JSON.parse(window.localStorage.getItem("ManualDialHistory"));
+		if(history !=null && history.length > 0 && history[0] != null && history[0] != '') $('MCNum').value = history[0];
+
 		if (crNewCallDialog.crNumToCall) 
 		{
 			$("MCNum").value = crNewCallDialog.crNumToCall;
@@ -512,6 +516,7 @@ var crNewCallDialog =
 				var maxIteration = history.length;
 				for(var i = maxIteration; i > 0; i--)
 				{
+					if(history[i-1] == _Element.value) history[i-1] = '';
 					history[i] = history[i-1];
 				}
 				history[0] = _Element.value;
