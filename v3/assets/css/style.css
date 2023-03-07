@@ -1019,8 +1019,39 @@ button:disabled:hover, button:disabled:focus, button[disabled]:hover, button[dis
 #Select-qual .dateBoxMain ul li div.dateBox .day { border-radius: 100%; width: 22px; height: 22px; text-align: center; padding-top: 2px; margin-bottom: 2px;}
 #Select-qual .dateBoxMain ul li div.dateBox.active .day { border: 1px solid #333333;}
 #Select-qual .timeSlap {  width:100%; float:left; margin-top:5px}
+
+/* 
 #Select-qual .mytsscroll::-webkit-scrollbar { background: #3b3b3b; color: #8e8e8e;}
-#Select-qual .mytsscroll::-webkit-scrollbar-thumb { background: #8e8e8e;}
+#Select-qual .mytsscroll::-webkit-scrollbar-thumb { background: #8e8e8e;} */
+
+#Select-qual .mytsscroll::-webkit-scrollbar { background: #3b3b3b; color: #8e8e8e; width: 10px;}
+#Select-qual .mytsscroll::-webkit-scrollbar-thumb { background: #8e8e8e; border-radius: 15px;}
+#Select-qual .mytsscroll::-webkit-scrollbar-button:single-button 
+{
+  background-color: #3b3b3b;
+  display: block;
+  border-style: solid;
+  height: 13px;
+  width: 10px;
+  background-repeat: no-repeat;
+}
+
+#Select-qual .mytsscroll::-webkit-scrollbar-button:single-button:vertical:decrement 
+{
+  border-width: 0 6px 6px 6px;
+  border-color: transparent transparent #8e8e8e transparent;
+}
+
+#Select-qual .mytsscroll::-webkit-scrollbar-button:single-button:vertical:increment 
+{
+  border-width: 6px 6px 0 6px;
+  border-color: #8e8e8e transparent transparent transparent;
+}
+#Select-qual .mytsscroll::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 6px 0 0px #3b3b3b;/*Gives styles to the scrollbar*/
+}
+
+
 #Select-qual .timeSlap ul { list-style:none; width:100%; float:left; height:126px; overflow-y:scroll;}
 #Select-qual .timeSlap ul li { width:100%; float:left; margin:1px 0; background:#4f4f4f; color: #cfcfcf; padding:4px 8px; border-radius:4px; cursor:pointer; font-size: 12px;}
 #Select-qual .timeSlap ul li.active { background:#1bcdfd; color: #333333;}
