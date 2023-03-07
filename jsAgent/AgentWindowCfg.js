@@ -417,6 +417,7 @@ function nixxislink_ConactAdded(contactInfo)
 	SetContactInfoBox(contactInfo.Id);
 
 	$('contactViewerObject').style.display = "none";
+	$('contactViewerObject').parentNode.style.overflow = '';
 	
 	DisplayScriptURLs(contactInfo);	
 
@@ -1195,6 +1196,7 @@ function RemoveContact(contactInfo)
 	else
 	{
 		$('contactViewerObject').style.display = "inline";
+		$('contactViewerObject').parentNode.style.overflow = 'hidden';
 		$('masterTab').style.display ='none';
 		$('masterTab').innerHTML = '';
 		
@@ -2340,6 +2342,7 @@ function DisplayScriptURLs(contactInfo)
 	$('masterTab').style.display ='block';
 	// $('masterTab').innerHTML = '';
 	$('contactViewerObject').style.display = "none";
+	$('contactViewerObject').parentNode.style.overflow = '';
 
 	if(vals !=null && vals.length > 0)
 	{
