@@ -277,7 +277,7 @@ body {
 }
 
 .footer .column.grid-buttons button.btn-1:disabled {
-  opacity: 0.5;
+  opacity: 0.25;
 }
 
 .footer .column.grid-buttons button.btn-1.active img {
@@ -933,12 +933,12 @@ body {
 .c-btn:hover:before { border: 1px solid #0f768e;}
 /* .c-btn:focus:before { border: 1px solid #0f768e;} */
 
-button:disabled, button[disabled]{ opacity: 0.4; cursor: auto; color: #000;}
+.c-btn:disabled, .c-btn[disabled]{ opacity: 0.4; cursor: auto; color: #000;}
 .c-btn:disabled:before, .c-btn[disabled]:before,
 .c-btn:disabled:hover:before, .c-btn[disabled]:hover:before { border: 1px solid #565656;}
 .c-btn:disabled:before:hover, .c-btn[disabled]:before:hover,
 .c-btn:disabled:before:focus, .c-btn[disabled]:before:focus{ box-shadow:inset 0 0 8px #626262; -moz-box-shadow:inset 0 0 8px #626262; -webkit-box-shadow:inset 0 0 8px #626262;}
-button:disabled:hover, button:disabled:focus, button[disabled]:hover, button[disabled]:focus { background-color: #757575 !important; border: 1px solid #989898; color: #000; box-shadow:inset 0 0 8px #626262; -moz-box-shadow:inset 0 0 8px #626262; -webkit-box-shadow:inset 0 0 8px #626262;}
+.c-btn:disabled:hover, .c-btn:disabled:focus, .c-btn[disabled]:hover, .c-btn[disabled]:focus { background-color: #757575 !important; border: 1px solid #989898; color: #000; box-shadow:inset 0 0 8px #626262; -moz-box-shadow:inset 0 0 8px #626262; -webkit-box-shadow:inset 0 0 8px #626262;}
 
 /*  SEARCH MODE  */
 #search-mode.modal { height: 295px; width: 286px;}
