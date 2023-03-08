@@ -691,7 +691,7 @@ function SetZindexOfActiveContactsVoiceStatusToolStrip()
 
 function SetPaddingBetweenActiveContacts()
 {
-	debugger;
+	// debugger;
 	var child = document.querySelectorAll('#voiceStatusToolStrip')[0];
 	var chilrens = child.getElementsByClassName('row d-flex cardBoxRow');
 	var chilLength = child.children.length;
@@ -1330,7 +1330,7 @@ function SetAgentInfoStat()
 
 function VoiceButtonsbehaviourWhenCallHold(contact)
 {
-	debugger;
+	// debugger;
 
 	var CurrentAction = contact.State;
 
@@ -2339,7 +2339,7 @@ function HideAllDialogModals()
 
 function DisplayScriptURLs(contactInfo)
 {
-	debugger;
+	// debugger;
 	var vals = contactInfo.ScriptUrl.split('|');
 	$('masterTab').style.display ='block';
 	// $('masterTab').innerHTML = '';
@@ -2394,7 +2394,6 @@ function DisplayScriptURLs(contactInfo)
 				divTagURLBox.appendChild(childdivTagURLBox);
 			}
 
-			debugger;
 			divTagBox.appendChild(ulTagBox);
 			$('masterTab').appendChild(divTagBox);
 			$('masterTab').appendChild(divTagURLBox);
@@ -2425,10 +2424,28 @@ function DisplayScriptURLs(contactInfo)
 
 function LoadIframeTitleToTabTitle(sender)
 {
-	debugger;
-
+	
 	var iframe = sender.currentTarget;
 
+	try
+	{ 
+		var doc1 = iframe.contentWindow.document; 
+		if(doc1) console.log("doc1");
+	}catch{}
+
+	try
+	{ 
+		var doc2 = iframe.contentDocument; 
+		if(doc2) console.log("doc2");
+	}catch{}
+
+	try
+	{ 
+		var doc3 = iframe.document;
+		if(doc3) console.log("doc3");
+	}catch{}
+	
+	// debugger;
 	// if(iframe)
 	// {
 	// 	iframe.TabHeaderControl.innerHTML = 
