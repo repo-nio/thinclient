@@ -62,7 +62,7 @@
                 crLoadingScreen.crLoadingMsg = CrResource.Common.LoadingMsg;
                 crLoadingScreen.Init();
 
-                debugger;
+                // debugger;
                 
                 let NixxisAgentLoginUser_History = window.localStorage.getItem("NixxisAgentLoginUser_History");
                 if(NixxisAgentLoginUser_History) $("userAccount").value = NixxisAgentLoginUser_History;
@@ -148,7 +148,7 @@
 
                 <div class="loginBoxMain">
                     <div class="loginFormTitle">
-                        Nixxis Contact Suite 3.0<sup>TM</sup>
+                        Nixxis Contact Suite 3.0<sup class="loginFormTitleSup">TM</sup>
                     </div>
                     <div class="loginFormLeft">
                         <ul>
@@ -199,13 +199,13 @@
                                 <input type="hidden" value="Client_Sup.html" name="startPage" id="startPage" />
                                 <input type="hidden" value="agent" name="roles" id="roles" />
                                 <!--<div id="divBtnSubmit" class="LoginButtons"></div>-->
-                                <button type="button" class="loginFormLoginBtn" id="divBtnSubmit" onclick="javascript:submitForm()" type="submit">
+                                <button type="button" class="c-btn" id="divBtnSubmit" onclick="javascript:submitForm()" type="submit">
                                     <script>document.writeln(const_Btn_Ok)</script>
                                 </button>
                             </li>
                             <li>
                                 <!--<div id="divBtnReset" class="LoginButtons"></div>-->
-                                <button  type="button" id="divBtnReset" class="loginFormLoginBtn" onclick="javascript:resetForm()">
+                                <button  type="button" id="divBtnReset" class="c-btn" onclick="javascript:resetForm()">
                                     <script>document.writeln(const_Btn_Cancel)</script>
                                 </button>
                             </li>
