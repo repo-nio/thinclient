@@ -523,8 +523,10 @@ var crNewCallDialog =
 			}
 			else
 			{
-				history = [_Element.value,'','','','','','','','','','','','','','','','','','','','','','','','','','',''];
+				history = [_Element.value];
 			}
+
+			history = history.filter(function(e){ return e.replace(/(\r\n|\n|\r)/gm,"")});
 
 			window.localStorage.setItem('ManualDialHistory', JSON.stringify(history));
 		} 
