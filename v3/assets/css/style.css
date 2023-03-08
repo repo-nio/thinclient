@@ -387,7 +387,7 @@ body {
   width: 100%;
   margin: 1px 1px 1px 1px;  
   border-radius: 5px;
-  cursor: pointer;
+  /* cursor: pointer; */
   display: -webkit-inline-box !important;
 }
 
@@ -569,7 +569,7 @@ body {
   background-color: #676767;
   font-size: x-large;
   color: #dad7d7;
-  cursor: pointer; 
+  /* cursor: pointer;  */
   border-radius: 7px;
   border-color:#ece2d0;
 }
@@ -577,7 +577,7 @@ body {
 .dial :not(.buttons) button {
   background-color: #676767;
   /* margin-left: 8px; */
-  cursor: pointer;
+  /* cursor: pointer; */
   max-width: 45px;
   min-width: 45px;
   max-height: 45px;
@@ -795,7 +795,7 @@ body {
 .masterTab .tabBox ul li { float: left; margin: 0; padding: 0; border: 1px solid #555F73; border-radius: 1px;}
 .masterTab .tabBox ul li span  { float: left; padding: 10px; background: #404040; color: #fff; 
   -webkit-transition-duration:0.5s; -moz-transition-duration:0.5s; 
-  -o-transition-duration: 0.5s; transition-duration:0.5s; cursor: pointer;
+  -o-transition-duration: 0.5s; transition-duration:0.5s; /*cursor: pointer;*/
 }
 .masterTab .tabBox ul li span:hover  { background: #00809F; color: #fff;}
 
@@ -816,7 +816,7 @@ body {
 #voiceStatusToolStrip { position: relative;}
 .footer .column .status { height: auto;}
 .cardBoxLayer {
-    cursor: pointer;
+    /* cursor: pointer; */
     position: absolute;
     /* margin-bottom: 10px; */
     /* border:1px solid #cccccc5c; */
@@ -837,7 +837,7 @@ body {
 .cardBoxLayer.active {
     background:#58a100;            
     z-index:199 !important;
-    cursor: default;
+    /* cursor: default; */
     margin-left: 0 !important;
     /* margin-top:45px; */
 }
@@ -953,9 +953,9 @@ button:disabled:hover, button:disabled:focus, button[disabled]:hover, button[dis
 .accordionModal li .accord-detail p button:focus { background-color: #1bcdfd; color: #000000;}
 
 /* Checkbox for Team and break */
-.checkBoxModal .container { width: 100%; float: left; min-height: 20px; display: block; position: relative; padding-left: 30px; margin-bottom: 1px; cursor: pointer; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; color: #d6d4d5}
+.checkBoxModal .container { width: 100%; float: left; min-height: 20px; display: block; position: relative; padding-left: 30px; margin-bottom: 1px; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; color: #d6d4d5}
 .checkBoxModal .container div { position: relative; z-index: 999; font-size: 12px; line-height: 20px; left: 26px;}
-.checkBoxModal .container input { position: absolute; opacity: 0; cursor: pointer; height: 0; width: 0;}
+.checkBoxModal .container input { position: absolute; opacity: 0; height: 0; width: 0;}
 .checkBoxModal .checkmark { position: absolute; top: 0; left: 0; height: 20px; width: 100%; background-color: #4f4f4f; -webkit-transition-duration:0.5s; -moz-transition-duration:0.5s; -o-transition-duration: 0.5s; transition-duration:0.5s;}
 .checkBoxModal .checkmark:before { content: ""; width: 12px; height: 12px; border: 1px solid #dedede; position: absolute; left: 4px; top: 4px; 
   box-shadow:inset 0 0 2px #000000; -moz-box-shadow:inset 0 0 2px #000000; -webkit-box-shadow:inset 0 0 2px #000000;}
@@ -1000,7 +1000,7 @@ button:disabled:hover, button:disabled:focus, button[disabled]:hover, button[dis
 
 #Select-qual .calenderBox {width:248px; margin:0;}
 /* #disposition .calenderBox button { color: #cfcfcf; background:#757575; box-shadow:none; border:0 none; outline:0 none; padding:5px 8px; border-radius:4px; cursor:pointer;} */
-#Select-qual .calenderBox button{ background-color: #757575; border: 1px solid #989898; color: #cfcfcf; border-radius: 4px; position: relative; cursor: pointer; padding:5px 12px; font-weight: 500; font-size: 12px; box-shadow:inset 0 0 8px #626262; -moz-box-shadow:inset 0 0 8px #626262; -webkit-box-shadow:inset 0 0 8px #626262; -webkit-transition-duration:0.5s; -moz-transition-duration:0.5s; -o-transition-duration: 0.5s; transition-duration:0.5s;}
+#Select-qual .calenderBox button{ background-color: #757575; border: 1px solid #989898; color: #cfcfcf; border-radius: 4px; position: relative; padding:5px 12px; font-weight: 500; font-size: 12px; box-shadow:inset 0 0 8px #626262; -moz-box-shadow:inset 0 0 8px #626262; -webkit-box-shadow:inset 0 0 8px #626262; -webkit-transition-duration:0.5s; -moz-transition-duration:0.5s; -o-transition-duration: 0.5s; transition-duration:0.5s;}
 #Select-qual .calenderBox button:hover{background: #1bcdfd; color: #000; box-shadow:inset 0 0 8px #0f768e; -moz-box-shadow:inset 0 0 8px #0f768e; -webkit-box-shadow:inset 0 0 8px #0f768e;}
 /* #Select-qual .calenderBox button:focus { background: #0f768e; color: #000; box-shadow:inset 0 0 8px #0f768e; -moz-box-shadow:inset 0 0 8px #0f768e; -webkit-box-shadow:inset 0 0 8px #0f768e;} */
 #Select-qual .calenderBox button:before { content: ""; width: calc(100% - 2px); height: calc(100% - 2px);  border: 1px solid #565656; border-radius: 4px; position: absolute; top: 0px; left: 0px; -webkit-transition-duration:0.5s; -moz-transition-duration:0.5s; -o-transition-duration: 0.5s; transition-duration:0.5s;}
@@ -1013,7 +1013,7 @@ button:disabled:hover, button:disabled:focus, button[disabled]:hover, button[dis
 #Select-qual .dateBoxMain { display:flex; flex-wrap: wrap; align-items: center; justify-content: space-between;}
 #Select-qual .dateBoxMain ul { list-style:none;}
 #Select-qual .dateBoxMain ul li { list-style:none; display:flex; align-items: center; justify-content: space-between;}
-#Select-qual .dateBoxMain ul li div.dateBox { float:left; margin:0 1px; background:#4f4f4f; color: #cfcfcf; padding:3px 2px; border-radius:4px; cursor:pointer; font-size: 12px;}
+#Select-qual .dateBoxMain ul li div.dateBox { float:left; margin:0 1px; background:#4f4f4f; color: #cfcfcf; padding:3px 2px; border-radius:4px; font-size: 12px;}
 #Select-qual .dateBoxMain ul li div.dateBox.active {background:#1bcdfd; color: #333333;}
 #Select-qual .dateBoxMain ul li div.dateBox div {display:block; text-align:center;}
 #Select-qual .dateBoxMain ul li div.dateBox .day { border-radius: 100%; width: 22px; height: 22px; text-align: center; padding-top: 2px; margin-bottom: 2px;}
@@ -1053,7 +1053,7 @@ button:disabled:hover, button:disabled:focus, button[disabled]:hover, button[dis
 
 
 #Select-qual .timeSlap ul { list-style:none; width:100%; float:left; height:126px; overflow-y:scroll;}
-#Select-qual .timeSlap ul li { width:100%; float:left; margin:1px 0; background:#4f4f4f; color: #cfcfcf; padding:4px 8px; border-radius:4px; cursor:pointer; font-size: 12px;}
+#Select-qual .timeSlap ul li { width:100%; float:left; margin:1px 0; background:#4f4f4f; color: #cfcfcf; padding:4px 8px; border-radius:4px; /*cursor:pointer;*/ font-size: 12px;}
 #Select-qual .timeSlap ul li.active { background:#1bcdfd; color: #333333;}
 
 #Select-qual .calenderBoxForm { width: 100%; float: left; margin-top: 8px;}
