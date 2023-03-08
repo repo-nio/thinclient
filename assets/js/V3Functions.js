@@ -12,7 +12,8 @@ function expandCollapseSearchModeAccord()
 
     var wrap2 = document.querySelectorAll('.accordionModal .acclink');  
     wrap2.forEach(e => {
-        e.ondblclick = accSearchModelink_OnClick;
+        // e.ondblclick = accSearchModelink_OnClick;
+        e.onclick = accSearchModelink_OnClick;
         removeElementClass(e, 'active');
     });
 };
@@ -62,7 +63,7 @@ function expandCollapseDispositionAccord()
     var wrap2 = document.querySelectorAll('.accordionDisposition .acclink');  
     wrap2.forEach(e => 
     {
-        if(e.classList.contains('acclink')) e.ondblclick = accDispositionlink_OnClick;
+        if(e.classList.contains('acclink')) e.onclick = accDispositionlink_OnClick;
         removeElementClass(e, 'active');
     });
 };
