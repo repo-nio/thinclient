@@ -997,9 +997,10 @@ body {
 .accordionDisposition li ul li  .accord-detail { padding-left: 18px;}
 
 
-#Select-qual .dispositionCnt { width:226px; padding-right: 10px;}
+#Select-qual .dispositionCnt { width:48%; padding-right: 10px;}
 
-#Select-qual .calenderBox {width:248px; margin:0;}
+#Select-qual .calenderBox {width:52%; margin:0;}
+#Select-qual .calenderBoxControl {width:100%; margin:0;}
 /* #disposition .calenderBox button { color: #cfcfcf; background:#757575; box-shadow:none; border:0 none; outline:0 none; padding:5px 8px; border-radius:4px; cursor:pointer;} */
 #Select-qual .calenderBox button{ background-color: #757575; border: 1px solid #989898; color: #cfcfcf; border-radius: 4px; position: relative; padding:5px 12px; font-weight: 500; font-size: 12px; box-shadow:inset 0 0 8px #626262; -moz-box-shadow:inset 0 0 8px #626262; -webkit-box-shadow:inset 0 0 8px #626262; -webkit-transition-duration:0.5s; -moz-transition-duration:0.5s; -o-transition-duration: 0.5s; transition-duration:0.5s;}
 #Select-qual .calenderBox button:hover{background: #1bcdfd; color: #000; box-shadow:inset 0 0 8px #0f768e; -moz-box-shadow:inset 0 0 8px #0f768e; -webkit-box-shadow:inset 0 0 8px #0f768e;}

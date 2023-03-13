@@ -306,6 +306,9 @@ var crQualPanel =
 		addElementClass($('Select-qual'), 'active');
 		addElementClass($('Selectqual'), 'active');
 		addElementClass($('backdrop'), 'active');
+
+		if($("QualificationPanel")) $("QualificationPanel").style.display = 'none';
+		if($("modalSelectqualworkspace")) $("modalSelectqualworkspace").style.width = '100%';
 	},
 	CreateBranch : function(branch, level, workspace)
 	{
@@ -450,6 +453,9 @@ var crQualPanel =
 		{
 			crQualPanel.OptionClear();
 			
+			if($("QualificationPanel")) $("QualificationPanel").style.display = 'none';
+			if($("modalSelectqualworkspace")) $("modalSelectqualworkspace").style.width = '100%';
+
 			if (this.crPositiveUpdatable) 
 			{
 				crQualPanel.OptionAddPosValue();
@@ -457,6 +463,9 @@ var crQualPanel =
 			}
 			if (this.crAction == 4 || this.crAction == 5) 
 			{
+				if($("QualificationPanel")) $("QualificationPanel").style.display = '';
+				if($("modalSelectqualworkspace")) $("modalSelectqualworkspace").style.width = '48%';
+
 				$('btnSelectqualOk').disabled = true;
 				crQualPanel.OptionAddDateTime();
 			}
@@ -481,7 +490,10 @@ var crQualPanel =
 
 		crQualPanel.CurrentSelected = this;
 		crQualPanel.OptionClear();
-		
+
+		if($("QualificationPanel")) $("QualificationPanel").style.display = 'none';
+		if($("modalSelectqualworkspace")) $("modalSelectqualworkspace").style.width = '100%';
+
 		if (this.crPositiveUpdatable) 
 		{
 			crQualPanel.OptionAddPosValue();
@@ -489,6 +501,8 @@ var crQualPanel =
 		}
 		if (this.crAction == 4 || this.crAction == 5) 
 		{
+			if($("QualificationPanel")) $("QualificationPanel").style.display = '';
+			if($("modalSelectqualworkspace")) $("modalSelectqualworkspace").style.width = '48%';
 			crQualPanel.OptionAddDateTime();
 		}
 		else 
@@ -506,7 +520,7 @@ var crQualPanel =
 		// debugger;
 		
 		var el = window.document.createElement("div");
-		el.className = 'calenderBox';
+		el.className = 'calenderBoxControl';
 		var _BODY = '';	    
 		// _BODY += '<div class="calenderBox">';
 		_BODY += '	<div class="calender">';

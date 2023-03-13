@@ -20,7 +20,7 @@
     outline:0 none;
     padding:8px; 
     border-radius:5px;
-    cursor:pointer;    
+    /* cursor:pointer;     */
 }
 
 .calenderBox button.btnNext 
@@ -70,7 +70,7 @@
     color: silver;
     padding:5px 3px;
     border-radius:5px;
-    cursor:pointer;
+    /* cursor:pointer; */
     /*min-width: 32px;*/
 }
 
@@ -128,7 +128,7 @@
     color: silver;
     padding:6px 15px;
     border-radius:8px;
-    cursor:pointer;
+    /* cursor:pointer; */
 }
 
 .timeSlap ul li.active 
