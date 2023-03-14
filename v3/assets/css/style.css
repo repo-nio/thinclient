@@ -945,13 +945,15 @@ body {
 .accordionModal { width: 100%; float: left; margin: 0; padding: 0; list-style: none;}
 .accordionModal li { width: 100%; float: left; margin: 0 0 10px 0; color: #cccccc;}
 .accordionModal li .acclink { width: 100%; float: left; position: relative; padding: 0 0 0 16px; font-size: 12px;}
-.accordionModal li .acclink::before {content: "\f0da"; position: absolute; left: 0; top: 1px; font: normal normal normal 14px/1 FontAwesome; font-size: 14px; font-size: inherit; text-rendering: auto;}
-.accordionModal li .acclink.active::before {content: "\f0d7"; position: absolute; left: 0; top: 1px; font: normal normal normal 14px/1 FontAwesome; font-size: 14px; font-size: inherit; text-rendering: auto;}
+.accordionModal li .acclink::before {content: "\f0da"; position: absolute; left: 0; top: 5px; font: normal normal normal 14px/1 FontAwesome; font-size: 14px; font-size: inherit; text-rendering: auto;}
+.accordionModal li .acclink.active::before {content: "\f0d7"; position: absolute; left: 0; top: 5px; font: normal normal normal 14px/1 FontAwesome; font-size: 14px; font-size: inherit; text-rendering: auto;}
 .accordionModal li .accord-detail { width: 100%; float: left; margin-top: 8px; padding-left: 35px;font-size: 12px;}
 .accordionModal li .accord-detail p { margin: 0 0 5px 0; font-size: 12px; line-height: 20px; padding: 0px 6px; -webkit-transition-duration:0.5s; -moz-transition-duration:0.5s; -o-transition-duration: 0.5s; transition-duration:0.5s;}
 .accordionModal li .accord-detail p button { background: transparent; border: 0 none; border-radius: 2px;outline: 0 none; font-size: 12px; line-height: 20px; padding: 0px 6px; -webkit-transition-duration:0.5s; -moz-transition-duration:0.5s; -o-transition-duration: 0.5s; transition-duration:0.5s; color: #cccccc;}
 .accordionModal li .accord-detail p button:hover { background-color: #00809f;}
 .accordionModal li .accord-detail p button:focus { background-color: #1bcdfd; color: #000000;}
+.accordionModal li .acclink button { background: transparent; border: 0 none; border-radius: 2px;outline: 0 none; font-size: 12px; line-height: 20px; padding: 0px 6px; -webkit-transition-duration:0.5s; -moz-transition-duration:0.5s; -o-transition-duration: 0.5s; transition-duration:0.5s; color: #cccccc;}
+.accordionModal li .acclink button:hover { background-color: #00809f;}
 
 /* Checkbox for Team and break */
 .checkBoxModal .container { width: 100%; float: left; min-height: 20px; display: block; position: relative; padding-left: 30px; margin-bottom: 1px; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none; color: #d6d4d5}
@@ -985,8 +987,8 @@ body {
 .accordionDisposition { width: 100%; float: left; margin: 0; padding: 0; list-style: none;}
 .accordionDisposition li { width: 100%; float: left; margin: 0 0 2px 0; color: #cfcfcf; list-style: none;}
 .accordionDisposition li .acclink { width: 100%; float: left; position: relative; padding: 0 0 0 16px; font-size: 12px;}
-.accordionDisposition li .acclink::before {content: "\f0da"; position: absolute; left: 0; top: 1px; font: normal normal normal 14px/1 FontAwesome; font-size: 14px; font-size: inherit; text-rendering: auto;}
-.accordionDisposition li .acclink.active::before {content: "\f0d7"; position: absolute; left: 0; top: 1px; font: normal normal normal 14px/1 FontAwesome; font-size: 14px; font-size: inherit; text-rendering: auto;}
+.accordionDisposition li .acclink::before {content: "\f0da"; position: absolute; left: 0; top: 5px; font: normal normal normal 14px/1 FontAwesome; font-size: 14px; font-size: inherit; text-rendering: auto;}
+.accordionDisposition li .acclink.active::before {content: "\f0d7"; position: absolute; left: 0; top: 5px; font: normal normal normal 14px/1 FontAwesome; font-size: 14px; font-size: inherit; text-rendering: auto;}
 .accordionDisposition li .accord-detail { width: 100%; float: left; margin-top: 8px; /*padding-left: 35px;*/ font-size: 12px;}
 .accordionDisposition li .accord-detail p { margin: 0 0 5px 0; font-size: 12px;}
 
@@ -1017,6 +1019,7 @@ body {
 #Select-qual .dateBoxMain ul li { list-style:none; display:flex; align-items: center; justify-content: space-between;}
 #Select-qual .dateBoxMain ul li div.dateBox { float:left; margin:0 1px; background:#4f4f4f; color: #cfcfcf; padding:3px 2px; border-radius:4px; font-size: 12px;}
 #Select-qual .dateBoxMain ul li div.dateBox.active {background:#1bcdfd; color: #333333;}
+#Select-qual .dateBoxMain ul li div.dateBox:not(.active):hover { background-color: #00809f;}
 #Select-qual .dateBoxMain ul li div.dateBox div {display:block; text-align:center;}
 #Select-qual .dateBoxMain ul li div.dateBox .day { border-radius: 100%; width: 22px; height: 22px; text-align: center; padding-top: 2px; margin-bottom: 2px;}
 #Select-qual .dateBoxMain ul li div.dateBox.active .day { border: 1px solid #333333;}
@@ -1057,6 +1060,7 @@ body {
 #Select-qual .timeSlap ul { list-style:none; width:100%; float:left; height:126px; overflow-y:scroll;}
 #Select-qual .timeSlap ul li { width:100%; float:left; margin:1px 0; background:#4f4f4f; color: #cfcfcf; padding:4px 8px; border-radius:4px; /*cursor:pointer;*/ font-size: 12px;}
 #Select-qual .timeSlap ul li.active { background:#1bcdfd; color: #333333;}
+#Select-qual .timeSlap ul li:not(.active):hover { background-color: #00809f;}
 
 #Select-qual .calenderBoxForm { width: 100%; float: left; margin-top: 8px;}
 #Select-qual .calenderBoxForm ul { width: 100%; float: left; list-style: none;}

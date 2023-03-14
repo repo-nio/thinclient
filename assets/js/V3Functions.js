@@ -95,5 +95,9 @@ function accDispositionlink_OnClick(sender)
         }	   
         element.nextElementSibling.style.display = 'block';
     }
+
+    if($("QualificationPanel")) $("QualificationPanel").style.display = 'none';
+    if($("modalSelectqualworkspace")) $("modalSelectqualworkspace").style.width = '100%';
+    if($("QualificationPanel")) $('QualificationPanel').innerHTML = '';
     return false;
 }

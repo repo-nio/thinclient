@@ -343,7 +343,7 @@ var crQualPanel =
 					var branchNode = document.createElement('li');
 					var innerBranchNode = document.createElement('div');
 					innerBranchNode.className = 'acclink';
-					innerBranchNode.innerHTML = branch.Items[index].Description;
+					innerBranchNode.innerHTML = '<button>' + branch.Items[index].Description + '</button>';
 					innerBranchNode.onclick = crQualPanel.Select_OnClick;
 					innerBranchNode.ondblclick = crQualPanel.Select_OnDoubleClick;
 
@@ -378,7 +378,7 @@ var crQualPanel =
 
 							var innerBranchNode2 = document.createElement('div');
 							innerBranchNode2.className = 'acclink';
-							innerBranchNode2.innerHTML = branch.Items[index].Children.Items[indexC].Description;
+							innerBranchNode2.innerHTML = '<button>' + branch.Items[index].Children.Items[indexC].Description + '</button>';
 							innerBranchNode2.onclick = crQualPanel.Select_OnClick;
 							innerBranchNode2.ondblclick = crQualPanel.Select_OnDoubleClick;
 
@@ -442,20 +442,18 @@ var crQualPanel =
 	{
 		// debugger;
 
+		if($("QualificationPanel")) $("QualificationPanel").style.display = 'none';
+		if($("modalSelectqualworkspace")) $("modalSelectqualworkspace").style.width = '100%';
+		crQualPanel.OptionClear();
+
 		if(this.crAction == null)
 		{
-			crQualPanel.OptionClear();
 			$('btnSelectqualOk').disabled = true;
 			return;
 		}
 
 		if (crQualPanel.CurrentSelected.crAction != this.crAction) 
 		{
-			crQualPanel.OptionClear();
-			
-			if($("QualificationPanel")) $("QualificationPanel").style.display = 'none';
-			if($("modalSelectqualworkspace")) $("modalSelectqualworkspace").style.width = '100%';
-
 			if (this.crPositiveUpdatable) 
 			{
 				crQualPanel.OptionAddPosValue();
@@ -482,17 +480,13 @@ var crQualPanel =
 		// debugger;
 		$('btnSelectqualOk').disabled = true;
 
-		if(this == null || this.crAction == null)
-		{
-			crQualPanel.OptionClear();
-			return;
-		}
-
-		crQualPanel.CurrentSelected = this;
-		crQualPanel.OptionClear();
-
 		if($("QualificationPanel")) $("QualificationPanel").style.display = 'none';
 		if($("modalSelectqualworkspace")) $("modalSelectqualworkspace").style.width = '100%';
+		crQualPanel.OptionClear();
+
+		if(this == null || this.crAction == null) return;
+
+		crQualPanel.CurrentSelected = this;
 
 		if (this.crPositiveUpdatable) 
 		{
@@ -797,7 +791,7 @@ var crSearchModePanel =
 					if(iCount == 0) mainTitleTag.className = 'acclink active';
 					else mainTitleTag.className = 'acclink';
 
-					mainTitleTag.innerHTML = branch.Children[index].Description;
+					mainTitleTag.innerHTML ='<button>' +  branch.Children[index].Description + '</button>';
 					mainTitleTag.crId = branch.Children[index].Id;
 					// mainTitleTag.onclick = crSearchModePanel.Select_OnClick;
 
