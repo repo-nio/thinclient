@@ -26,13 +26,14 @@ function LoadDateTimeInstance()
     DisplayTimeOptions();
 
     // debugger;
-    // if(selectedDate == null) selectedDate = new Date();
+
     selectedDate = new Date();
     setMonthNameYear();
 
     const myCurrentDate = new Date(selectedDate);
     DisplayDateNo(myCurrentDate);
     $('dateBox'+ 1).className = 'dateBox active';
+    ShowTodaysDateCircled();
 
     var days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
     for(i = 0; i < DAYS_IN_WEEK; i++)
@@ -112,6 +113,7 @@ function getNextWeek()
     var nextWeekFirstDate = new Date(currentFirstDate.setDate(currentFirstDate.getDate() + DAYS_IN_WEEK));
     setMonthNameYear();    
     DisplayDateNo(nextWeekFirstDate);
+    ShowTodaysDateCircled();
 }    
 
 function getPreviousWeek()
@@ -123,6 +125,7 @@ function getPreviousWeek()
     var previousWeekDate = new Date(currentFirstDate.setDate(currentFirstDate.getDate() - DAYS_IN_WEEK));
     setMonthNameYear();
     DisplayDateNo(previousWeekDate);
+    ShowTodaysDateCircled();
 }
 
 function onDateClicked(sender)
@@ -138,6 +141,33 @@ function onDateClicked(sender)
     }
 
     sender.currentTarget.className = 'dateBox active';
+    ShowTodaysDateCircled();
+}
+
+function ShowTodaysDateCircled()
+{
+    // debugger;
+
+    for(i = 1; i <= DAYS_IN_WEEK; i++)
+    {
+        var datecontrol  = $("dateBox" + i);
+        if(datecontrol.AssignedDate.withoutTime() == new Date().withoutTime())
+        {
+            if(datecontrol.className?.includes('active')) addElementClass(datecontrol , 'todaysDateActive');
+            else addElementClass(datecontrol , 'todaysDate');
+        }
+        else 
+        {
+            removeElementClass(datecontrol , 'todaysDateActive');
+            removeElementClass(datecontrol , 'todaysDate');
+        }
+    }
+}
+
+Date.prototype.withoutTime = function () {
+    var d = new Date(this);
+    d.setHours(0, 0, 0, 0);
+    return d.toISOString();
 }
 
 function onTimeClicked(sender)
