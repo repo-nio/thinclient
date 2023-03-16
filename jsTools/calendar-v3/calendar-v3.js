@@ -23,11 +23,6 @@ function $(element)
 
 function LoadDateTimeInstance()
 {
-    for(i = 0; i < DAYS_IN_WEEK; i++)
-    {           
-        $("dateBox" + (i+1) ).onclick = onDateClicked;
-    }
-
     DisplayTimeOptions();
 
     // debugger;
@@ -35,9 +30,20 @@ function LoadDateTimeInstance()
     selectedDate = new Date();
     setMonthNameYear();
 
-    let mySundayDate = getSundayFromDate(selectedDate);
-    DisplayDateNo(mySundayDate);
-    $('dateBox'+ (selectedDate.getDay() + 1)).className = 'dateBox active';
+    const myCurrentDate = new Date(selectedDate);
+    DisplayDateNo(myCurrentDate);
+    $('dateBox'+ 1).className = 'dateBox active';
+
+    var days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+    for(i = 0; i < DAYS_IN_WEEK; i++)
+    {
+        debugger;
+        let myNextDateToSet = myCurrentDate;
+        if(i != 0) myNextDateToSet = new Date(myCurrentDate.setDate(myCurrentDate.getDate() + 1));
+        $("Day" + (i+1)).innerHTML = days[myNextDateToSet.getDay()];
+
+        $("dateBox" + (i+1) ).onclick = onDateClicked;
+    }
 }
 
 function setMonthNameYear()
@@ -46,16 +52,6 @@ function setMonthNameYear()
 
     const myElement = $("MonthName");
     myElement.innerHTML = MonthInYear[selectedDate.getMonth()] + ' ' + selectedDate.getFullYear();
-}
-
-function getSundayFromDate(myDate)
-{
-    let dateReceived = new Date(myDate);
-    let weekDateNo = dateReceived.getDate();
-    let weekDaysToDeductForSunday = dateReceived.getDay();
-
-    let mySunday = new Date(dateReceived.setDate(weekDateNo - weekDaysToDeductForSunday));
-    return mySunday;
 }
 
 function DisplayDateNo(dateToSet)
@@ -109,25 +105,24 @@ function DisplayTimeOptions()
 
 function getNextWeek()
 {
-    // debugger;
     if(selectedDate == null) selectedDate = new Date();
+    selectedDate = new Date(selectedDate.setDate(selectedDate.getDate() + DAYS_IN_WEEK));
 
-    var nextWeekDate = new Date(selectedDate.setDate(selectedDate.getDate() + DAYS_IN_WEEK));
-    setMonthNameYear();
-    
-    var mySunday = getSundayFromDate(nextWeekDate);        
-    DisplayDateNo(mySunday);
+    const currentFirstDate = $("dateBox" + (1)).AssignedDate;
+    var nextWeekFirstDate = new Date(currentFirstDate.setDate(currentFirstDate.getDate() + DAYS_IN_WEEK));
+    setMonthNameYear();    
+    DisplayDateNo(nextWeekFirstDate);
 }    
 
 function getPreviousWeek()
 {
     if(selectedDate == null) selectedDate = new Date();
+    selectedDate = new Date(selectedDate.setDate(selectedDate.getDate() - DAYS_IN_WEEK));
 
-    var nextWeekDate = new Date(selectedDate.setDate(selectedDate.getDate() - DAYS_IN_WEEK));
+    const currentFirstDate = $("dateBox" + (1)).AssignedDate;
+    var previousWeekDate = new Date(currentFirstDate.setDate(currentFirstDate.getDate() - DAYS_IN_WEEK));
     setMonthNameYear();
-
-    var mySunday = getSundayFromDate(nextWeekDate);
-    DisplayDateNo(mySunday);
+    DisplayDateNo(previousWeekDate);
 }
 
 function onDateClicked(sender)
@@ -142,8 +137,7 @@ function onDateClicked(sender)
         $("dateBox" + (i + 1)).className = 'dateBox';
     }
 
-    let current =  $('dateBox'+ (selectedDate.getDay() + 1));
-    current.className = 'dateBox active';
+    sender.currentTarget.className = 'dateBox active';
 }
 
 function onTimeClicked(sender)
