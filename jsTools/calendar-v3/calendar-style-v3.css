@@ -96,12 +96,6 @@
     margin-bottom: 2px;
 }
 
-.dateBoxMain ul li div.dateBox.active .day
-{
-    border: 1px solid #333333;
-    /* color: silver; */
-}
-
 .timeSlap 
 { 
     width:100%;
