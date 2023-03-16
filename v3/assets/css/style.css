@@ -70,7 +70,7 @@ body {
 }
 
 .content .message h1 {
-  font-size: 1.5em;
+  font-size: 2em;
   color: #c2c2c2;
   margin: 0;
   margin-bottom: 10px;
@@ -1019,10 +1019,15 @@ body {
 #Select-qual .dateBoxMain ul li { list-style:none; display:flex; align-items: center; justify-content: space-between;}
 #Select-qual .dateBoxMain ul li div.dateBox { float:left; margin:0 1px; background:#4f4f4f; color: #cfcfcf; padding:3px 2px; border-radius:4px; font-size: 12px;}
 #Select-qual .dateBoxMain ul li div.dateBox.active {background:#1bcdfd; color: #333333;}
-#Select-qual .dateBoxMain ul li div.dateBox:not(.active):hover { background-color: #00809f;}
+#Select-qual .dateBoxMain ul li div.dateBox:not(.active):hover { background-color: #00809f; -webkit-transition-duration:1s; -moz-transition-duration:1s; -o-transition-duration: 1s; transition-duration:1s;}
+#Select-qual .dateBoxMain ul li div { -webkit-transition-duration:1s; -moz-transition-duration:1s; -o-transition-duration: 1s; transition-duration:1s;}
+
 #Select-qual .dateBoxMain ul li div.dateBox div {display:block; text-align:center;}
 #Select-qual .dateBoxMain ul li div.dateBox .day { border-radius: 100%; width: 22px; height: 22px; text-align: center; padding-top: 2px; margin-bottom: 2px;}
-#Select-qual .dateBoxMain ul li div.dateBox.active .day { border: 1px solid #333333;}
+
+#Select-qual .dateBoxMain ul li div.dateBox.todaysDateActive .day { border: 1px solid #333333;}
+#Select-qual .dateBoxMain ul li div.dateBox.todaysDate .day { border: 1px solid #FFF; /* color: silver; */ }
+
 #Select-qual .timeSlap {  width:100%; float:left; margin-top:5px}
 
 /* 
@@ -1058,9 +1063,9 @@ body {
 
 
 #Select-qual .timeSlap ul { list-style:none; width:100%; float:left; height:126px; overflow-y:scroll;}
-#Select-qual .timeSlap ul li { width:100%; float:left; margin:1px 0; background:#4f4f4f; color: #cfcfcf; padding:4px 8px; border-radius:4px; /*cursor:pointer;*/ font-size: 12px;}
+#Select-qual .timeSlap ul li { width:100%; float:left; margin:1px 0; background:#4f4f4f; color: #cfcfcf; padding:4px 8px; border-radius:4px; /*cursor:pointer;*/ font-size: 12px;-webkit-transition-duration:1s; -moz-transition-duration:1s; -o-transition-duration: 1s; transition-duration:1s;}
 #Select-qual .timeSlap ul li.active { background:#1bcdfd; color: #333333;}
-#Select-qual .timeSlap ul li:not(.active):hover { background-color: #00809f;}
+#Select-qual .timeSlap ul li:not(.active):hover { background-color: #00809f; -webkit-transition-duration:1s; -moz-transition-duration:1s; -o-transition-duration: 1s; transition-duration:1s;}
 
 #Select-qual .calenderBoxForm { width: 100%; float: left; margin-top: 8px;}
 #Select-qual .calenderBoxForm ul { width: 100%; float: left; list-style: none;}
