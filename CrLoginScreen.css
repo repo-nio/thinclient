@@ -30,7 +30,7 @@ ul, li {
 
 .LoginLogoBox {
     position: absolute;
-    left: 10%;
+    left: 3.5%;
     top: 50%;
     margin: 0 auto;
     text-align: center;
@@ -84,7 +84,7 @@ ul, li {
 
     .loginFormRight  {
         position: relative;
-        right: 10px;
+        right: 10%;
     }
 }
 .loginFormTitle {
@@ -121,7 +121,7 @@ ul, li {
 
 
 .loginFormTitleSup {
-    font-size: 15px;
+    font-size: 10px;
     font-weight: 600;
 }
 
@@ -129,7 +129,7 @@ ul, li {
 .loginFormLeft {
     position: relative;
     /* left: 10%; */
-    left: 20px;
+    left: 100px;
     width:auto;
     float: left;
 }
@@ -137,7 +137,7 @@ ul, li {
 .loginFormRight {
     position: relative;
     top: -26%;
-    left: 8%;
+    left: 30%;
     width:auto;
     float: right;
 }
@@ -156,7 +156,7 @@ ul, li {
     margin: 0;
     padding: 0;
     position: relative;
-    top: 100px;
+    top: 70px;
 }
 
     .loginBoxMain ul li {
