@@ -112,9 +112,7 @@ function ClientConnect()
 	// debugger;
 	window.localStorage.setItem("NixxisAgentLoginUser_History", ClientLink.UserAccount);
 	window.localStorage.setItem("NixxisAgentLoginUserExtension_History", ClientLink.Extension);
-	
 
-	$('divAgentStatus').onclick = onAgentStatusClick;
 	ShowHideVoiceToolStripIcons(false);
 	ShowHideVoiceStatusToolStripIcons(false);
 	// window.setTimeout(DisplayDateTimeElapsed, 1000);
@@ -141,6 +139,8 @@ function ClientConnect()
 	{
 		location.reload();
 	}
+
+	SetAgentStatusViewContextOptions();
 }
 
 function ForceBreakOnAgentReload()
@@ -178,27 +178,6 @@ function ForceBreakOnAgentReload()
 	}
 }
 
-function onAgentStatusClick()
-{
-	if($("Info_AgentReadyVoiceIndication").style.display == "none")
-	{
-		$("Info_AgentReadyVoiceIndication").style.display = "inline";
-
-		$("Info_QueueWaitingHeader").textContent  = 'Waiting contacts:';
-		$("Info_QueueWaiting").textContent  = '0';
-
-		$("Info_QueueHighPriorityHeader").textContent  = 'Priority contacts:';
-		$("Info_QueueHighPriority").textContent  = '0 - 0';
-
-		$("Info_AgentStateHeader").textContent  = 'State:';
-		$("Info_AgentState").textContent  = 'Break';
-
-		$("Info_AgentSessionDurationHeader").textContent  = 'Duration:';
-
-		$("Info_AgtName_Account").innerHTML  = $D(ClientLink.UserName)+' ('+$D(ClientLink.Extension)+')';
-	}
-}
-
 var startdatetime;
 function DisplayDateTimeElapsed()
 {
@@ -231,29 +210,55 @@ function setSessionDisconnectedMessage(msg)
 	// debugger;
 	var cleanedmsg = msg;
 	
+	var msgSrcIcon = './assets/icons/Supervisor_WarningMessage_16.png';
 	if(msg)
 	{
 		var msgArr = msg.split(',');
 
 		if(msgArr && msgArr.length > 3) cleanedmsg = (msgArr[1] + ',' + msgArr[2]).formatString(msgArr.slice(3, msgArr.length));
 		else if(msgArr && msgArr.length > 2) cleanedmsg = msgArr[1].formatString(msgArr.slice(2, msgArr.length));
+		else if(msgArr && msgArr.length > 1) cleanedmsg = msgArr[1];
+
+		if(msgArr.length > 0)
+		{
+			switch (msgArr[0])
+			{
+				case '0': // Default
+					msgSrcIcon = './assets/icons/Supervisor_WarningMessage_16.png';
+					break;
+				case '1': // HelpRequest
+					msgSrcIcon = './assets/icons/Supervisor_MessageTypee_HelpRequest_25.png';
+					break;
+				case '2': // Warning
+					msgSrcIcon = './assets/icons/Supervisor_WarningMessage_16.png';
+					break;
+				case '3': // Alert
+					msgSrcIcon = './assets/icons/Supervisor_MessageType_Alert_25.png';
+					break;
+				case '4': // Chat
+					msgSrcIcon = './assets/icons/Supervisor_WarningMessage_16.png';
+					break;
+				case '5': // ChatEnd
+					msgSrcIcon = './assets/icons/Supervisor_WarningMessage_16.png';
+					break;
+				default:
+					msgSrcIcon = './assets/icons/Supervisor_MessageType_Default_25.png';
+			}
+		}
 	}
 
-	$("Info_QueueWaitingHeader").textContent  = cleanedmsg;
-	$("Info_QueueWaiting").textContent  = '';
+	var liWarningView = $('liWarningView');
 
-	$("Info_QueueHighPriorityHeader").textContent  = '';
-	$("Info_QueueHighPriority").textContent  = '';
+	var _BODY = '';	    
 
-	$("Info_AgentStateHeader").textContent  = '';
-	$("Info_AgentState").textContent  = '';
+	_BODY += '<li>';
+	_BODY += '	<button><img src= '+ msgSrcIcon +' style="height: 16px;width: 16px;"/> '+ cleanedmsg +'</button>';
+	_BODY += '</div>';
 
-	$("Info_AgentSessionDurationHeader").textContent  = '';
-	$("Info_AgentSessionDuration").textContent  = '';
+	const currentInnerHtml = liWarningView.innerHTML;
+	liWarningView.innerHTML = _BODY + currentInnerHtml;
 
-	$("Info_AgtName_Account").textContent  = '';
-
-	$("Info_AgentReadyVoiceIndication").style.display = "none";
+	SetViewOptionStatusForButtons($('btnAgentViewOptionWarningMessage'));
 }
 
 String.prototype.formatString = function (args) 

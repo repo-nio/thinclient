@@ -187,7 +187,7 @@ body {
   width: 25%;
   border-right: 2px solid silver;
   flex: 1;
-  min-width: 200px;
+  min-width: 250px;
 }
 
 #bottom-right {
@@ -1078,3 +1078,75 @@ body {
 
 #dial-pad.modal { width: 306px;}
 
+
+
+#rightClickContextMenu.show { display: block;}
+#rightClickContextMenu.hide { display: none;}
+#rightClickContextMenu 
+{
+  min-width: 135px;
+  height: 100px;
+  padding: 5px;
+  box-sizing: border-box;
+  display: block;  
+  background-color: #555f73;
+  /* border: 1px solid #8a919e; */
+  position: absolute;
+  z-index: 1000;
+  font-size: 12px;
+}
+
+#rightClickContextMenu ul { width: 100%; float: left; list-style: none; margin: 0; padding: 0;}
+#rightClickContextMenu ul li { width: 100%; display: block; list-style: none; margin: 3px 0; padding: 0;}
+#rightClickContextMenu ul li button { width: 100%; margin: 0; padding: 0; background: none; border:0 none; outline: 0; text-align: left; display: flex; align-items: center;}
+#rightClickContextMenu ul li button i { color: #fff; margin-right: 8px; display: none;}
+#rightClickContextMenu ul li button.active i { display: block;}
+#rightClickContextMenu ul li button span { width: 100%; color: #fff; display: block; padding: 4px 8px; font-size: 12px;}
+#rightClickContextMenu ul li button:hover span { background: rgb(0,136,170);
+  background: -moz-linear-gradient(0deg, rgba(0,136,170,1) 0%, rgba(0,188,235,1) 100%);
+  background: -webkit-linear-gradient(0deg, rgba(0,136,170,1) 0%, rgba(0,188,235,1) 100%);
+  background: linear-gradient(0deg, rgba(0,136,170,1) 0%, rgba(0,188,235,1) 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0088aa",endColorstr="#00bceb",GradientType=1);}
+
+
+
+.WarningView { width:calc( 100% - 20px); height: calc( 100% - 20px); float: left; margin: 10px; border: 1px solid #ccc; padding: 2px; box-sizing: border-box; border-radius: 2px; -webkit-box-shadow: 0px 0px 0px 5px rgba(255,255,255,0.15); 
+  box-shadow: 0px 0px 0px 5px rgba(255,255,255,0.15);overflow: auto;}
+.WarningView ul { width: 100%; float: left; margin: 0; padding: 0; list-style: none;}
+.WarningView ul li { width: 100%; float: left; margin: 1px 0; padding: 0; list-style: none;}
+.WarningView ul li button {width: 100%; background: transparent; border: 0 none; border-radius: 2px;outline: 0 none; font-size: 12px; line-height: 20px; padding: 0px 6px; -webkit-transition-duration:0.5s; -moz-transition-duration:0.5s; -o-transition-duration: 0.5s; transition-duration:0.5s; color: #cccccc; text-align: left; display: flex; align-items: center;}
+.WarningView ul li button img { margin-right: 5px;}
+.WarningView ul li button:hover { background-color: #00809f;}
+.WarningView ul li button:focus { background-color: #1bcdfd; color: #000000;}
+
+
+.WarningView::-webkit-scrollbar { background: #3b3b3b; color: #8e8e8e; width: 10px;}
+.WarningView::-webkit-scrollbar-thumb { background: #8e8e8e; border-radius: 15px;}
+.WarningView::-webkit-scrollbar-button:single-button 
+{
+  background-color: #3b3b3b;
+  display: block;
+  border-style: solid;
+  height: 13px;
+  width: 10px;
+  background-repeat: no-repeat;
+}
+
+.WarningView::-webkit-scrollbar-button:single-button:vertical:decrement 
+{
+  border-width: 0 6px 6px 6px;
+  border-color: transparent transparent #8e8e8e transparent;
+}
+
+.WarningView::-webkit-scrollbar-button:single-button:vertical:increment 
+{
+  border-width: 6px 6px 0 6px;
+  border-color: #8e8e8e transparent transparent transparent;
+}
+.WarningView::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 6px 0 0px #3b3b3b;/*Gives styles to the scrollbar*/
+}
+
+
+.accordionModal li .acclink button { background: transparent; border: 0 none; border-radius: 2px;outline: 0 none; font-size: 12px; line-height: 20px; padding: 0px 6px; -webkit-transition-duration:0.5s; -moz-transition-duration:0.5s; -o-transition-duration: 0.5s; transition-duration:0.5s; color: #cccccc;}
+.accordionModal li .acclink button:hover { background-color: #00809f;}
