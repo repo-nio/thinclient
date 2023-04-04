@@ -107,33 +107,37 @@ body {
 .content .message .animation::before {
   content: "";
   position: absolute;
-  top: -71.42857px;
+  top: -69.42857px;
   left: 0;
   width: 0;
   height: 0;
   border-left: 125px solid transparent;
   border-right: 125px solid transparent;
-  border-bottom: 71.42857px solid #00cffd;
+  /* border-bottom: 71.42857px solid #00cffd; */
+  border-bottom: 70.42857px solid #00cffd;
 }
 
 .content .message .animation::after {
   content: "";
   position: absolute;
-  bottom: -71.42857px;
+  bottom: -69.42857px;
   left: 0;
   width: 0;
   height: 0;
   border-left: 125px solid transparent;
   border-right: 125px solid transparent;
-  border-top: 71.42857px solid #00cffd;
+  /* border-top: 71.42857px solid #00cffd; */
+  border-top: 70.42857px solid #00cffd;
 }
 
 .footer {
   /* border: 2px solid silver; */
   display: -webkit-box;
   display: -ms-flexbox;
-  display: flex;
+  display: flex; 
   /* height: 140px; */
+
+  
 }
 
 
@@ -166,7 +170,22 @@ body {
   width: 100%;
   background: linear-gradient(0deg, rgba(46,46,46,1) 0%, rgba(78,78,78,1) 100%);
   border-radius: 3px;
-  height: 100%;
+  /* height: 100%; */
+}
+
+
+#bottom-left .btn-1, #bottom-middle-left .btn-1 {
+  background-color: transparent;
+  border: none;
+  /* cursor: pointer; */
+  text-align: left;
+  height: 70px;
+  /* width: 80px; */
+}
+
+#bottom-left .btn-1 img, #bottom-middle-left .btn-1 img {
+  display: block;
+  margin: 0 auto;
 }
 
 #AgentToolStrip .btn-1, #VoiceToolStrip .btn-1 {
@@ -191,15 +210,35 @@ body {
   /* flex: 1;
   min-width: 250px; */
 
-  
-  min-width: 20%;
-  border-right: 2px solid silver;
-  flex: 1;
+  width: 25%;
+  /* padding: 3px 4px; */
+  min-width: 230px;
 }
 
 #bottom-right {
-  /* max-height: 140px; */
   width: 25%;
+  position: relative;
+  min-width: 230px;
+}
+
+#bottom-right .view {  
+  position: absolute;
+  width: 100%;
+  padding: 5px;
+  transform: translateY(-50%);
+  top: 50%;
+}
+
+@media only screen and (max-width: 100px) {
+  #bottom-middle-right {
+    min-width: 30%;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .status img {
+    display: none;
+  }
 }
 
 
@@ -220,11 +259,11 @@ body {
 
 .grid-wrapper {
   display: grid;
-  min-width: 80px;
+  min-width: 90px;
   grid-gap: 2px;
-  justify-content: center;
+  justify-content: left;
   grid-template-columns: repeat(auto-fit, 80px) !important;
-  grid-template-rows: repeat(2, 56px);
+  grid-template-rows: repeat(auto-fit, 60px);
   background-color: #333;
 }
 .grid-wrapper.expand2 {
@@ -245,7 +284,7 @@ body {
 
 .collapseBtn {
   position: absolute;
-  right: -6px;
+  right: -14px;
   top: 50%;
   background-color: transparent;
   box-shadow: none;
@@ -254,7 +293,7 @@ body {
 }
 
 .collapseBtn:hover {
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .grid-wrapper.expand .collapseBtn {
@@ -272,16 +311,19 @@ body {
 
 
 .grid-buttons { position: relative;}
-.resetBtn { background: none; outline: 0 none; border: 0 none; cursor: pointer; padding: 0; margin: 0; display: inline; height: auto; position: absolute; top: 50%; margin-top: -10px;z-index: 2;}
-
+.resetBtn { display: block ;background: none; outline: 0 none; border: 0 none; cursor: pointer; padding: 0; margin: 0;  height: auto; position: absolute; top: 50%; margin-top: -10px;z-index: 2; left: 100%; right: -6px}
 .resetBtn.left { right:0; margin-left: -10px;}
-.resetBtn.right { left:100%; margin-left: 0;}
+.resetBtn.right { display: inline-block; }
 /* .resetBtn.resetBtnBoxTwo { right:0; margin-left: -10px;}
 .resetBtn.resetBtnBoxTwo.active { left:100%; margin-left: 0;} */
 
 .resetBtn img{ display: none;}
 .resetBtn.left img.left{ display: block;}
 .resetBtn.right img.right{ display: block; margin-left: -10px;}
+
+.resetBtn .right:hover, .collapseBtn .iconify:hover {
+  color: #00cffd !important;
+}
 
 .background img.mainBg { display: block;}
 .background img.mainBg1440 { display: none;}
@@ -329,8 +371,9 @@ body {
   .background img.mainBg768 { display: block;}
 }
 
-.footer-main { width: 100%; display: flex; height: 130px;}
-.footer-main .footer { width: 75%;}
+.footer-main { width: 100%; display: flex;}
+.footer-main .footer { width: 100%}
+
 
 
 
@@ -371,8 +414,8 @@ body {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  height: 28px;
-  width: 28px;
+  height: 39px;
+  width: 39px;
 }
 
 .footer .column.grid-buttons button.btn-1 .icon img {
@@ -401,10 +444,18 @@ body {
           filter: invert(48%) sepia(76%) saturate(4073%) hue-rotate(166deg) brightness(101%) contrast(103%);
 }
 
-#bottom-right .view {
-  padding: 8px;
-  height: 100%;
+.footer .column.grid-buttons button.btn-1:hover img {
+  filter: drop-shadow(5px 5px 1px rgba(0, 0, 0, 0.5));
 }
+#bottom-right .view {
+  position: absolute;
+  width: 100%;
+  padding: 5px;
+  transform: translateY(-50%);
+  top: 50%;
+}
+
+
 
 #bottom-right .view ul {
   background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.193)), to(transparent));
@@ -509,7 +560,7 @@ body {
 }
 
 .footer .column .status img {
-  height: 70px;
+  /* height: 70px; */
 }
 
 .statusparent
@@ -707,7 +758,6 @@ body {
   /* margin-top: auto; */
   /* margin-bottom: auto; */
 }
-
 
 .modal .modal-content-item {
   /* background-color: rgb(81, 80, 80); */
@@ -917,7 +967,7 @@ body {
 .masterTab .tabBox ul li span:hover  { background: #00809F; color: #fff;}
 
 .masterTab .tabBox ul li span.active  { background: #00cffd; color: #000;}
-.masterTab .tabCntBox { width: 100%;  height: calc(100% - 40px); 
+.masterTab .tabCntBox { width: 100%;  height: calc(100% - 15px); 
   /* display: flex;  */
   padding: 10px; background: #222;}
 .masterTab .tabCntBox .tabCnt { width: 100%; 
@@ -933,11 +983,7 @@ body {
 #voiceStatusToolStrip { position: relative;}
 .footer .column .status { height: auto;}
 .cardBoxLayer {
-    /* cursor: pointer; */
     position: absolute;
-    /* margin-bottom: 10px; */
-    /* border:1px solid #cccccc5c; */
-    /* background-color: #2e2e2e; */
     background: rgb(46,46,46);
     background: linear-gradient(0deg, rgba(46,46,46,1) 0%, rgba(78,78,78,1) 100%); 
     color:#fff!important;
@@ -1289,14 +1335,14 @@ body {
 } */
 
 .flex>flex-resizer {
-  flex: 0 0 4px;
+  flex: 0 0 2px;
   background-color: silver;
   background-repeat: no-repeat;
   background-position: center;
 }
 
 .flex>flex-resizer.flexLine {
-  flex: 0 0 8px;  
+  flex: 0 0 4px;
 }
 
 .flex.h>flex-resizer {

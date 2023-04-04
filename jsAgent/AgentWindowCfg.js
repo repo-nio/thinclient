@@ -2485,7 +2485,7 @@ function ShowActiveContactScriptURLs(conct)
 			{
 				if(!tabCntBoxList[i].id) continue;
 
-				if(tabCntBoxList[i].id == "tabCntBox" + conct.Id) tabCntBoxList[i].style.display ='contents';				
+				if(tabCntBoxList[i].id == "tabCntBox" + conct.Id) tabCntBoxList[i].style.display ='';				
 				else tabCntBoxList[i].style.display ='none';
 			}
 		}
