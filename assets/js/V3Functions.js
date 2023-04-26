@@ -129,6 +129,16 @@ function SetAgentStatusViewContextOptions()
         if(rcm.className == "show") rcm.className = "hide";
     });
 
+    $('backdrop').addEventListener("click",function (e) 
+    {
+        // debugger;
+        const rcm = document.getElementById("rightClickContextMenu");
+        if(rcm.className == "show") rcm.className = "hide";
+
+        HideManualDialHistoryDivWhenClickAnywhere();
+    });
+    
+
     const rightClickContextMenu = document.getElementById("rightClickContextMenu");
     if(rightClickContextMenu) rightClickContextMenu.addEventListener("contextmenu", (e) => { e.preventDefault()});
 
@@ -209,4 +219,17 @@ function topY(evt)
     if((yVal + rightclickDivHeigth) > docMaxHeight)  yVal = docMaxHeight -  rightclickDivHeigth - 20;
 
     return yVal;
+}
+
+function HideManualDialHistoryDivWhenClickAnywhere()
+{
+    if($('dial-pad').className?.includes('active'))
+    {
+        if($('manualDialHistoryListDiv').style.display != "none")
+        {
+            $('manualDialHistoryListDiv').style.display = "none";
+            $('manualDialHistoryListUL').innerHTML = '';
+            $('MCNum').focus();
+        }
+    }
 }
