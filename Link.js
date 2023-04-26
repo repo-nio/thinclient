@@ -466,8 +466,11 @@ function NixxisCreateCommands(owner)
                                                                         {
                                                                             this.linkedItem.src = disabledSrc.src;                                                                             
                                                                         }
+
+                                                                        // debugger;
                                                                         // addElementClass(this.linkedItem, disabledElementClass);
-                                                                        if(this.linkedItem.id !='Pause') this.linkedItem.disabled = true;
+                                                                        if(this.linkedItem.id !='Pause'  && this.linkedItem.id !='WaitForCall') this.linkedItem.disabled = true;
+                                                                        
 																		removeElementClass(this.linkedItem, hoverElementClass);
 																		this.linkedItem.onmouseover = function() { ; };
                                                         				this.linkedItem.onmouseout = function() { ; };
