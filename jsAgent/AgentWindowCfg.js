@@ -141,11 +141,12 @@ function ClientConnect()
 	}
 
 	SetAgentStatusViewContextOptions();
+	$('VoiceToolStrip').style.display = '';
 }
 
 function ForceBreakOnAgentReload()
 {
-	debugger;
+	// debugger;
 
 	if (window.performance) 
 	{	  
@@ -154,7 +155,7 @@ function ForceBreakOnAgentReload()
 	  if (performance.navigation.type == performance.navigation.TYPE_RELOAD) 
 	  {
 		console.info( "page reloaded" );
-		debugger;
+		// debugger;
 		try
 		{			
 			CloseScript();
@@ -360,7 +361,7 @@ function PropertyGridHeight()
 
 function nixxislink_ConactAdded(contactInfo)
 {
-	debugger;	
+	// debugger;	
 
 	contactInfo.isInUse = true;
 
@@ -502,7 +503,7 @@ function ResizeFirstActiveContact(canViewFullBox)
 
 function voicestatus_clicked(sender)
 {
-	debugger;
+	// debugger;
 
 	var chilrens = $('voiceStatusToolStrip').children;
 
@@ -762,7 +763,7 @@ function SetQualificationIconShowHideBasedONActivity(currentContact)
 
 function nixxislink_ContactRemoved(contactInfo)
 {
-	debugger;
+	// debugger;
 
 	// defaultSetAgentInfoLabels();
     DebugLog("nixxislink_ContactRemoved. Remove contact " + contactInfo.Id);
@@ -1144,7 +1145,7 @@ function SetReadyBreakBasedOnAgentState(state)
 }
 function CloseScript()
 {
-	debugger;
+	// debugger;
 
 	removeElementClass($("CloseScript"),'active');
 	ClientLink.TerminateContact(ClientLink.Contacts.Get(ClientLink.Contacts.ActiveContactId));
@@ -1173,7 +1174,7 @@ function NewContact(contactInfo)
 }
 function RemoveContact(contactInfo)
 {
-	debugger;
+	// debugger;
 
 	if(ClientLink.Contacts.GetAllCount() > 0) 
 	{
@@ -2511,7 +2512,7 @@ function ShowActiveContactScriptURLs(conct)
 
 function RemoveContactScriptURLs(conct)
 {
-	debugger;
+	// debugger;
 
 	if(conct)
 	{

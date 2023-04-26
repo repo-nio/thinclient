@@ -445,17 +445,20 @@ body {
 }
 
 .footer .column.grid-buttons button.btn-1:hover img {
-  filter: drop-shadow(5px 5px 1px rgba(0, 0, 0, 0.5));
+  -webkit-filter: invert(48%) sepia(76%) saturate(4073%) hue-rotate(166deg) brightness(101%) contrast(103%) drop-shadow(5px 5px 1px rgba(0, 0, 0, 0.5));
 }
+
+.footer .column.grid-buttons button.btn-1:not(.active):hover img {
+  filter: drop-shadow(5px 5px 1px rgba(0, 0, 0, 0.5));  
+}
+
 #bottom-right .view {
   position: absolute;
-  width: 100%;
+  width: 99.5%;
   padding: 5px;
   transform: translateY(-50%);
   top: 50%;
 }
-
-
 
 #bottom-right .view ul {
   background: -webkit-gradient(linear, left top, left bottom, from(rgba(255, 255, 255, 0.193)), to(transparent));
@@ -467,11 +470,12 @@ body {
 }
 
 #bottom-right .view.highlight {
-  margin: 3px;
-  padding: 3px;
+  margin: 1px 1px 1px -1px;
+  padding: 1px;
   border: 3px solid #FFA524;
   border-radius: 5px;
   height: auto;
+  left: 2px;
 }
 
 #bottom-right .view.highlightRed {
