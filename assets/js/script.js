@@ -350,7 +350,7 @@ setupResizerEvents();
   }
 
   $(".resetBtn").click(function (e) {
-    debugger;
+    // debugger;
     e.preventDefault();
     let _id = "";
     let _idSecond = "";
@@ -422,7 +422,7 @@ setupResizerEvents();
 
 
 
-debugger;
+// debugger;
 let topCurrentHeight = 0,
     bottomCurrentHeight = 0,
     currentPosition = 0,
@@ -722,7 +722,7 @@ let topCurrentHeight = 0,
     mouseDownWidthBottomRightHandler();
   });
 
-  debugger;
+  // debugger;
 
   
 
