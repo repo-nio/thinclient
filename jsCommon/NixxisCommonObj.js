@@ -344,7 +344,32 @@ var crNewCallDialog =
 		}
 
 		$('manualDialHistoryListDiv').style.display = "none";
-		$("MCNum").focus();		
+		$("MCNum").focus();
+		$("MCNum").select();
+
+		var popuptitle = $('h4ManualDialTitle');
+		var titleText = 'Manual dialing...';
+		if(ClientLink && ClientLink.Contacts && ClientLink.Contacts.ActiveContactId)
+		{
+			var conct = ClientLink.Contacts.Get(ClientLink.Contacts.ActiveContactId);
+
+			var activitylist = null;
+			try{ activitylist = conct.Activity.split('.'); } catch(e) { activitylist = [this.Activity]; }
+
+			debugger;
+
+			if(cmd && cmd == 'VoiceForward') titleText = 'Forward...';
+			else if(activitylist != null && activitylist.length > 0 && activitylist[0] == '') titleText = 'Consultation...';
+			else if(conct.Direction == 'O' && (conct.State == 'C' || conct.State == 'D')) titleText = 'Consultation...';
+			else if(conct.Direction == 'I') titleText = 'Consultation...';
+			else
+			{
+				if(conct.From && conct.To && conct.State == 'D') titleText = 'Consultation...';
+				if(conct.From && conct.To) titleText = 'Activity dialing...';				
+			} 
+		}
+
+		popuptitle.innerText = titleText;
 	},
 	Clear : function()
 	{
@@ -362,6 +387,10 @@ var crNewCallDialog =
 	},
 	KeyPress : function(e)
 	{
+		// debugger;
+
+		if(! $('dial-pad').className?.includes('active')) return;
+
 	    var keycode;
 	    if (window.event) keycode = window.event.keyCode;
 	    else if (e) keycode = e.which;
@@ -370,10 +399,11 @@ var crNewCallDialog =
 	    //window.alert("KeyCode: " + keycode);
 	    
 	    if (keycode == 0) return true; //Special keys home, del, ...
-	    else if (keycode == 8) return true; // backspace
-	    else if (keycode == 35) return true; // Hash #
-	    else if (keycode == 42) return true; // star *
-	    else if (keycode >= 48 && keycode <= 57) return true; // numbers    
+	    // else if (keycode == 8) return true; // backspace
+	    // else if (keycode == 35) return true; // Hash #
+	    // else if (keycode == 42) return true; // star *
+	    // else if (keycode >= 48 && keycode <= 57) return true; // numbers    
+
 	    else if (keycode == 13) crNewCallDialog.ButtonDial(); //Enter key
 		
 	    return false;
@@ -391,7 +421,7 @@ var crNewCallDialog =
 
 		_BODY += '<div class="modal" id="dial-pad">';
 		_BODY += '	<div class="modal-header">';
-		_BODY += '		<h4><img src="./assets/icons/Agent_Dialog_AddressBook.ico" width="16" height="16" alt="icon" /> ';
+		_BODY += '		<h4 id ="h4ManualDialTitle"><img src="./assets/icons/Agent_Dialog_AddressBook.ico" width="16" height="16" alt="icon" /> ';
 		_BODY += '			Manual dialing...';
 		_BODY += '		</h4>';
 		_BODY += '		<button class="close-btn" id ="MCallDialPad_Close" data-close>close</button>';
@@ -454,7 +484,9 @@ var crNewCallDialog =
 		addElementClass($('backdrop'), 'active');
 
 		$('MCNum').addEventListener('input', crNewCallDialog.Input_Changed);
-	    this.setStatus(CrResource.newContactForm.statusEnterNumber);		
+	    this.setStatus(CrResource.newContactForm.statusEnterNumber);
+		
+		$('MCNum').addEventListener("keypress", function(event) { crNewCallDialog.KeyPress(event)});
 	},
 	CreateButton: function(key, onclickFn)
 	{
@@ -491,7 +523,7 @@ var crNewCallDialog =
 	},
 	ButtonDial : function()
 	{
-		debugger;
+		// debugger;
 		removeElementClass($('dial-pad'), 'active');
 		removeElementClass($('backdrop'), 'active');
 		if($('VoiceNewCall')) removeElementClass($('VoiceNewCall'), 'active');
@@ -509,7 +541,7 @@ var crNewCallDialog =
 	    	//crNewCallDialog.crClientLink.commands[crNewCallDialog.crCmd].execute(_Element.value);
 			//crNewCallDialog.crClientLink.commands.VoiceNewCall(_Element.value);
 
-			debugger;
+			// debugger;
 			var history = JSON.parse(window.localStorage.getItem("ManualDialHistory"));
 			if(history !=null && history.length > 0)
 			{
@@ -590,12 +622,7 @@ var crNewCallDialog =
 			if(diffStamp < 500) return;
 		}
 
-		if($('manualDialHistoryListDiv').style.display != "none")
-		{
-			$('manualDialHistoryListDiv').style.display = "none";
-			$('manualDialHistoryListUL').innerHTML = '';
-			$('MCNum').focus();
-		}
+		HideManualDialHistoryDivWhenClickAnywhere();
 	},
 	ButtonShowDialHistory : function()
 	{
@@ -608,7 +635,9 @@ var crNewCallDialog =
 			$('manualDialHistoryListDiv').style.display = "";
 			$('manualDialHistoryListUL').innerHTML = '';
 			
+			// debugger;
 			var history = JSON.parse(window.localStorage.getItem("ManualDialHistory"));
+			history = history.sort();
 			var historyIndex = -1;
 			if(_Element.value) historyIndex = history.findIndex(aa=>aa.includes(_Element.value));
 		
@@ -651,7 +680,7 @@ var crNewCallDialog =
 	},
 	Select_OnClick : function(sender)
 	{
-		debugger;
+		// debugger;
 
 		var target = sender.currentTarget;
 
