@@ -16,19 +16,25 @@
           return element;
       }
 
+      
       function initInstance()
       {
-        // debugger;
+        debugger;
+
         const urlParams = new URLSearchParams(window.location.search);
         const agentstate = urlParams.get('agentstate');
         
         if(agentstate)
         {
+          debugger;
+          var icon = '';
           if(agentstate == 'agentready')
           {
             $('message_h1').innerHTML = "You are waiting for contact";
             $('message_p').innerHTML = '';
             $('imgEmdedAgentStateGIF').src = window.origin + "/agent/v3/assets/animations/Agent_waiting.gif";
+
+            icon = "./assets/icons/Agent_AddressBookAction_Call_25.png";
           }
           else
           {
@@ -36,8 +42,15 @@
             $('message_p').innerHTML = 'Click on ready to start working';
             $('imgEmdedAgentStateGIF').src = window.origin + "/agent/v3/assets/animations/Agent_pause.gif";
           }
+
+          const node = document.createElement("img");
+          const btnNode = document.createElement("button");
+          btnNode.appendChild(node);
+          const imgNode = document.getElementsByClassName("message")[0].appendChild(btnNode);
+          btnNode.setAttribute("class", "iconWaiting");
+          imgNode.children[0].setAttribute("src", icon);
         }
-      }      
+      }
     </script>
 
 

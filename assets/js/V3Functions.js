@@ -44,6 +44,22 @@ function accSearchModelink_OnClick(sender)
         }	   
         element.nextElementSibling.style.display = 'block';
     }
+
+    var allbtns = $('modalSearchworkspace').getElementsByTagName('button');
+
+    if(allbtns != null)
+    {			
+        for(var i = 0; i < allbtns.length; i++)
+        {
+            var child = allbtns[i];
+            if(child) 
+            {
+                removeElementClass(child, 'active');
+                $('btnSearchOk').disabled = true;
+            }
+        }
+    }
+
     return false;
 }
 
@@ -94,6 +110,17 @@ function accDispositionlink_OnClick(sender)
             wrap[i].style.display = 'none';
         }	   
         element.nextElementSibling.style.display = 'block';
+    }
+
+    var allbtns = $('modalSelectqualworkspace').getElementsByTagName('button');
+
+    if(allbtns != null)
+    {			
+        for(var i = 0; i < allbtns.length; i++)
+        {
+            var child = allbtns[i];
+            if(child) removeElementClass(child, 'active');
+        }
     }
 
     if($("QualificationPanel")) $("QualificationPanel").style.display = 'none';
@@ -223,7 +250,7 @@ function topY(evt)
 
 function HideManualDialHistoryDivWhenClickAnywhere()
 {
-    if($('dial-pad').className?.includes('active'))
+    if($('dial-pad') && $('dial-pad').className?.includes('active'))
     {
         if($('manualDialHistoryListDiv').style.display != "none")
         {

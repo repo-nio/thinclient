@@ -526,6 +526,7 @@ var crNewCallDialog =
 		// debugger;
 		removeElementClass($('dial-pad'), 'active');
 		removeElementClass($('backdrop'), 'active');
+		removeElementClass($("VoiceForward"),'active');
 		if($('VoiceNewCall')) removeElementClass($('VoiceNewCall'), 'active');
 		
 	    if (!crNewCallDialog.crClientLink) return;
@@ -612,13 +613,14 @@ var crNewCallDialog =
 		removeElementClass($('dial-pad'), 'active');
 		removeElementClass($('backdrop'), 'active');
 		removeElementClass($('VoiceNewCall'), 'active');
+		removeElementClass($("VoiceForward"),'active');
 	},
 	PopupArea_Onclick : function(sender)
 	{
-		if(HistoryOpenDateTime)
+		if(crNewCallDialog && crNewCallDialog.HistoryOpenDateTime)
 		{
 			// debugger;
-			var diffStamp = new Date() - HistoryOpenDateTime;
+			var diffStamp = new Date() - crNewCallDialog.HistoryOpenDateTime;
 			if(diffStamp < 500) return;
 		}
 
@@ -627,7 +629,7 @@ var crNewCallDialog =
 	ButtonShowDialHistory : function()
 	{
 		// debugger;
-		HistoryOpenDateTime = new Date();
+		if(crNewCallDialog) crNewCallDialog.HistoryOpenDateTime = new Date();
 		var _Element = $('MCNum');		
 
 		if($('manualDialHistoryListDiv').style.display == "none")
@@ -637,7 +639,7 @@ var crNewCallDialog =
 			
 			// debugger;
 			var history = JSON.parse(window.localStorage.getItem("ManualDialHistory"));
-			history = history.sort();
+			if(history) history = history.sort();
 			var historyIndex = -1;
 			if(_Element.value) historyIndex = history.findIndex(aa=>aa.includes(_Element.value));
 		

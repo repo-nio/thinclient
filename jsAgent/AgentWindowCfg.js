@@ -99,6 +99,8 @@ function ClientConnect()
 {
 	// sessionStorage.setItem('reloadedOn', new Date());
     
+	// debugger;
+
 	if(startdatetime == null) startdatetime = new Date();
 
 	DebugLog("Nixxislink connect...");
@@ -375,9 +377,7 @@ function nixxislink_ConactAdded(contactInfo)
 	if (contactInfo.Media == "V") 
 	{
 		contactInfo.__ContactUpdate = true;
-		// addElementClass($('VoiceToolStrip'),'active');
 		ShowHideVoiceToolStripIcons(true);
-		// addElementClass($('voiceStatusToolStrip'),'active');
 		ShowHideVoiceStatusToolStripIcons(true);
 
 		if(contactInfo.Context == 'Customer service')
@@ -436,7 +436,7 @@ function addVoiceStatus(contactInfo)
 {
 	// debugger;
 
-	var chilrens = $('voiceStatusToolStrip').children;
+	var chilrens = $('statusBox-gird').children;
 
     if(chilrens)
     {       
@@ -486,13 +486,13 @@ function addVoiceStatus(contactInfo)
 	voiceDIV.ContactInfo = contactInfo;
 	voiceDIV.onclick = function(){voicestatus_clicked(this);}
 		
-	$('voiceStatusToolStrip').appendChild(voiceDIV);
+	$('statusBox-gird').appendChild(voiceDIV);
 
 	SetRecordDisplayBasedOnActiveContactStatus(false);
 	SetWidthOfBoxActiveContactVoiceStatusToolStrip();
 	SetZindexOfActiveContactsVoiceStatusToolStrip();
 
-	var imgTag = $('voiceStatusToolStrip').getElementsByTagName('img');
+	var imgTag = $('statusBox-gird').getElementsByTagName('img');
 	if(imgTag) imgTag[imgTag.length - 1].src = 'assets/icons/Agent_MediaType_Outbound_50.png';
 }
 
@@ -505,7 +505,7 @@ function voicestatus_clicked(sender)
 {
 	// debugger;
 
-	var chilrens = $('voiceStatusToolStrip').children;
+	var chilrens = $('statusBox-gird').children;
 
     if(chilrens)
     {       
@@ -556,116 +556,100 @@ function voicestatus_clicked(sender)
 function SetWidthOfBoxActiveContactVoiceStatusToolStrip()
 {
 	// debugger;
-    var chilrens = document.querySelectorAll('#voiceStatusToolStrip')[0].children;
+	const heightFooterMain = document.querySelector("#footerMain").offsetHeight;
+	const statusBox = document.querySelector("#statusBox-gird").offsetHeight;
+	if (heightFooterMain < statusBox) return;
+	// debugger;
+	var chilrens = document.querySelectorAll("#bottom-middle-right div")[0]
+	  .children;
+	var childIndex = 0;
 
-    if(chilrens)
-    {
-		var childrenLength = chilrens.length;
+	var parentWidth = 100;
+	var widthOffset = 4;
 
-		var parentOffsetHeight = document.querySelectorAll('#voiceStatusToolStrip')[0].offsetHeight;
-		parentOffsetHeight = parentOffsetHeight - 5;
+	if (chilrens) {
+	  for (var i = 0; i < chilrens.length; i++) {
+		var child = chilrens[i];
+		if (child.className?.includes("active")) {
+		  childIndex = i;
+		}
+	  }
+  
+	  let preActive = [];
+	  let suffActive = [];
+	  let styleWidth = 0;
+	  let finalMgForLess = 0;
+	  for (var i = 0; i < chilrens.length; i++) {
+		var child = chilrens[i];
+  
+		if (i < childIndex) {
+		  preActive = [...preActive, chilrens[i]];
+		  child.onclick = contact_clicked;
+		}
+		if (i > childIndex) {
+		  suffActive = [...suffActive, chilrens[i]];
+		  child.onclick = contact_clicked;
+		}
+	  }
+  
+	  if (preActive.length > suffActive.length) {
+		styleWidth = preActive.length * widthOffset;
+		finalMgForLess = styleWidth / suffActive.length;
+	  } else {
+		styleWidth = suffActive.length * widthOffset;
+		finalMgForLess = styleWidth / preActive.length;
+	  }
+	  if (preActive.length < suffActive.length) {
+		preActive.reverse().forEach((item, index) => {
+		  item.style.marginLeft = (finalMgForLess * (index + 1)) / 2 + "%";
+		  item.style.width = parentWidth - finalMgForLess * (index + 1) + "%";
+		});
+		suffActive.forEach((item, index) => {
+		  item.style.marginLeft = (widthOffset * (index + 1)) / 2 + "%";
+		  item.style.width = parentWidth - widthOffset * (index + 1) + "%";
+		});
+	  } else {
+		preActive.reverse().forEach((item, index) => {
+		  item.style.marginLeft = (widthOffset * (index + 1)) / 2 + "%";
+		  item.style.width = parentWidth - widthOffset * (index + 1) + "%";
+		});
+		suffActive.forEach((item, index) => {
+		  item.style.marginLeft = (finalMgForLess * (index + 1)) / 2 + "%";
+		  item.style.width = parentWidth - finalMgForLess * (index + 1) + "%";
+		});
+	  }
+	  // }
+	}
 
-		var offsetFactor = 3.25;
-        if(chilrens.length == 2) offsetFactor = 1.4;
-        else if (chilrens.length > 2) offsetFactor = (1.4 + (0.4 * (chilrens.length - 2)));
-
-		var childOffsetHeight = ((parentOffsetHeight / childrenLength) / (childrenLength / offsetFactor));
-
-        var parentWidth = 100; // 100 %
-        var widthOffset = 4;
-        var childWidth = (parentWidth - (childrenLength * widthOffset));
-
-        var ival = 3;
-
-		var childIndex = 0;
-		for(var i = 0; i < childrenLength; i++)
-        {
-            var child = chilrens[i];
-			if(child.tagName.toLowerCase() != 'div') continue;
-            if(child.className?.includes('active')) childIndex = i;
-			
-			var imgTag = child.getElementsByTagName('img');
-			if(imgTag)
-			{
-				if(childrenLength > 2) imgTag[0].src = 'assets/icons/Agent_MediaType_Outbound_25.png';
-				else imgTag[0].src = 'assets/icons/Agent_MediaType_Outbound_50.png';
-			}
-        }
-
-		if(childrenLength > 2) childOffsetHeight = childOffsetHeight -1;
-
-        for(var i = 0; i < chilrens.length; i++)
-        {
-            var child = chilrens[i];
-            if(child.tagName.toLowerCase() != 'div') continue;
-
-            if(childrenLength == 1) 
-			{
-				child.style.height = 'calc(100% - 10px)';
-				child.style.fontSize = '13px';
-
-				// debugger;
-				var spanTags = child.getElementsByTagName('span');
-				if(spanTags)
-				{
-					var span = Array.from(spanTags).filter(aa=>aa.id?.includes('InfoContactStatusDuration_'));
-					if(span) span[0].style.fontSize = '14px';
-				}
-			}
-            else if(childrenLength == 2) 
-			{
-				child.style.height = 'calc(50% - 10px)';
-				child.style.fontSize = '10.5px';
-				child.style.width = 98 + '%';
-				child.style.marginLeft = 1 + '%';
-
-				var spanTags = child.getElementsByTagName('span');
-				if(spanTags)
-				{
-					var span = Array.from(spanTags).filter(aa=>aa.id?.includes('InfoContactStatusDuration_'));
-					if(span) span[0].style.fontSize = '11.5px';
-				}
-			}
-            else
-            {
-				child.style.fontSize = '9.5px';
-
-				if(i < childIndex)
-                {
-                    child.style.width = childWidth + '%';
-                    
-                    child.style.marginLeft = ((parentWidth - childWidth)/2) + '%';
-                    childWidth = childWidth + widthOffset;
-                }
-                else if(i > childIndex)
-                {
-                    child.style.width = childWidth + '%';
-                    
-                    child.style.marginLeft = ((parentWidth - childWidth)/2) + '%';
-                    childWidth = childWidth - widthOffset;
-                }
-
-				var spanTags = child.getElementsByTagName('span');
-				if(spanTags)
-				{
-					var span = Array.from(spanTags).filter(aa=>aa.id?.includes('InfoContactStatusDuration_'));
-					if(span) span[0].style.fontSize = '9.5px';
-				}
-            }
-                        
-            child.style.top = ival + '%';
-            ival = ival + childOffsetHeight;
-        }
-    }
-
-	SetPaddingBetweenActiveContacts();
+	// SetPaddingBetweenActiveContacts();
 }
 
+
+function contact_clicked(sender) {
+	var chilrens = document.querySelectorAll("#bottom-middle-right div")[0]
+		.children;
+	const heightFooterMain = document.querySelector("#footerMain").offsetHeight;
+	const chilren = document
+		.querySelector("#statusBox-gird")
+		.querySelectorAll(".status");
+	if (chilrens) {
+		for (var i = 0; i < chilrens.length; i++) {
+		var child = chilrens[i];
+		if (child.tagName.toLowerCase() != "div") continue;
+		child.style.marginTop = child.OriginalMarginTop;
+		}
+	}
+	if (heightFooterMain < chilren.length * 70 + chilren.length * 6) {
+		SetWidthOfBox();
+	}
+	SetZindex();
+}
+  
 function SetZindexOfActiveContactsVoiceStatusToolStrip()
 {
 	// debugger;
 
-    var chilrens = document.querySelectorAll('#voiceStatusToolStrip')[0].children;
+    var chilrens = document.querySelectorAll('#statusBox-gird')[0].children;
     var childIndex = 0;
 
     if(chilrens)
@@ -698,7 +682,7 @@ function SetZindexOfActiveContactsVoiceStatusToolStrip()
 function SetPaddingBetweenActiveContacts()
 {
 	// debugger;
-	var child = document.querySelectorAll('#voiceStatusToolStrip')[0];
+	var child = document.querySelectorAll('#statusBox-gird')[0];
 	var chilrens = child.getElementsByClassName('row d-flex cardBoxRow');
 	var chilLength = child.children.length;
 	var paddingToAssign = '0px';
@@ -770,7 +754,7 @@ function nixxislink_ContactRemoved(contactInfo)
 	contactInfo.__AgentAction = "E";
 	
 	RemoveContact(contactInfo);
-	$('voiceStatusToolStrip').removeChild($('voicestatus_'+contactInfo.Id));
+	$('statusBox-gird').removeChild($('voicestatus_'+contactInfo.Id));
 	setVoiceDisplayStatus();
 
 	SetAgentInfoStat();
@@ -1136,10 +1120,11 @@ function SetReadyBreakBasedOnAgentState(state)
 	const url = new URL(window.location.href);
 	if(state == AGENT_WAITING) 
 	{
+		$('contactViewerObject').setAttribute("data", null);
 		$('contactViewerObject').setAttribute("data", url.origin + "/agent/embed.html?agentstate=agentready");
 	}
 	else
-	{		
+	{	$('contactViewerObject').setAttribute("data", null);
 		$('contactViewerObject').setAttribute("data", url.origin + "/agent/embed.html?agentstate=break");
 	}
 }
@@ -1253,7 +1238,7 @@ function ShowHideVoiceStatusToolStripIcons(canDisplay)
 
 	if(canDisplay) displayStyle ='';
 	
-	$('voiceStatusToolStrip').style = displayStyle;
+	$('statusBox-gird').style = displayStyle;
 }
 //**********************************************************
 //**********************************************************
@@ -2342,259 +2327,246 @@ function HideAllDialogModals()
 
 	if($('backdrop')) removeElementClass($('backdrop'), 'active');
 }
-
-function DisplayScriptURLs(contactInfo)
-{
-	// debugger;
-	var vals = contactInfo.ScriptUrl.split('|');
-	$('masterTab').style.display ='block';
+async function DisplayScriptURLs(contactInfo) {
+	debugger;
+	var vals = contactInfo.ScriptUrl.split("|");
+	$("masterTab").style.display = "block";
 	// $('masterTab').innerHTML = '';
-	$('contactViewerObject').style.display = "none";
-	$('contactViewerObject').parentNode.style.overflow = '';
-
-	if(vals !=null && vals.length > 0)
-	{
-		// "bin://Nixxis.Client.Agent.TabbedBrowser, NixxisAgentControl"
-		if(vals[0] !=null && vals[0]?.includes('TabbedBrowser'))
-		{
-			var divTagBox = document.createElement('div');
-			divTagBox.className = "tabBox";
-			divTagBox.id = "tabBox" + contactInfo.Id;
-			var ulTagBox = document.createElement('ul');
-
-			var divTagURLBox = document.createElement('div');
-			divTagURLBox.className = "tabCntBox";
-			divTagURLBox.id = "tabCntBox" + contactInfo.Id;
-
-			for(var j = 1; j < vals.length; j++)
-			{
-				var liTagBox = document.createElement('li');
-
-				var spanTagBox = document.createElement('span');
-				if(j == 1) spanTagBox.className = 'active';
-				else spanTagBox.className = '';
-
-				spanTagBox.id = 'spanTagBox' + j;
-				spanTagBox.onclick = liTagBoxSelect_OnClick;
-
-				if(vals[j] && vals[j].length > 30) spanTagBox.innerHTML = vals[j]?.substring(0,30) + '...';
-				else spanTagBox.innerHTML = vals[j];
-
-				liTagBox.appendChild(spanTagBox);
-				ulTagBox.appendChild(liTagBox);
-
-				var childdivTagURLBox = document.createElement('div');
-				childdivTagURLBox.id = 'childdivTagURLBox' + j;
-				childdivTagURLBox.className = "tabCnt";
-				if(j == 1) childdivTagURLBox.style.display = 'contents';
-				else childdivTagURLBox.style.display = 'none';
-
-				var childIframeTagURLBox = GetNewIframe();
-				childIframeTagURLBox.TabHeaderControl =  spanTagBox;
-				childIframeTagURLBox.onload = LoadIframeTitleToTabTitle;
-
-				childIframeTagURLBox.setAttribute("src",vals[j]);
-				// childIframeTagURLBox.src = vals[j];
-
-				childdivTagURLBox.appendChild(childIframeTagURLBox);
-				divTagURLBox.appendChild(childdivTagURLBox);
-			}
-
-			divTagBox.appendChild(ulTagBox);
-			$('masterTab').appendChild(divTagBox);
-			$('masterTab').appendChild(divTagURLBox);
+	$("contactViewerObject").style.display = "none";
+	$("contactViewerObject").parentNode.style.overflow = "";
+  
+	if (vals != null && vals.length > 0) {
+	  // "bin://Nixxis.Client.Agent.TabbedBrowser, NixxisAgentControl"
+	  if (vals[0] != null && vals[0]?.includes("TabbedBrowser")) {
+		var divTagBox = document.createElement("div");
+		divTagBox.className = "tabBox";
+		divTagBox.id = "tabBox" + contactInfo.Id;
+		var ulTagBox = document.createElement("ul");
+  
+		var divTagURLBox = document.createElement("div");
+		divTagURLBox.className = "tabCntBox";
+		divTagURLBox.id = "tabCntBox" + contactInfo.Id;
+  
+		for (var j = 1; j < vals.length; j++) {
+		  var liTagBox = document.createElement("li");
+  
+		  var spanTagBox = document.createElement("span");
+		  if (j == 1) spanTagBox.className = "active";
+		  else spanTagBox.className = "";
+  
+		  spanTagBox.id = "spanTagBox" + j;
+		  spanTagBox.onclick = liTagBoxSelect_OnClick;
+		  // if(vals[j] && vals[j].length > 30) spanTagBox.innerHTML = vals[j]?.substring(0,30) + '...';
+		  // else
+		  spanTagBox.innerHTML = await handleConvertTitle(vals[j]);
+  
+		  liTagBox.appendChild(spanTagBox);
+		  ulTagBox.appendChild(liTagBox);
+  
+		  var childdivTagURLBox = document.createElement("div");
+		  childdivTagURLBox.id = "childdivTagURLBox" + j;
+		  childdivTagURLBox.className = "tabCnt";
+		  if (j == 1) childdivTagURLBox.style.display = "contents";
+		  else childdivTagURLBox.style.display = "none";
+  
+		  var childIframeTagURLBox = GetNewIframe();
+		  childIframeTagURLBox.TabHeaderControl = spanTagBox;
+		  childIframeTagURLBox.onload = LoadIframeTitleToTabTitle;
+  
+		  childIframeTagURLBox.setAttribute("src", vals[j]);
+		  // childIframeTagURLBox.src = vals[j];
+  
+		  childdivTagURLBox.appendChild(childIframeTagURLBox);
+		  divTagURLBox.appendChild(childdivTagURLBox);
 		}
-		else
-		{
-			var childIframe = GetNewIframe();
-			childIframe.id = 'NixxisAgent' + contactInfo.Id;
-			// childIframe.tagName = 'NixxisAgent';
-
-			if(contactInfo.ScriptUrl)
-			{
-				childIframe.src = contactInfo.ScriptUrl;
-				childIframe.style.display = 'contents';
-			}
-			else
-			{
-				childIframe.src = "about:blank";
-				childIframe.style.display = 'none';
-			}
-
-			$('masterTab').appendChild(childIframe);
+  
+		divTagBox.appendChild(ulTagBox);
+		$("masterTab").appendChild(divTagBox);
+		$("masterTab").appendChild(divTagURLBox);
+	  } else {
+		var childIframe = GetNewIframe();
+		childIframe.id = "NixxisAgent" + contactInfo.Id;
+		// childIframe.tagName = 'NixxisAgent';
+  
+		if (contactInfo.ScriptUrl) {
+		  childIframe.src = contactInfo.ScriptUrl;
+		  childIframe.style.display = "contents";
+		} else {
+		  childIframe.src = "about:blank";
+		  childIframe.style.display = "none";
 		}
-
-		ShowActiveContactScriptURLs(contactInfo);
+  
+		$("masterTab").appendChild(childIframe);
+	  }
+  
+	  ShowActiveContactScriptURLs(contactInfo);
 	}
-}
+  }
+  const handleConvertTitle = async (arguUrl) => {
+	// debugger;
+	let title = "";
+	try
+	{
+		await fetch(
+			`https://api.allorigins.win/get?url=${encodeURIComponent(`${arguUrl}`)}`
+		  )
+			.then((response) => {
+			  if (response.ok) return response.json();
+			  throw new Error("Network response was not ok.");
+			})
+			.then((data) => {
+			  const doc = new DOMParser().parseFromString(data.contents, "text/html");
+			  const temp = doc.querySelectorAll("title")[0];
+			  title = temp.innerHTML;
+			});
+	}
+	catch
+	{
 
-function LoadIframeTitleToTabTitle(sender)
-{
+	}
 	
+	return title;
+  };
+  function LoadIframeTitleToTabTitle(sender) {
 	var iframe = sender.currentTarget;
-
-	try
-	{ 
-		var doc1 = iframe.contentWindow.document; 
-		if(doc1) console.log("doc1");
-	}catch{}
-
-	try
-	{ 
-		var doc2 = iframe.contentDocument; 
-		if(doc2) console.log("doc2");
-	}catch{}
-
-	try
-	{ 
-		var doc3 = iframe.document;
-		if(doc3) console.log("doc3");
-	}catch{}
-	
+  
+	try {
+	  var doc1 = iframe.contentWindow.document;
+	  if (doc1) console.log("doc1");
+	} catch {}
+  
+	try {
+	  var doc2 = iframe.contentDocument;
+	  if (doc2) console.log("doc2");
+	} catch {}
+  
+	try {
+	  var doc3 = iframe.document;
+	  if (doc3) console.log("doc3");
+	} catch {}
+  
 	// debugger;
 	// if(iframe)
 	// {
-	// 	iframe.TabHeaderControl.innerHTML = 
+	// 	iframe.TabHeaderControl.innerHTML =
 	// }
-}
-
-function ShowActiveContactScriptURLs(conct)
-{
+  }
+  
+  function ShowActiveContactScriptURLs(conct) {
 	// debugger;
 	// conct = ClientLink.Contacts.Get(ClientLink.Contacts.ActiveContactId);
-
-	if(conct)
-	{
-		var tabBoxList = $('masterTab').getElementsByClassName("tabBox");
-
-		if(tabBoxList && tabBoxList.length > 0)
-		{
-			for(var i = 0; i < tabBoxList.length; i++)
-			{
-				if(!tabBoxList[i].id) continue;
-
-				if(tabBoxList[i].id == "tabBox" + conct.Id) tabBoxList[i].style.display ='block';				
-				else tabBoxList[i].style.display ='none';
-			}
+  
+	if (conct) {
+	  var tabBoxList = $("masterTab").getElementsByClassName("tabBox");
+  
+	  if (tabBoxList && tabBoxList.length > 0) {
+		for (var i = 0; i < tabBoxList.length; i++) {
+		  if (!tabBoxList[i].id) continue;
+  
+		  if (tabBoxList[i].id == "tabBox" + conct.Id)
+			tabBoxList[i].style.display = "block";
+		  else tabBoxList[i].style.display = "none";
 		}
-
-		var tabCntBoxList = $('masterTab').getElementsByClassName("tabCntBox");
-
-		if(tabCntBoxList && tabCntBoxList.length > 0)
-		{
-			for(var i = 0; i < tabCntBoxList.length; i++)
-			{
-				if(!tabCntBoxList[i].id) continue;
-
-				if(tabCntBoxList[i].id == "tabCntBox" + conct.Id) tabCntBoxList[i].style.display ='';				
-				else tabCntBoxList[i].style.display ='none';
-			}
+	  }
+  
+	  var tabCntBoxList = $("masterTab").getElementsByClassName("tabCntBox");
+  
+	  if (tabCntBoxList && tabCntBoxList.length > 0) {
+		for (var i = 0; i < tabCntBoxList.length; i++) {
+		  if (!tabCntBoxList[i].id) continue;
+  
+		  if (tabCntBoxList[i].id == "tabCntBox" + conct.Id)
+			tabCntBoxList[i].style.display = "contents";
+		  else tabCntBoxList[i].style.display = "none";
 		}
-
-		var singleIframeList = $('masterTab').getElementsByTagName('iframe');
-
-		if(singleIframeList && singleIframeList.length > 0)
-		{
-			for(var i = 0; i < singleIframeList.length; i++)
-			{
-				if(!singleIframeList[i].id) continue;
-
-				if(singleIframeList[i].id == "NixxisAgent" + conct.Id) singleIframeList[i].style.display ='block';				
-				else if(singleIframeList[i].id?.includes("NixxisAgent")) singleIframeList[i].style.display ='none';
-			}
+	  }
+  
+	  var singleIframeList = $("masterTab").getElementsByTagName("iframe");
+  
+	  if (singleIframeList && singleIframeList.length > 0) {
+		for (var i = 0; i < singleIframeList.length; i++) {
+		  if (!singleIframeList[i].id) continue;
+  
+		  if (singleIframeList[i].id == "NixxisAgent" + conct.Id)
+			singleIframeList[i].style.display = "block";
+		  else if (singleIframeList[i].id?.includes("NixxisAgent"))
+			singleIframeList[i].style.display = "none";
 		}
+	  }
+	} else {
 	}
-	else
-	{
-
+  }
+  
+  function RemoveContactScriptURLs(conct) {
+	debugger;
+  
+	if (conct) {
+	  var tabBoxList = $("masterTab").getElementsByClassName("tabBox");
+  
+	  if (tabBoxList && tabBoxList.length > 0) {
+		for (var i = 0; i < tabBoxList.length; i++) {
+		  if (!tabBoxList[i].id) continue;
+  
+		  if (tabBoxList[i].id == "tabBox" + conct.Id) {
+			// tabBoxList[i].Remove();
+			$("masterTab").removeChild(tabBoxList[i]);
+		  }
+		}
+	  }
+  
+	  var tabCntBoxList = $("masterTab").getElementsByClassName("tabCntBox");
+  
+	  if (tabCntBoxList && tabCntBoxList.length > 0) {
+		for (var i = 0; i < tabCntBoxList.length; i++) {
+		  if (!tabCntBoxList[i].id) continue;
+  
+		  if (tabCntBoxList[i].id == "tabCntBox" + conct.Id) {
+			// tabCntBoxList[i].Remove();
+			$("masterTab").removeChild(tabCntBoxList[i]);
+		  }
+		}
+	  }
+  
+	  var singleIframeList = $("masterTab").getElementsByTagName("iframe");
+  
+	  if (singleIframeList && singleIframeList.length > 0) {
+		for (var i = 0; i < singleIframeList.length; i++) {
+		  if (!singleIframeList[i].id) continue;
+  
+		  if (singleIframeList[i].id == "NixxisAgent" + conct.Id) {
+			// singleIframeList[i].Remove();
+			$("masterTab").removeChild(singleIframeList[i]);
+		  }
+		}
+	  }
+	} else {
 	}
-}
-
-function RemoveContactScriptURLs(conct)
-{
+  }
+  
+  function liTagBoxSelect_OnClick(sender) {
 	// debugger;
-
-	if(conct)
-	{
-		var tabBoxList = $('masterTab').getElementsByClassName("tabBox");
-
-		if(tabBoxList && tabBoxList.length > 0)
-		{
-			for(var i = 0; i < tabBoxList.length; i++)
-			{
-				if(!tabBoxList[i].id) continue;
-
-				if(tabBoxList[i].id == "tabBox" + conct.Id) 
-				{
-					// tabBoxList[i].Remove();
-					$('masterTab').removeChild(tabBoxList[i]);
-				}
-			}
-		}
-
-		var tabCntBoxList = $('masterTab').getElementsByClassName("tabCntBox");
-
-		if(tabCntBoxList && tabCntBoxList.length > 0)
-		{
-			for(var i = 0; i < tabCntBoxList.length; i++)
-			{
-				if(!tabCntBoxList[i].id) continue;
-
-				if(tabCntBoxList[i].id == "tabCntBox" + conct.Id) 
-				{
-					// tabCntBoxList[i].Remove();
-					$('masterTab').removeChild(tabCntBoxList[i]);
-				}
-			}
-		}
-
-		var singleIframeList = $('masterTab').getElementsByTagName('iframe');
-
-		if(singleIframeList && singleIframeList.length > 0)
-		{
-			for(var i = 0; i < singleIframeList.length; i++)
-			{
-				if(!singleIframeList[i].id) continue;
-
-				if(singleIframeList[i].id == "NixxisAgent" + conct.Id) 
-				{
-					// singleIframeList[i].Remove();
-					$('masterTab').removeChild(singleIframeList[i]);
-				}
-			}
-		}
+	const spanList = $("masterTab").getElementsByTagName("span");
+	const divList = $("masterTab").getElementsByTagName("div");
+  
+	if (spanList != null && spanList.length > 0) {
+	  for (var j = 0; j < spanList.length; j++) spanList[j].className = "";
 	}
-	else
-	{
-
+  
+	if (divList != null && divList.length > 0) {
+	  for (var j = 0; j < divList.length; j++) {
+		if (divList[j].id?.includes("childdivTagURLBox"))
+		  divList[j].style.display = "none";
+	  }
 	}
-}
-
-function liTagBoxSelect_OnClick(sender)
-{
-	// debugger;	
-	const spanList = $('masterTab').getElementsByTagName("span");
-	const divList = $('masterTab').getElementsByTagName("div");
-
-	if(spanList !=null && spanList.length > 0)
-	{
-		for(var j = 0; j < spanList.length; j++)
-			spanList[j].className = '';
-	}
-
-	if(divList !=null && divList.length > 0)
-	{
-		for(var j = 0; j < divList.length; j++)
-		{
-			if(divList[j].id?.includes('childdivTagURLBox')) divList[j].style.display = 'none';
-		}
-	}
-	
-	var idNo = sender.currentTarget.id?.substring('spanTagBox'.length, sender.currentTarget.id.length);
-
-	$('spanTagBox'+idNo).className = 'active';
-	$('childdivTagURLBox'+idNo).style.display = 'contents';
-}
+  
+	var idNo = sender.currentTarget.id?.substring(
+	  "spanTagBox".length,
+	  sender.currentTarget.id.length
+	);
+  
+	$("spanTagBox" + idNo).className = "active";
+	$("childdivTagURLBox" + idNo).style.display = "contents";
+  }
 
 function GetNewIframe()
 {

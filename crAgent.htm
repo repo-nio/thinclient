@@ -32,6 +32,7 @@
     <script type="text/javascript" language="javascript" src="jsAgent/agentWindowCfg.js"></script>
     <script type="text/javascript" language="javascript" src="./assets/js/V3Functions.js"></script>
     <script defer src="https://code.iconify.design/3/3.1.0/iconify.min.js" ></script>
+    <!-- <script defer src="./assets/js/modals.js"></script> -->
     <script type="text/javascript" language="javascript">
       var ClientLink;
       
@@ -114,9 +115,12 @@
        
       window.onbeforeunload = function(e)
       {
-        // debugger;
+        debugger;
+
+        // return;
         
-        if(document.activeElement && document.activeElement.id == 'btnAgentLogoutOk')
+        if(document.activeElement && (document.activeElement.id == 'btnAgentLogoutOk'
+          || document.activeElement.lastElementChild.id == 'AgentLogout'))
         {
           console.info( "onbeforeunload" );
         }
@@ -140,30 +144,31 @@
   <body onload="javascript: initInstance();" onunload="javascript: exitInstance();">
     <div id="app">
       <div class="flex v" style="display: flex; flex: 1; flex-direction: column; height: 100vh" >
-        <div id="content" class="resize-div" style="height: 100vh" >
-          <div class="masterTab" id="masterTab" style="display:none;"></div>
+        <div id="content" class="resize-div" style="height: calc(100% - 144px)">
+          <div class="masterTab" id="masterTab" style="display:none;">
+          </div>
           <object data="./embed.html" type="text/html" id="contactViewerObject" style="pointer-events: none; height: 100%; width: 100%"></object>
         </div>
 
         <flex-resizer id="resize-1" class="flexLine" style="cursor: ns-resize" ></flex-resizer>
         
-        <div id="footerMain" class="footer-main resize-div" style="flex: 1 1 0%; height: 140px;">
-          <div class="footer" id="divFooter" style="height: 140px">
+        <div id="footerMain" class="footer-main resize-div" style="flex: 1">
+          <div class="footer" id="footer-child">
             <div class="flex h" style="overflow: unset; flex: 1; width: 100%">
               <!-- Buttons -->
-              <div class="flex-item column grid-buttons resize-div" style="padding: 0px 5px; min-width: 100px ;width: 25%;" 
-                  id="bottom-left">
-                <button class="resetBtn resetBtnBoxOne" id="resetBtn-1">
-                  <span class="right iconify" data-icon="material-symbols:play-arrow" data-width="24" data-height="24"
-                        style="color: #bfbfbf; margin-left: -20px"></span>
-                </button>
+              <div class="flex-item column grid-buttons resize-div" style="padding: 0px 5px; min-width: 100px; width: 25%"
+                   id="bottom-left">
+                   <button class="resetBtn resetBtnBoxOne ovl-btn" id="resetBtn-1">
+                    <span class="right iconify" data-icon="material-symbols:play-arrow" data-width="24"
+                          data-height="24" style="color: #bfbfbf; margin-left: -20px"></span>
+                  </button>
 
                 <div class="grid-wrapper " id="AgentToolStrip">
 
                   <!-- Mini mode -->
-                  <button class="btn-1" data-mode="#modalAgentLogout" id="AgentLogout">
+                  <button class="btn-1" data-mode="#modalAgentLogout" id="AgentLogout" data-target="#logout">
                     <div class="icon">
-                      <img src="./assets/icons/Admin_BacktoCockpit_50.png" alt="icon"
+                      <img src="./assets/icons/General_ApplicationChooser_50.png" alt="icon"
                           class="NixxisButton" id="AgentLogout"/>              
                     </div>
                     <span id="AgentLogout">Logout</span>
@@ -183,7 +188,7 @@
                   <!-- Ready -->
 
                   <!-- data-switch="ready" -->
-                  <button class="btn-1" data-switch="ready" id="WaitForCall">
+                  <button class="btn-1" data-switch="ready" id="WaitForCall" data-keep-target="#ready" data-target="#break">
                     <div class="icon">
                       <img src="./assets/icons/Agent_Command_Ready_50.png" alt="icon" 
                           class="NixxisButton" id="WaitForCall"/>
@@ -193,7 +198,7 @@
 
                   <!-- Break -->
 
-                  <button class="btn-1" data-switch="break" id="Pause">
+                  <button class="btn-1" data-switch="break" id="Pause" data-target="#break">
                     <div class="icon">
                       <img src="./assets/icons/Agent_Command_Pause_50.png" alt="icon"
                           class="NixxisButton" id="Pause" />
@@ -202,7 +207,7 @@
                   </button>
 
                   <!-- Priority picker -->
-                  <button class="btn-1" id="PriorityPickup">
+                  <button class="btn-1" id="PriorityPickup" data-keep-target="#priority-picker">
                     <div class="icon">
                       <img src="./assets/icons/Agent_Command_PriorityPickup_50.png" alt="icon"
                           class="NixxisButton" id="PriorityPickup" />
@@ -256,18 +261,19 @@
 
                   <button class="collapseBtn">
                     <span class="iconify" data-icon="material-symbols:play-arrow" data-width="24" data-height="24"
-                          data-rotate="180deg" style="color: #bfbfbf"></span>
+                          data-rotate="180deg" style="color: #bfbfbf" ></span>
                   </button>
                 </div>
+                <div class="bg_w" style="background-color: #333; position: absolute; bottom: 0; width: 100%; content: '';"></div>
               </div>
               <flex-resizer style="width: 2px;" id="rs-1"></flex-resizer>
 
               <!-- Voice Buttons -->
-              <div class="flex-item column grid-buttons resize-div" style="padding: 0px 5px; min-width: 100px; width: 25%;" 
+              <div class="flex-item column grid-buttons resize-div" style="padding: 0px 5px; min-width: 100px; width: 25%"
                    id="bottom-middle-left">
-                <button class="resetBtn resetBtnBoxOne" id="resetBtn-2">
+                <button class="resetBtn resetBtnBoxOne ovl-btn" id="resetBtn-2">
                   <span class="right iconify" data-icon="material-symbols:play-arrow" data-width="24" data-height="24"
-                        style="color: #bfbfbf; margin-left: -20px" ></span>
+                        style="color: #bfbfbf; margin-left: -20px"></span>
                 </button>
                 <div class="grid-wrapper " id="VoiceToolStrip" style="display: none;">
                   <!-- Disposition -->
@@ -382,21 +388,29 @@
                   </button>
 
                   <button class="collapseBtn">
-                    <span
-                      class="iconify"
-                      data-icon="material-symbols:play-arrow"
-                      data-width="24"
-                      data-height="24"
-                      data-rotate="180deg"
-                      style="color: #bfbfbf"
-                    ></span>
+                    <span class="iconify" data-icon="material-symbols:play-arrow" data-width="24" data-height="24"
+                          data-rotate="180deg" style="color: #bfbfbf" ></span>
                   </button>
                 </div>
+                <div class="bg_w" style=" background-color: #333; position: absolute; bottom: 0; width: 100%; content: '';"></div>
               </div>
               <flex-resizer style="width: 2px;" id="rs-2"></flex-resizer>
 
               <!-- Active Contact Status -->
-              <div class="flex-item column when-ready resize-div statusBox" id="voiceStatusToolStrip" >
+              <div class="flex-item column when-ready resize-div statusBox" id="bottom-middle-right" > <!-- id="voiceStatusToolStrip"  -->
+                <button class="resetBtn resetBtnBoxOne" id="resetBtn-3">
+                  <span class="right iconify" data-icon="material-symbols:play-arrow" data-width="24" data-height="24"
+                        style="color: #bfbfbf; margin-left: -20px" ></span>
+                </button>
+
+                <div class="when-ready" id="statusBox-gird">
+
+                </div>
+
+                <button class="collapseBtn-3 resetBtn resetBtnBoxOne" style="z-index: 10000; right: -8px" >
+                  <span class="right iconify" data-icon="material-symbols:play-arrow" data-width="24" data-height="24"
+                        data-rotate="180deg" style="color: #bfbfbf; margin-left: -20px" ></span>
+                </button>
               </div>
 
               <flex-resizer style="width: 2px;" id="rs-3"></flex-resizer>
@@ -479,6 +493,7 @@
     </div>
 
     <div class="backdrop" id="backdrop"></div>
+    <div id="overlay-modal" style="position: fixed; height: 100%; width: 100%; z-index: -1" ></div>
     <!-- <script src="./assets/js/CrToolbox.js"></script> -->
     <script src="./assets/js/script.js"></script>
   </body>

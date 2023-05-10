@@ -1418,7 +1418,7 @@ function NixxisClientLink(sessionId, baseLocation)
 	                                if(this.authorized)
 	                                {
 										addElementClass($("ExtendWrapup"),'active');
-										removeElementClass($("VoiceForward"),'active');
+										// removeElementClass($("VoiceForward"),'active');
 	                                    if(arguments.length > 0)
 	                                    {
 	                                        //window.alert(arguments[0]);

@@ -38,7 +38,7 @@ function LoadDateTimeInstance()
     var days = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
     for(i = 0; i < DAYS_IN_WEEK; i++)
     {
-        debugger;
+        // debugger;
         let myNextDateToSet = myCurrentDate;
         if(i != 0) myNextDateToSet = new Date(myCurrentDate.setDate(myCurrentDate.getDate() + 1));
         $("Day" + (i+1)).innerHTML = days[myNextDateToSet.getDay()];

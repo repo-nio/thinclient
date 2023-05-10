@@ -438,19 +438,56 @@ var crQualPanel =
 			workspace.appendChild(mainEl);
 		}
 	},
-	Select_OnClick : function()
+	Select_OnClick : function(sender)
 	{
-		// debugger;
+		debugger;
 
-		if($("QualificationPanel")) $("QualificationPanel").style.display = 'none';
-		if($("modalSelectqualworkspace")) $("modalSelectqualworkspace").style.width = '100%';
-		crQualPanel.OptionClear();
+		var target = sender.currentTarget;
+		
+		var allbtns = $('modalSelectqualworkspace').getElementsByTagName('button');
+
+		if(allbtns != null)
+		{			
+			for(var i = 0; i < allbtns.length; i++)
+			{
+				var child = allbtns[i];
+				if(child) removeElementClass(child, 'active');
+			}
+		}
+
+		debugger;
+
+		if(target && target.nodeName?.toLowerCase() == 'button' )
+		{
+			addElementClass(target, 'active');			
+		}
+
+		if (crQualPanel.CurrentSelected && target)
+		{
+			if(crQualPanel.CurrentSelected.crId && target.crId 
+				&& crQualPanel.CurrentSelected.crId == target.crId)
+			{
+				if(crQualPanel.OptionSpace && crQualPanel.OptionSpace.innerHTML == "")
+				{
+					if($("QualificationPanel")) $("QualificationPanel").style.display = '';
+					if($("modalSelectqualworkspace")) $("modalSelectqualworkspace").style.width = '48%';
+
+					$('btnSelectqualOk').disabled = true;
+					crQualPanel.OptionAddDateTime();
+				}
+				return;
+			}
+		}
 
 		if(this.crAction == null)
 		{
 			$('btnSelectqualOk').disabled = true;
 			return;
 		}
+
+		if($("QualificationPanel")) $("QualificationPanel").style.display = 'none';
+		if($("modalSelectqualworkspace")) $("modalSelectqualworkspace").style.width = '100%';
+		crQualPanel.OptionClear();
 
 		if (crQualPanel.CurrentSelected.crAction != this.crAction) 
 		{
@@ -841,6 +878,16 @@ var crSearchModePanel =
 	Select_OnClick : function(sender)
 	{
 		// debugger;
+		var allbtns = $('modalSearchworkspace').getElementsByTagName('button');
+
+		if(allbtns != null)
+		{			
+			for(var i = 0; i < allbtns.length; i++)
+			{
+				var child = allbtns[i];
+				if(child) removeElementClass(child, 'active');
+			}
+		}
 
 		var target = sender.currentTarget;
 
@@ -909,7 +956,7 @@ var crSearchModePanel =
 
 function removeAgentFooter()
 {
-	var allSpans = $('divFooter').getElementsByClassName('when-ready');
+	var allSpans = $('footer-child').getElementsByClassName('when-ready');
 		
 	if(allSpans != null)
 	{			
@@ -923,7 +970,7 @@ function removeAgentFooter()
 
 function addAgentFooter()
 {
-	var allSpans = $('divFooter').getElementsByClassName('when-ready');
+	var allSpans = $('footer-child').getElementsByClassName('when-ready');
 		
 	if(allSpans != null)
 	{			
