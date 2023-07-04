@@ -1,0 +1,27 @@
+    
+<application id="agent" name="Test App 2" type="NixxisClientApp" debug="true" sessionKey="agentScript" preload="true" serviceId="agent, supervision">
+
+	<add key="filesPath" value="staticfiles" />
+	<add key="filesSettings" value="specificExt='.txt.html.htm.js.vbs.css';cacheControl='private';cacheDuration='500'" />
+	<add key="defaultFile" value="CrLoginScreen.htm" />
+	<add key="agtFile" value="CrAgent.htm"/>
+	<add key="supFile" value="Client_Sup.html"/>
+	<add key="loginFile" value="CrLoginScreen.htm" />
+	<add key="redirectOnSessionExpired" value="http://yourserver:8088/agent/CrLoginScreen.htm"/>
+	<add key="ManualCallList" value=""/>
+	<add key="allowTeamSelection" value="true"/>
+	<add key="autoReady" value="-2"/>
+	<add key="concurrentVoice" value="4"/>
+	<add key="concurrentVoiceActive" value="4"/>
+	<add key="concurrentVoiceOthers" value="4"/>
+	<add key="concurrentMail" value="0"/>
+	<add key="concurrentMailActive" value="0"/>
+	<add key="concurrentChat" value="1"/>
+	<add key="concurrentChatActive" value="1"/>
+	<add key="client_AllowWaitingForChat" value="True" />
+	<add key="client_AllowWaitingForMail" value="false" />
+	<add key="client_ChatEnterKeyBehavior" value="send"/>
+	<add key="autoRedial" value="true"/>
+	<add key="popupOnConnection" value="true"/>
+	<add key="autoRedial" value="true"/>
+</application>
